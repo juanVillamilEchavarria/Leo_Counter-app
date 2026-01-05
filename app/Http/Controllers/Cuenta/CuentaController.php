@@ -14,7 +14,8 @@ class CuentaController extends Controller
     public function index()
     {
         return Inertia::render('Cuentas/Index',[
-            'tittle'=>'Cuentas'
+            'tittle'=>'Cuentas',
+            'NoRegistros'=>10
         ]);
     }
 
