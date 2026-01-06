@@ -1,8 +1,10 @@
-import { type User,  Roles, type UserLogin, type UserRegister, type SelfUserCardsProps } from "./types/user.types";
+import { type User,  Roles, type UserLogin, type UserRegister, type SelfUserCardProps } from "./types/user.types";
+import useSelfUserCard from "./hooks/useSelfUserCard";
 export {
     type User,
-    Roles,
     type UserLogin,
     type UserRegister,
-    type SelfUserCardsProps
+    type SelfUserCardProps,
+        Roles,
+        useSelfUserCard
 }

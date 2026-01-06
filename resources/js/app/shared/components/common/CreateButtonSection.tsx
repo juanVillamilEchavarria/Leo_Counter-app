@@ -6,7 +6,7 @@ export default function CreateButtonSection({
     children : React.ReactNode
 }) {
   return (
-    <div className="w-full flex justify-center lg:justify-end my-2">
+    <div className="w-full flex justify-center lg:justify-start my-2">
               <div className="border-b-2 border-green-800 flex flex-col" >
                 {children}
             </div>

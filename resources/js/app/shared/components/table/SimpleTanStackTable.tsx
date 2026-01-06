@@ -30,7 +30,7 @@ export default function SimpleTanStackTable({
                 icon="fa-solid fa-search"
                 value={filtering}
                 placeholder="Busqueda"
-                className="border-2 border-azul-oscuro p-1 rounded-2xl"
+                className="border-2 border-azul-oscuro  rounded-2xl"
                 onChange={(e: ChangeEvent<HTMLInputElement>)=> setFiltering(e.target.value)}
             />
         </div>

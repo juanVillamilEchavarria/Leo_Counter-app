@@ -20,3 +20,16 @@ export type TablePaginationProps={
         pageCurrentIndex: number
         totalPages: number
 }
+
+export type SimpleTableColumn <T>={
+        key: keyof T | string
+        label: string
+        className?: string
+        render?: (row : T)=> React.ReactNode //se le pasa un posible componente, como botones, switches, etc
+}
+
+export type SimpleTableProps<T>={
+        columns: SimpleTableColumn<T>[]
+        data: T[]
+        emptyMessage?:string
+}

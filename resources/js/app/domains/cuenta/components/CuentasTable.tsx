@@ -1,57 +1,62 @@
 import EditAndDeleteActions from "@/app/shared/components/table/EditAndDeleteActions"
 import ToggleState from "@/app/shared/components/table/ToggleState";
-import { useState } from "react";
+import { type Cuenta } from "../types/cuenta.types";
+import SimpleTable from "@/app/shared/components/table/SimpleTable";
+import { useState, useMemo } from "react";
 export default function CuentasTable() {
   const [active, setActive] = useState(false)
+  const data: Cuenta[] = [
+    {
+      id: 1,
+      nombre: "Cuenta 1",
+      saldoInicial: 1000,
+      saldoActual: 2000,
+      tipo: "Ahorro",
+      notas: "Notas",
+      active: true
+    },
+    {
+      id: 2,
+      nombre: "Cuenta 2",
+      saldoInicial: 1000,
+      saldoActual: 2000,
+      tipo: "Ahorro",
+      notas: "Notas",
+      active: false
+    }
+  ]
+  const columns = useMemo(()=>{
+    return [
+    { key: "id", label: "ID" },
+    { key: "nombre", label: "Nombre" },
+    { key: "saldoInicial", label: "Saldo Inicial" },
+    { key: "saldoActual", label: "Saldo Actual" },
+    { key: "tipo", label: "Tipo de cuenta" },
+    { key: "notas", label: "Notas" },
+    {
+      key: 'active',
+      label: 'Active',
+      render: (row : Cuenta)=>(
+        <ToggleState 
+        active={row.active}
+        setActive={setActive}
+        />
+      )
+    },
+    {
+      key: 'actions',
+      label: '',
+      render: ()=>(
+        <EditAndDeleteActions />
+      )
+    }
+  ]
+  }, []) 
   return (
-      <div className="table-container min-w-200">
-        <table className="table-general">
-            <thead className="table-thead">
-                <tr>
-                    <th >ID</th>
-                    <th >Nombre</th>
-                    <th >Saldo Inicial</th>
-                    <th >Saldo Actual</th>
-                    <th >tipo de cuenta</th>
-                    <th >Notas</th>
-                    <th >Active</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody className="table-tbody">
-              <tr >
-                <td >1</td>
-                <td >Cuenta 1</td>
-                <td >1000</td>
-                <td >2000</td>
-                <td >Ahorro</td>
-                <td >Notas</td>
-                <td className="p-0 w-1/8" >
-                    <ToggleState active={active} setActive={setActive} />
-                  
-                </td>
-                <td >
-                     <EditAndDeleteActions />
-                </td>
-              </tr>
-               <tr >
-                <td >1</td>
-                <td >Cuenta 1</td>
-                <td >1000</td>
-                <td >2000</td>
-                <td >Ahorro</td>
-                <td >Notas</td>
-                <td className="p-0 w-1/8" >
-                    <ToggleState active={active} setActive={setActive} />
-                  
-                </td>
-                <td >
-                    <EditAndDeleteActions />
-                </td>
-              </tr>
+    <SimpleTable
+    data={data}
+    columns={columns}
 
-            </tbody>
-        </table>
-    </div>
+     />
   )
 }
