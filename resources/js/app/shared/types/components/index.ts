@@ -4,7 +4,7 @@ import { type InputFillableProps } from './common/form.types';
 import { type CardProps, CardVariants } from './common/card.types';
 import { type AlertMessageProps, AlertMessagesTypes } from './common/alert.types';
 import { type TransitionDuration, type TransitionMotionProps, type TransitionSection } from './common/transition.types';
-import { type NavItemConfig, type NavItemProps,  NavItems } from './common/nav.types';
+import { type NavItemConfig, type NavItemProps,  NavItems, NavItemCurrentStyles, NavItemHoverStyles, NavItemStyles, NavItemTransitionStyle } from './common/nav.types';
 import { type CrudButtonProps, type CrudButtonVariants } from './common/crudButton.types';
 import { type EditAndDeleteActionsProps } from './common/table.types';
 export {
@@ -26,4 +26,8 @@ export {
     ButtonVariants,
     CardVariants,
     AlertMessagesTypes,
+    NavItemCurrentStyles,
+    NavItemHoverStyles,
+    NavItemStyles,
+    NavItemTransitionStyle
 }

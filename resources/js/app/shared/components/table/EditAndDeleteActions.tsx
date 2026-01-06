@@ -1,21 +1,23 @@
 import CrudButton from "../common/CrudButton"
 import { Link } from "@inertiajs/react"
 import { type EditAndDeleteActionsProps } from "../../types/components"
+import ActionSection from "./ActionSection"
 export default function EditAndDeleteActions({
     editHref='#',
     deleteOnClick=undefined
 }:EditAndDeleteActionsProps) {
+  const actions=[
+    {
+      as:Link,
+      href:editHref,
+      Crudvariant:'Edit'
+    },
+    {
+      onClick:deleteOnClick,
+      Crudvariant:'Delete'
+    }
+  ]
   return (
-     <div className="flex flex-row w-1/2 justify-center gap-2">
-            <CrudButton
-            as={Link}
-            href={editHref}
-            Crudvariant="Edit"
-            />
-            <CrudButton
-            onClick={deleteOnClick}
-            Crudvariant="Delete"
-            />
-    </div>
+      <ActionSection actions={actions} as={CrudButton}></ActionSection>
   )
 }

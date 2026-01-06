@@ -1,5 +1,27 @@
 import { useRoute } from "ziggy-js"
 const route= useRoute()
+export const NavItemCurrentStyles= 'bg-azul/50 text-cyan-400!' 
+  export  const NavItemStyles= `
+        flex 
+        px-3
+        h-15
+        justify-start
+        gap-3
+        items-center
+        w-full 
+        rounded-2xl
+        rounded-l-none
+        transition-colors
+        transition-transform
+        ease-in-out 
+        duration-400 
+        text-white
+    `;
+ export   const NavItemHoverStyles=  `
+        hover:bg-white/10 
+        hover:text-white
+    `
+  export  const NavItemTransitionStyle= 'transition-all duration-300 ease-in-out'
 export type NavItemConfig={
     key: string,
     icon: string,

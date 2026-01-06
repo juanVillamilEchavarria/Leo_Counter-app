@@ -1,6 +1,8 @@
-import { dateFormat } from "./date/dateFormat.helper";
+import { dateFormat } from "./date/date.helper";
+import { getVisiblePages } from "./table/table.helper";
 
 export{
-    dateFormat
+    dateFormat,
+    getVisiblePages
 
 }
