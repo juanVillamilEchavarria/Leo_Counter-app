@@ -1,10 +1,11 @@
+import dayjs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+import "dayjs/locale/es";
+dayjs.extend(localizedFormat);
+dayjs.locale("es");
+
 export function dateFormat(date : string| Date | undefined) {
-    if(!date) return
-     return new Intl.DateTimeFormat('es-ES', {
-    day: '2-digit',
-    month: 'long',
-    year: 'numeric',
-  }).format(new Date(date))
+  return dayjs(date).format('DD [de] MMMM [de] YYYY')
 }
 export const months: Record<string, string> = {
         'january': 'Enero',

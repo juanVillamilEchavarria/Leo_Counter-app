@@ -1,54 +1,38 @@
 import TransitionMotion from "../transitions/TransitionMotion"
-import Tittle from "../Tittle"
+import Title from "../common/Title"
 import NavItem from "./NavItem"
 import useOpen from "../../hooks/open/useOpen"
 import { useEffect } from "react"
 import { type NavItemConfig, type NavItemProps } from "../../types/components"
 export default function NavItemGroup({
     icon = '',
-    tittle = '',
+    title = '',
+    ItemStyles = '',
+    ItemHoverStyles = '',
+    TransitionStyle= '',
+    CurrentStyles='',
     childrenNav = [],
     isOpen = false,
 }: NavItemProps) {
-    const CurrentStyles= 'bg-white/80 text-black!' 
-        const ItemStyles= `
-            flex 
-            px-3 
-            h-10
-            justify-start
-            gap-3
-            items-center
-            w-full 
-            rounded-2xl
-            transition-all
-            ease-in-out 
-            duration-300 
-            text-white
-        `;
-        const ItemHoverStyles=  `
-            hover:bg-white/80 
-            hover:text-black
-        `
-        const TransitionStyle= 'transition-all duration-300 ease-in-out'
         const {isOpen : isOpenChild, setIsOpen: setIsOpenChild} = useOpen(false)
             useEffect(() => {
                 if(isOpen === false) setIsOpenChild(false)
             }, [isOpen])
   return (
-     <li className="flex flex-col w-full">
-            <div className={`${ItemStyles} ${ItemHoverStyles}`}>
+     <li className={`flex flex-col w-full`}>
+            <div className={``}>
                <button 
-               className=" 
-               flex items-center gap-3 h-10 cursor-pointer w-full"
+               className={`
+               flex items-center gap-3 cursor-pointer w-full ${ItemStyles} ${ItemHoverStyles} `}
                onClick={() => setIsOpenChild(prev => !prev)}
                disabled={isOpen===false}
                >
                     <i 
-                    className={`${icon} text-2xl ${TransitionStyle}`}>
+                    className={`${icon} ml-2 text-2xl ${TransitionStyle}`}>
                     </i>
                     <TransitionMotion initial={{opacity: 0, x: -40}} active={isOpen} className="w-full">
                         <div className="flex items-center w-full">
-                            <Tittle size="md" tittle={tittle} className="whitespace-nowrap" />
+                            <Title size="md" title={title} className="whitespace-nowrap" />
                       
                         <i className={`fa-solid fa-chevron-down ml-auto mr-2 text-2xl ${isOpenChild ? 'rotate-180' : ''} ${TransitionStyle}`}></i>
                          
@@ -66,10 +50,10 @@ export default function NavItemGroup({
                     transition-all
                     duration-300
                     ease-in-out
-                    ${isOpenChild ? 'max-h-96 opacity-100 mt-3' : 'max-h-0 opacity-0'}
+                    ${isOpenChild ? 'h-full  opacity-100' : 'max-h-0 opacity-0'}
                 `}
                 >
-                <ul className="flex flex-col gap-2">
+                <ul className="flex flex-col">
                     {childrenNav.map(item => (
                     <NavItem
                         {...item}

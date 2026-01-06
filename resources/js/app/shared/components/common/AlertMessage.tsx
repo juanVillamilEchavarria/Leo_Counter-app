@@ -1,5 +1,5 @@
-import { type AlertMessageProps } from "../types/components"
-import useMessage from "../hooks/messages/useMessage"
+import { type AlertMessageProps } from "../../types/components"
+import useMessage from "../../hooks/messages/useMessage"
 export default function AlertMessage({
     message,
     type = 'error'

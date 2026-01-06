@@ -1,5 +1,5 @@
-import SectionDescription from "@/app/shared/components/SectionDescription"
-import { type MovimientosMesActualProps } from "@/app/domains/movimientos"
+import SectionDescription from "@/app/shared/components/common/SectionDescription"
+import { type MovimientosMesActualProps } from "@/app/domains/movimiento"
 import { dateFormat } from "@/app/shared/helpers"
 export default function Index({
   inicio,
@@ -7,9 +7,9 @@ export default function Index({
 }:MovimientosMesActualProps
 ) {
   return (
-    <div className="mt-10">
+    <div className="section">
       
-        <SectionDescription tittle={`Movimientos Del Mes Actual `} paragraph={` ${dateFormat(inicio)} - ${dateFormat(fin)}`} />
+        <SectionDescription title={`Movimientos Del Mes Actual `} paragraph={` ${dateFormat(inicio)} - ${dateFormat(fin)}`} />
     </div>
   )
 }

@@ -36,6 +36,30 @@
   --color-morado-oscuro: #1e1e2b;
   --color-azul-gris: #19242c;
 }
+@layer components{
+  .table-container{
+    @apply border border-gray-400/40 rounded-2xl shadow-2xl w-full font-principal overflow-hidden
+  }
+  .table-general{
+    @apply table p-3 h-full w-full 
+  }
+  .table-thead{
+    @apply bg-azul-oscuro text-white/80 text-left rounded-2xl
+  }
+  .table-tbody{
+    @apply text-left
+  }
+  .table-tbody tr{
+    @apply border-b border-gray-300/40 even:bg-gray-300/40
+  }
+  .table-tbody tr td{
+    @apply px-4 py-2
+  }
+  .table-thead tr th{
+    @apply px-4 py-2
+
+  }
+}
 
 @layer utilities{
   /* Firefox */
@@ -69,6 +93,10 @@
 
 .scrollbar-modern::-webkit-scrollbar-thumb:hover {
   background-color: rgba(148, 163, 184, 0.65);
+}
+
+.section{
+  @apply mx-auto mt-10 lg:w-[90%] w-[95%] h-full 
 }
 
 }

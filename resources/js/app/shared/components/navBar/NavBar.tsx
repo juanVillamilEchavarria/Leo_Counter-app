@@ -1,4 +1,4 @@
-import List from "../List"
+import List from "../common/List"
 import NavItem from "./NavItem"
 import { useRoute } from "ziggy-js"
 import { NavItems } from "../../types/components"
@@ -9,7 +9,7 @@ export default function NavBar({
 }) {
   const route= useRoute()
   return (
-     <List className="w-full h-155 space-y-4">
+     <List className="w-full h-155 flex flex-col ">
             {
                 NavItems.map((item) => (
                     <NavItem 

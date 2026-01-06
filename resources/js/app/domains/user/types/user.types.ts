@@ -24,10 +24,13 @@ export type UserRegister = Omit<User, 'id' | 'email_verified_at'| 'created_at' |
     password_confirmation: string
 }
 
-export type SelfUserCardsProps={
+export type SelfUserCardProps={
     isOpen : boolean
     user:{
         name: string | undefined,
         role: string | undefined
     }
+}
+export type useSelfUserCardProps={
+    isOpen: boolean
 }

@@ -14,7 +14,7 @@ class MovimientoFijoController extends Controller
     public function index()
     {
         return Inertia::render('MovimientosFijos/Index', [
-            'tittle' => 'Movimientos Fijos',
+            'title' => 'Movimientos Fijos',
             'NoRegistros'=> 10
         ]);
     }

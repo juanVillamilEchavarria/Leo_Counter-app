@@ -26,6 +26,8 @@
     },
     "dependencies": {
         "@tailwindcss/postcss": "^4.1.18",
+        "@tanstack/react-table": "^8.21.3",
+        "dayjs": "^1.11.19",
         "framer-motion": "^12.23.26",
         "ziggy-js": "^2.6.0"
     }

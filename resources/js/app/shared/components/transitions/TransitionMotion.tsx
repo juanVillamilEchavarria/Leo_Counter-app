@@ -30,7 +30,8 @@ export default function TransitionMotion({
     },
     transition={
         duration: 0.25
-    }
+    },
+    style={}
 }: TransitionMotionProps) {
   return (
     <AnimatePresence >

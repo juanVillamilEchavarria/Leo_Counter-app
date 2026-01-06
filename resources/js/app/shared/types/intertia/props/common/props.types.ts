@@ -4,6 +4,6 @@ export type InertiaProps = {
     auth?: {
         user?: User
     }
-    tittle?: string,
+    title?: string,
     NoRegistros?: number
 }

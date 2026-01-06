@@ -1,4 +1,4 @@
-import Tittle from "../Tittle"
+import Title from "../common/Title"
 import { Head } from "@inertiajs/react"
 import { useMessageRedirect } from "../../hooks"
 export default function Header() {
@@ -6,21 +6,21 @@ export default function Header() {
     
     
   return (
-    <div className="w-full h-20 flex justify-between bg-white shadow-2xl items-center ">
+    <div className="w-full h-20 flex lg:flex-row flex-col justify-between bg-white shadow-xl items-center ">
         <Head>
-          <title>{props.tittle}</title>
+          <title>{props.title}</title>
        </Head>
-        <Tittle tittle={
+        <Title title={
                   props.NoRegistros ? (
                     <>
-                      {props.tittle}
+                      {props.title}
                       <span className="mx-2 text-gray-400">&middot;</span>
                       <span className="text-sm text-gray-500">
                         {props.NoRegistros} registros
                       </span>
                     </>
                   ) : (
-                    props.tittle
+                    props.title
                   )
               }    
               size="md" 

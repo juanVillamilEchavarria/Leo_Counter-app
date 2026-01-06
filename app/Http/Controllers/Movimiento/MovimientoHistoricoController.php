@@ -10,7 +10,8 @@ class MovimientoHistoricoController extends Controller
 {
     public function index (){
         return Inertia::render('Movimientos/Historicos/Index',[
-            'tittle'=>'Movimientos Historicos'
+            'title'=>'Movimientos Historicos',
+            'NoRegistros'=>10
         ]);
     }
 }

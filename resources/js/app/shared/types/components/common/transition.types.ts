@@ -13,6 +13,7 @@ export type TransitionMotionProps={
     active: boolean,
     children: React.ReactNode,
     className?: string  
+    style?: React.CSSProperties
     layout?: boolean | "size" | "position" | "preserve-aspect" ,
     initial?: TransitionSection,
     animate?: TransitionSection,

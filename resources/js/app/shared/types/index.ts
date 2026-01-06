@@ -1,6 +1,6 @@
 import { type FormDataNormalProps } from "./formData";
 import{ TextSize,
-    type TittleProps,
+    type TitleProps,
     type ButtonProps,
     ButtonVariants,
     type InputFillableProps,
@@ -12,7 +12,7 @@ import { type InertiaProps } from "./intertia/props";
 export {
     type FormDataNormalProps,
     TextSize,
-    type TittleProps,
+    type TitleProps,
     type ButtonProps,
     ButtonVariants,
     type InputFillableProps,

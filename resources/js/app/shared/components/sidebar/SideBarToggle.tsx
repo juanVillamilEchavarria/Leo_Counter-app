@@ -10,7 +10,7 @@ export default function SideBarToggle({
                     className="
                         absolute
                         top-1/6
-                        -right-7
+                        -right-5
                         -translate-y-1/2
                         z-50
                         w-8 h-8

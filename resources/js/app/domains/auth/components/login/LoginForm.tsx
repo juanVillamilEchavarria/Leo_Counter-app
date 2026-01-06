@@ -1,6 +1,6 @@
  import InputFillable from "@/app/shared/components/form/InputFillable"
- import Button from "@/app/shared/components/Button"
- import AlertMessage from "@/app/shared/components/AlertMessage"
+ import Button from "@/app/shared/components/common/Button"
+ import AlertMessage from "@/app/shared/components/common/AlertMessage"
  import { Link } from "@inertiajs/react"
  import useAuth from "../../hooks/useAuth"
  import { motion, AnimatePresence } from 'framer-motion'

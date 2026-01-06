@@ -16,7 +16,8 @@ class MovimientoMesActualController extends Controller
         // le pasamos la vista con el mes actual formateado a string y a español
         
         return Inertia::render('Movimientos/MesActual/Index',[
-            'tittle' => 'Movimientos Del Mes Actual',
+            'title' => 'Movimientos Del Mes Actual',
+            'NoRegistros' => 14,
             'inicio' => Carbon::now()->startOfMonth()->toISOString(),
             'fin' => Carbon::now()->endOfMonth()->toISOString()
         ]);

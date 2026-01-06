@@ -1,9 +1,9 @@
-import SectionDescription from "@/app/shared/components/SectionDescription"
+import SectionDescription from "@/app/shared/components/common/SectionDescription"
 
 export default function Index() {
   return (
-    <div className="mt-10">
-        <SectionDescription tittle="Movimientos Fijos" paragraph="Gestiona Tus Movimientos Fijos" />
+    <div className="section">
+        <SectionDescription title="Movimientos Fijos" paragraph="Gestiona Tus Movimientos Fijos" />
     </div>
   )
 }

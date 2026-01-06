@@ -6,20 +6,16 @@ export default function SelfOptionsCard() {
   return (
      <div className="
         flex
-        absolute
         flex-col
-        bg-zinc-950/80 
+        bg-zinc-950/90 
         backdrop-blur-2xl
         border
-        border-white/80  
-        z-50
+        border-white/20  
         shadow-[0_20px_50px_rgba(0,0,0,0.6)]
         rounded-2xl 
         gap-2
         p-5
-        w-56
-
-
+        w-56    
         origin-bottom-left
         "
     >

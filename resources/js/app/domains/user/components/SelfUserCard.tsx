@@ -1,22 +1,18 @@
 import TransitionMotion from "@/app/shared/components/transitions/TransitionMotion"
-import useOpen from "@/app/shared/hooks/open/useOpen"
 import SelfOptionsCard from "./SelfOptionsCard"
-import {  useEffect } from "react"
-import { type SelfUserCardsProps } from "../types/user.types"
+import { createPortal } from 'react-dom';
+import useSelfUserCard from "../hooks/useSelfUserCard";
+import { type SelfUserCardProps } from "../types/user.types"
 export default function SelfUserCard({
     isOpen = false,
     user
-}:SelfUserCardsProps) {
+}:SelfUserCardProps) {
     // si no hay name o role no se renderiza
     if(!user.name || !user.role) return null
-    const {isOpen : isOpenCard, setIsOpen : setIsOpenCard} = useOpen(false)
-    // este useeffect es para detectar si se cerro el sidebar, y si es asi se cierra el card de opciones
-    useEffect(() => {
-       if (!isOpen) setIsOpenCard(false)
-    }, [isOpen])
-
+    const {buttonRef, cardStyle, isOpenCard, setIsOpenCard, portal} = useSelfUserCard({isOpen})
+    if(!portal) return null
   return (
-    <div className="flex flex-row items-center justify-between w-full bg-zinc-950/40 p-2 rounded-2xl relative">
+    <div className="flex flex-row items-center justify-between w-full bg-zinc-950/40 p-2 rounded-2xl">
         <div 
             className="
             flex
@@ -53,7 +49,7 @@ export default function SelfUserCard({
                 </TransitionMotion>
             
         </div>
-        <div> {/* este div no tiene estilos porque solo envuelve todo el contenido para que eñ justify-between del elemento padre no mueva al boton de abrir el card */}
+        <div> {/* este div no tiene estilos porque solo envuelve todo el contenido para que el justify-between del elemento padre no mueva al boton de abrir el card */}
 
             
               {/* muestra el boton para abrir el card de opciones */}
@@ -68,6 +64,7 @@ export default function SelfUserCard({
                         <button
                         className="cursor-pointer ml-2 hover:bg-white/20 rounded-xl text-white py-1 "
                         onClick={() => setIsOpenCard(prev => !prev)}
+                        ref={buttonRef}
                         >
                             <i className={`
                                 fa-solid
@@ -86,37 +83,53 @@ export default function SelfUserCard({
                 
             </TransitionMotion>
             {/* muestra el card de opciones */}
-            <TransitionMotion 
+            {typeof document !== 'undefined' && createPortal(
+                <TransitionMotion 
                     active={isOpenCard} 
                     initial={
                             {
                             opacity: 0,
                             scaleY:0,
-                            scaleX:0}
+                            scaleX:0,
+                            y: -150,
+                            x: 100}
                         } 
                     animate={
                             {
                             opacity: 1,
                             scaleY:1, 
                             scaleX:1,
-                            y: -180,
-                            x: 40}
+                            y: -250,
+                            x: 200}
                         } 
                     exit={
                             {
                             opacity: 0,
                             scaleY:0,
                             scaleX:0,
-                            y: 0}
+                            y: -150,
+                            x: 100}
                         } 
                     transition={
                         {
                         duration: 0.25}
                     }
+                    layout={false}
+                    style={{
+                        position: "absolute",
+                        top: cardStyle.top,
+                        left: cardStyle.left,
+                        zIndex: 1000,
+                    }}
+                    className="fixed -bottom-35 left-10 z-100 pointer-events-auto"
                     >
                         {/* este es el card de opciones */}
                         <SelfOptionsCard />
-                </TransitionMotion>
+                </TransitionMotion>,
+                portal
+                
+            )}
+            
         
 
         </div>

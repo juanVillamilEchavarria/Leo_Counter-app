@@ -15,9 +15,9 @@ export const TextSize : Record<string, string> = {
     '8xl': 'text-8xl',
     '9xl': 'text-9xl',
 }
-export type TittleProps={
+export type TitleProps={
     as ?: React.ElementType
-    tittle? : React.ReactNode
+    title? : React.ReactNode
     size? : keyof typeof TextSize
     className? : string
 }

@@ -1,14 +1,14 @@
-import Tittle from "./Tittle"
+import Title from "./Title"
 export default function SectionDescription({
-    tittle,
+    title,
     paragraph
 }:{
-    tittle: string,
+    title: string,
     paragraph: string
 }) {
   return (
    <> 
-        <Tittle tittle={tittle} size="4xl" className="text-center font-cursiva" />
+        <Title title={title} size="4xl" className="text-center font-cursiva" />
         <p className="text-center text-lg font-principal mt-2 ">{paragraph}</p>
    </>
   )
