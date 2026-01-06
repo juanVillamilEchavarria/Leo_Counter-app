@@ -1,5 +1,6 @@
 // ajustar tamaño y espacio en el elemento padre del toggle
 // after es la bolita que se mueve
+// este es el switch para hacer patch a un estado de algun modelo desde la tabla
 export default function ToggleState({
     active = false,
     setActive,
@@ -24,6 +25,7 @@ export default function ToggleState({
                         className="sr-only peer" 
                         onChange={()=>setActive(!active)} 
                     />
+                    
                     <div className={`
                       relative
                       transition-all

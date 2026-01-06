@@ -6,7 +6,7 @@ import { type AlertMessageProps, AlertMessagesTypes } from './common/alert.types
 import { type TransitionDuration, type TransitionMotionProps, type TransitionSection } from './common/transition.types';
 import { type NavItemConfig, type NavItemProps,  NavItems, NavItemCurrentStyles, NavItemHoverStyles, NavItemStyles, NavItemTransitionStyle } from './common/nav.types';
 import { type CrudButtonProps, type CrudButtonVariants } from './common/crudButton.types';
-import { type EditAndDeleteActionsProps } from './common/table.types';
+import { type EditAndDeleteActionsProps, type useTanStackTableProps, type TablePaginationProps, type SimpleTanStackTableProps } from './common/table.types';
 export {
     type TitleProps,
     type ButtonProps,
@@ -21,6 +21,9 @@ export {
     type CrudButtonProps,
     type CrudButtonVariants,
     type EditAndDeleteActionsProps,
+    type useTanStackTableProps,
+    type TablePaginationProps,
+    type SimpleTanStackTableProps,
     NavItems,
     TextSize,
     ButtonVariants,
