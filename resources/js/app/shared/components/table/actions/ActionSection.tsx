@@ -1,6 +1,6 @@
-import Button from '../common/Button'
-import { type ButtonProps } from '../../types'
-import { type CrudButtonProps } from '../../types/components'
+import Button from '../../common/Button'
+import { type ButtonProps } from '../../../types'
+import { type CrudButtonProps } from '../../../types/components'
 
 export default function ActionSection({
     as: Tag=Button,

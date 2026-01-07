@@ -18,19 +18,19 @@ export default function SideBarApp() {
         <SideBarToggle isOpen={isOpen} setIsOpen={setIsOpen} />
             <div className={` grid grid-rows-[auto_1fr] overflow-hidden`}>
                     
-                    <div className="flex w-full gap-7 p-1  h-15 ">
-                        <div className={`w-15 h-15 shrink-0`} >
+                    <div className="flex w-full gap-5 p-2 mt-4  h-15 ">
+                        <div className={`w-12 h-12 shrink-0`} >
                             <Logo className="w-full h-full object-cover"  />
                         </div>
                         
                         <TransitionMotion active={isOpen} initial={{opacity:0, x: -70}}>
-                            <Title size="lg" title="Leo Counter" className="text-center text-gray-200 font-cursiva my-4 whitespace-nowrap" />
+                            <Title size="md" title="Leo Counter" className="text-center text-gray-200 font-cursiva my-4 whitespace-nowrap" />
                         </TransitionMotion>
                     </div>
                     <div className={`flex  flex-col my-5 overflow-y-scroll scrollbar-modern ${TrasitionStyle}`}>
                         <NavBar isOpen={isOpen} />
                     </div>
-                     <div className="my-2 p-2 ">
+                     <div className="my-2 p-2 border-t border-gray-200/20 ">
                         
                             <SelfUserCard user={{name: user?.name, role: user?.role}} isOpen={isOpen} />
                             <div className="mt-5 h-5">

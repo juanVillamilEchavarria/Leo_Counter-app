@@ -1,20 +1,19 @@
-import InputFillable from "../form/InputFillable"
-import TablePagination from "./TablePagination"
+import InputFillable from "../../form/InputFillable"
+import TablePagination from "../TablePagination"
 import { flexRender} from "@tanstack/react-table"
-import useTanStackTable from "../../hooks/table/useTanStackTable"
-import { type ChangeEvent } from "react"
-import { type SimpleTanStackTableProps } from "../../types/components" 
-export default function SimpleTanStackTable({
+import useTanStackTable from "../../../hooks/table/advanced/useTanStackTable"
+import { useTanStackPagination } from "@/app/shared/hooks/table/advanced/useTanStackPagination"
+import { type ChangeEvent, useMemo } from "react"
+import { type TanStackTableProps } from "../../../types/components" 
+export default function TanStackTable({
     columns,
     data
-}:SimpleTanStackTableProps) {
+}:TanStackTableProps) {
     if(columns === undefined|| data=== undefined)return null
     const {
         filtering,
         setFiltering,
         table, 
-        start, 
-        end, visiblePages,
         pageCurrentIndex,
         totalPages,
         UpDown
@@ -22,6 +21,8 @@ export default function SimpleTanStackTable({
         columns,
         data
     }) 
+    const controller =useTanStackPagination(table)
+ 
   return (
     <div>
         <div className="flex w-full my-2 justify-start">
@@ -30,7 +31,7 @@ export default function SimpleTanStackTable({
                 icon="fa-solid fa-search"
                 value={filtering}
                 placeholder="Busqueda"
-                className="border-2 border-azul-oscuro  rounded-2xl"
+                className="border border-azul-oscuro/50 rounded-2xl transition-all "
                 onChange={(e: ChangeEvent<HTMLInputElement>)=> setFiltering(e.target.value)}
             />
         </div>
@@ -81,12 +82,7 @@ export default function SimpleTanStackTable({
     </div>
     <div className=" w-[80%] my-4 flex justify-start">
         <TablePagination
-        table={table}
-        start={start}
-        end={end}
-        visiblePages={visiblePages}
-        pageCurrentIndex={pageCurrentIndex}
-        totalPages={totalPages}
+        controller={controller}        
         />
     </div>
 

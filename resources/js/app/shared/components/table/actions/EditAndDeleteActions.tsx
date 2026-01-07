@@ -1,6 +1,6 @@
-import CrudButton from "../common/CrudButton"
+import CrudButton from "../../common/CrudButton"
 import { Link } from "@inertiajs/react"
-import { type EditAndDeleteActionsProps } from "../../types/components"
+import { type EditAndDeleteActionsProps } from "../../../types/components"
 import ActionSection from "./ActionSection"
 export default function EditAndDeleteActions({
     editHref='#',

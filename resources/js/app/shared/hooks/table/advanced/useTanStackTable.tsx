@@ -15,8 +15,8 @@ import {
 // helpers
 import {
      getVisiblePages 
-} from "../../helpers"
-import { type useTanStackTableProps } from "../../types/components"
+} from "../../../helpers"
+import { type useTanStackTableProps } from "../../../types/components"
 
 
 
@@ -60,13 +60,7 @@ export default function useTanStackTable({
 
         const totalPages= table.getPageCount() // el total de paginas que hay en la tabla
 
-        const Pagination= useMemo(()=>{ //se usa useMemo para optimizar el renderizado de la paginacion 
-
-           return getVisiblePages(pageCurrentIndex, totalPages, maxVisible)
-
-        }, [totalPages, pageCurrentIndex]) // se actualiza cuando la pagina cambia, o el total de paginas cambia
-
-        const {pages: visiblePages, start, end}= Pagination  // se extrae los valores que devuelve el helper 
+       
 
         const UpDown = useMemo<Record<'asc' | 'desc', JSX.Element>>(() => ({ // Iconos para el sorting
             asc: <i className="fa-solid fa-caret-up" />,
@@ -78,10 +72,6 @@ export default function useTanStackTable({
     table,
     pageCurrentIndex,
     totalPages,
-    Pagination,
-    visiblePages,
-    start,
-    end,
     UpDown,
     setFiltering,
     setSorting

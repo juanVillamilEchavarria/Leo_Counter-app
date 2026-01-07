@@ -8,7 +8,7 @@ export default function SectionDescription({
 }) {
   return (
    <> 
-        <Title title={title} size="4xl" className="text-center font-cursiva" />
+        <Title title={title} size="4xl" className="text-center font-principal" />
         <p className="text-center text-lg font-principal mt-2 ">{paragraph}</p>
    </>
   )

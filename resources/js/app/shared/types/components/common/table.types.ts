@@ -3,23 +3,15 @@ export type EditAndDeleteActionsProps={
     editHref?: string,
     deleteOnClick?: () => void | undefined
 }
-export type SimpleTanStackTableProps={
+export type TanStackTableProps={
         columns : ColumnDef<Record<string,any>>[]
         data : Record<string,any>[]
 }
-export type useTanStackTableProps= SimpleTanStackTableProps &{
+export type useTanStackTableProps= TanStackTableProps &{
         pageSize?: number
         maxVisible?:number
 }
 
-export type TablePaginationProps={
-    table: Table<Record<string, any>>
-        start: number 
-        end: number
-        visiblePages: number[]
-        pageCurrentIndex: number
-        totalPages: number
-}
 
 export type SimpleTableColumn <T>={
         key: keyof T | string
@@ -32,4 +24,21 @@ export type SimpleTableProps<T>={
         columns: SimpleTableColumn<T>[]
         data: T[]
         emptyMessage?:string
+        pagination?: boolean
+        pageSize?:number
+}
+export interface TablePaginationController {
+  page: number
+  totalPages: number
+  canNext: boolean
+  canPrev: boolean
+  goTo: (page: number) => void
+  next: () => void
+  prev: () => void
+}
+
+export type TablePaginationProps={
+         controller: TablePaginationController
+         maxVisible?: number
+
 }

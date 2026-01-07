@@ -1,7 +1,8 @@
-import { type MovimientosMesActualProps } from "./types/mesActual/movimientosMesActual.types";
-import { ColumnsTableMovimientosHistoricos } from "./types/historicos/movimientosHistoricos.types";
+
+import { ColumnsTableMovimientos } from "./types/movimiento.types";
+import MovimientoTable from "./components/MovimientoTable";
 
 export {
-    type MovimientosMesActualProps,
-    ColumnsTableMovimientosHistoricos
+    ColumnsTableMovimientos,
+    MovimientoTable
 }

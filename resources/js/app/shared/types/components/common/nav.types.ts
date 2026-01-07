@@ -52,22 +52,7 @@ export const NavItems: NavItemConfig[] = [
             title: 'Movimientos',
             icon: 'fa-solid fa-money-bill-transfer fa-lg',
             routeName: 'movimientos.index',
-            childrenNav: [
-                {
-                    key: 'movimientosHistoricos',
-                    title: 'Movimientos Historicos',
-                    icon: 'fa-solid fa-earth-americas fa-lg',
-                    routeName: 'movimientosHistoricos.index',
-                    href: route('movimientosHistoricos.index'),
-                },
-                {
-                    key: 'movimientosDelMes',
-                    title: 'Movimientos Del Mes',
-                    icon: 'fa-solid fa-calendar-day fa-lg',
-                    routeName: 'movimientosMesActual.index',
-                    href: route('movimientosMesActual.index'),
-                }
-            ],
+           href: route('movimientos.index')
         },
         {
             key: 'movimientosFijos',
@@ -95,7 +80,22 @@ export const NavItems: NavItemConfig[] = [
             title: 'Presupuestos',
             icon: 'fa-solid fa-piggy-bank fa-lg',
             routeName: 'presupuestos.index',
-            href: route('presupuestos.index'),
+            childrenNav: [
+                {
+                    key: 'presupuestosHistoricos',
+                    title: 'Presupuestos Historicos',
+                    icon: 'fa-solid fa-earth-americas fa-lg',
+                    routeName: 'presupuestosHistoricos.index',
+                    href: route('presupuestosHistoricos.index'),
+                },
+                {
+                    key: 'presupuestosMesActual',
+                    title: 'Presupuestos Del Mes',
+                    icon: 'fa-solid fa-calendar-day fa-lg',
+                    routeName: 'presupuestosMesActual.index',
+                    href: route('presupuestosMesActual.index'),
+                }
+            ],
         },
         {
             key: 'pagosPendientes',

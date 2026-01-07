@@ -1,7 +1,7 @@
-import EditAndDeleteActions from "@/app/shared/components/table/EditAndDeleteActions"
+import EditAndDeleteActions from "@/app/shared/components/table/actions/EditAndDeleteActions"
 import ToggleState from "@/app/shared/components/table/ToggleState";
 import { type Cuenta } from "../types/cuenta.types";
-import SimpleTable from "@/app/shared/components/table/SimpleTable";
+import SimpleTable from "@/app/shared/components/table/simple/SimpleTable";
 import { useState, useMemo } from "react";
 export default function CuentasTable() {
   const [active, setActive] = useState(false)

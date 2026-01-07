@@ -24,7 +24,7 @@ export default function CrudButton({
         className={`${CreateStyles} ${className}`}
     >
         <i className={icon}></i>
-        <span> New</span>
+        <span> Nuevo</span>
     </Button>
   )}
   if(Crudvariant==='Edit')return(

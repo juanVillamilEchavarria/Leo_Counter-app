@@ -12,7 +12,7 @@ export default function SelfUserCard({
     const {buttonRef, cardStyle, isOpenCard, setIsOpenCard, portal} = useSelfUserCard({isOpen})
     if(!portal) return null
   return (
-    <div className="flex flex-row items-center justify-between w-full bg-zinc-950/40 p-2 rounded-2xl">
+    <div className="flex flex-row items-center justify-between mt-3 w-full p-2 rounded-2xl">
         <div 
             className="
             flex
@@ -100,7 +100,7 @@ export default function SelfUserCard({
                             scaleY:1, 
                             scaleX:1,
                             y: -250,
-                            x: 200}
+                            x: 250}
                         } 
                     exit={
                             {

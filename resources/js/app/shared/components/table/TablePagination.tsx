@@ -1,25 +1,26 @@
 import Button from "../common/Button"
 import { type TablePaginationProps } from "../../types/components"
+import { useMemo } from "react"
+import { getVisiblePages } from "../../helpers"
 
 // el elemento padre define donde se coloca la paginacion
 export default function TablePagination({
-    table,
-    start,
-    end,
-    visiblePages,
-    pageCurrentIndex,
-    totalPages
-}:TablePaginationProps) {
-   const disabledNext = !table.getCanNextPage()
-const disabledBack = !table.getCanPreviousPage()
+    controller,
+    maxVisible=5
+}:TablePaginationProps){
+    const notAllowedStyles = `cursor-not-allowed! text-gray-300!`
+      const Pagination= useMemo(()=>{ //se usa useMemo para optimizar el renderizado de la paginacion 
+        return getVisiblePages(controller.page, controller.totalPages, maxVisible)
+    }, [controller.totalPages, controller.page, maxVisible]) // se actualiza cuando la pagina cambia, o el total de paginas cambia
+    const {pages, start, end}= Pagination 
   return (
-    
             <ul className="w-1/4 flex rounded-2xl">
                 <li className="mr-3">
                     <Button 
                         variant="primaryPagination" 
-                        onClick={()=> table.setPageIndex(0)} 
-                        className="rounded-none"
+                        onClick={()=> controller.goTo(0)} 
+                        disabled={!controller.canPrev}
+                        className={`rounded-none ${!controller.canPrev && notAllowedStyles}`}
                     >
                         Primer
 
@@ -29,9 +30,9 @@ const disabledBack = !table.getCanPreviousPage()
                     <li className="">
                         <Button 
                             variant="primaryPagination" 
-                            disabled={disabledBack}
-                            onClick={()=> table.previousPage()} 
-                            className={`rounded-none px-3 ${disabledBack && 'cursor-not-allowed! text-gray-500!'}`}
+                            disabled={!controller.canPrev}
+                            onClick={()=> controller.prev()} 
+                            className={`rounded-none px-3 ${!controller.canPrev && notAllowedStyles}`}
                             >
                             <i className="fa-regular fa-circle-left "></i>
                         </Button>
@@ -46,25 +47,25 @@ const disabledBack = !table.getCanPreviousPage()
                             </Button>
                         </li>
                     }
-                    {visiblePages.map((index) => (
-                        <li key={index} className="">
+                    {pages.map((p) => (
+                        <li key={p} className="">
                             <Button 
                                 variant="primaryPagination" 
-                                onClick={()=> table.setPageIndex(index)} 
+                                onClick={()=> controller.goTo(p)} 
                                 className={`
                                     rounded-none 
-                                    px-5 
-                                    ${index === pageCurrentIndex ?
-                                    'border-cyan-500! text-cyan-400!' 
+                                    w-10!
+                                    ${p === controller.page ?
+                                    'border-blue-500! text-blue-400!' 
                                     : ''}
                             `}>
-                                {index + 1}
+                                {p + 1}
 
                             </Button>
                         </li>
                     ))}
         
-                    {end < totalPages - 1 && <li className="">
+                    {end < controller.totalPages - 1 && <li className="">
                         <Button 
                             variant="primaryPagination" 
                             className="rounded-none px-3 "
@@ -77,9 +78,9 @@ const disabledBack = !table.getCanPreviousPage()
                     <li className="">
                         <Button 
                             variant="primaryPagination" 
-                            disabled={end>=totalPages-1}
-                            onClick={()=> table.nextPage()} 
-                            className={`rounded-none px-3 ${disabledNext && 'cursor-not-allowed! text-gray-500!'}`}
+                            disabled={!controller.canNext}
+                            onClick={()=> controller.next()} 
+                            className={`rounded-none px-3 ${!controller.canNext && notAllowedStyles}`}
                             
                         >
                             <i className="fa-regular fa-circle-right "></i>
@@ -92,8 +93,9 @@ const disabledBack = !table.getCanPreviousPage()
                     <li className="mr-3">
                     <Button 
                         variant="primaryPagination" 
-                        onClick={()=> table.setPageIndex(totalPages - 1)} 
-                        className="rounded-none"
+                        onClick={()=> controller.goTo(controller.totalPages-1)} 
+                        disabled={!controller.canNext}
+                        className={`rounded-none ${!controller.canNext && notAllowedStyles}`}
                     >
                         Ultimo
 
