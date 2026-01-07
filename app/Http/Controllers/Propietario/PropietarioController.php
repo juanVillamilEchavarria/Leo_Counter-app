@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Cuenta;
+namespace App\Http\Controllers\Propietario;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class CuentaController extends Controller
+class PropietarioController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Inertia::render('Cuentas/Index',[
-            'title'=>'Cuentas',
-            'NoRegistros'=>10
+        return Inertia::render('Propietarios/Index',[
+            'title' => 'Propietarios',
+            'NoRegistros' => 24
         ]);
     }
 
@@ -24,7 +24,7 @@ class CuentaController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Cuentas/Create');
+        //
     }
 
     /**

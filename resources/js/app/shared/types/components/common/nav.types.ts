@@ -44,8 +44,15 @@ export const NavItems: NavItemConfig[] = [
             key: 'cuentas',
             title: 'Cuentas',
             icon: 'fa-solid fa-wallet fa-lg',
-            routeName: 'cuentas.index',
+            routeName: 'cuentas.*',
             href: route('cuentas.index'),
+        },
+        {
+            key: 'propietarios',
+            title: 'Propietarios',
+            icon: 'fa-solid fa-users fa-lg',
+            routeName: 'propietarios.index',
+            href: route('propietarios.index'),
         },
         {
             key: 'movimientos',

@@ -5,7 +5,6 @@ export const AuthActions = {
     register: '/register'
 }as const
 export type AuthTypes = 'login' | 'register'
-
 export type AuthLoginFacade ={
     type: AuthTypes,
     form: InertiaFormProps<UserLogin>
@@ -18,7 +17,6 @@ export type AuthRegisterFacade = {
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
 }
 export type AuthFacade= AuthLoginFacade | AuthRegisterFacade
-
 
 export type AuthFormReturn<TData extends Record<string, any>> = {
   form: InertiaFormProps<TData>

@@ -37,6 +37,7 @@
   --color-azul-gris: #19242c;
 }
 @layer components{
+  /* Table */
   .table-container{
     @apply border border-gray-400/40 rounded-2xl shadow-2xl w-full font-principal overflow-hidden
   }
@@ -59,6 +60,26 @@
     @apply px-4 py-2
 
   }
+/* Form */
+  .formulario-general{
+    @apply flex flex-col gap-2
+  }
+  .contenedor-fieldset{
+    @apply flex w-full justify-center items-center
+  }
+  .legend{
+    @apply text-gray-600 text-lg
+  }
+  .formulario-campo{
+    @apply flex flex-col gap-2
+  }
+  .formulario-campo label{
+    @apply font-bold
+  }
+  .select{
+    @apply w-full border-2 border-gray-300 rounded-xl p-3
+  }
+  
 }
 
 @layer utilities{

@@ -1,5 +1,4 @@
 import TablePagination from "../TablePagination"
-import { useSimplePagination } from "@/app/shared/hooks/table/simple/useSimpleTablePagination"
 import { type SimpleTableProps } from "../../../types/components"
 
 export default function SimpleTable<T>({ //en el T se le pasa el tipo de Modelo para tiparlo correctamente
@@ -7,7 +6,8 @@ export default function SimpleTable<T>({ //en el T se le pasa el tipo de Modelo 
     data,
     emptyMessage= "No hay registros",
     pagination=true,
-    pageSize=10
+    pageSize=10,
+    controller
 }: SimpleTableProps<T>) {
   return (
     <div>
@@ -39,7 +39,8 @@ export default function SimpleTable<T>({ //en el T se le pasa el tipo de Modelo 
                                     <td key={String(col.key)} className={col.className}>
                                         {col.render // si hay un render de algun componente, lo mostramos en la tabla 
                                          ? col.render(row) 
-                                         : String((row as any)[col.key]) // sino mostramos el string del registro en su posicion de la columna
+                                         // si no hay render, mostramos el string del registro en su posicion de la columna
+                                         : String(row[col.key as keyof T]) // sino mostramos el string del registro en su posicion de la columna
                                          }
                                     </td>
 
@@ -56,7 +57,7 @@ export default function SimpleTable<T>({ //en el T se le pasa el tipo de Modelo 
         {pagination&&(
                  <div className=" w-[80%] my-4 flex justify-start">
                         <TablePagination
-                        controller={useSimplePagination(data.length, pageSize)}        
+                        controller={controller}        
                         />
                     </div>
             )}

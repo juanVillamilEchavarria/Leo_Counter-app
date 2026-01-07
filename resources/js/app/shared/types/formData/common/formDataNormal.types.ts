@@ -1,5 +1,6 @@
-
-export type FormDataNormalProps<TData extends Record<string,any>, TActions extends string>={
-    action : TActions,
-    data ?: TData | null | undefined
+import { FormMethods } from "../../components"
+export type FormDataNormalProps<TData extends Record<string,any>>={
+    action : string,
+    method ?: keyof typeof FormMethods
+    data ?: TData
 }

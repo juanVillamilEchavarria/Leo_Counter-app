@@ -1,16 +1,22 @@
 import { useForm } from "@inertiajs/react";
 import { type FormDataNormalProps } from "../../types";
-export default function useFormNormal<TData extends Record<string, any>, TActions extends string>({
+export default function useFormNormal<TData extends Record<string, any>>({
     action,
+    method = 'post',
     data ,
-}: FormDataNormalProps<TData, TActions>) {
+}: FormDataNormalProps<TData>) {
     const form = useForm(data);
+    const {delete : destroy} = form
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
          form.clearErrors()   
-        form.post(action, {
-            onSuccess: () => form.reset(),
-        });
+          const actions = {
+            post: form.post,
+            put: form.put,
+            patch: form.patch,
+            delete: destroy,
+      }
+      actions[method]?.(action)
     }
   return {
     form,

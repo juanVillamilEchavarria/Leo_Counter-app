@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Cuenta\CuentaController;
+use App\Http\Controllers\Propietario\PropietarioController;
 use App\Http\Controllers\Movimiento\MovimientoController;
 use App\Http\Controllers\MovimientoFijo\MovimientoFijoController;
 use App\Http\Controllers\Categoria\CategoriaController;
@@ -19,7 +20,8 @@ Route::get('/register', function (){
 })->name('register');
 Route::middleware('auth')->group( function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::resource('cuentas',CuentaController::class);
+    Route::resource('cuentas',CuentaController::class)->names('cuentas');
+    Route::resource('propietarios',PropietarioController::class)->names('propietarios');
     Route::get('/movimientos', [MovimientoController::class, 'index'])->name('movimientos.index');
     Route::resource('movimientos-fijos',MovimientoFijoController::class)->names('movimientosFijos');
     Route::resource('categorias',CategoriaController::class)->names('categorias');

@@ -11,7 +11,7 @@ export default function InputFillable({
     disabled = false,
     required = false,
 }:InputFillableProps) {
-  return icon!=='' ? (
+  return icon ? (
     <div className="flex relative">
         <i className={`absolute top-3 left-2 ${icon}`}></i>
         <input type={type} name={name} id={id} placeholder={placeholder} value={value} onChange={onChange} className={`w-full p-2 pl-10 rounded-2xl ${className}`} disabled={disabled} required={required} />

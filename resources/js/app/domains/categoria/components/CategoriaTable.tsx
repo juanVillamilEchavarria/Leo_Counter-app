@@ -41,6 +41,7 @@ export default function CategoriaTable() {
      <SimpleTable
            data={data}
            columns={columns}
+           pagination={false}
        
         />
   )

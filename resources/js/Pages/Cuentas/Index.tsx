@@ -3,16 +3,16 @@ import CuentasTable from "@/app/domains/cuenta/components/CuentasTable"
 import { Link } from "@inertiajs/react"
 import CreateButtonSection from "@/app/shared/components/common/CreateButtonSection"
 import CrudButton from "@/app/shared/components/common/CrudButton"
-Link
+import { CuentaRoutes } from "@/app/domains/cuenta"
 export default function Index() {
   return (
     <div className="section">
       
-        <SectionDescription title="Cuentas" paragraph="Gestiona Tus Cuentas" />
+        <SectionDescription title="Cuentas" paragraph="Registra las cuentas de tu hogar y gestionalas " />
        <CreateButtonSection>
           <CrudButton
             as={Link}
-            href="#"
+            href={CuentaRoutes.create()}
             icon="fa-solid fa-wallet "
             />
         </CreateButtonSection>

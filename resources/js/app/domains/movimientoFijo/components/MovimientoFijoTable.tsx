@@ -67,7 +67,7 @@ export default function MovimientoFijoTable() {
    <SimpleTable
        data={data}
        columns={columns}
-   
+       pagination={false}
     />
   )
 }

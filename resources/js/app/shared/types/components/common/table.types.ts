@@ -25,7 +25,8 @@ export type SimpleTableProps<T>={
         data: T[]
         emptyMessage?:string
         pagination?: boolean
-        pageSize?:number
+        pageSize?:number,
+        controller?: TablePaginationController
 }
 export interface TablePaginationController {
   page: number
@@ -38,7 +39,7 @@ export interface TablePaginationController {
 }
 
 export type TablePaginationProps={
-         controller: TablePaginationController
+         controller: TablePaginationController | undefined
          maxVisible?: number
 
 }
