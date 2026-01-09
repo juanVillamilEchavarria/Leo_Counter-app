@@ -4,18 +4,29 @@ namespace App\Http\Controllers\Cuenta;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\Cuenta\StoreAndUpdateCuentaRequest;
 use Inertia\Inertia;
-
+use App\Models\Cuenta\Cuenta;
+use App\Domains\Cuenta\Services\CuentaService;
 class CuentaController extends Controller
 {
+    public function __construct(
+        private CuentaService $cuentaService
+    )
+    {
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        
+        $cuentas= $this->cuentaService->getAllAvailableWhitDetails();
+        
         return Inertia::render('Cuentas/Index',[
             'title'=>'Cuentas',
-            'NoRegistros'=>10
+            'NoRegistros'=>10,
+            'cuentas'=>$cuentas
         ]);
     }
 
@@ -24,15 +35,22 @@ class CuentaController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Cuentas/Create');
+        $options = $this->cuentaService->getOptions();
+        return Inertia::render('Cuentas/Create',[
+            'title'=>'Cuentas',
+            'NoRegistros'=>10,
+            'options'=>$options
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreAndUpdateCuentaRequest $request)
     {
-        //
+        $this->cuentaService->store($request->validated());
+        Inertia::flash('success', 'Cuenta creada correctamente');
+        return redirect()->route('cuentas.index');
     }
 
     /**
@@ -46,17 +64,26 @@ class CuentaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Cuenta $cuenta)
     {
-        //
+         $options = $this->cuentaService->getOptions();
+        
+        return Inertia::render('Cuentas/Edit',[
+            'title'=>'Cuentas',
+            'NoRegistros'=>10,
+            'options'=>$options,
+            'data'=>$cuenta
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreAndUpdateCuentaRequest $request, Cuenta $cuenta)
     {
-        //
+        $this->cuentaService->update($cuenta, $request->validated());
+        Inertia::flash('success', 'Cuenta actualizada correctamente');
+        return redirect()->route('cuentas.index');
     }
 
     /**
@@ -65,5 +92,10 @@ class CuentaController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    public function toggleActive(Cuenta $cuenta){
+        $this->cuentaService->toggleActive($cuenta);
+        Inertia::flash('success', 'Cuenta actualizada correctamente');
+        return redirect()->route('cuentas.index');
     }
 }

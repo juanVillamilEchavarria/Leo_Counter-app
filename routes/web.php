@@ -20,7 +20,9 @@ Route::get('/register', function (){
 })->name('register');
 Route::middleware('auth')->group( function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::resource('cuentas',CuentaController::class)->names('cuentas');
+    // CUENTA
+    Route::resource('cuentas',CuentaController::class)->names('cuentas')->except('patch');
+    Route::patch('cuentas/{cuenta}/toggle-active', [CuentaController::class, 'toggleActive'])->name('cuentas.toggle-active');
     Route::resource('propietarios',PropietarioController::class)->names('propietarios');
     Route::get('/movimientos', [MovimientoController::class, 'index'])->name('movimientos.index');
     Route::resource('movimientos-fijos',MovimientoFijoController::class)->names('movimientosFijos');

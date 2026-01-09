@@ -37,7 +37,7 @@ export default function CrudButton({
         variant="secondary"
         className={`${EditAndDeleteStyles} ${className}`}
     >
-        <i className={`fa-solid fa-pen ${icon}`}></i>
+        <i className={` ${icon ? icon : 'fa-solid fa-pen'}`}></i>
 
     </Button>
      
@@ -52,7 +52,7 @@ export default function CrudButton({
     variant="dangerSecondary" 
     className={`${EditAndDeleteStyles}${className}`}
     >
-        <i className={`fa-solid fa-trash  ${icon}`}></i>
+        <i className={` ${icon ? icon : 'fa-solid fa-trash '}`}></i>
     </Button>
      
   )

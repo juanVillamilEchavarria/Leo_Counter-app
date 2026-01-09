@@ -1,3 +1,4 @@
+import FlashToastListener from "@/app/shared/components/common/FlashToastListener"
 export default function GuestLayout({
     children
 }:{

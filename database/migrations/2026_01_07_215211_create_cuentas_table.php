@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->decimal('saldo_inicial', 12, 2);
-            $table->decimal('saldo_actual', 12, 2);
+            $table->decimal('saldo_actual', 12, 2)->default(0);
             $table->foreignId('tipo_cuenta_id')->constrained('tipo_cuentas');
             $table->foreignId('propietario_id')->constrained('propietarios');
             $table->text('notas')->nullable();
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cuenta');
+        Schema::dropIfExists('cuentas');
     }
 };

@@ -2,6 +2,8 @@ import { type ColumnDef, type Table } from "@tanstack/react-table"
 export type EditAndDeleteActionsProps={
     editHref?: string,
     deleteOnClick?: () => void | undefined
+    editIcon?: string
+    deleteIcon?: string
 }
 export type TanStackTableProps={
         columns : ColumnDef<Record<string,any>>[]
@@ -42,4 +44,14 @@ export type TablePaginationProps={
          controller: TablePaginationController | undefined
          maxVisible?: number
 
+}
+
+export type ModelToggleProps = {
+  active: boolean
+  route: string
+  payload?: Record<string, any>
+  labels?: {
+    active?: string
+    inactive?: string
+  }
 }

@@ -1,0 +1,75 @@
+<?php
+
+namespace App\Domains\Cuenta\Services;
+
+// ACTIONS
+use App\Domains\Propietario\Actions\GetPropietarioAction;
+use App\Domains\TipoCuenta\Actions\GetTipoCuentaAction;
+use App\Domains\Cuenta\Actions\StoreCuentaAction;
+use App\Domains\Cuenta\DTOs\CuentaFormOptionsDTO;
+use App\Domains\Cuenta\Actions\GetCuentaAction;
+use App\Domains\Cuenta\Actions\UpdateCuentaAction;
+// DTOs
+use App\Domains\Cuenta\DTOs\StoreCuentaDTO;
+use App\Domains\Cuenta\DTOs\UpdateCuentaDTO;
+
+// MODELS
+use App\Models\Cuenta\Cuenta;
+
+// CLASES DE LARAVEL PARA TIPAR
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Database\Eloquent\Builder;
+
+class CuentaService{
+    public function __construct(
+        private GetPropietarioAction $getPropietarioAction,
+        private GetTipoCuentaAction $getTipoCuentaAction,
+        private StoreCuentaAction $storeCuentaAction,
+        private UpdateCuentaAction $updateCuentaAction,
+        private GetCuentaAction $getCuentaAction
+    )
+    {
+    }
+    public function getOptions(): CuentaFormOptionsDTO{
+        return new CuentaFormOptionsDTO(
+            $this->getPropietarioAction->getAll(),
+            $this->getTipoCuentaAction->getAll()
+        );
+    }
+
+    public function store(array $data): Cuenta{
+         $dto = new StoreCuentaDTO(
+            propietario_id: $data['propietario_id'],
+            tipo_cuenta_id: $data['tipo_cuenta_id'],
+            nombre: $data['nombre'],
+            saldo_inicial: $data['saldo_inicial'],
+            notas: $data['notas']
+         );
+        return $this->storeCuentaAction->store($dto);
+    }
+
+    public function update(Cuenta $cuenta, array $data): bool{
+        $dto = new UpdateCuentaDTO(
+            propietario_id: $data['propietario_id'],
+            tipo_cuenta_id: $data['tipo_cuenta_id'],
+            nombre: $data['nombre'],
+            saldo_inicial: $data['saldo_inicial'],
+            notas: $data['notas']
+        );
+        return $this->updateCuentaAction->update($cuenta, $dto);
+    }
+    public function toggleActive(Cuenta $cuenta): bool{
+        return $this->updateCuentaAction->toggleActive($cuenta);
+    }
+
+    public function getAllAvailableWhitDetails(): AnonymousResourceCollection{
+        return $this->getCuentaAction->getAllAvalaibleWhitDetails();
+    }
+    public function getAllAvailable(): Builder{
+        return $this->getCuentaAction->allAvailable();
+    }
+
+    public function getById(string $id): ?Cuenta{
+        return $this->getCuentaAction->where('id', $id);
+    }
+}

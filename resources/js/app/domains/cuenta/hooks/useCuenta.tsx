@@ -1,28 +1,31 @@
+import { toastHelper } from "@/app/shared/helpers"
 import { useFormNormal } from "@/app/shared/hooks"
-import { type CuentaFormData, type Cuenta, CuentaActions } from "../types/cuenta.types"
+import {  type Cuenta, CuentaActions } from "../types/cuenta.types"
 import { FormMethods } from "@/app/shared/types/components"
+
 export default function useCuenta(
 {
   method = 'post',
-  id
+  id,
+  data
 }:{
     method ?: keyof typeof FormMethods,
     id ?: number
+    data ?: Cuenta
 }) {
-
     //definimos la action dependiendo del metodo, se encuentra en CuentaActions, puede ser funcion para los metodos de put, patch y delete y una string para el metodo post
     const action =
     typeof CuentaActions[method] === 'function' //aqui se verifica si la accion es una funcion
       ? (CuentaActions[method] as any)(id)
       : CuentaActions[method]
-
-    const { form, handleSubmit } = useFormNormal<Cuenta>({
+    const { form, handleSubmit, submit } = useFormNormal<Cuenta>({
         action,
-        data: {} as Cuenta,
+        data: data ?? {} as Cuenta,
         method
     })
   return {
     form,
+    submit,
     handleSubmit
   }
 }

@@ -1,5 +1,5 @@
 import SimpleTable from "@/app/shared/components/table/simple/SimpleTable"
-import ToggleState from "@/app/shared/components/table/ToggleState"
+import ToggleState from "@/app/shared/components/table/actions/ToggleState"
 import EditAndDeleteActions from "@/app/shared/components/table/actions/EditAndDeleteActions"
 import { useMemo, useState } from "react"
 import { type MovimientoFIjoTableData } from "../types/movimientoFijo.types"

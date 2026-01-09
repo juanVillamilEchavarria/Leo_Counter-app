@@ -17,9 +17,7 @@ export default function CreateOrEditDescription({
             className={`
                     font-bold 
                     text-4xl
-                    ${type === 'create' ?
-                    'text-green-700/70 rounded-sm border-b-2 border-green-700' :
-                    'text-blue-700/70 rounded-sm border-b-2 border-blue-700'}
+                    text-blue-700/70 rounded-sm border-b-2 border-blue-700
                 `}
             >
                 {

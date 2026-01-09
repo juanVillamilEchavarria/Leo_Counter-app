@@ -4,3 +4,8 @@ export type FormDataNormalProps<TData extends Record<string,any>>={
     method ?: keyof typeof FormMethods
     data ?: TData
 }
+
+export type CreateAndEditViewWithOptionsProps<TData extends Record<string,any>, TOptions extends Record<string,any>>={
+    data ?: TData
+    options : TOptions
+}

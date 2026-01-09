@@ -1,9 +1,9 @@
 import { useState, useCallback, useMemo } from "react"
 
 // toca hacer bastante logica aqui porque es para la paginacion para una tabla normal
-export function useSimplePagination(totalRows: number, pageSize = 10) {
+export default function useSimplePagination(totalRows: number, pageSize = 10) {
   const [page, setPage] = useState(0) //estado para manejar la pagina actual
-  const totalPages = Math.ceil(totalRows / pageSize)
+  const totalPages = Math.ceil(totalRows / pageSize) // calcula el total de paginas, redondea hacia arriba
   const canNext= page < totalPages-1
   const canPrev = page>0
   //usecallback para guardar la funcion y evitar renders innecesarios

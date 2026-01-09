@@ -1,8 +1,8 @@
 import InputFillable from "../../form/InputFillable"
-import TablePagination from "../TablePagination"
+import TablePagination from "../pagination/TablePagination"
 import { flexRender} from "@tanstack/react-table"
 import useTanStackTable from "../../../hooks/table/advanced/useTanStackTable"
-import { useTanStackPagination } from "@/app/shared/hooks/table/advanced/useTanStackPagination"
+import { useTanStackPagination } from "@/app/shared/hooks"
 import { type ChangeEvent, useMemo } from "react"
 import { type TanStackTableProps } from "../../../types/components" 
 export default function TanStackTable({

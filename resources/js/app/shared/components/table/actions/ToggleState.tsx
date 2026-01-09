@@ -10,7 +10,7 @@ export default function ToggleState({
     }
 }:{
     active?:boolean,
-    setActive:(active:boolean)=>void | undefined,
+    setActive:()=>void | undefined | void,
     message?:{
         active?:string,
         inactive?:string
@@ -23,7 +23,7 @@ export default function ToggleState({
                         value="" 
                         checked={active} 
                         className="sr-only peer" 
-                        onChange={()=>setActive(!active)} 
+                        onChange={setActive} 
                     />
                     
                     <div className={`

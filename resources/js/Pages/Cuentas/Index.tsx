@@ -1,10 +1,15 @@
 import SectionDescription from "@/app/shared/components/common/SectionDescription"
-import CuentasTable from "@/app/domains/cuenta/components/CuentasTable"
+import CuentaTable from "@/app/domains/cuenta/components/CuentaTable"
 import { Link } from "@inertiajs/react"
 import CreateButtonSection from "@/app/shared/components/common/CreateButtonSection"
 import CrudButton from "@/app/shared/components/common/CrudButton"
 import { CuentaRoutes } from "@/app/domains/cuenta"
-export default function Index() {
+import {  type Cuenta } from "@/app/domains/cuenta"
+export default function Index({
+  cuentas
+}:{
+  cuentas : {data: Cuenta[]}
+}) {
   return (
     <div className="section">
       
@@ -18,7 +23,7 @@ export default function Index() {
         </CreateButtonSection>
         
         <div className="overflow-scroll scrollbar-modern">
-            <CuentasTable />
+            <CuentaTable data={cuentas.data} />
         </div>
     </div>
   )

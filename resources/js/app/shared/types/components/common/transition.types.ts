@@ -10,7 +10,7 @@ export type TransitionDuration={
     duration: number
 }
 export type TransitionMotionProps={
-    active: boolean,
+    active: boolean | string,
     children: React.ReactNode,
     className?: string  
     style?: React.CSSProperties

@@ -4,17 +4,22 @@ import { type EditAndDeleteActionsProps } from "../../../types/components"
 import ActionSection from "./ActionSection"
 export default function EditAndDeleteActions({
     editHref='#',
-    deleteOnClick=undefined
+    deleteOnClick=undefined,
+    editIcon,
+    deleteIcon
 }:EditAndDeleteActionsProps) {
   const actions=[
     {
       as:Link,
       href:editHref,
-      Crudvariant:'Edit'
+      Crudvariant:'Edit',
+      icon : editIcon ?? ''
     },
     {
       onClick:deleteOnClick,
-      Crudvariant:'Delete'
+      Crudvariant:'Delete',
+      icon : deleteIcon ?? ''
+
     }
   ]
   return (

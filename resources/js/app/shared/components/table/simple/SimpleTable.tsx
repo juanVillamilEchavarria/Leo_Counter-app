@@ -1,4 +1,4 @@
-import TablePagination from "../TablePagination"
+import TablePagination from "../pagination/TablePagination"
 import { type SimpleTableProps } from "../../../types/components"
 
 export default function SimpleTable<T>({ //en el T se le pasa el tipo de Modelo para tiparlo correctamente

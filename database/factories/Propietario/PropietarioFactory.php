@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Propietario;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -17,7 +17,10 @@ class PropietarioFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nombre' => fake()->name(),
+            'apellido' => fake()->lastName(),
+            'telefono' => fake()->phoneNumber(),
+            'email' => fake()->email()
         ];
     }
 }

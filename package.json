@@ -29,6 +29,7 @@
         "@tanstack/react-table": "^8.21.3",
         "dayjs": "^1.11.19",
         "framer-motion": "^12.23.26",
+        "react-toastify": "^11.0.5",
         "ziggy-js": "^2.6.0"
     }
 }

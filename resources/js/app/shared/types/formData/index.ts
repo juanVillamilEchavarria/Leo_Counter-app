@@ -1,7 +1,8 @@
 
-import { type FormDataNormalProps } from "./common/formDataNormal.types";
+import { type FormDataNormalProps, type CreateAndEditViewWithOptionsProps } from "./common/formDataNormal.types";
 
 
 export {
     type FormDataNormalProps,
+    type CreateAndEditViewWithOptionsProps
 }

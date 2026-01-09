@@ -1,7 +1,7 @@
-import Button from "../common/Button"
-import { type TablePaginationProps } from "../../types/components"
+import Button from "../../common/Button"
+import { type TablePaginationProps } from "../../../types/components"
 import { useMemo } from "react"
-import { getVisiblePages } from "../../helpers"
+import { getVisiblePages } from "../../../helpers"
 
 // el elemento padre define donde se coloca la paginacion
 export default function TablePagination({
