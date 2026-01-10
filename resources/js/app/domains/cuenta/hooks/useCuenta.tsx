@@ -10,13 +10,13 @@ export default function useCuenta(
   data
 }:{
     method ?: keyof typeof FormMethods,
-    id ?: number
+    id ?: number | null
     data ?: Cuenta
 }) {
     //definimos la action dependiendo del metodo, se encuentra en CuentaActions, puede ser funcion para los metodos de put, patch y delete y una string para el metodo post
     const action =
     typeof CuentaActions[method] === 'function' //aqui se verifica si la accion es una funcion
-      ? (CuentaActions[method] as any)(id)
+      ?  (id ? (CuentaActions[method] as any)(id) : null)
       : CuentaActions[method]
     const { form, handleSubmit, submit } = useFormNormal<Cuenta>({
         action,

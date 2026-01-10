@@ -89,9 +89,11 @@ class CuentaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Cuenta $cuenta)
     {
-        //
+        $this->cuentaService->destroy($cuenta);
+        Inertia::flash('success', 'Cuenta Archivada correctamente');
+        return redirect()->route('cuentas.index');
     }
     public function toggleActive(Cuenta $cuenta){
         $this->cuentaService->toggleActive($cuenta);

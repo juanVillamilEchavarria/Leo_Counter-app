@@ -9,6 +9,7 @@ use App\Domains\Cuenta\Actions\StoreCuentaAction;
 use App\Domains\Cuenta\DTOs\CuentaFormOptionsDTO;
 use App\Domains\Cuenta\Actions\GetCuentaAction;
 use App\Domains\Cuenta\Actions\UpdateCuentaAction;
+use App\Domains\Cuenta\Actions\DestroyCuentaAction;
 // DTOs
 use App\Domains\Cuenta\DTOs\StoreCuentaDTO;
 use App\Domains\Cuenta\DTOs\UpdateCuentaDTO;
@@ -26,7 +27,8 @@ class CuentaService{
         private GetTipoCuentaAction $getTipoCuentaAction,
         private StoreCuentaAction $storeCuentaAction,
         private UpdateCuentaAction $updateCuentaAction,
-        private GetCuentaAction $getCuentaAction
+        private GetCuentaAction $getCuentaAction,
+        private DestroyCuentaAction $destroyCuentaAction
     )
     {
     }
@@ -58,6 +60,11 @@ class CuentaService{
         );
         return $this->updateCuentaAction->update($cuenta, $dto);
     }
+
+    public function destroy(Cuenta $cuenta): bool{
+        return $this->destroyCuentaAction->destroy($cuenta);
+    }
+
     public function toggleActive(Cuenta $cuenta): bool{
         return $this->updateCuentaAction->toggleActive($cuenta);
     }

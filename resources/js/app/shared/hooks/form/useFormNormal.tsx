@@ -9,6 +9,7 @@ export default function useFormNormal<TData extends Record<string, any>>({
     const {delete : destroy} = form
 
     const submit = ()=>{
+      if(!action) return
       form.clearErrors() 
       const actions = {
             post: form.post,

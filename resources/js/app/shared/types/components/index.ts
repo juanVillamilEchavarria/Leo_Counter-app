@@ -7,6 +7,8 @@ import { type TransitionDuration, type TransitionMotionProps, type TransitionSec
 import { type NavItemConfig, type NavItemProps,  NavItems, NavItemCurrentStyles, NavItemHoverStyles, NavItemStyles, NavItemTransitionStyle } from './common/nav.types';
 import { type CrudButtonProps, type CrudButtonVariants } from './common/crudButton.types';
 import { type EditAndDeleteActionsProps, type useTanStackTableProps, type TanStackTableProps, type SimpleTableColumn, type SimpleTableProps, type TablePaginationController, type TablePaginationProps, type ModelToggleProps } from './common/table.types';
+
+import { ModalSizes, type ModalProps, type DeleteModalProps, ModalVariants } from './common/modal.types';
 export {
     type TitleProps,
     type ButtonProps,
@@ -30,6 +32,10 @@ export {
     type FormCommonProps,
     type TextAreaProps,
     type ModelToggleProps,
+    type ModalProps,
+    type DeleteModalProps,
+    ModalSizes,
+    ModalVariants,
     FormMethods,
     NavItems,
     TextSize,

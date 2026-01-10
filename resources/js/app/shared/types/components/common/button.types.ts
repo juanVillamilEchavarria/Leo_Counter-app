@@ -22,6 +22,12 @@ const ButtonTransitionBaseStyles = `
 const TransitionCommonStyles= 'transition-all ease-in-out duration-400 '
 const ButtonBorderedBaseStyles = 'bg-white border hover:text-white '
 export const ButtonVariants = {
+    gray: `
+                      bg-gray-500 
+                      hover:bg-gray-600 
+                      text-white 
+                      ${TransitionCommonStyles}
+                      `,
   clean: '',
   primary:      `
                       bg-azul 
