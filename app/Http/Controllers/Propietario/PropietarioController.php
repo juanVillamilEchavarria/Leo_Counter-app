@@ -4,18 +4,25 @@ namespace App\Http\Controllers\Propietario;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Domains\Propietario\Services\PropietarioService;
 use Inertia\Inertia;
 
 class PropietarioController extends Controller
 {
+    public function __construct(
+        private PropietarioService $propietarioService
+    ){}
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        $propietarios = $this->propietarioService->getAll();
         return Inertia::render('Propietarios/Index',[
             'title' => 'Propietarios',
-            'NoRegistros' => 24
+            'NoRegistros' => 24,
+            'propietarios' => $propietarios
         ]);
     }
 

@@ -8,22 +8,20 @@ export default function useFormNormal<TData extends Record<string, any>>({
     const form = useForm(data);
     const {delete : destroy} = form
 
-    const submit = ()=>{
-      if(!action) return
-      form.clearErrors() 
-      const actions = {
-            post: form.post,
-            put: form.put,
-            patch: form.patch,
-            delete: destroy,
-      }
-      actions[method]?.(action)
-
-    }
+            const submit = (options?: Parameters<typeof form.post>[1]) => { // se le pueden pasar opciones
+                  if (!action) return
+                  form.clearErrors()
+                  const methodMap = {
+                    post: () => form.post(action, options),
+                    put: () => form.put(action, options),
+                    patch: () => form.patch(action, options),
+                    delete: () => destroy(action, options),
+                  } as const
+                  methodMap[method]?.()
+          }
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>, ) => {
         e.preventDefault();
-        submit();
-         
+        submit();   
     }
   return {
     form,

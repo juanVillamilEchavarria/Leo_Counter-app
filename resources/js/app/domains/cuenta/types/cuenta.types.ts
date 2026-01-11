@@ -10,7 +10,7 @@ export const CuentaRoutes = {
   edit : (id: number) => route('cuentas.edit', {id})
 }
 export const CuentaActions = {
-  post : () => route('cuentas.store'),
+  post : route('cuentas.store'),
   put : (id: number) => route('cuentas.update', {id}),
   patch : (id: number) => route('cuentas.toggle-active', {id}),
   delete : (id: number) => route('cuentas.destroy', {cuenta:id})

@@ -14,9 +14,10 @@ export default function CuentaTable({
   data: Cuenta[]
 }) {
   const [cuentaSelected, setCuentaSelected] = useState<Cuenta|null>(null) // el estado para manejar el id de la cuenta que se va a eliminar
+
   const columns = useMemo(()=>{
     return CuentaColumns({ // le pasamos la cuenta que se va a eliminar
-      onDelete: (cuenta : Cuenta)=>{
+      onDelete: (cuenta : Cuenta)=>{ // cuando le de click al boton de eliminar, se abre el modal y se le asigna la cuenta al state
         setCuentaSelected(cuenta)
       }
     })
@@ -26,7 +27,7 @@ export default function CuentaTable({
     id: cuentaSelected?.id,
   })
   const handleDelete = (e: React.FormEvent<HTMLFormElement>) => {
-    if (!cuentaSelected) return
+    if (!cuentaSelected) return  // si no hay cuenta seleccionada, no hacemos nada
     handleSubmit(e)
     setCuentaSelected(null)
   }

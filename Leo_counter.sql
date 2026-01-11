@@ -100,7 +100,7 @@ CREATE TABLE `cuentas` (
   `saldo_inicial` DECIMAL(12,2) NOT NULL,
   `saldo_actual` DECIMAL(12,2) NOT NULL,
   `tipo_cuenta_id` BIGINT UNSIGNED NOT NULL,
-  `propietario_id` BIGINT UNSIGNED NOT NULL,
+  `propietario_id` BIGINT UNSIGNED  NULL,
   `notas` TEXT NULL,
   `active` TINYINT(1) NOT NULL DEFAULT 1,
   `created_at` TIMESTAMP NULL,
@@ -110,7 +110,7 @@ CREATE TABLE `cuentas` (
   INDEX (`propietario_id`),
   INDEX (`active`),
   CONSTRAINT `fk_cuentas_tipo_cuenta` FOREIGN KEY (`tipo_cuenta_id`) REFERENCES `tipo_cuentas`(`id`) ON UPDATE CASCADE ON DELETE RESTRICT,
-  CONSTRAINT `fk_cuentas_propietario` FOREIGN KEY (`propietario_id`) REFERENCES `propietarios`(`id`) ON UPDATE CASCADE ON DELETE RESTRICT
+  CONSTRAINT `fk_cuentas_propietario` FOREIGN KEY (`propietario_id`) REFERENCES `propietarios`(`id`) ON UPDATE CASCADE ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 

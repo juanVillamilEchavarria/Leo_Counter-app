@@ -22,6 +22,7 @@ export default function DeleteModal({
             <span> {title}</span>
             </div>
             } 
+            size="lg"
           variant="secondary">
             <p>{paragraph}</p>
                 {children}

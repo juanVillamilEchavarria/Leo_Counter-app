@@ -46,6 +46,16 @@ export type TablePaginationProps={
 
 }
 
+export type useModelToggleProps={
+    route: string
+    payload?: Record<string, any>
+    options?: {
+        onSuccess?: () => void
+        onError?: () => void
+    }
+}
+
+
 export type ModelToggleProps = {
   active: boolean
   route: string

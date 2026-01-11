@@ -15,6 +15,7 @@ export default function CuentaForm({
     options,
     processing,
 }: CuentaFormProps) {
+    console.log(errors)
   return (
     <Card
     className="shadow-2xl! rounded-2xl!"

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->decimal('saldo_inicial', 12, 2);
             $table->decimal('saldo_actual', 12, 2)->default(0);
             $table->foreignId('tipo_cuenta_id')->constrained('tipo_cuentas');
-            $table->foreignId('propietario_id')->constrained('propietarios');
+            $table->foreignId('propietario_id')->nullable()->constrained('propietarios')->nullOnDelete();
             $table->text('notas')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();

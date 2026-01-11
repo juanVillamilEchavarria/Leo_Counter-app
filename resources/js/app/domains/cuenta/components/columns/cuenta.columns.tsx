@@ -1,7 +1,6 @@
 
-import { CuentaActions, type Cuenta } from "../../types/cuenta.types"
+import { CuentaActions, type Cuenta, CuentaRoutes } from "../../types/cuenta.types"
 import EditAndDeleteActions from "@/app/shared/components/table/actions/EditAndDeleteActions"
-import { CuentaRoutes} from "../../types/cuenta.types"
 import ModelToggle from "@/app/shared/components/table/actions/ModelToggle"
 
 

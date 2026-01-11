@@ -9,6 +9,7 @@ export default function Create({
 }:CuentaCreateAndEditViewProps
 ) {
     const {form, handleSubmit}= useCuenta({})
+    console.log(handleSubmit);
   return (
     <div className="section">
         <CreateOrEditDescription type="create" model="Cuenta" />
