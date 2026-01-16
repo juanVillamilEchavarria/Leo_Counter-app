@@ -5,8 +5,6 @@ import Button from "@/app/shared/components/common/Button"
 import TransitionMotion from "@/app/shared/components/transitions/TransitionMotion"
 import AlertMessage from "@/app/shared/components/common/AlertMessage"
 import { type CuentaFormProps } from "../types/cuenta.types"
-import { type CuentaFormData } from "../types/cuenta.types"
-import type React from "react"
 export default function CuentaForm({
     data,
     setData,

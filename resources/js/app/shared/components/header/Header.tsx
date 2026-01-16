@@ -16,7 +16,7 @@ export default function Header() {
                       {props.title}
                       <span className="mx-2 text-gray-400">&middot;</span>
                       <span className="text-sm text-gray-500">
-                        {props.NoRegistros} registros
+                        {props.NoRegistros} {props.NoRegistros === 1 ? 'registro' : 'registros'}
                       </span>
                     </>
                   ) : (

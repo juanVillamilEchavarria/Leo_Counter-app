@@ -3,10 +3,12 @@ import CreateOrEditFormSection from "@/app/shared/components/common/CreateOrEdit
 import CuentaForm from "@/app/domains/cuenta/components/CuentaForm"
 import { useCuenta } from "@/app/domains/cuenta"
 import { CuentaRoutes } from "@/app/domains/cuenta"
-import { type CuentaCreateAndEditViewProps} from "@/app/domains/cuenta"
+import { type Cuenta, type CuentaFormOptions} from "@/app/domains/cuenta"
+
+import { type CreateAndEditViewWithOptionsProps } from "@/app/shared/types/formData"
 export default function Create({
   options
-}:CuentaCreateAndEditViewProps
+}:CreateAndEditViewWithOptionsProps<Cuenta, CuentaFormOptions> 
 ) {
     const {form, handleSubmit}= useCuenta({})
     console.log(handleSubmit);

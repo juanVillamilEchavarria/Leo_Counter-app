@@ -1,5 +1,6 @@
 import TablePagination from "../pagination/TablePagination"
 import { type SimpleTableProps } from "../../../types/components"
+import { span } from "framer-motion/client"
 
 export default function SimpleTable<T>({ //en el T se le pasa el tipo de Modelo para tiparlo correctamente
     columns,
@@ -40,7 +41,7 @@ export default function SimpleTable<T>({ //en el T se le pasa el tipo de Modelo 
                                         {col.render // si hay un render de algun componente, lo mostramos en la tabla 
                                          ? col.render(row) 
                                          // si no hay render, mostramos el string del registro en su posicion de la columna
-                                         : String(row[col.key as keyof T]) // sino mostramos el string del registro en su posicion de la columna
+                                         : row[col.key as keyof T] !== null ? String(row[col.key as keyof T]): <span className="text-gray-400 uppercase">Campo Vacio</span> // sino mostramos el string del registro en su posicion de la columna
                                          }
                                     </td>
 

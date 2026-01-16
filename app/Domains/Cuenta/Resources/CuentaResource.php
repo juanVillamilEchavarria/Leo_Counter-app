@@ -21,9 +21,8 @@ class CuentaResource extends JsonResource
             'saldo_actual' => $this->saldo_actual,
 
             'tipo_cuenta' => $this->tipo_cuenta->tipo_cuenta,
-            'propietario' => $this->propietario->nombre,
+            'propietario' => $this->propietario ? $this->propietario->nombre . ' ' . $this->propietario->apellido : null,
             'notas' => $this->notas,
-
             'active' => $this->active,
             'archived' => $this->archived,
         ];

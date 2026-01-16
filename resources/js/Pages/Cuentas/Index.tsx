@@ -12,6 +12,7 @@ export default function Index({
 }:{
   cuentas : {data: Cuenta[]}
 }) {
+  console.log(cuentas)
   return (
     <div className="section">
         <SectionDescription title="Cuentas" paragraph="Registra las cuentas de tu hogar y gestionalas " />

@@ -19,6 +19,7 @@ export const CuentaColumns=({ // la hacemos de esta manera para poder pasarle la
     {
       key: 'active',
       label: 'Active',
+      className: 'w-40',
       render: (row : Cuenta)=>(
         <ModelToggle
           active={row.active}

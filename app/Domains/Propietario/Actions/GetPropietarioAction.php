@@ -10,4 +10,8 @@ class GetPropietarioAction
     {
         return Propietario::all();
     }
+
+    public function getRecordsCount() : int{
+        return Propietario::count();
+    }
 }

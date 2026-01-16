@@ -3,8 +3,8 @@ import { type FormCommonProps } from "@/app/shared/types/components"
 const route= useRoute()
 
 export const PropietarioRoutes={
-    index : route('propietarios.index'),
-    create : route('propietarios.create'),
+    index : () => route('propietarios.index'),
+    create :()=> route('propietarios.create'),
     show : (id: number) => route('propietarios.show', {id}),
     edit : (id: number) => route('propietarios.edit', {id})
 }

@@ -15,6 +15,6 @@ class DestroyCuentaAction
         }
         return $cuenta->update([
             'archived' => true
-        ]);
+        ]); // realmete la archiva, no la elimina, esto se hace para mantener la integridad de los datos
     }
 }

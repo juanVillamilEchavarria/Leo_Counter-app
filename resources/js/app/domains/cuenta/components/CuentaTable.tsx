@@ -13,6 +13,7 @@ export default function CuentaTable({
   pageSize?: number,
   data: Cuenta[]
 }) {
+
   const [cuentaSelected, setCuentaSelected] = useState<Cuenta|null>(null) // el estado para manejar el id de la cuenta que se va a eliminar
 
   const columns = useMemo(()=>{

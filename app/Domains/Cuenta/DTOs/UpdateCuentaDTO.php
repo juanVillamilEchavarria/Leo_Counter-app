@@ -10,7 +10,7 @@ class UpdateCuentaDTO {
         public readonly ?string $notas
     ){}
 
-    public function toArray(){
+    public function toArray(): array{
         return [
             'propietario_id' => $this->propietario_id,
             'tipo_cuenta_id' => $this->tipo_cuenta_id,

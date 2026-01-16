@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Domains\Categoria\Actions;
+
+use App\Models\Categoria\Categoria;
+use Illuminate\Database\Eloquent\Collection;
+use App\Domains\Categoria\Resources\CategoriaResource;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+
+class GetCategoriaAction
+{
+    public function getAll() : Collection
+    {
+        return Categoria::all();
+    }
+
+
+    public function getRecordsCount() : int{
+        return Categoria::count();
+    }
+    public function getAllWithDetails() : AnonymousResourceCollection
+    {
+        $categoria= Categoria::with('tipoMovimiento')->get();
+        return CategoriaResource::collection($categoria);
+    }
+}

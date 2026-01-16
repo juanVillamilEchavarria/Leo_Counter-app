@@ -18,6 +18,10 @@ class CuentaController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    private function NoRegistros(){
+        return $this->cuentaService->getRecordsCount();
+    }
     public function index()
     {
         
@@ -25,7 +29,7 @@ class CuentaController extends Controller
         
         return Inertia::render('Cuentas/Index',[
             'title'=>'Cuentas',
-            'NoRegistros'=>10,
+            'NoRegistros'=>$this->NoRegistros(),
             'cuentas'=>$cuentas
         ]);
     }
@@ -38,7 +42,7 @@ class CuentaController extends Controller
         $options = $this->cuentaService->getOptions();
         return Inertia::render('Cuentas/Create',[
             'title'=>'Cuentas',
-            'NoRegistros'=>10,
+            'NoRegistros'=>$this->NoRegistros(),
             'options'=>$options
         ]);
     }
@@ -70,7 +74,7 @@ class CuentaController extends Controller
         
         return Inertia::render('Cuentas/Edit',[
             'title'=>'Cuentas',
-            'NoRegistros'=>10,
+            'NoRegistros'=>$this->NoRegistros(),
             'options'=>$options,
             'data'=>$cuenta
         ]);

@@ -41,9 +41,9 @@ export default function PropietarioTable({
            onSubmit={handleDelete}
           spanTitle={'Eliminar'}
           title={' Propietario'}
-          paragraph={`¿Esta seguro de eliminar el propietario: ${propietarioSelected?.nombre} ?`}
+          paragraph={`¿Esta seguro de eliminar el propietario: ${propietarioSelected?.nombre} ${propietarioSelected?.apellido} ?`}
           >
-            <small>los propietarios eliminados no son recuperables</small>
+            <small>los propietarios eliminados no son recuperables, si este propietario esta asignado a una cuenta, considera inmediatamente luego de esta accion asignarle un nuevo propietario</small>
           </DeleteModal>
     </>
   )

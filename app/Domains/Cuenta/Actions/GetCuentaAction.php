@@ -18,6 +18,10 @@ class GetCuentaAction
   public function allAvailable(): Builder{
     return Cuenta::query()->where('archived', false);
   }
+
+  public function getRecordsCount(): int{
+    return $this->allAvailable()->count();
+  }
    public function where(string $attribute, $value): ?Cuenta{
        return Cuenta::where($attribute, $value)->first();
    }

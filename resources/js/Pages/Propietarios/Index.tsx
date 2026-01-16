@@ -3,6 +3,7 @@ import CreateButtonSection from "@/app/shared/components/common/CreateButtonSect
 import { PropietarioTable } from "@/app/domains/propietario"
 import CrudButton from "@/app/shared/components/common/CrudButton"
 import { Link } from "@inertiajs/react"
+import { PropietarioRoutes } from "@/app/domains/propietario"
 import { type Propietario } from "@/app/domains/propietario"
 export default function Index({
   propietarios
@@ -16,7 +17,7 @@ export default function Index({
         <CreateButtonSection>
           <CrudButton
             as={Link}
-            href="#"
+            href={PropietarioRoutes.create()}
             icon="fa-solid fa-users"
             />
         </CreateButtonSection>

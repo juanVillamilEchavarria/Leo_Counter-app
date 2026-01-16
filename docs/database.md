@@ -205,6 +205,76 @@ Archivar una cuenta significa que:
 
 ---
 
+## 12. Tabla `tipo_movimientos`
+
+### ¿Para qué existe?
+
+Define los **tipos base de movimiento financiero** del sistema, como:
+
+- Ingresos  
+- Gastos  
+
+Funciona como una tabla de **clasificación principal** para todos los movimientos y categorías.
+
+### ¿Por qué es necesaria?
+
+Separar los tipos de movimiento en una tabla independiente permite:
+
+* Evitar valores hardcodeados (`Ingreso`, `Gasto`) en otras tablas.
+* Mantener consistencia semántica en todo el sistema.
+* Facilitar futuras extensiones (por ejemplo: transferencias, ajustes, etc.).
+* Simplificar validaciones y reglas de negocio.
+
+### Campo clave
+
+* `tipo_movimiento`: nombre único del tipo de movimiento (ej. *Ingreso*, *Gasto*).
+
+Este campo es único porque:
+
+* No pueden existir dos tipos de movimiento con el mismo significado.
+* Garantiza integridad conceptual del sistema.
+
+### Relación con otras tablas
+
+* Se relaciona con la tabla `categorias`.
+* Define el **sentido financiero** de cada categoría.
+
+---
+
+## 13. Tabla `categorias`
+
+### ¿Para qué existe?
+
+Representa las **categorías financieras** utilizadas para clasificar los movimientos, tales como:
+
+- Alimentación
+- Educación
+- Vivienda
+- Ingresos laborales
+- Entretenimiento
+
+Las categorías permiten organizar, analizar y generar reportes financieros detallados.
+
+### ¿Por qué es necesaria?
+
+Las categorías son fundamentales porque:
+
+* Permiten agrupar movimientos financieros.
+* Facilitan la generación de reportes y estadísticas.
+* Ayudan al usuario a entender en qué gasta o de dónde proviene su dinero.
+* Hacen el sistema flexible y personalizable.
+
+---
+
+### Relación con `tipo_movimientos`
+
+Cada categoría pertenece a **un solo tipo de movimiento**:
+
+* Una categoría es **exclusivamente de ingreso** o **exclusivamente de gasto**.
+* Esto evita errores conceptuales, como usar una categoría de gasto en un ingreso.
+
+
+
 ## Nota final
 
 Este diseño prioriza:

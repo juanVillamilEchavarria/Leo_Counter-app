@@ -45,8 +45,4 @@ export type CuentaFormProps = // declaramos las propiedades del formulario
     options: CuentaFormOptions
   }
 
-  export type CuentaCreateAndEditViewProps={
-    options: CuentaFormOptions
-    cuenta?: Cuenta
-  }
   

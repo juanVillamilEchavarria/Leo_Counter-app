@@ -79,4 +79,8 @@ class CuentaService{
     public function getById(string $id): ?Cuenta{
         return $this->getCuentaAction->where('id', $id);
     }
+
+    public function getRecordsCount(): int{
+        return $this->getCuentaAction->getRecordsCount();
+    }
 }

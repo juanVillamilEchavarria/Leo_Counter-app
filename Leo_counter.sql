@@ -113,4 +113,25 @@ CREATE TABLE `cuentas` (
   CONSTRAINT `fk_cuentas_propietario` FOREIGN KEY (`propietario_id`) REFERENCES `propietarios`(`id`) ON UPDATE CASCADE ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE `tipo_movimientos` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `tipo_movimiento` VARCHAR(255) NOT NULL UNIQUE,
+  `created_at` TIMESTAMP NULL,
+  `updated_at` TIMESTAMP NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `categorias` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `nombre` VARCHAR(255) NOT NULL,
+  `tipo_movimiento_id` BIGINT UNSIGNED NOT NULL,
+  `es_fijo` TINYINT(1) NOT NULL DEFAULT 0,
+  `descripcion` TEXT NULL,
+  `is_system` TINYINT(1) NOT NULL DEFAULT 0,
+  `created_at` TIMESTAMP NULL,
+  `updated_at` TIMESTAMP NULL,
+  INDEX (`tipo_movimiento_id`),
+  UNIQUE (`nombre`, `tipo_movimiento_id`),
+  CONSTRAINT `fk_categorias_tipo_movimiento` FOREIGN KEY (`tipo_movimiento_id`) REFERENCES `tipo_movimientos`(`id`) ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
