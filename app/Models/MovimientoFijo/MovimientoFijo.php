@@ -1,0 +1,60 @@
+<?php
+
+namespace App\Models\MovimientoFijo;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\Cuenta\Cuenta;
+use App\Models\Categoria\Categoria;
+use App\Models\TipoMovimiento\TipoMovimiento;
+use App\Models\FrecuenciaMovimiento\FrecuenciaMovimiento;
+
+class MovimientoFijo extends Model
+{
+    use HasFactory;
+
+    protected $toggeable=[
+        'registrar_automatico',
+        'active'
+    ];
+
+    protected $fillable = [
+        'nombre',
+        'descripcion',
+        'tipo_movimiento_id',
+        'categoria_id',
+        'cuenta_id',
+        'frecuencia_movimiento_id',
+        'fecha_proximo',
+        'monto',
+        'url_pago',
+        'active',
+        'registrar_automatico'
+
+
+    ];
+
+    public function isToggable(string $field){
+        return in_array($field, $this->toggeable, true);
+    }
+
+    public function cuenta()
+    {
+        return $this->belongsTo(Cuenta::class);
+    }
+
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class);
+    }
+
+    public function tipo_movimiento()
+    {
+        return $this->belongsTo(TipoMovimiento::class);
+    }
+
+    public function frecuencia_movimiento()
+    {
+        return $this->belongsTo(FrecuenciaMovimiento::class);
+    }
+}

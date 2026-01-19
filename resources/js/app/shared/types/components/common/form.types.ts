@@ -24,5 +24,7 @@ export type InputFillableProps = {
     className? : string
     disabled? : boolean
     required? : boolean
+    min? : number | string
+    max? : number | string
 }
 export type TextAreaProps=Omit<InputFillableProps,'type'>

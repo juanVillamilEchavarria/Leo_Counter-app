@@ -1,6 +1,16 @@
-import { type MovimientoFIjoTableData } from "./types/movimientoFijo.types";
 import MovimientoFijoTable from "./components/MovimientoFijoTable";
+import MovimientoFijoForm from "./components/MovimientoFijoForm";
+import useMovimientoFijo from "./hooks/useMovimientoFijo";
+import useMovimientoFijoForm from "./hooks/useMovimientoFijoForm";
+import { filterCategoriasByTipoMovimiento } from "./helpers/optionFilter.helper";
+import { type MovimientoFijo, MovimientoFijoActions, MovimientoFijoRoutes } from "./types/movimientoFijo.types";
 export{
-    type MovimientoFIjoTableData,
-    MovimientoFijoTable
+    type MovimientoFijo,
+    MovimientoFijoActions,
+    MovimientoFijoRoutes,
+    MovimientoFijoTable,
+    MovimientoFijoForm,
+    useMovimientoFijo,
+    useMovimientoFijoForm,
+    filterCategoriasByTipoMovimiento
 }

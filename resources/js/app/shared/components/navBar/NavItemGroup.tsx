@@ -47,18 +47,10 @@ export default function NavItemGroup({
                     </TransitionMotion>
                 </button>
             </div> 
-            {/* aca se muestran los children, el div por default esta oculto, no use transitionMotion porque me parece que se ve mejor asi */}
+            {/* aca se muestran los children */}
               
-            <div
-                className={`
-                    ml-3
-                    overflow-hidden
-                    transition-all
-                    duration-300
-                    ease-in-out
-                    ${isOpenChild ? 'h-full  opacity-100' : 'max-h-0 opacity-0'}
-                `}
-                >
+           
+             <TransitionMotion transition={{duration:0.15}} initial={{y: -30, opacity: 0}} exit={{x:0, y:-30, opacity:0}} active={isOpenChild} >
                     {/* devuelve una lista de items */}
                 <ul className="flex flex-col">
                     {childrenNav.map(item => (
@@ -69,7 +61,8 @@ export default function NavItemGroup({
                     />
                     ))}
                 </ul>
-            </div>
+            </TransitionMotion>
+            
              
             
         </li>

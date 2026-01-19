@@ -20,7 +20,7 @@ export default function CategoriaTable({
                }
            })
          }, []) 
-    const {form, handleSubmit, submit}= useCategoria({method:'delete', id:categoriaSelected?.id})
+    const {form, handleSubmit}= useCategoria({method:'delete', id:categoriaSelected?.id})
   const handleDelete = (e: React.FormEvent<HTMLFormElement>)=>{
       if(!categoriaSelected) return
       handleSubmit(e)

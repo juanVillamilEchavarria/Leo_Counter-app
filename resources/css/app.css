@@ -45,7 +45,7 @@
     @apply table p-3 h-full w-full 
   }
   .table-thead{
-    @apply bg-azul-oscuro text-white/80 text-left rounded-2xl
+    @apply bg-azul-oscuro/80 text-white/80 text-left rounded-2xl
   }
   .table-tbody{
     @apply text-left
@@ -117,7 +117,7 @@
 }
 
 .section{
-  @apply mx-auto mt-10 lg:w-[90%] w-[95%] h-full 
+  @apply mx-auto mt-10 lg:w-[95%] w-[95%] h-full 
 }
 
 }

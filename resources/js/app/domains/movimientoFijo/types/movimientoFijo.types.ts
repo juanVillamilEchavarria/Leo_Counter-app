@@ -1,14 +1,51 @@
-export type MovimientoFIjoTableData ={
+import { type FormCommonProps } from "@/app/shared/types/components"
+import { type TipoMovimiento } from "../../tipoMovimiento"
+import { type Categoria } from "../../categoria"
+import { type FrecuenciaMovimiento } from "../../frecuenciaMovimiento"
+import { type Cuenta } from "../../cuenta"
+import { useRoute } from "ziggy-js"
+const route= useRoute()
+
+export type MovimientoFijo={
     id : number,
-    user : string,
-    cuenta : string,
-    tipo : string,
-    categoria: string,
+    nombre: string,
+    cuenta_id : number,
+    tipo_movimiento_id : number,
+    categoria_id: number,
     monto: number,
-    fecha : string | Date,
-    frecuencia: string,
+    fecha_proximo : string,
+    frecuencia_movimiento_id: string,
     descripcion: string,
     active: boolean,
+    url_pago: string,
     registrar_automatico: boolean
 
 }
+export const MovimientoFijoActions = {
+    post : route('movimientosFijos.store'),
+    put : (id: number) => route('movimientosFijos.update', {id}),
+    delete : (id: number) => route('movimientosFijos.destroy', {movimientoFijo:id}),
+    patch : (id: number) => route('movimientosFijos.update', {id}),
+    toggleActive : (id: number) => route('movimientosFijos.toggle-active', {movimientoFijo:id}),
+    toggleRegistrarAutomaticamente : (id: number) => route('movimientosFijos.toggle-registrar-automaticamente', {movimientoFijo:id})
+}as const
+
+export const MovimientoFijoRoutes = {
+    index : () => route('movimientosFijos.index'),
+    create : () => route('movimientosFijos.create'),
+    show : (id: number) => route('movimientosFijos.show', {id}),
+    edit : (id: number) => route('movimientosFijos.edit', {id})
+}
+
+export type MovimientoFijoFormData = Omit<MovimientoFijo,'id' | 'active' | 'registrar_automatico'>
+
+export type MovimientoFijoFormOptions = { // declaramos las opciones seleccionables del formulario
+    tipos_movimientos: TipoMovimiento[],
+    categorias: Categoria[],
+    frecuencias_movimientos: FrecuenciaMovimiento[],
+    cuentas: Cuenta[]
+}
+export type MovimientoFijoFormProps = // declaramos las propiedades del formulario
+    FormCommonProps<MovimientoFijoFormData> & {
+    options: MovimientoFijoFormOptions
+    }

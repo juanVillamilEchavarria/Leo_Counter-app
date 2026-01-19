@@ -18,9 +18,14 @@ class GetCategoriaAction
     public function getRecordsCount() : int{
         return Categoria::count();
     }
+
+    public function getAllWithFullDetails() : Collection
+    {
+        return Categoria::with('tipoMovimiento')->get();
+    }
     public function getAllWithDetails() : AnonymousResourceCollection
     {
-        $categoria= Categoria::with('tipoMovimiento')->get();
+        $categoria = $this->getAllWithFullDetails();
         return CategoriaResource::collection($categoria);
     }
 }
