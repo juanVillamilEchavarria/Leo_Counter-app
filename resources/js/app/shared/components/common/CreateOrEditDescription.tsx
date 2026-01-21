@@ -1,4 +1,5 @@
 import Title from "./Title"
+import TransitionMotion from '../transitions/TransitionMotion'
 export default function CreateOrEditDescription({
     type,
     model
@@ -7,6 +8,13 @@ export default function CreateOrEditDescription({
     model: string
 }) {
   return (
+    <TransitionMotion 
+    initial={{x:-20, y:0, opacity:.5}}  
+    transition={{
+        duration: 0.35,
+        ease: [0.22, 1, 0.36, 1], 
+    }}  
+    active={true} >
     <Title 
     size="2xl"
     className="text-center"
@@ -31,5 +39,6 @@ export default function CreateOrEditDescription({
             </>
         )
     } />
+    </TransitionMotion>
   )
 }

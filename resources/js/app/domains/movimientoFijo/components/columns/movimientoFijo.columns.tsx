@@ -2,11 +2,11 @@ import ModelToggle from "@/app/shared/components/table/actions/ModelToggle"
 import EditAndDeleteActions from "@/app/shared/components/table/actions/EditAndDeleteActions"
 import { MovimientoFijoActions, MovimientoFijoRoutes } from "../../types/movimientoFijo.types"
 import { dateFormat } from "@/app/shared/helpers"
-import { type MovimientoFijo } from "../../types/movimientoFijo.types"
+import { type MovimientoFijoTableData } from "../../types/movimientoFijo.types"
 export const MovimientoFijoColumns = (({
     onDelete
 }:{
-    onDelete: (movimientoFijo: MovimientoFijo)=>void
+    onDelete: (movimientoFijo: MovimientoFijoTableData)=>void
 }) => {
     return [
            { key: "id", label: "ID" },
@@ -15,13 +15,13 @@ export const MovimientoFijoColumns = (({
            { key: "tipo_movimiento", label: "Tipo" },
            { key: "categoria", label: "Categoria" },
            { key: "monto", label: "Monto" },
-           { key: "fecha_proximo", label: "Fecha Del Proximo Pago", render: (row: MovimientoFijo)=>(dateFormat(row.fecha_proximo)) },
+           { key: "fecha_proximo", label: "Fecha Del Proximo Pago", render: (row: MovimientoFijoTableData)=>(dateFormat(row.fecha_proximo)) },
            { key: "frecuencia_movimiento", label: "Frecuencia" },
            { key: "descripcion", label: "Descripcion", className: 'w-30' },
            {
              key: 'active',
              label: 'Activo',
-             render: (row : MovimientoFijo)=>(
+             render: (row : MovimientoFijoTableData)=>(
                <ModelToggle 
                active={row.active}
                route={MovimientoFijoActions.toggleActive(row.id)}
@@ -31,7 +31,7 @@ export const MovimientoFijoColumns = (({
             {
              key: 'registrar_automatico',
              label: 'Registro Automatico',
-             render: (row : MovimientoFijo)=>(
+             render: (row : MovimientoFijoTableData)=>(
                 <ModelToggle 
                 active={row.registrar_automatico}
                 route={MovimientoFijoActions.toggleRegistrarAutomaticamente(row.id)}
@@ -46,7 +46,7 @@ export const MovimientoFijoColumns = (({
            {
              key: 'actions',
              label: '',
-             render: (row : MovimientoFijo)=>(
+             render: (row : MovimientoFijoTableData)=>(
                <EditAndDeleteActions
                     editHref={MovimientoFijoRoutes.edit(row.id)}
                     deleteOnClick={()=> onDelete(row)}

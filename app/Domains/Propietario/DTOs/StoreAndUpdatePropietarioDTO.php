@@ -2,7 +2,9 @@
 
 namespace App\Domains\Propietario\DTOs;
 
-class StoreAndUpdatePropietarioDTO
+use App\Shared\DTOs\DTO;
+
+class StoreAndUpdatePropietarioDTO extends DTO
 {
     public function __construct(
         public string $nombre,
@@ -11,13 +13,4 @@ class StoreAndUpdatePropietarioDTO
         public string $email,
     ){}
 
-    public function toArray(): array
-    {
-        return [
-            'nombre' => $this->nombre,
-            'apellido' => $this->apellido,
-            'telefono' => $this->telefono,
-            'email' => $this->email,
-        ];
-    }
 }

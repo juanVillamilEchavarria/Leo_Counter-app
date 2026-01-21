@@ -8,6 +8,7 @@ export type TransitionSection={
 }
 export type TransitionDuration={
     duration: number
+    ease?: [number, number, number, number]
 }
 export type TransitionMotionProps={
     active: boolean | string,

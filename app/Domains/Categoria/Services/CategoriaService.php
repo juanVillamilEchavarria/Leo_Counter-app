@@ -24,20 +24,12 @@ class CategoriaService{
     }
 
     public function store(array $data): Categoria{
-        $dto = new StoreAndUpdateCategoriaDTO(
-            nombre: $data['nombre'],
-            tipo_movimiento_id: $data['tipo_movimiento_id'],
-            descripcion: $data['descripcion']
-        );
+        $dto = StoreAndUpdateCategoriaDTO::fromArray($data);
         return $this->storeCategoriaAction->store($dto);
     }
 
     public function update(Categoria $categoria, array $data): bool{
-        $dto = new StoreAndUpdateCategoriaDTO(
-            nombre: $data['nombre'],
-            tipo_movimiento_id: $data['tipo_movimiento_id'],
-            descripcion: $data['descripcion']
-        );
+        $dto = StoreAndUpdateCategoriaDTO::fromArray($data);
         return $this->updateCategoriaAction->update($categoria, $dto);
     }
 

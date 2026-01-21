@@ -40,24 +40,12 @@ class CuentaService{
     }
 
     public function store(array $data): Cuenta{
-         $dto = new StoreCuentaDTO(
-            propietario_id: $data['propietario_id'],
-            tipo_cuenta_id: $data['tipo_cuenta_id'],
-            nombre: $data['nombre'],
-            saldo_inicial: $data['saldo_inicial'],
-            notas: $data['notas']
-         );
+         $dto = StoreCuentaDTO::fromArray($data);
         return $this->storeCuentaAction->store($dto);
     }
 
     public function update(Cuenta $cuenta, array $data): bool{
-        $dto = new UpdateCuentaDTO(
-            propietario_id: $data['propietario_id'],
-            tipo_cuenta_id: $data['tipo_cuenta_id'],
-            nombre: $data['nombre'],
-            saldo_inicial: $data['saldo_inicial'],
-            notas: $data['notas']
-        );
+        $dto = UpdateCuentaDTO::fromArray($data);
         return $this->updateCuentaAction->update($cuenta, $dto);
     }
 

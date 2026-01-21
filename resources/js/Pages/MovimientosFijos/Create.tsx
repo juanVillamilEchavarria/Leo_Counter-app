@@ -3,10 +3,11 @@ import CreateOrEditFormSection from "@/app/shared/components/common/CreateOrEdit
 import {MovimientoFijoForm} from "@/app/domains/movimientoFijo";
 import { MovimientoFijoRoutes } from "@/app/domains/movimientoFijo";
 import{ useMovimientoFijo }from "@/app/domains/movimientoFijo";
+import { type MovimientoFijoFormOptions } from "@/app/domains/movimientoFijo";
 export default function Create({
     options
 }:{
-    options: any
+    options: MovimientoFijoFormOptions
 }) {
 
     const {form, handleSubmit}= useMovimientoFijo({})

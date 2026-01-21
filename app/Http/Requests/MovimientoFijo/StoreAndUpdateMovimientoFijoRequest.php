@@ -28,7 +28,7 @@ class StoreAndUpdateMovimientoFijoRequest extends FormRequest
             'cuenta_id'=> 'required|integer|exists:cuentas,id',
             'monto'=> 'required|numeric|min:0',
             'fecha_proximo'=> 'required|date',
-            'frecuencia_movimiento_id'=> 'required|string|exists:frecuencia_movimientos,id',
+            'frecuencia_movimiento_id'=> 'required|numeric|exists:frecuencia_movimientos,id',
             'descripcion'=> 'nullable|string|max:1000',
             'url_pago'=> 'nullable|url|max:255',
         ];

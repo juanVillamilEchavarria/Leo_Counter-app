@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\MovimientoFijo;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Domains\MovimientoFijo\Services\MovimientoFijoService;
 
@@ -17,13 +16,18 @@ class MovimientoFijoController extends Controller
         protected MovimientoFijoService $movimientoFijoService
     ) {
     }
+
+    private function NoRegistros(){
+        $this->movimientoFijoService->getRecordsCount();
+        
+    }
     public function index()
     {
         $movimientos= $this->movimientoFijoService->getAll();
 
         return Inertia::render('MovimientosFijos/Index', [
             'title' => 'Movimientos Fijos',
-            'NoRegistros'=> 10,
+            'NoRegistros'=> $this->NoRegistros(),
             'movimientos' => $movimientos
         ]);
     }
@@ -35,7 +39,7 @@ class MovimientoFijoController extends Controller
     {
         return Inertia::render('MovimientosFijos/Create', [
             'title' => 'Crear Movimiento Fijo',
-            'NoRegistros'=> 10,
+            'NoRegistros'=> $this->NoRegistros(),
             'options' => $this->movimientoFijoService->getOptions()
         ]);
     }
@@ -61,25 +65,34 @@ class MovimientoFijoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(MovimientoFijo $movimientoFijo)
     {
-        dd('edit');
+        return Inertia::render('MovimientosFijos/Edit', [
+            'title' => 'Editar Movimiento Fijo',
+            'NoRegistros'=> $this->NoRegistros(),
+            'data' => $movimientoFijo,
+            'options' => $this->movimientoFijoService->getOptions()
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreAndUpdateMovimientoFijoRequest $request, MovimientoFijo $movimientoFijo)
     {
-        //
+        $this->movimientoFijoService->update($movimientoFijo, $request->validated());
+        Inertia::flash('success','Movimiento Fijo actualizado con exito');
+        return redirect()->route('movimientosFijos.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(MovimientoFijo $movimientoFijo)
     {
-        dd('desde destroy');
+        $this->movimientoFijoService->destroy($movimientoFijo);
+        Inertia::flash('success','Movimiento Fijo eliminado con exito');
+        return redirect()->route('movimientosFijos.index');
     }
 
     public function toggleActive(MovimientoFijo $movimientoFijo)

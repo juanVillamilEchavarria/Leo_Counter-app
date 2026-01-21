@@ -1,12 +1,10 @@
 import SectionDescription from "@/app/shared/components/common/SectionDescription"
-import Modal from "@/app/shared/components/modal/Modal"
 import CuentaTable from "@/app/domains/cuenta/components/CuentaTable"
 import { Link } from "@inertiajs/react"
 import CreateButtonSection from "@/app/shared/components/common/CreateButtonSection"
 import CrudButton from "@/app/shared/components/common/CrudButton"
 import { CuentaRoutes } from "@/app/domains/cuenta"
 import {  type Cuenta } from "@/app/domains/cuenta"
-import Button from "@/app/shared/components/common/Button"
 export default function Index({
   cuentas
 }:{

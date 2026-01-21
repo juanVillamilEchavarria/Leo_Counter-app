@@ -4,7 +4,8 @@ namespace App\Domains\MovimientoFijo\DTOs;
 
 use App\Shared\DTOs\DTO;
 
-class StoreMovimientoFijoDTO extends DTO{
+class UpdateMovimientoFijoDTO extends DTO{
+    
     public function __construct(
         public ?int $cuenta_id,
         public ?int $categoria_id,
@@ -19,11 +20,4 @@ class StoreMovimientoFijoDTO extends DTO{
     {
     }
 
-    public function toArray(): array
-    {
-        return array_merge(parent::toArray(), [
-            'active'=> true,
-            'registrar_automatico'=> false
-        ]);
-    }
 }

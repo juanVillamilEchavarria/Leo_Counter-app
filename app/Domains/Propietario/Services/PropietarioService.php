@@ -18,23 +18,13 @@ class PropietarioService{
     ){}
 
     public function store (array $data): Propietario{
-        $dto = new StoreAndUpdatePropietarioDTO(
-            nombre: $data['nombre'],
-            apellido: $data['apellido'],
-            telefono: $data['telefono'],
-            email: $data['email'],
-        );
+        $dto = StoreAndUpdatePropietarioDTO::fromArray($data);
         return $this->storePropietarioAction->store($dto);
 
     }
 
     public function update(Propietario $propietario, array $data ): bool{
-        $dto = new StoreAndUpdatePropietarioDTO(
-            nombre: $data['nombre'],
-            apellido: $data['apellido'],
-            telefono: $data['telefono'],
-            email: $data['email'],
-        );
+        $dto = StoreAndUpdatePropietarioDTO::fromArray($data);
         return $this->updatePropietarioAction->update($propietario, $dto);
         
     }

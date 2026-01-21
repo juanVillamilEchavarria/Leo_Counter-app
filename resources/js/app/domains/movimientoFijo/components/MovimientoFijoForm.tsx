@@ -20,8 +20,7 @@ export default function MovimientoFijoForm({
     setTipoMovimientoId,
     categoriasFiltered,
     today
-   } = useMovimientoFijoForm({options})
-    console.log(errors)
+   } = useMovimientoFijoForm({options, data})
   return (
     <Card>
     <form onSubmit={submit} className="formulario-general">
@@ -177,6 +176,10 @@ export default function MovimientoFijoForm({
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('url_pago', e.target.value)}  
                     className={`border-2 p-3 border-gray-300 text-gray-800 ${errors.url_pago && 'border-red-500! text-red-500!'} `}
                 ></InputFillable>
+
+                <TransitionMotion active={errors?.url_pago}>
+                    <AlertMessage message={errors?.url_pago} />
+                </TransitionMotion>
             </div>
         </TransitionMotion>
         <div className="formulario-campo">

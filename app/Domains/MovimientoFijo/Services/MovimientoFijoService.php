@@ -2,15 +2,20 @@
 
 namespace App\Domains\MovimientoFijo\Services;
 
+// Models
 use App\Models\MovimientoFijo\MovimientoFijo;
+//Actions
 use App\Domains\MovimientoFijo\Actions\GetMovimientoFijoAction;
 use App\Domains\MovimientoFijo\Actions\StoreMovimientoFijoAction;
 use App\Domains\MovimientoFijo\Actions\UpdateMovimientoFijoAction;
+use App\Domains\MovimientoFijo\Actions\DestroyMovimientoFijoAction;
 use App\Domains\Cuenta\Actions\GetCuentaAction;
 use App\Domains\Categoria\Actions\GetCategoriaAction;
 use App\Domains\TipoMovimiento\Actions\GetTipoMovimientoAction;
 use App\Domains\FrecuenciaMovimiento\Actions\GetFrecuenciaMovimientoAction;
+//DTOs
 use App\Domains\MovimientoFijo\DTOs\MovimientoFijoFormOptionsDTO;
+use App\Domains\MovimientoFijo\DTOs\UpdateMovimientoFijoDTO;
 use App\Domains\MovimientoFijo\DTOs\StoreMovimientoFijoDTO;
 
 class MovimientoFijoService
@@ -19,6 +24,7 @@ class MovimientoFijoService
         private GetMovimientoFijoAction $getMovimientoFijoAction,
         private StoreMovimientoFijoAction $storeMovimientoFijoAction,
         private UpdateMovimientoFijoAction $updateMovimientoFijoAction,
+        private DestroyMovimientoFijoAction $destroyMovimientoFijoAction,
         private GetCategoriaAction $getCategoriaAction,
         private GetTipoMovimientoAction $getTipoMovimientoAction,
         private GetFrecuenciaMovimientoAction $getFrecuenciaMovimientoAction,
@@ -29,19 +35,17 @@ class MovimientoFijoService
 
     public function store (array $data){
 
-        $dto = new StoreMovimientoFijoDTO(
-            cuenta_id: $data['cuenta_id'],
-            categoria_id: $data['categoria_id'],
-            tipo_movimiento_id: $data['tipo_movimiento_id'],
-            frecuencia_movimiento_id: $data['frecuencia_movimiento_id'],
-            nombre: $data['nombre'],
-            descripcion: $data['descripcion'],
-            monto: $data['monto'],
-            fecha_proximo: $data['fecha_proximo'],
-            url_pago: $data['url_pago'] ?? '',
-        );
+        $dto = StoreMovimientoFijoDTO::fromArray($data);
         return $this->storeMovimientoFijoAction->store($dto);
         
+    }
+    public function update(MovimientoFijo $movimientoFijo, array $data){
+        $dto = UpdateMovimientoFijoDTO::fromArray($data);
+        $this->updateMovimientoFijoAction->update($movimientoFijo, $dto);
+    }
+
+    public function destroy(MovimientoFijo $movimientoFijo){
+        $this->destroyMovimientoFijoAction->destroy($movimientoFijo);
     }
 
     public function toggleActive(MovimientoFijo $movimientoFijo): bool{
@@ -63,5 +67,9 @@ class MovimientoFijoService
             $this->getCuentaAction->allAvailable()->get()
         );
 
+   }
+
+   public function getRecordsCount(){
+        return $this->getMovimientoFijoAction->getRecordsCount();
    }
 }

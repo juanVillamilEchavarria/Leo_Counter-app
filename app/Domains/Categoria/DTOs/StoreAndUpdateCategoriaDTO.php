@@ -2,20 +2,13 @@
 
 namespace App\Domains\Categoria\DTOs;
 
-class StoreAndUpdateCategoriaDTO
+use App\Shared\DTOs\DTO;
+
+class StoreAndUpdateCategoriaDTO extends DTO
 {
     public function __construct(
         public string $nombre,
         public int $tipo_movimiento_id,
-        public ?string $descripcion
+        public ?string $descripcion = null
     ){}
-
-    public function toArray(): array
-    {
-        return [
-            'nombre' => $this->nombre,
-            'tipo_movimiento_id' => $this->tipo_movimiento_id,
-            'descripcion' => $this->descripcion,
-        ];
-    }
 }

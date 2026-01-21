@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from './Button'
+import TransitionMotion from '../transitions/TransitionMotion'
 import { Link } from '@inertiajs/react'
 
 export default function CreateOrEditFormSection({
@@ -19,7 +20,15 @@ export default function CreateOrEditFormSection({
             >
           <i className="fa-solid fa-arrow-left"></i>
          </Button>
-                {children}
+         <TransitionMotion   active
+            initial={{ y: -12, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{
+              duration: 0.35,
+              ease: [0.22, 1, 0.36, 1], 
+            }} >        
+                  {children}
+          </TransitionMotion>
         </div>
   )
 }

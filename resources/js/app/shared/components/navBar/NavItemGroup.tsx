@@ -52,7 +52,7 @@ export default function NavItemGroup({
            
              <TransitionMotion transition={{duration:0.15}} initial={{y: -30, opacity: 0}} exit={{x:0, y:-30, opacity:0}} active={isOpenChild} >
                     {/* devuelve una lista de items */}
-                <ul className="flex flex-col">
+                <ul className="flex flex-col ml-4">
                     {childrenNav.map(item => (
                     <NavItem
                         {...item}

@@ -21,6 +21,12 @@ export type MovimientoFijo={
     registrar_automatico: boolean
 
 }
+export type MovimientoFijoTableData = Omit<MovimientoFijo,'tipo_movimiento_id' | 'categoria_id' | 'frecuencia_movimiento_id'>&{
+    tipo_movimiento: string,
+    categoria: string,
+    frecuencia_movimiento: string,
+    movimientos?: boolean
+}
 export const MovimientoFijoActions = {
     post : route('movimientosFijos.store'),
     put : (id: number) => route('movimientosFijos.update', {id}),

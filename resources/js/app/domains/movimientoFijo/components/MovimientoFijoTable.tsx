@@ -3,19 +3,19 @@ import DeleteModal from "@/app/shared/components/modal/DeleteModal"
 import useMovimientoFijo from "../hooks/useMovimientoFijo"
 import { MovimientoFijoColumns } from "./columns/movimientoFijo.columns"
 import { useMemo, useState } from "react"
-import { type MovimientoFijo } from "../types/movimientoFijo.types"
+import { type MovimientoFijo, type MovimientoFijoTableData } from "../types/movimientoFijo.types"
 
 
 export default function MovimientoFijoTable({
   data
 }:{
-  data: MovimientoFijo[]
+  data: MovimientoFijoTableData[]
 }) {
 
-    const [movimientoFijoSelected, setMovimientoFijoSelected]= useState<MovimientoFijo | null>(null)
+    const [movimientoFijoSelected, setMovimientoFijoSelected]= useState<MovimientoFijoTableData | null>(null)
     const columns = useMemo(()=>{
        return MovimientoFijoColumns({
-            onDelete: (movimientoFijo: MovimientoFijo)=>{
+            onDelete: (movimientoFijo: MovimientoFijoTableData)=>{
                 setMovimientoFijoSelected(movimientoFijo)
             }
        })

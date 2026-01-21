@@ -4,12 +4,12 @@ import CrudButton from "@/app/shared/components/common/CrudButton"
 import { MovimientoFijoTable } from "@/app/domains/movimientoFijo"
 import { Link } from "@inertiajs/react"
 import { MovimientoFijoRoutes } from "@/app/domains/movimientoFijo"
-import { type MovimientoFijo } from "@/app/domains/movimientoFijo"
+import { type MovimientoFijoTableData } from "@/app/domains/movimientoFijo"
 
 export default function Index({
   movimientos
 }:{
-  movimientos: {data: MovimientoFijo[]}
+  movimientos: {data: MovimientoFijoTableData[]}
 }) {
   return (
     <div className="section">
