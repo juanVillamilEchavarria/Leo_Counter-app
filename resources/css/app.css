@@ -76,6 +76,9 @@
   .formulario-campo label{
     @apply font-bold
   }
+  .formulario-seccion{
+    @apply flex w-full gap-4
+  }
   .select{
     @apply w-full border-2 border-gray-300 rounded-xl p-3
   }

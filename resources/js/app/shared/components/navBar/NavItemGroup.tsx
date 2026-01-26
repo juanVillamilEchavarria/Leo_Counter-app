@@ -3,14 +3,16 @@ import Title from "../common/Title"
 import NavItem from "./NavItem"
 import useOpen from "../../hooks/open/useOpen"
 import { useEffect } from "react"
+import { isRouteActive } from "../../helpers"
 import { type NavItemProps } from "../../types/components"
 export default function NavItemGroup({
     icon = '',
     title = '',
     ItemStyles = '',
     ItemHoverStyles = '',
+    CurrentStyles,
     TransitionStyle= '',
-    CurrentStyles='',
+    routeName,
     childrenNav = [],
     isOpen = false,
 }: NavItemProps) {
@@ -24,7 +26,7 @@ export default function NavItemGroup({
                 {/* ya no es un link sino un button que despliega los children */}
                <button 
                 className={`
-                flex items-center gap-3 cursor-pointer w-full ${ItemStyles} ${ItemHoverStyles} `}
+                flex items-center gap-3 cursor-pointer w-full ${ItemStyles} ${ItemHoverStyles} ${isRouteActive(routeName) ? CurrentStyles : ''} `}
                 // aca se hace el toggle
                 onClick={() => setIsOpenChild(prev => !prev)}
                 // si el sideBar esta cerrado se deshabilita

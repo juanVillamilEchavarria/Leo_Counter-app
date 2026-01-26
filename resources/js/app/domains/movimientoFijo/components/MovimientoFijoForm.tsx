@@ -4,8 +4,8 @@ import TextArea from "@/app/shared/components/form/TextArea"
 import TransitionMotion from "@/app/shared/components/transitions/TransitionMotion"
 import AlertMessage from "@/app/shared/components/common/AlertMessage"
 import Button from "@/app/shared/components/common/Button"
+import SelectModel from "@/app/shared/components/form/SelectModel"
 import useMovimientoFijoForm from "../hooks/useMovimientoFijoForm"
-import { filterCategoriasByTipoMovimiento } from "../helpers/optionFilter.helper"
 import { type MovimientoFijoFormProps } from "../types/movimientoFijo.types"
 export default function MovimientoFijoForm({
     data,
@@ -46,7 +46,7 @@ export default function MovimientoFijoForm({
         <div className="flex w-full gap-4">
             <div className="formulario-campo w-full">
                 <label htmlFor="tipo_movimiento_id">Tipo de movimiento</label>
-                <select
+                {/* <select
                     name="tipo_movimiento_id"
                     id="tipo_movimiento_id"
                     value={tipoMovimientoId}
@@ -62,14 +62,27 @@ export default function MovimientoFijoForm({
                                 <option key={tipo.id} value={tipo.id}>{tipo.tipo_movimiento}</option>
                             ))
                         }
-                     </select>
+                     </select> */}
+                    <SelectModel 
+                    name="tipo_movimiento_id"
+                    id="tipo_movimiento_id"
+                    iterable={options.tipos_movimientos}
+                    iterableOutput="tipo_movimiento"
+                    onChange={(e) => {
+                        setTipoMovimientoId(Number(e.target.value));
+                        setData('tipo_movimiento_id', Number(e.target.value));
+                    }}
+                    value={tipoMovimientoId}
+                    className={`${errors.tipo_movimiento_id && 'border-red-500! text-red-500!'}`}
+                    placeholder="Seleccione un tipo de movimiento"
+                    />
                         <TransitionMotion active={errors?.tipo_movimiento_id}>
                             <AlertMessage message={errors?.tipo_movimiento_id} />
                         </TransitionMotion>
             </div>
             <div className="formulario-campo w-full">
                 <label htmlFor="categoria_id">Categoría</label>
-                <select
+                {/* <select
                     name="categoria_id"
                     id="categoria_id"
                     value={data?.categoria_id}
@@ -82,7 +95,16 @@ export default function MovimientoFijoForm({
                             <option key={categoria.id} value={categoria.id}>{categoria.nombre}</option>
                         ))
                     }
-                </select>
+                </select> */}
+                <SelectModel 
+                    name="categoria_id"
+                    id="categoria_id"
+                    iterable={categoriasFiltered}
+                    onChange={(e) => setData('categoria_id', Number(e.target.value))}
+                    value={data?.categoria_id}
+                    className={`${errors.categoria_id && 'border-red-500! text-red-500!'}`}
+                    placeholder="Seleccione una categoría"
+                    />
                 <TransitionMotion active={errors?.categoria_id}>
                     <AlertMessage message={errors?.categoria_id} />
                 </TransitionMotion>
@@ -91,7 +113,7 @@ export default function MovimientoFijoForm({
         <div className="flex w-full gap-4">
             <div className="formulario-campo w-full">
                 <label htmlFor="cuenta_id">Cuenta</label>
-                <select
+                {/* <select
                     name="cuenta_id"
                     id="cuenta_id"
                     value={data?.cuenta_id}
@@ -104,14 +126,23 @@ export default function MovimientoFijoForm({
                             <option key={cuenta.id} value={cuenta.id}>{cuenta.nombre}</option>
                         ))
                     }
-                </select>
+                </select> */}
+                <SelectModel 
+                    name="cuenta_id"
+                    id="cuenta_id"
+                    iterable={options.cuentas}
+                    onChange={(e) => setData('cuenta_id', Number(e.target.value))}
+                    value={data?.cuenta_id}
+                    className={`${errors.cuenta_id && 'border-red-500! text-red-500!'}`}
+                    placeholder="Seleccione una cuenta"
+                    />
                 <TransitionMotion active={errors?.cuenta_id}>
                     <AlertMessage message={errors?.cuenta_id} />
                 </TransitionMotion>
             </div>
             <div className="formulario-campo w-full">
                 <label htmlFor="frecuencia_id">Frecuencia</label>
-                <select
+                {/* <select
                     name="frecuencia_movimiento_id"
                     id="frecuencia_movimiento_id"
                     value={data?.frecuencia_movimiento_id}
@@ -124,7 +155,17 @@ export default function MovimientoFijoForm({
                             <option key={frecuencia.id} value={frecuencia.id}>{frecuencia.frecuencia_movimiento}</option>
                         ))
                     }
-                </select>
+                </select> */}
+                <SelectModel 
+                    name="frecuencia_movimiento_id"
+                    id="frecuencia_movimiento_id"
+                    iterable={options.frecuencias_movimientos}
+                    iterableOutput="frecuencia_movimiento"
+                    onChange={(e) => setData('frecuencia_movimiento_id', e.target.value)}
+                    value={data?.frecuencia_movimiento_id}
+                    className={`${errors.frecuencia_movimiento_id && 'border-red-500! text-red-500!'}`}
+                    placeholder="Seleccione una frecuencia"
+                    />
                 <TransitionMotion active={errors?.frecuencia_movimiento_id}>
                     <AlertMessage message={errors?.frecuencia_movimiento_id} />
                 </TransitionMotion>
@@ -199,14 +240,14 @@ export default function MovimientoFijoForm({
         </div>
          
           <div className="w-1/6 my-5 mx-auto">
-                     <Button
-                     variant="secondary"
-                         type="submit"
-                         disabled={processing}
-                     >
-                         Guardar
-                     </Button>
-                 </div>
+            <Button
+            variant="secondary"
+                type="submit"
+                disabled={processing}
+            >
+                Guardar
+            </Button>
+        </div>
         </form>
     </Card>
   )

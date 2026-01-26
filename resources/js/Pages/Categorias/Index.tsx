@@ -1,6 +1,7 @@
 import SectionDescription from "@/app/shared/components/common/SectionDescription"
 import CreateButtonSection from "@/app/shared/components/common/CreateButtonSection"
 import CrudButton from "@/app/shared/components/common/CrudButton"
+import SectionTransition from "@/app/shared/components/common/SectionTransition"
 import { CategoriaTable } from "@/app/domains/categoria"
 import { Link } from "@inertiajs/react"
 import { type Categoria, CategoriaRoutes } from "@/app/domains/categoria"
@@ -11,7 +12,7 @@ export default function Index({
 }) {
   console.log(categorias)
   return (
-    <div className="section">
+    <SectionTransition>
         <SectionDescription title="Categorias" paragraph="Gestiona Tus Categorias" />
         <CreateButtonSection>
           <CrudButton
@@ -23,6 +24,6 @@ export default function Index({
           </CrudButton>
         </CreateButtonSection>
         <CategoriaTable data={categorias.data} />
-    </div>
+    </SectionTransition>
   )
 }

@@ -26,7 +26,7 @@ export type NavItemConfig={
     key: string,
     icon: string,
     title: string,
-    routeName?: string,
+    routeName?: string |string[],
     href?: string,
     roles?: string[],
     childrenNav?: NavItemConfig[]
@@ -86,7 +86,10 @@ export const NavItems: NavItemConfig[] = [
             key: 'presupuestos',
             title: 'Presupuestos',
             icon: 'fa-solid fa-piggy-bank fa-lg',
-            routeName: 'presupuestos.index',
+            routeName: [
+                'presupuestosHistoricos.*',
+                'presupuestosMesActual.*'
+            ],
             childrenNav: [
                 {
                     key: 'presupuestosHistoricos',
@@ -130,7 +133,7 @@ export const NavItems: NavItemConfig[] = [
 
 export type NavItemProps={
     icon : string,
-    routeName ?: string
+    routeName ?: string | string[] 
     isOpen : boolean
     CurrentStyles ?: string
     ItemStyles ?: string

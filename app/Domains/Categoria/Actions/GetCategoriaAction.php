@@ -14,6 +14,9 @@ class GetCategoriaAction
         return Categoria::all();
     }
 
+    public function getAllByType(int $tipo_movimiento_id) : Collection {
+        return Categoria::where('tipo_movimiento_id', $tipo_movimiento_id)->get();
+    }
 
     public function getRecordsCount() : int{
         return Categoria::count();

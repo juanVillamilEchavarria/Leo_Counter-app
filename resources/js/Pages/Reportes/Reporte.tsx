@@ -1,8 +1,9 @@
 import SectionDescription from "@/app/shared/components/common/SectionDescription"
+import SectionTransition from "@/app/shared/components/common/SectionTransition"
 export default function Reporte() {
   return (
-    <div className="section">
+    <SectionTransition>
         <SectionDescription title="Reporte" paragraph="Genera Tus Reportes" />
-    </div>
+    </SectionTransition>
   )
 }

@@ -46,7 +46,7 @@ export default function MovimientoFijoTable({
             onSubmit={handleDelete}
 
         >
-          <small>Los Movimientos fijos eliminados no se pueden recuperar, solo los movimientos fijos sin movimientos asociados pueden ser eliminados, si tiene movimientos, mejor marcalo como inactivo</small>
+          <small>Los Movimientos fijos eliminados no se pueden recuperar, solo los movimientos fijos sin movimientos asociados pueden ser eliminados, si no lo usaras mas, mejor marcalo como inactivo</small>
           </DeleteModal >
     </>
   )

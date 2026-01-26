@@ -1,6 +1,6 @@
 import { TextSize, type TitleProps} from './common/text.types';
 import { type ButtonProps, ButtonVariants } from './common/button.types';
-import { type InputFillableProps,type TextAreaProps ,type FormCommonProps, FormMethods } from './common/form.types';
+import { type InputFillableProps,type TextAreaProps ,type FormCommonProps, type SelectModelProps, FormMethods } from './common/form.types';
 import { type CardProps, CardVariants } from './common/card.types';
 import { type AlertMessageProps, AlertMessagesTypes } from './common/alert.types';
 import { type TransitionDuration, type TransitionMotionProps, type TransitionSection } from './common/transition.types';
@@ -30,6 +30,7 @@ export {
     type TablePaginationController,
     type TablePaginationProps,
     type FormCommonProps,
+    type SelectModelProps,
     type TextAreaProps,
     type ModelToggleProps,
     type ModalProps,

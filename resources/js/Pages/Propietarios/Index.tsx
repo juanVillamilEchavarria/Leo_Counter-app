@@ -2,6 +2,7 @@ import SectionDescription from "@/app/shared/components/common/SectionDescriptio
 import CreateButtonSection from "@/app/shared/components/common/CreateButtonSection"
 import { PropietarioTable } from "@/app/domains/propietario"
 import CrudButton from "@/app/shared/components/common/CrudButton"
+import SectionTransition from "@/app/shared/components/common/SectionTransition"
 import { Link } from "@inertiajs/react"
 import { PropietarioRoutes } from "@/app/domains/propietario"
 import { type Propietario } from "@/app/domains/propietario"
@@ -12,7 +13,7 @@ export default function Index({
 }) {
   console.log(propietarios)
   return (
-    <div className="section">
+    <SectionTransition>
         <SectionDescription title="Propietarios" paragraph="Gestiona Tus Propietarios" />
         <CreateButtonSection>
           <CrudButton
@@ -24,6 +25,6 @@ export default function Index({
         <PropietarioTable
         data={propietarios}
          />
-    </div>
+    </SectionTransition>
   )
 }

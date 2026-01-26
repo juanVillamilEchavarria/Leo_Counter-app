@@ -3,6 +3,7 @@ import TransitionMotion from "../transitions/TransitionMotion"
 import Title from "../common/Title"
 import NavItemGroup from "./NavItemGroup"
 import { useRoute } from "ziggy-js"
+import { isRouteActive } from "../../helpers"
 import { NavItemCurrentStyles, NavItemHoverStyles, NavItemStyles, NavItemTransitionStyle } from "../../types/components/common/nav.types"
 import { type NavItemProps } from "../../types/components/common/nav.types"
 export default function NavItem({
@@ -15,8 +16,6 @@ export default function NavItem({
     className = ''
 }: NavItemProps
 ) {
-    const route= useRoute()
-
     // si no tiene children devuelve el link normal
   return childrenNav.length <= 0 ? (
      <li className={`flex w-full ${className}`}>
@@ -24,7 +23,7 @@ export default function NavItem({
         href={href} 
         className={`
         ${NavItemStyles} 
-        ${route().current(routeName) ? 
+        ${isRouteActive(routeName)? 
           NavItemCurrentStyles 
           : NavItemHoverStyles  }
         `}>
@@ -41,6 +40,7 @@ export default function NavItem({
     // si tiene children se devuelve un desplegable con los links de los children
     <NavItemGroup
       CurrentStyles={NavItemCurrentStyles}
+      routeName={routeName}
       ItemStyles={NavItemStyles}
       ItemHoverStyles={NavItemHoverStyles} 
       TransitionStyle={NavItemTransitionStyle}

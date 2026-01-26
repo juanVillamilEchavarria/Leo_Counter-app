@@ -1,6 +1,7 @@
 import SectionDescription from "@/app/shared/components/common/SectionDescription"
 import CreateButtonSection from "@/app/shared/components/common/CreateButtonSection"
 import CrudButton from "@/app/shared/components/common/CrudButton"
+import SectionTransition from "@/app/shared/components/common/SectionTransition"
 import { MovimientoFijoTable } from "@/app/domains/movimientoFijo"
 import { Link } from "@inertiajs/react"
 import { MovimientoFijoRoutes } from "@/app/domains/movimientoFijo"
@@ -12,7 +13,7 @@ export default function Index({
   movimientos: {data: MovimientoFijoTableData[]}
 }) {
   return (
-    <div className="section">
+    <SectionTransition>
         <SectionDescription title="Movimientos Fijos" paragraph="Gestiona tus ingresos o gastos fijos " />
         <CreateButtonSection>
           <CrudButton
@@ -22,6 +23,6 @@ export default function Index({
                 />
         </CreateButtonSection>
         <MovimientoFijoTable data={movimientos.data} />
-    </div>
+    </SectionTransition>
   )
 }
