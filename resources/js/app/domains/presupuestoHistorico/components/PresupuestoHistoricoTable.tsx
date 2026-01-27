@@ -1,15 +1,15 @@
 import TanStackTable from "@/app/shared/components/table/advanced/TanStackTable"
-import { ColumnsTablePresupuestoHistorico } from "../types/presupuesto.types"
-export default function PresupuestoHistoricoTable() {        
+import { ColumnsTablePresupuestoHistorico, type PresupuestoHistoricoTableData } from "../types/presupuesto.types"
+
+interface PresupuestoHistoricoTableProps {
+  data: PresupuestoHistoricoTableData[]
+}
+
+export default function PresupuestoHistoricoTable({ data }: PresupuestoHistoricoTableProps) {        
   return (
-    <TanStackTable
-    columns={ColumnsTablePresupuestoHistorico}
-       data={[
-             {
-               id: 1,
-               nombre: 'Juan'
-             }
-           ]}
-     />
+    <TanStackTable<PresupuestoHistoricoTableData>
+      columns={ColumnsTablePresupuestoHistorico}
+      data={data}
+    />
   )
 }

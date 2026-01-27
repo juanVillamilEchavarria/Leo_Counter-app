@@ -21,12 +21,12 @@ import { type useTanStackTableProps } from "../../../types/components"
 
 
 // hook de tanstackTable
-export default function useTanStackTable({
+export default function useTanStackTable<T = Record<string,any>>({
     columns,
     data,
     pageSize = 10, //La cantidad de registros visibles por pagina
     maxVisible= 5 // la cantidad de numeros de paginacion visibles
-}:useTanStackTableProps) {
+}:useTanStackTableProps<T>) {
 
         // state para manejar el sorting ( filtrar columna por orden)
         const[sorting, setSorting]= useState<SortingState>([])

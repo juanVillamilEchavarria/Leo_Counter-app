@@ -1,7 +1,7 @@
 import { getVisiblePages } from "@/app/shared/helpers"
 import { type Table } from "@tanstack/react-table"
 import { useMemo, useCallback } from "react"
-export default function useTanStackPagination(table: Table<Record<string, any>>) {
+export default function useTanStackPagination<T>(table: Table<T>) {
   const page = table.getState().pagination.pageIndex
   const totalPages = table.getPageCount()
   const canNext = table.getCanNextPage()

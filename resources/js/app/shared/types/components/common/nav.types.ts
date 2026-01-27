@@ -66,21 +66,21 @@ export const NavItems: NavItemConfig[] = [
             childrenNav:[
                 {
                     key: 'movimientos',
-                    title: 'Movimientos Historicos',
+                    title: 'Historicos',
                     icon: 'fa-solid fa-earth-americas fa-lfa-money-bill-transferg',
                     routeName: 'movimientos.*',
                     href: route('movimientos.index'),
                 },
                 {
                     key: 'movimientosFijos',
-                    title: 'Movimientos Fijos',
+                    title: 'Fijos',
                     icon: 'fa-solid fa-diagram-project fa-lg',
                     routeName: 'movimientosFijos.*',
                     href: route('movimientosFijos.index'),
                 },
                 {
                     key: 'movimientosPendientes',
-                    title: 'Movimientos Pendientes',
+                    title: 'Pendientes',
                     icon: 'fa-solid fa-hand-holding-dollar fa-lg',
                     routeName: 'movimientosPendientes.*',
                     href: route('movimientosPendientes.index'),
@@ -115,21 +115,21 @@ export const NavItems: NavItemConfig[] = [
             childrenNav: [
                 {
                     key: 'presupuestosHistoricos',
-                    title: 'Presupuestos Historicos',
+                    title: 'Historicos',
                     icon: 'fa-solid fa-earth-americas fa-lg',
                     routeName: 'presupuestosHistoricos.index',
                     href: route('presupuestosHistoricos.index'),
                 },
                 {
                     key: 'presupuestosMesActual',
-                    title: 'Presupuestos Del Mes',
+                    title: 'Del Mes',
                     icon: 'fa-solid fa-calendar-day fa-lg',
                     routeName: 'presupuestosMesActual.*',
                     href: route('presupuestosMesActual.index'),
                 },
                 {
                     key: 'presupuestosPorPeriodo',
-                    title: 'Presupuestos Por Periodo',
+                    title: 'Por Periodo',
                     icon: 'fa-solid fa-calendar-week fa-lg',
                     routeName: 'presupuestosPorPeriodo.*',
                     href: route('presupuestosPorPeriodo.index'),

@@ -5,11 +5,11 @@ export type EditAndDeleteActionsProps={
     editIcon?: string
     deleteIcon?: string
 }
-export type TanStackTableProps={
-        columns : ColumnDef<Record<string,any>>[]
-        data : Record<string,any>[]
+export type TanStackTableProps<T = Record<string,any>>={
+        columns : ColumnDef<T>[]
+        data : T[]
 }
-export type useTanStackTableProps= TanStackTableProps &{
+export type useTanStackTableProps<T = Record<string,any>>= TanStackTableProps<T> &{
         pageSize?: number
         maxVisible?:number
 }

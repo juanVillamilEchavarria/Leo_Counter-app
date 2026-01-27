@@ -5,10 +5,10 @@ import useTanStackTable from "../../../hooks/table/advanced/useTanStackTable"
 import { useTanStackPagination } from "@/app/shared/hooks"
 import { type ChangeEvent, useMemo } from "react"
 import { type TanStackTableProps } from "../../../types/components" 
-export default function TanStackTable({
+export default function TanStackTable<T extends Record<string,any>>({
     columns,
     data
-}:TanStackTableProps) {
+}:TanStackTableProps<T>) {
     if(columns === undefined|| data=== undefined)return null
     const {
         filtering,
@@ -17,7 +17,7 @@ export default function TanStackTable({
         pageCurrentIndex,
         totalPages,
         UpDown
-    }= useTanStackTable({
+    }= useTanStackTable<T>({
         columns,
         data
     }) 

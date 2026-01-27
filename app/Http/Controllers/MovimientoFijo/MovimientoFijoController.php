@@ -18,7 +18,7 @@ class MovimientoFijoController extends Controller
     }
 
     private function NoRegistros(){
-        $this->movimientoFijoService->getRecordsCount();
+        return $this->movimientoFijoService->getRecordsCount();
         
     }
     public function index()
