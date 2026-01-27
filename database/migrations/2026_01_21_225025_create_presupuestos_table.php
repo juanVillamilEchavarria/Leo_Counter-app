@@ -36,7 +36,10 @@ return new class extends Migration
             ], 'presupuestos_categoria_fecha_tipo_unique');
 
             // indices
-            $table->index(['categoria_id', 'user_id', 'tipo_presupuesto_id']);
+            $table->index('categoria_id');
+            $table->index('user_id');
+            $table->index('tipo_presupuesto_id');
+            $table->index(['categoria_id', 'fecha_inicio', 'fecha_final', 'tipo_presupuesto_id'], 'presupuestos_categoria_fecha_tipo_index');
 
 
         });

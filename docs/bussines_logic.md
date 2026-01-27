@@ -11,7 +11,7 @@
 - **Tipos de presupuesto:** Operativo (gastos mensuales), Planificado (gastos a mediano-largo plazo), Ahorro.
 
 ## 3. Reglas de negocio
-- Los **movimientos fijos** se registran automáticamente según su frecuencia.
+- Los **movimientos fijos** se registran automáticamente en **movimientos pendientes** según su frecuencia y segun si el fijo esta marcado como registro automatico, automaticamente se genera la instancia de **movimientos** mediante el registro creado en **movimientos pendientes**.
 - Los **movimientos espontáneos** se crean manualmente.
 - Presupuestos de tipo **planificado** pueden ser semestrales o anuales, mientras que **operativo** normalmente es mensual.
 - Movimientos se asignan a presupuestos en los reportes usando **JOINs y rango de fechas (BETWEEN)**.
