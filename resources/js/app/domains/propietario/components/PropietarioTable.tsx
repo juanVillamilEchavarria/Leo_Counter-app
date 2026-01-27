@@ -1,50 +1,51 @@
 import SimpleTable from "@/app/shared/components/table/simple/SimpleTable"
 import usePropietario from "../hooks/usePropietario"
 import DeleteModal from "@/app/shared/components/modal/DeleteModal"
-import { useMemo , useState} from "react"
+import { useSimpleTable } from "@/app/shared/hooks"
 import { PropietarioColumns } from "./columns/propietarios.columns"
 import { type Propietario } from "../types/propietario.types"
+
 export default function PropietarioTable({
-    pageSize=10,
-    data
-}:{
-    pageSize?: number,
-    data: Propietario[]
+  pageSize = 10,
+  data
+}: {
+  pageSize?: number,
+  data: Propietario[]
 }) {
-    const [propietarioSelected, setPropietarioSelected]= useState<Propietario|null>(null)
-    const columns= useMemo(()=>{
-        return PropietarioColumns({
-            onDelete: (propietario: Propietario)=>{
-                setPropietarioSelected(propietario)
-            }
-        })
-    },[])
-    const {form, handleSubmit }=usePropietario({
-        method: 'delete',
-        id: propietarioSelected?.id
-    })
-     const handleDelete = (e: React.FormEvent<HTMLFormElement>) => {
-    if (!propietarioSelected) return  // si no hay cuenta seleccionada, no hacemos nada
-    handleSubmit(e)
-    setPropietarioSelected(null)
-  }
+  const config = useSimpleTable({
+    data,
+    pageSize,
+    tableColumns: PropietarioColumns,
+    formModelHook: usePropietario
+  })
+
+  const {
+    data: paginatedData,
+    columns,
+    pagination,
+    handleDelete,
+    itemSelected,
+    setItemSelected
+  } = config
+
   return (
     <>
-    <SimpleTable 
-    data={data }
-    columns={columns}
-    pagination={false}
-    />
-     <DeleteModal
-          open={propietarioSelected !== null}
-          onClose={() => setPropietarioSelected(null)}
-           onSubmit={handleDelete}
-          spanTitle={'Eliminar'}
-          title={' Propietario'}
-          paragraph={`¿Esta seguro de eliminar el propietario: ${propietarioSelected?.nombre} ${propietarioSelected?.apellido} ?`}
-          >
-            <small>los propietarios eliminados no son recuperables, si este propietario esta asignado a una cuenta, considera inmediatamente luego de esta accion asignarle un nuevo propietario</small>
-          </DeleteModal>
+      <SimpleTable
+        data={paginatedData}
+        columns={columns}
+        pagination={true}
+        controller={pagination}
+      />
+      <DeleteModal
+        open={itemSelected !== null}
+        onClose={() => setItemSelected(null)}
+        onSubmit={handleDelete}
+        spanTitle={'Eliminar'}
+        title={' Propietario'}
+        paragraph={`¿Esta seguro de eliminar el propietario: ${itemSelected?.nombre} ${itemSelected?.apellido} ?`}
+      >
+        <small>los propietarios eliminados no son recuperables, si este propietario esta asignado a una cuenta, considera inmediatamente luego de esta accion asignarle un nuevo propietario</small>
+      </DeleteModal>
     </>
   )
 }

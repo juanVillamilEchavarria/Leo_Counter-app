@@ -16,10 +16,10 @@ export default function InputFillable({
   return icon ? (
     <div className="flex relative">
         <i className={`absolute top-3 left-2 ${icon}`}></i>
-        <input min={min} max={max} type={type} name={name} id={id} placeholder={placeholder} value={value} onChange={onChange} className={`w-full p-2 pl-10 rounded-2xl ${className}`} disabled={disabled} required={required} />
+        <input min={min} max={max} type={type} name={name} id={id} placeholder={placeholder} value={value} onChange={onChange} className={`pl-10  formulario-fillable ${className}`} disabled={disabled} required={required} />
 
     </div>
   ):(
-    <input min={min} max={max} type={type} name={name} id={id} placeholder={placeholder} value={value} onChange={onChange} className={`w-full p-2 rounded-2xl ${className}`} disabled={disabled} required={required} />
+    <input min={min} max={max} type={type} name={name} id={id} placeholder={placeholder} value={value} onChange={onChange} className={`formulario-fillable  ${className}`} disabled={disabled} required={required} />
   )
 }

@@ -29,6 +29,8 @@ export default function TanStackTable({
             <InputFillable 
                 type="text" 
                 icon="fa-solid fa-search"
+                name="search"
+                id="search"
                 value={filtering}
                 placeholder="Busqueda"
                 className="border border-azul-oscuro/50 rounded-2xl transition-all "

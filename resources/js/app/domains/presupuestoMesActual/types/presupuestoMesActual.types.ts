@@ -1,5 +1,6 @@
 import { type FormCommonProps } from "@/app/shared/types/components"
 import { type Categoria } from "../../categoria"
+import { type TipoPresupuesto } from "../../tipoPresupuesto"
 import { type User } from "../../user"
 import { useRoute } from "ziggy-js"
 const route= useRoute()
@@ -8,13 +9,17 @@ export type Presupuesto ={
     id: number
     user_id: number
     categoria_id: number
+    tipo_presupuesto_id: number
     monto: number
-    periodo: string
+    descripcion?: string
+    fecha_inicio: string,
+    fecha_final: string
 }
 
 export type PresupuestoMesActualTableData = Omit<Presupuesto, 'periodo'> &{
     user: string
     categoria: string
+    tipo_presupuesto: string
 }
 
 export const PresupuestoMesActualActions = {
@@ -33,8 +38,8 @@ export const PresupuestoMesActualRoutes={
 } as const
 
 export type PresupuestoMesActualFormOptions={
-    users: User[]
     categorias: Categoria[]
+    tipo_presupuestos: TipoPresupuesto[]
 }
 
 export type PresupuestoMesActualFormProps = FormCommonProps<Presupuesto> & {

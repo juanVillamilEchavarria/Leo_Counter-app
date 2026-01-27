@@ -79,6 +79,9 @@
   .formulario-seccion{
     @apply flex w-full gap-4
   }
+  .formulario-fillable{
+    @apply w-full border-2 border-gray-300 rounded-2xl p-3
+  }
   .select{
     @apply w-full border-2 border-gray-300 rounded-xl p-3
   }

@@ -2,22 +2,10 @@
 
 namespace App\Domains\MovimientoFijo\DTOs;
 
-use App\Shared\DTOs\DTO;
+use App\Domains\MovimientoFijo\DTOs\MovimientoFijoDTO;
+use Illuminate\Support\Carbon;
 
-class StoreMovimientoFijoDTO extends DTO{
-    public function __construct(
-        public ?int $cuenta_id,
-        public ?int $categoria_id,
-        public ?int $tipo_movimiento_id,
-        public ?int $frecuencia_movimiento_id,
-        public ?string $nombre,
-        public ?float $monto,
-        public ?string $fecha_proximo,
-        public ?string $descripcion = null,
-        public ?string $url_pago = null,
-    )
-    {
-    }
+class StoreMovimientoFijoDTO extends MovimientoFijoDTO{
 
     public function toArray(): array
     {

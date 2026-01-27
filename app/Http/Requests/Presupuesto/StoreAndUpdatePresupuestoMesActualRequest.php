@@ -23,7 +23,9 @@ class StoreAndUpdatePresupuestoMesActualRequest extends FormRequest
     {
         return [
             'categoria_id' => ['required','integer','exists:categorias,id'],
+            'tipo_presupuesto_id' => ['required','integer','exists:tipo_presupuestos,id'],
             'monto' => ['required','numeric','min:0'],
+            'descripcion' => ['nullable','string','max:50'],
         ];
     }
 }

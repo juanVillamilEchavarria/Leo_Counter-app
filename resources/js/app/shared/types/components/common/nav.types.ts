@@ -58,16 +58,37 @@ export const NavItems: NavItemConfig[] = [
             key: 'movimientos',
             title: 'Movimientos',
             icon: 'fa-solid fa-money-bill-transfer fa-lg',
-            routeName: 'movimientos.*',
+            routeName: [
+                'movimientos.*',
+                'movimientosFijos.*',
+                'movimientosPendientes.*'
+            ],
+            childrenNav:[
+                {
+                    key: 'movimientos',
+                    title: 'Movimientos Historicos',
+                    icon: 'fa-solid fa-earth-americas fa-lfa-money-bill-transferg',
+                    routeName: 'movimientos.*',
+                    href: route('movimientos.index'),
+                },
+                {
+                    key: 'movimientosFijos',
+                    title: 'Movimientos Fijos',
+                    icon: 'fa-solid fa-diagram-project fa-lg',
+                    routeName: 'movimientosFijos.*',
+                    href: route('movimientosFijos.index'),
+                },
+                {
+                    key: 'movimientosPendientes',
+                    title: 'Movimientos Pendientes',
+                    icon: 'fa-solid fa-hand-holding-dollar fa-lg',
+                    routeName: 'movimientosPendientes.*',
+                    href: route('movimientosPendientes.index'),
+                }
+            ],
            href: route('movimientos.index')
         },
-        {
-            key: 'movimientosFijos',
-            title: 'Movimientos Fijos',
-            icon: 'fa-solid fa-diagram-project fa-lg',
-            routeName: 'movimientosFijos.*',
-            href: route('movimientosFijos.index'),
-        },
+
         {
             key: 'categorias',
             title: 'Categorias',
@@ -88,7 +109,8 @@ export const NavItems: NavItemConfig[] = [
             icon: 'fa-solid fa-piggy-bank fa-lg',
             routeName: [
                 'presupuestosHistoricos.*',
-                'presupuestosMesActual.*'
+                'presupuestosMesActual.*',
+                'presupuestosPorPeriodo.*'
             ],
             childrenNav: [
                 {
@@ -104,15 +126,15 @@ export const NavItems: NavItemConfig[] = [
                     icon: 'fa-solid fa-calendar-day fa-lg',
                     routeName: 'presupuestosMesActual.*',
                     href: route('presupuestosMesActual.index'),
+                },
+                {
+                    key: 'presupuestosPorPeriodo',
+                    title: 'Presupuestos Por Periodo',
+                    icon: 'fa-solid fa-calendar-week fa-lg',
+                    routeName: 'presupuestosPorPeriodo.*',
+                    href: route('presupuestosPorPeriodo.index'),
                 }
             ],
-        },
-        {
-            key: 'pagosPendientes',
-            title: 'Pagos Pendientes',
-            icon: 'fa-solid fa-hand-holding-dollar fa-lg',
-            routeName: 'pagosPendientes.*',
-            href: route('pagosPendientes.index'),
         },
         {
             key: 'historial',

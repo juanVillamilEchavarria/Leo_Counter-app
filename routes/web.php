@@ -6,11 +6,13 @@ use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Cuenta\CuentaController;
 use App\Http\Controllers\Propietario\PropietarioController;
 use App\Http\Controllers\Movimiento\MovimientoController;
+use App\Http\Controllers\MovimientoPendiente\MovimientoPendienteController;
 use App\Http\Controllers\MovimientoFijo\MovimientoFijoController;
 use App\Http\Controllers\Categoria\CategoriaController;
 use App\Http\Controllers\Reporte\ReporteController;
 use App\Http\Controllers\Presupuesto\PresupuestoHistoricoController;
 use App\Http\Controllers\Presupuesto\PresupuestoMesActualController;
+use App\Http\Controllers\Presupuesto\PresupuestoPorPeriodoController;
 use App\Http\Controllers\PagoPendiente\PagoPendienteController;
 use App\Http\Controllers\Historial\HistorialController;
 Route::get('/', [LoginController::class, 'index'])->name('login');
@@ -26,6 +28,10 @@ Route::middleware('auth')->group( function () {
     Route::resource('propietarios',PropietarioController::class)->names('propietarios');
     // MOVIMIENTOS
     Route::get('/movimientos', [MovimientoController::class, 'index'])->name('movimientos.index');
+    // MOVIMIENTOS PENDIENTES
+    Route::resource('movimientos-pendientes',MovimientoPendienteController::class)->names('movimientosPendientes')->parameters([
+        'movimientos-pendientes'=> 'movimientoPendiente'
+    ]);
     // MOVIMIENTOS FIJOS
     Route::resource('movimientos-fijos',MovimientoFijoController::class)->names('movimientosFijos')->parameters([
         'movimientos-fijos'=> 'movimientoFijo'
@@ -37,8 +43,17 @@ Route::middleware('auth')->group( function () {
     Route::patch('categorias/{categoria}/es-fijo', [CategoriaController::class, 'toggleEsFijo'])->name('categorias.es-fijo');
     
     Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
+    // PRESUPUESTOS
     Route::get('/presupuestos/historicos', [PresupuestoHistoricoController::class, 'index'])->name('presupuestosHistoricos.index');
-    Route::resource('presupuestos/mes-actual', PresupuestoMesActualController::class)->names('presupuestosMesActual');
+    // PRESUPUESTOS MES ACTUAL
+    Route::resource('presupuestos/mes-actual', PresupuestoMesActualController::class)->names('presupuestosMesActual')->parameters([
+        'mes-actual' => 'presupuesto'
+    ]);
+    // PRESUPUESTOS POR PERIODO
+    Route::resource('presupuestos/por-periodo', PresupuestoPorPeriodoController::class)->names('presupuestosPorPeriodo')->parameters([
+        'por-periodo' => 'presupuesto'
+    ]);
+    // PAGOS PENDIENTES
     Route::resource('pagos-pendientes',PagoPendienteController::class)->names('pagosPendientes');
     Route::get('/historial', [HistorialController::class, 'index'])->name('historial.index');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

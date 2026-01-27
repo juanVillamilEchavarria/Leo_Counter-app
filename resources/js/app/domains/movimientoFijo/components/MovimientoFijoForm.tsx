@@ -6,6 +6,7 @@ import AlertMessage from "@/app/shared/components/common/AlertMessage"
 import Button from "@/app/shared/components/common/Button"
 import SelectModel from "@/app/shared/components/form/SelectModel"
 import useMovimientoFijoForm from "../hooks/useMovimientoFijoForm"
+import { dateToLocal } from "@/app/shared/helpers"
 import { type MovimientoFijoFormProps } from "../types/movimientoFijo.types"
 export default function MovimientoFijoForm({
     data,
@@ -21,6 +22,7 @@ export default function MovimientoFijoForm({
     categoriasFiltered,
     today
    } = useMovimientoFijoForm({options, data})
+   console.log(data);
   return (
     <Card>
     <form onSubmit={submit} className="formulario-general">
@@ -46,23 +48,7 @@ export default function MovimientoFijoForm({
         <div className="flex w-full gap-4">
             <div className="formulario-campo w-full">
                 <label htmlFor="tipo_movimiento_id">Tipo de movimiento</label>
-                {/* <select
-                    name="tipo_movimiento_id"
-                    id="tipo_movimiento_id"
-                    value={tipoMovimientoId}
-                    onChange={(e) => {
-                        setTipoMovimientoId(Number(e.target.value));
-                        setData('tipo_movimiento_id', Number(e.target.value));
-                    }}
-                     className={`select ${errors.tipo_movimiento_id && 'border-red-500! text-red-500!'}`}
-                     >
-                        <option value="">--- Seleccione un tipo de movimiento ---</option>
-                        {
-                            options.tipos_movimientos.map((tipo) => (
-                                <option key={tipo.id} value={tipo.id}>{tipo.tipo_movimiento}</option>
-                            ))
-                        }
-                     </select> */}
+               
                     <SelectModel 
                     name="tipo_movimiento_id"
                     id="tipo_movimiento_id"
@@ -82,20 +68,7 @@ export default function MovimientoFijoForm({
             </div>
             <div className="formulario-campo w-full">
                 <label htmlFor="categoria_id">Categoría</label>
-                {/* <select
-                    name="categoria_id"
-                    id="categoria_id"
-                    value={data?.categoria_id}
-                    onChange={(e) => setData('categoria_id', Number(e.target.value))}
-                    className={`select ${errors.categoria_id && 'border-red-500! text-red-500!'}`}
-                >
-                    <option value="">--- Seleccione una categoría ---</option>
-                    {
-                        categoriasFiltered.map((categoria) => (
-                            <option key={categoria.id} value={categoria.id}>{categoria.nombre}</option>
-                        ))
-                    }
-                </select> */}
+                
                 <SelectModel 
                     name="categoria_id"
                     id="categoria_id"
@@ -113,20 +86,7 @@ export default function MovimientoFijoForm({
         <div className="flex w-full gap-4">
             <div className="formulario-campo w-full">
                 <label htmlFor="cuenta_id">Cuenta</label>
-                {/* <select
-                    name="cuenta_id"
-                    id="cuenta_id"
-                    value={data?.cuenta_id}
-                    onChange={(e) => setData('cuenta_id', Number(e.target.value))}
-                    className={`select ${errors.cuenta_id && 'border-red-500! text-red-500!'}`}
-                >
-                    <option value="">--- Seleccione una cuenta ---</option>
-                    {
-                        options.cuentas.map((cuenta) => (
-                            <option key={cuenta.id} value={cuenta.id}>{cuenta.nombre}</option>
-                        ))
-                    }
-                </select> */}
+                
                 <SelectModel 
                     name="cuenta_id"
                     id="cuenta_id"
@@ -142,20 +102,6 @@ export default function MovimientoFijoForm({
             </div>
             <div className="formulario-campo w-full">
                 <label htmlFor="frecuencia_id">Frecuencia</label>
-                {/* <select
-                    name="frecuencia_movimiento_id"
-                    id="frecuencia_movimiento_id"
-                    value={data?.frecuencia_movimiento_id}
-                    onChange={(e) => setData('frecuencia_movimiento_id', e.target.value)}
-                    className={`select ${errors.frecuencia_movimiento_id && 'border-red-500! text-red-500!'}`}
-                >
-                    <option value="">--- Seleccione una frecuencia ---</option>
-                    {
-                        options.frecuencias_movimientos.map((frecuencia) => (
-                            <option key={frecuencia.id} value={frecuencia.id}>{frecuencia.frecuencia_movimiento}</option>
-                        ))
-                    }
-                </select> */}
                 <SelectModel 
                     name="frecuencia_movimiento_id"
                     id="frecuencia_movimiento_id"
@@ -195,7 +141,7 @@ export default function MovimientoFijoForm({
                     name="fecha_proximo"
                     id="fecha_proximo"
                     min={today}
-                    value={data?.fecha_proximo}
+                    value={data?.fecha_proximo ? dateToLocal(data?.fecha_proximo) : ''}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('fecha_proximo', e.target.value)}
                     className={`border-2 p-3 border-gray-300 text-gray-800 ${errors.fecha_proximo && 'border-red-500! text-red-500!'} `}
                 ></InputFillable>

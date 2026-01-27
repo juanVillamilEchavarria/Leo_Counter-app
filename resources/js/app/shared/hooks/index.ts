@@ -3,6 +3,7 @@ import useMessageRedirect from "./redirectResponses/useMessageRedirect";
 import  usePortalRoot from "./portal/usePortalRoot";
 import useModelToggle from "./table/actions/useModelToggle";
 import  useSimplePagination  from "./table/simple/useSimpleTablePagination";
+import useSimpleTable from "./table/simple/useSimpleTable";
 import useTanStackTable from "./table/advanced/useTanStackTable";
 import  useTanStackPagination  from "./table/advanced/useTanStackPagination";
 import useOpen from "./open/useOpen";
@@ -13,6 +14,7 @@ export {
     useModelToggle,
     useOpen,
     useSimplePagination,
+    useSimpleTable,
     useTanStackTable,
     useTanStackPagination
 }

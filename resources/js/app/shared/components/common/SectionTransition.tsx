@@ -3,7 +3,7 @@ import { type TransitionDuration } from "../../types/components"
 export default function SectionTransition({
     children,
     transition={
-        duration: 0.10
+        duration: 0.20
     }
 }:{
     children : React.ReactNode

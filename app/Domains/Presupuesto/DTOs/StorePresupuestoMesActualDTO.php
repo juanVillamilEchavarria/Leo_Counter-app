@@ -2,19 +2,16 @@
 
 namespace App\Domains\Presupuesto\DTOs;
 
-use App\Shared\DTOs\DTO;
 
+use App\Domains\Presupuesto\DTOs\PresupuestoDTO;
 use Illuminate\Support\Carbon;
 
-class StorePresupuestoDTO extends DTO{
-    public function __construct(
-        public int $categoria_id,
-        public float $monto
-    ){}
+class StorePresupuestoMesActualDTO extends PresupuestoDTO{
     public function toArray() : array
     {
         return array_merge(parent::toArray(),[
-            'periodo'=> Carbon::now()->format('Y-m'),
+            'fecha_inicio'=> Carbon::now()->firstOfMonth(),
+            'fecha_final'=> Carbon::now()->lastOfMonth(),
             'user_id'=> auth()->user()->id
         ]);
     }

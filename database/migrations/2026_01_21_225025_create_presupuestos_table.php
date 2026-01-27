@@ -13,17 +13,32 @@ return new class extends Migration
     {
         Schema::create('presupuestos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('categoria_id')->constrained('categorias')->onDelete('cascade');
-            $table->char('periodo', 7);
+            $table->foreignId('categoria_id')->constrained('categorias');
+            $table->date('fecha_inicio');
+            $table->date('fecha_final');
             $table->decimal('monto', 12, 2);
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('tipo_presupuesto_id')
+                ->constrained('tipo_presupuestos')
+                ->cascadeOnUpdate()
+                ->restrictOnDelete();
+            $table->text('descripcion')->nullable();
+            $table->softDeletes();
             $table->timestamps();
+             
+            // uniques
+            $table->unique([
+                'categoria_id',
+                'fecha_inicio',
+                'fecha_final',
+                'tipo_presupuesto_id',
+                'deleted_at'
+            ], 'presupuestos_categoria_fecha_tipo_unique');
 
             // indices
-            $table->index(['categoria_id', 'user_id']);
+            $table->index(['categoria_id', 'user_id', 'tipo_presupuesto_id']);
 
-            // uniques
-            $table->unique(['categoria_id', 'periodo']);
+
         });
     }
 

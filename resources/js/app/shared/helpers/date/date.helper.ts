@@ -4,6 +4,18 @@ import "dayjs/locale/es";
 dayjs.extend(localizedFormat);
 dayjs.locale("es");
 
+export function dateToLocal(date : string| Date | undefined) {
+  return dayjs(date).locale('es').format('YYYY-MM-DD')
+}
+
+export function today(){
+return dayjs().locale('es').format('YYYY-MM-DD');
+}
+
+export function monthLimitFromToday(months : number = 1){
+    return dayjs().add(months, 'month').locale('es').format('YYYY-MM-DD');
+}
+
 export function dateFormat(date : string| Date | undefined) {
   return dayjs(date).format('DD [de] MMMM [de] YYYY')
 }
