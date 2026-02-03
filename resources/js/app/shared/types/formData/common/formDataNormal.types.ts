@@ -9,3 +9,5 @@ export type CreateAndEditViewWithOptionsProps<TData extends Record<string,any>, 
     data ?: TData
     options : TOptions
 }
+
+export type FileWithPreview = File & { preview : string }

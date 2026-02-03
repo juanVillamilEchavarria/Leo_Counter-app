@@ -23,7 +23,6 @@ export default function useSimpleTable<TData extends Record<string, any>>({ // e
       }}),  
   [tableColumns]
 )
-console.log(modalSelected);
         const formConfig = formModelHook?.({ method: 'delete', id: itemSelected?.id }) || {} // si no hay formModelHook devuelve un objeto vacio
         const handleSubmit = formConfig.handleSubmit || (() => {})
 

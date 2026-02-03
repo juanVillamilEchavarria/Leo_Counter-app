@@ -3,8 +3,6 @@ import { Head } from "@inertiajs/react"
 import { useMessageRedirect } from "../../hooks"
 export default function Header() {
     const { props } = useMessageRedirect()
-    console.log(props);
-    
   return (
     <div className="w-full h-20 flex lg:flex-row flex-col justify-between bg-white shadow-xl items-center ">
         <Head>

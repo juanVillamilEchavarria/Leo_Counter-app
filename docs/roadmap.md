@@ -37,4 +37,5 @@
 
 ## 5. Pendientes menores / UX
 - [Parcial ] Confirmar nombres de secciones: `movimientos_pendientes`  
-- [ ] Crear sección para categorias eliminadas (archivadas)  
+- [ ] Crear sección para registros eliminados (archivadas)  
+

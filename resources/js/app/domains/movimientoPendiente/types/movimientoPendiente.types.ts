@@ -4,6 +4,7 @@ import { type TipoMovimiento } from "../../tipoMovimiento"
 import { type Categoria } from "../../categoria"
 import { type Cuenta } from "../../cuenta"
 import { type MovimientoFijo } from "../../movimientoFijo"
+import { type FileWithPreview } from "@/app/shared/types"
 
 const route= useRoute()
 
@@ -40,7 +41,7 @@ export type MovimientoPendiente = {
 }
 
 export type MarkAsDonePayload = {
-    comprobantes : File[] | null 
+    comprobantes :FileWithPreview[] |null 
 }
 
 export type MovimientoPendienteTableData = Omit< MovimientoPendiente, 'cuenta_id' | 'tipo_movimiento_id' | 'categoria_id' | 'movimiento_fijo_id'> & {
@@ -63,3 +64,9 @@ export type MovimientoPendienteFormProps = // declaramos las propiedades del for
     FormCommonProps<MovimientoPendienteFormData> & {
     options: MovimientoPendienteFormOptions
 }
+export type UseMarkAsDoneParams = {
+    onClose: () => void
+    onSubmit: () => void
+    itemSelected: MovimientoPendienteTableData | undefined | null
+}
+

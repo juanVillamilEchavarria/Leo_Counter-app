@@ -1,4 +1,4 @@
-import { type FormDataNormalProps } from "./formData";
+import { type FormDataNormalProps, type CreateAndEditViewWithOptionsProps, type FileWithPreview } from "./formData";
 import{ TextSize,
     type TitleProps,
     type ButtonProps,
@@ -9,8 +9,11 @@ import{ TextSize,
 } from "./components";
 import { type FlashMessages } from "./intertia/flash";
 import { type InertiaProps } from "./intertia/props";
+import { type DropZoneProps,  type UploadedFileListProps } from "./dropZone";
 export {
     type FormDataNormalProps,
+    type CreateAndEditViewWithOptionsProps,
+    type FileWithPreview,
     TextSize,
     type TitleProps,
     type ButtonProps,
@@ -19,5 +22,7 @@ export {
     type CardProps,
     CardVariants,
     type FlashMessages,
-    type InertiaProps
+    type InertiaProps,
+    type DropZoneProps,
+    type UploadedFileListProps
 }
