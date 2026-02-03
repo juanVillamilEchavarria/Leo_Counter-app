@@ -9,6 +9,7 @@ export default function CrudButton({
     className = '',
     href = '#',
     onClick = undefined,
+    withSpan=true
 }:CrudButtonProps) {
     const CreateStyles= 'rounded-lg px-4 py-2 text-sm shadow-2xl mb-2 '
     const EditAndDeleteStyles='rounded-xl px-2 py-2 text-center text-xs shadow-2xl'
@@ -24,7 +25,10 @@ export default function CrudButton({
         className={`${CreateStyles} ${className}`}
     >
         <i className={icon}></i>
-        <span> Nuevo</span>
+        {withSpan &&(
+         <span> Nuevo</span>
+        )}
+        
     </Button>
   )}
   if(Crudvariant==='Edit')return(

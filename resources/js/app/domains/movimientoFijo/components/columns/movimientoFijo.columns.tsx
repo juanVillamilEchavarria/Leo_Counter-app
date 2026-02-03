@@ -1,5 +1,6 @@
 import ModelToggle from "@/app/shared/components/table/actions/ModelToggle"
 import EditAndDeleteActions from "@/app/shared/components/table/actions/EditAndDeleteActions"
+import SuccessOrFailText from "@/app/shared/components/common/SuccessOrFailText"
 import { MovimientoFijoActions, MovimientoFijoRoutes } from "../../types/movimientoFijo.types"
 import { dateFormat } from "@/app/shared/helpers"
 import { type MovimientoFijoTableData } from "../../types/movimientoFijo.types"
@@ -12,7 +13,14 @@ export const MovimientoFijoColumns = (({
            { key: "id", label: "ID" },
            {key: "nombre", label : "Nombre"},
            { key: "cuenta", label: "Cuenta" },
-           { key: "tipo_movimiento", label: "Tipo" },
+           { key: "tipo_movimiento", label: "Tipo",
+            render : (row : MovimientoFijoTableData)=>(
+                   <SuccessOrFailText
+                       attribute={row.tipo_movimiento}
+                       value="Ingreso"
+                     />
+            )
+            },
            { key: "categoria", label: "Categoria" },
            { key: "monto", label: "Monto" },
            { key: "fecha_proximo", label: "Fecha Del Proximo Pago", render: (row: MovimientoFijoTableData)=>(dateFormat(row.fecha_proximo)) },

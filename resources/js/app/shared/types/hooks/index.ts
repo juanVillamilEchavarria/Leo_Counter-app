@@ -1,0 +1,1 @@
+export {type MovimientoFilter} from './filter/filter.types';

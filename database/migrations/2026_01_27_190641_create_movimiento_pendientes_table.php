@@ -19,16 +19,17 @@ return new class extends Migration
             $table->foreignId('movimiento_fijo_id')->nullable()->constrained('movimiento_fijos')->nullOnDelete();
             $table->foreignId('tipo_movimiento_id')->constrained('tipo_movimientos');
             $table->decimal('monto', 12, 2);
-            $table->date('fecha_vencimiento');
-            $table->enum('estado', ['pendiente', 'pagado', 'vencido'])->default('pendiente');
+            $table->date('fecha_programada');
+            $table->enum('estado', ['pendiente', 'realizado', 'vencido'])->default('pendiente');
+            $table->unsignedTinyInteger('dias_aviso')->nullable()->default(0);
             $table->text('descripcion')->nullable();
-            $table->timestamp('payed_at')->nullable();
+            $table->timestamp('paid_at')->nullable();
             $table->string('url_pago')->nullable();
             $table->softDeletes();
             $table->timestamps();
 
             // indices
-            $table->index(['estado', 'fecha_vencimiento']);
+            $table->index(['estado', 'fecha_programada']);
             $table->index(['movimiento_fijo_id']);
             $table->index(['categoria_id', 'cuenta_id', 'tipo_movimiento_id'], 'movimiento_pendiente_index');
         });

@@ -32,6 +32,7 @@ Route::middleware('auth')->group( function () {
     Route::resource('movimientos-pendientes',MovimientoPendienteController::class)->names('movimientosPendientes')->parameters([
         'movimientos-pendientes'=> 'movimientoPendiente'
     ]);
+    Route::patch('movimientos-pendientes/{movimientoPendiente}/mark-as-done', [MovimientoPendienteController::class, 'markAsDone'])->name('movimientosPendientes.markAsDone');
     // MOVIMIENTOS FIJOS
     Route::resource('movimientos-fijos',MovimientoFijoController::class)->names('movimientosFijos')->parameters([
         'movimientos-fijos'=> 'movimientoFijo'

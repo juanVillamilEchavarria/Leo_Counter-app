@@ -5,5 +5,6 @@ export type CrudButtonProps=Omit<ButtonProps, 'variant'|'children'>&{
     Crudvariant?: CrudButtonVariants
     icon?: string,
     className?: string
+    withSpan?: boolean
 
 }

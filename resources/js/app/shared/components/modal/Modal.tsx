@@ -8,6 +8,7 @@ export default function Modal({
   variant = 'secondary',
   onClose,
   size = 'md',
+  className = ''
 }: ModalProps) {
   return (
     <Transition appear show={open} as="div">
@@ -36,7 +37,7 @@ export default function Modal({
             leaveTo="opacity-0 scale-95 translate-y-4"
           >
             <DialogPanel
-              className={`${ModalVariants[variant]} ${ModalSizes[size]} rounded-2xl p-6 shadow-xl flex flex-col justify-between`}
+              className={`${ModalVariants[variant]} ${ModalSizes[size]} ${className} rounded-2xl p-6 shadow-xl flex flex-col justify-between`}
             >
               <div className="flex justify-end">
                 <button onClick={onClose} className='cursor-pointer'>

@@ -14,7 +14,7 @@ export default function ActionSection({
 
 }) {
   return (
-    <div className={`flex flex-row w-1/2 justify-center gap-2 ${className}`}>
+    <div className={`flex flex-row justify-center gap-2 ${className}`}>
       {actions.map((action, index) => (
         <Tag key={index} {...action} />
       ))}

@@ -8,6 +8,7 @@ use App\Models\Cuenta\Cuenta;
 use App\Models\Categoria\Categoria;
 use App\Models\TipoMovimiento\TipoMovimiento;
 use App\Models\FrecuenciaMovimiento\FrecuenciaMovimiento;
+use App\Models\MovimientoPendiente\MovimientoPendiente;
 
 class MovimientoFijo extends Model
 {
@@ -27,6 +28,7 @@ class MovimientoFijo extends Model
         'frecuencia_movimiento_id',
         'fecha_proximo',
         'monto',
+        'dias_aviso',
         'url_pago',
         'active',
         'registrar_automatico'
@@ -56,5 +58,10 @@ class MovimientoFijo extends Model
     public function frecuencia_movimiento()
     {
         return $this->belongsTo(FrecuenciaMovimiento::class);
+    }
+
+    public function movimientos_pendientes()
+    {
+        return $this->hasMany(MovimientoPendiente::class);
     }
 }

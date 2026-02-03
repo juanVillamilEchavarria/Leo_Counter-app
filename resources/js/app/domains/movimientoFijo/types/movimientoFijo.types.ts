@@ -15,6 +15,7 @@ export type MovimientoFijo={
     monto: number,
     fecha_proximo : string,
     frecuencia_movimiento_id: string,
+    dias_aviso: number,
     descripcion: string,
     active: boolean,
     url_pago: string,

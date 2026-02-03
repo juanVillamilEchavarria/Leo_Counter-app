@@ -1,18 +1,50 @@
 import EditAndDeleteActions from "@/app/shared/components/table/actions/EditAndDeleteActions"
-import ModelToggle from "@/app/shared/components/table/actions/ModelToggle"
+import ActionSection from "@/app/shared/components/table/actions/ActionSection"
 import { Link } from "@inertiajs/react"
+import Button from "@/app/shared/components/common/Button"
+import SuccessOrFailText from "@/app/shared/components/common/SuccessOrFailText"
 import {type MovimientoPendienteTableData, MovimientoPendienteActions, MovimientoPendienteRoutes } from "../../types/movimientoPendiente.types"
 import { MovimientoFijoRoutes } from "@/app/domains/movimientoFijo"
+import { dateFormat } from "@/app/shared/helpers"
+import CrudButton from "@/app/shared/components/common/CrudButton"
+const buildMovimientoPendienteActions = (
+  row: MovimientoPendienteTableData,
+  onDelete: (row: MovimientoPendienteTableData, modal: string) => void
+) => [
+  {
+    as: Link,
+    href: MovimientoPendienteRoutes.edit(row.id),
+    Crudvariant: 'Edit',
+  },
+  {
+    onClick: () => onDelete(row, 'delete'),
+    Crudvariant: 'Delete',
+  },
+  {
+    onClick: () => onDelete(row, 'pagar'),
+    Crudvariant: 'Create',
+    icon: 'fa-solid fa-cash-register fa-sm',
+    className: 'p-2! m-0!',
+    withSpan: false
+  }
+]
 
 export const MovimientoPendienteColumns=(({
     onDelete
 }:{
-    onDelete: (movimientoPendiente: MovimientoPendienteTableData)=>void
+    onDelete: (movimientoPendiente: MovimientoPendienteTableData, modal : string)=>void
 })=> {return [
     { key : 'id', label : 'ID' },
     { key : 'nombre', label : 'Nombre' },
     { key : 'cuenta', label : 'Cuenta' },
-    { key : 'tipo_movimiento', label : 'Tipo' },
+    { key : 'tipo_movimiento', label : 'Tipo',
+      render: (row: MovimientoPendienteTableData) => (
+       <SuccessOrFailText
+         attribute={row.tipo_movimiento}
+         value="Ingreso"
+       />
+      )
+     },
     { key : 'categoria', label : 'Categoria' },
     { key : 'movimiento_fijo',
       label : 'Movimiento Fijo',
@@ -21,24 +53,20 @@ export const MovimientoPendienteColumns=(({
       }
          },
     { key : 'monto', label : 'Monto' },
-    { key : 'fecha_vencimiento', label : 'Fecha Vencimiento' },
+    { key : 'fecha_programada', label : 'Fecha Programada', render: (row: MovimientoPendienteTableData)=>(dateFormat(row.fecha_programada)) },
     {
         key: 'estado',
         label: 'Estado',
         render: (row: MovimientoPendienteTableData) => (
-          <span className={` font-bold ${row.estado === 'pendiente' ? 'text-yellow-600' : row.estado === 'pagado' ? 'text-green-600' : 'text-red-600'}`}>{row.estado}</span>
+          <span className={` font-bold ${row.estado === 'pendiente' ? 'text-yellow-600' : row.estado === 'realizado' ? 'text-green-600' : 'text-red-600'}`}>{row.estado}</span>
         ),
 
     },
     {
       key: 'actions',
       label: '',
-      className: 'w-20',
       render: (row: MovimientoPendienteTableData) => (
-        <EditAndDeleteActions
-          editHref={MovimientoPendienteRoutes.edit(row.id)}
-          deleteOnClick={() => onDelete(row)}
-        />
+        <ActionSection actions={buildMovimientoPendienteActions(row, onDelete)} as={CrudButton} />
       ),
     },
 

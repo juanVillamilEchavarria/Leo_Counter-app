@@ -16,6 +16,7 @@ export const PropietarioColumns=({
     {
       key: 'actions',
       label: '',
+      className: 'w-20',
       render: (row: Propietario)=>(
         <EditAndDeleteActions
          editHref={PropietarioRoutes.edit(row.id)} 

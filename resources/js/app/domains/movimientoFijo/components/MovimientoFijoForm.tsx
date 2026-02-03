@@ -5,7 +5,7 @@ import TransitionMotion from "@/app/shared/components/transitions/TransitionMoti
 import AlertMessage from "@/app/shared/components/common/AlertMessage"
 import Button from "@/app/shared/components/common/Button"
 import SelectModel from "@/app/shared/components/form/SelectModel"
-import useMovimientoFijoForm from "../hooks/useMovimientoFijoForm"
+import { useCategoriasMovimientoFilter } from "@/app/shared/hooks"
 import { dateToLocal } from "@/app/shared/helpers"
 import { type MovimientoFijoFormProps } from "../types/movimientoFijo.types"
 export default function MovimientoFijoForm({
@@ -21,7 +21,7 @@ export default function MovimientoFijoForm({
     setTipoMovimientoId,
     categoriasFiltered,
     today
-   } = useMovimientoFijoForm({options, data})
+   } = useCategoriasMovimientoFilter({options, data})
    console.log(data);
   return (
     <Card>
@@ -38,7 +38,7 @@ export default function MovimientoFijoForm({
                 onChange={
                     (e: React.ChangeEvent<HTMLInputElement>) => setData('nombre', e.target.value)
                 }
-                className={`border-2 p-3 border-gray-300 text-gray-800 ${errors.nombre && 'border-red-500! text-red-500!'} `}
+                className={` ${errors.nombre && 'border-red-500! text-red-500!'} `}
                 icon={`fa-solid fa-file-signature fa-xl top-6 text-gray-400 ${errors.nombre && 'text-red-500!'} `}
             />
             <TransitionMotion active={errors?.nombre}>
@@ -126,7 +126,7 @@ export default function MovimientoFijoForm({
                     id="monto"
                     value={data?.monto}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('monto', Number(e.target.value))}
-                    className={`border-2 p-3 border-gray-300 text-gray-800 ${errors.monto && 'border-red-500! text-red-500!'} `}
+                    className={` ${errors.monto && 'border-red-500! text-red-500!'} `}
                 ></InputFillable>
 
                 <TransitionMotion active={errors?.monto}>
@@ -143,13 +143,29 @@ export default function MovimientoFijoForm({
                     min={today}
                     value={data?.fecha_proximo ? dateToLocal(data?.fecha_proximo) : ''}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('fecha_proximo', e.target.value)}
-                    className={`border-2 p-3 border-gray-300 text-gray-800 ${errors.fecha_proximo && 'border-red-500! text-red-500!'} `}
+                    className={` ${errors.fecha_proximo && 'border-red-500! text-red-500!'} `}
                 ></InputFillable>
 
                 <TransitionMotion active={errors?.fecha_proximo}>
                     <AlertMessage message={errors?.fecha_proximo} />
                 </TransitionMotion>
             </div>
+        </div>
+        <div className="formulario-campo">
+            <label htmlFor="dias_aviso">Dias de aviso</label>
+            <small className="text-gray-400">Ingresa la cantidad de dias en los que quieres ser notificado antes de la fecha del proximo, este campo es opcional</small>
+            <InputFillable
+                type="number"
+                name="dias_aviso"
+                id="dias_aviso"
+                value={data?.dias_aviso}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('dias_aviso', Number(e.target.value))}
+                className={` ${errors.dias_aviso && 'border-red-500! text-red-500!'} `}
+            ></InputFillable>
+
+            <TransitionMotion active={errors?.dias_aviso}>
+                <AlertMessage message={errors?.dias_aviso} />
+            </TransitionMotion>
         </div>
         <TransitionMotion initial={{x:0, y:-30, opacity:0}}  exit={{x: 0, y:-30, opacity:0}} active={tipoMovimientoId==2}>
             <div className="formulario-campo">
@@ -161,7 +177,7 @@ export default function MovimientoFijoForm({
                     id="url_pago"
                     value={data?.url_pago}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('url_pago', e.target.value)}  
-                    className={`border-2 p-3 border-gray-300 text-gray-800 ${errors.url_pago && 'border-red-500! text-red-500!'} `}
+                    className={` ${errors.url_pago && 'border-red-500! text-red-500!'} `}
                 ></InputFillable>
 
                 <TransitionMotion active={errors?.url_pago}>
@@ -178,7 +194,7 @@ export default function MovimientoFijoForm({
                 placeholder="Ej: Movimiento fijo del pago de la empleada, cada 15 dias, sale del bolsillo de mamá"
                 icon={`fa-solid fa-note-sticky fa-xl top-6 text-gray-400 ${errors.descripcion && 'text-red-500!'} `}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setData('descripcion', e.target.value)}
-                className={`border-2 p-3 border-gray-300 text-gray-800 h-60 ${errors.descripcion && 'border-red-500! text-red-500!'} `}
+                className={` h-60 ${errors.descripcion && 'border-red-500! text-red-500!'} `}
             />
             <TransitionMotion active={errors?.descripcion}>
                 <AlertMessage message={errors?.descripcion} />

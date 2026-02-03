@@ -18,9 +18,9 @@ export default function useFormNormal<TData extends Record<string, any>>({
                   } as const
                   methodMap[method]?.()
           }
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>, ) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>, options?: Parameters<typeof form.post>[1] ) => {
         e.preventDefault();
-        submit();   
+        submit( options);   
     }
   return {
     form,

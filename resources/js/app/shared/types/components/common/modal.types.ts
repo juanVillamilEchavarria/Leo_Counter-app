@@ -13,9 +13,10 @@ export type ModalProps={
     children : React.ReactNode,
     title : string | React.ReactNode,
     open : boolean,
-    variant: keyof typeof ModalVariants
+    variant?: keyof typeof ModalVariants
     onClose : () => void 
     size? : keyof typeof ModalSizes
+    className? : string
 }
 
 export type DeleteModalProps= Omit<ModalProps, 'variant'| 'size'>&{

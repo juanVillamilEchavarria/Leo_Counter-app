@@ -18,8 +18,8 @@ export default function DeleteModal({
             onClose={onClose} 
             title={ 
             <div>
-            <span className="text-red-400 border-b-2 border-red-500 rounded-lg">{spanTitle}</span>
-            <span> {title}</span>
+                <span className="text-red-400 border-b-2 border-red-500 rounded-lg">{spanTitle}</span>
+                <span> {title}</span>
             </div>
             } 
             size="lg"
