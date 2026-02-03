@@ -12,13 +12,17 @@ use App\Domains\MovimientoPendiente\Actions\UpdateMovimientoPendienteAction;
 use App\Domains\MovimientoPendiente\Actions\DestroyMovimientoPendienteAction;
 use App\Domains\Cuenta\Actions\GetCuentaAction;
 use App\Domains\Categoria\Actions\GetCategoriaAction;
+use App\Domains\Movimiento\Actions\StoreMovimientoAction;
 use App\Domains\TipoMovimiento\Actions\GetTipoMovimientoAction;
+//Services 
+use App\Domains\ArchivoMovimiento\Services\ArchivoMovimientoService;
 //DTOs
 use App\Domains\MovimientoPendiente\DTOs\MovimientoPendienteFormOptionsDTO;
 use App\Domains\MovimientoPendiente\DTOs\UpdateMovimientoPendienteDTO;
 use App\Domains\MovimientoPendiente\DTOs\StoreMovimientoPendienteDTO;
 use App\Domains\MovimientoPendiente\DTOs\MarkMovimientoPendienteDTO;
 use App\Domains\MovimientoPendiente\Enums\EstadosMovimientoPendiente;
+use App\Domains\Movimiento\DTOs\StoreMovimientoDTO;
 
 class MovimientoPendienteService
 {
@@ -29,7 +33,8 @@ class MovimientoPendienteService
         private DestroyMovimientoPendienteAction $destroyMovimientoPendienteAction,
         private GetCuentaAction $getCuentaAction,
         private GetCategoriaAction $getCategoriaAction,
-        private GetTipoMovimientoAction $getTipoMovimientoAction
+        private GetTipoMovimientoAction $getTipoMovimientoAction,
+        private ArchivoMovimientoService $archivoMovimientoService
     )
     {
     }
@@ -66,6 +71,13 @@ class MovimientoPendienteService
     }
 
     public function markAsDone(MovimientoPendiente $movimientoPendiente, array $data): bool{
+        $dtoMovimiento = StoreMovimientoDTO::fromObject($movimientoPendiente);
+        dd($dtoMovimiento);
+        if(!empty($data['comprobantes'])){
+           $data['categoria']= $movimientoPendiente->categoria->nombre;
+            $data['tipo_movimiento']= $movimientoPendiente->tipo_movimiento->tipo_movimiento;
+            $this->archivoMovimientoService->store($data);
+        }
         $dto = MarkMovimientoPendienteDTO::fromArray(['estado'=> EstadosMovimientoPendiente::REALIZADO]);
         return $this->updateMovimientoPendienteAction->update($movimientoPendiente, $dto);
     }

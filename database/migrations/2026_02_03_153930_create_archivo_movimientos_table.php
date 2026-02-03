@@ -26,6 +26,7 @@ return new class extends Migration
             // indices
             $table->index('movimiento_id');
             $table->index('created_at');
+            $table->index(['movimiento_id', 'created_at']);
         });
     }
 

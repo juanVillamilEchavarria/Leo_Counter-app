@@ -14,7 +14,7 @@
 - [ ] Script para registrar movimientos automáticos diarios
 - [Parcial ] Validaciones de tablas con relaciones antes de eliminar, no permitir sin antes reasignar
 - [ ] crear Jobs o Tasks para los sofdeletes de movimientos pendientes vencidos, para mostrarlos en la configuracion del sistema
-- [ ] terminar de hacer la migration de archivos_movimientos y completar el backend de movimientos_pendientes para que en la marcacion de pagado, inserte en movimientos y suba los archivos que llegan desde el frontend
+- [Parcial ] terminar de hacer la migration de archivos_movimientos y completar el backend de movimientos_pendientes para que en la marcacion de pagado, inserte en movimientos y suba los archivos que llegan desde el frontend
 
 ## 3. Frontend / UX
 - [ Parcial] Interfaces separadas para:

@@ -59,6 +59,13 @@ return [
             'throw' => false,
             'report' => false,
         ],
+        'movimientos'=>[
+            'driver' => 'local',
+            'root' => storage_path('app/data/movimientos'),
+            'throw' => false,
+            'visibility' => 'private',
+            'report' => false
+        ]
 
     ],
 

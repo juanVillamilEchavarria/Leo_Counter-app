@@ -94,7 +94,6 @@ class MovimientoPendienteController extends Controller
     }
 
     public function markAsDone(MarkAsDoneRequest $request, MovimientoPendiente $movimientoPendiente){
-        dd($request->all());
          $this->movimientoPendienteService->markAsDone($movimientoPendiente, $request->validated());
          Inertia::flash('success','Movimiento Pendiente marcado como realizado');
          return redirect()->route('movimientosPendientes.index');
