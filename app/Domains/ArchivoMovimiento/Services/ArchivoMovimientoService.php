@@ -7,6 +7,7 @@ use App\Domains\ArchivoMovimiento\DTOs\StoreArchivoMovimientoDTO;
 use App\Models\ArchivoMovimiento\ArchivoMovimiento;
 use App\Shared\Actions\UploadFileAction;
 use App\Shared\DTOs\UploadFileDTO;
+use App\Domains\ArchivoMovimiento\DTOs\ThrowArchivoMovimientoDTO;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 class ArchivoMovimientoService  {
@@ -17,14 +18,12 @@ class ArchivoMovimientoService  {
     {
     }
 
-    public function store(array $data){
-        $categoria = Str::slug($data['categoria']);
-        $movimiento_id = 1;
-        $tipo_movimiento = $data['tipo_movimiento'];
+    public function store(ThrowArchivoMovimientoDTO $dto) : void{
+        $categoria = Str::slug($dto->categoria);
+        $movimiento_id = $dto->movimiento_id;
+        $tipo_movimiento = $dto->tipo_movimiento;
         
-        foreach($data as $key => $value){
-            if(is_array($value)){
-                foreach($value as $file){
+        foreach($dto->comprobantes as $file){
                     $nombre_guardado = Str::uuid() . '.pdf';
                 $year = Carbon::now()->year;
                 $month = Carbon::now()->month;
@@ -36,7 +35,6 @@ class ArchivoMovimientoService  {
                     path: $path,
                     tamano_bytes: $file->getSize(),
                 );
-                
                 $dtoUpload = new UploadFileDTO(
                     disk: $dto->disk,
                     path: $path,
@@ -44,10 +42,7 @@ class ArchivoMovimientoService  {
                     file: $file
                 );
                 $this->uploadFileAction->upload($dtoUpload);
-                 return $this->storeArchivoMovimientoAction->store($dto);
-                }
-                
-            }
+                $this->storeArchivoMovimientoAction->store($dto);
         }
        
     }

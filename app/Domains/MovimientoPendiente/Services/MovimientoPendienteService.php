@@ -23,6 +23,7 @@ use App\Domains\MovimientoPendiente\DTOs\StoreMovimientoPendienteDTO;
 use App\Domains\MovimientoPendiente\DTOs\MarkMovimientoPendienteDTO;
 use App\Domains\MovimientoPendiente\Enums\EstadosMovimientoPendiente;
 use App\Domains\Movimiento\DTOs\StoreMovimientoDTO;
+use App\Domains\ArchivoMovimiento\DTOs\ThrowArchivoMovimientoDTO;
 
 class MovimientoPendienteService
 {
@@ -34,6 +35,7 @@ class MovimientoPendienteService
         private GetCuentaAction $getCuentaAction,
         private GetCategoriaAction $getCategoriaAction,
         private GetTipoMovimientoAction $getTipoMovimientoAction,
+        private StoreMovimientoAction $storeMovimientoAction,
         private ArchivoMovimientoService $archivoMovimientoService
     )
     {
@@ -72,11 +74,14 @@ class MovimientoPendienteService
 
     public function markAsDone(MovimientoPendiente $movimientoPendiente, array $data): bool{
         $dtoMovimiento = StoreMovimientoDTO::fromObject($movimientoPendiente);
-        dd($dtoMovimiento);
+        $movInserted= $this->storeMovimientoAction->store($dtoMovimiento);
         if(!empty($data['comprobantes'])){
-           $data['categoria']= $movimientoPendiente->categoria->nombre;
-            $data['tipo_movimiento']= $movimientoPendiente->tipo_movimiento->tipo_movimiento;
-            $this->archivoMovimientoService->store($data);
+           $dtoArchivo = new ThrowArchivoMovimientoDTO(
+                comprobantes: $data['comprobantes'],
+                categoria: $movimientoPendiente->categoria->nombre,
+                tipo_movimiento: $movimientoPendiente->tipo_movimiento->tipo_movimiento,
+                movimiento_id: $movInserted->id);
+            $this->archivoMovimientoService->store($dtoArchivo);
         }
         $dto = MarkMovimientoPendienteDTO::fromArray(['estado'=> EstadosMovimientoPendiente::REALIZADO]);
         return $this->updateMovimientoPendienteAction->update($movimientoPendiente, $dto);
