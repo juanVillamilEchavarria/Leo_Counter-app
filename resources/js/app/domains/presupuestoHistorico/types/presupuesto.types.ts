@@ -1,5 +1,6 @@
 import { type ColumnDef } from "@tanstack/react-table"
 import { type InertiaProps } from "@/app/shared/types/intertia/props"
+import { moneyFormat } from "@/app/shared/helpers"
 import { dateFormat } from "@/app/shared/helpers"
 
 export const ColumnsTablePresupuestoHistorico: ColumnDef<PresupuestoHistoricoTableData>[]=[
@@ -14,20 +15,10 @@ export const ColumnsTablePresupuestoHistorico: ColumnDef<PresupuestoHistoricoTab
         accessorKey: 'categoria'
     },
     {
-        id: 'tipo_presupuesto',
-        header: 'Tipo',
-        accessorKey: 'tipo_presupuesto'
-    },
-    {
         id: 'monto',
         header: 'Monto',
         accessorKey: 'monto',
-        cell: ({ row }) => {
-            return new Intl.NumberFormat('es-ES', {
-                style: 'currency',
-                currency: 'COP',
-            }).format(row.original.monto)
-        }
+        cell: ({ row }) => moneyFormat(Number(row.original.monto))
     },
     {
         id: 'usuario',
@@ -35,31 +26,20 @@ export const ColumnsTablePresupuestoHistorico: ColumnDef<PresupuestoHistoricoTab
         accessorKey: 'user'
     },
     {
-        id: 'fecha_inicio',
-        header: 'Fecha Inicio',
-        accessorKey: 'fecha_inicio',
-        cell: ({ row }) => {
-            return dateFormat(row.original.fecha_inicio)
-        }
+        id: 'periodo',
+        header: 'Periodo',
+        accessorKey: 'periodo',
+        cell: ({ row }) => dateFormat(row.original.periodo, 'MMM [de] YYYY')
+        
     },
-    {
-        id: 'fecha_final',
-        header: 'Fecha Final',
-        accessorKey: 'fecha_final',
-        cell: ({ row }) => {
-            return dateFormat(row.original.fecha_final)
-        }
-    }
 ]
 
 export type PresupuestoHistoricoTableData = {
     id: number,
     user: string,
     categoria: string,
-    tipo_presupuesto: string,
     monto: number,
-    fecha_inicio: string | Date,
-    fecha_final: string | Date
+    periodo: string | Date
 }
 
 export type PresupuestoHistoricoProps = InertiaProps & {

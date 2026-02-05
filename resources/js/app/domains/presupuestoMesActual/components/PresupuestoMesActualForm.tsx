@@ -36,24 +36,6 @@ export default function PresupuestoMesActualForm({
             </TransitionMotion>
           </div>
           <div className="formulario-campo">
-            <label htmlFor="tipo_presupuesto_id">Tipo de Presupuesto</label>
-            <SelectModel
-              name="tipo_presupuesto_id"
-              id="tipo_presupuesto_id"
-              value={data?.tipo_presupuesto_id}
-              onChange={
-                (e: React.ChangeEvent<HTMLSelectElement>) => setData('tipo_presupuesto_id', Number(e.target.value))
-              }
-              iterable={options.tipo_presupuestos}
-              iterableOutput="tipo_presupuesto"
-              className={` ${errors.tipo_presupuesto_id && 'border-red-500! text-red-500!'} `}
-            />
-            <TransitionMotion
-            active={errors?.tipo_presupuesto_id}>
-                <AlertMessage message={errors?.tipo_presupuesto_id} />
-            </TransitionMotion>
-          </div>
-          <div className="formulario-campo">
             <label htmlFor="monto">Monto</label>
             <InputFillable 
               placeholder="Ej: 1000"

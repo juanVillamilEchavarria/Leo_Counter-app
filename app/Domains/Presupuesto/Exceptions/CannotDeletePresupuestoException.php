@@ -3,7 +3,7 @@
 namespace App\Domains\Presupuesto\Exceptions;
 
 use Exception;
-
-class CannotDeletePresupuestoException extends Exception
+use App\Domains\Presupuesto\Exceptions\PresupuestoException;
+class CannotDeletePresupuestoException extends PresupuestoException
 {
 }

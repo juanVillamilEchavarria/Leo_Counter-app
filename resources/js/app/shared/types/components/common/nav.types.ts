@@ -109,8 +109,7 @@ export const NavItems: NavItemConfig[] = [
             icon: 'fa-solid fa-piggy-bank fa-lg',
             routeName: [
                 'presupuestosHistoricos.*',
-                'presupuestosMesActual.*',
-                'presupuestosPorPeriodo.*'
+                'presupuestosMesActual.*'
             ],
             childrenNav: [
                 {
@@ -126,13 +125,6 @@ export const NavItems: NavItemConfig[] = [
                     icon: 'fa-solid fa-calendar-day fa-lg',
                     routeName: 'presupuestosMesActual.*',
                     href: route('presupuestosMesActual.index'),
-                },
-                {
-                    key: 'presupuestosPorPeriodo',
-                    title: 'Presupuestos Por Periodo',
-                    icon: 'fa-solid fa-calendar-week fa-lg',
-                    routeName: 'presupuestosPorPeriodo.*',
-                    href: route('presupuestosPorPeriodo.index'),
                 }
             ],
         },

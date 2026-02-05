@@ -3,7 +3,8 @@
 namespace App\Http\Requests\Presupuesto;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Carbon;
 class StoreAndUpdatePresupuestoMesActualRequest extends FormRequest
 {
     /**
@@ -22,10 +23,19 @@ class StoreAndUpdatePresupuestoMesActualRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'categoria_id' => ['required','integer','exists:categorias,id'],
-            'tipo_presupuesto_id' => ['required','integer','exists:tipo_presupuestos,id'],
+            'categoria_id' => [
+                    'required',
+                    'integer',
+                    'exists:categorias,id',
+                    Rule::unique('presupuestos')
+                        ->where(fn ($q) =>
+                            $q->where('periodo', Carbon::now()->firstOfMonth())
+                            ->where('categoria_id', $this->categoria_id)
+                        )
+                        ->ignore(optional($this->route('presupuesto'))->id),
+                ],
             'monto' => ['required','numeric','min:0'],
-            'descripcion' => ['nullable','string','max:50'],
+            'descripcion' => ['nullable','string','max:80'],
         ];
     }
 }

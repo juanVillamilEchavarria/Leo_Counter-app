@@ -3,7 +3,7 @@
 namespace App\Domains\Presupuesto\Exceptions;
 
 use Exception;
-
-class CannotUpdatePresupuestoException extends Exception
+use App\Domains\Presupuesto\Exceptions\PresupuestoException;
+class CannotUpdatePresupuestoException extends PresupuestoException
 {
 }

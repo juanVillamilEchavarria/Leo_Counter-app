@@ -2,13 +2,17 @@
 
 namespace App\Domains\Presupuesto\DTOs;
 
-USE App\Shared\DTOs\DTO;
+use App\Shared\DTOs\DTO;
+use Illuminate\Support\Carbon;
 
 abstract class PresupuestoDTO extends DTO {
     public function __construct(
         public int $categoria_id,
-        public int $tipo_presupuesto_id,
         public float $monto,
-        public ?string $descripcion = null
-    ){}
+         public ?Carbon $periodo = null,
+        public ?string $descripcion = null,
+ 
+    ){
+        $this->periodo = Carbon::now()->firstOfMonth();
+    }
 }

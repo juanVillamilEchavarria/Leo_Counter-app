@@ -16,8 +16,8 @@ export function monthLimitFromToday(months : number = 1){
     return dayjs().add(months, 'month').locale('es').format('YYYY-MM-DD');
 }
 
-export function dateFormat(date : string| Date | undefined) {
-  return dayjs(date).format('DD [de] MMMM [de] YYYY')
+export function dateFormat(date : string| Date | undefined, format : string = 'DD [de] MM [de] YYYY') {
+  return dayjs(date).format(format);
 }
 export const months: Record<string, string> = {
         'january': 'Enero',

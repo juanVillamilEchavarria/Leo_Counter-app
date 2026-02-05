@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Categoria\Categoria;
 use App\Models\User;
-use App\Models\TipoPresupuesto\TipoPresupuesto;
 
 class Presupuesto extends Model
 {
@@ -15,28 +14,20 @@ class Presupuesto extends Model
 
     protected $fillable = [
         'categoria_id',
-        'tipo_presupuesto_id',
         'monto',
         'descripcion',
-        'fecha_inicio',
-        'fecha_final',
+        'periodo',
         'user_id'
     ];
-
     protected $casts = [
-        'fecha_inicio' => 'date',
-        'fecha_final' => 'date',
-        'monto' => 'decimal:2'
+        'periodo'=> 'date',
+        'monto'=> 'decimal:2'
     ];
+
 
     public function categoria()
     {
         return $this->belongsTo(Categoria::class);
-    }
-
-    public function tipoPresupuesto()
-    {
-        return $this->belongsTo(TipoPresupuesto::class);
     }
 
     public function user()

@@ -4,6 +4,6 @@ namespace App\Domains\Presupuesto\Exceptions;
 
 use Exception;
 
-class PresupuestoException extends Exception
+abstract class PresupuestoException extends Exception
 {
 }

@@ -8,8 +8,7 @@
 - [ Completado ] Revisar índices para reportes trimestrales y anuales
 - [ completado] Crear Tabla de `movimiento_pendientes` 
 - [Completado ] Crear Tabla de `movimientos` y asociarla con `movimeinto_pendientes` 
-- [ ] Agregar columna `nombre` en `presupuestos` para mejorar claridad
--[ ] Eliminar la tabla de tipo_presupuesto y sus relaciones
+-[ Completado] Eliminar la tabla de tipo_presupuesto y sus relaciones
 
 ## 2. Backend / Laravel
 - [ ] Crear Jobs o Tasks para registro automático de movimientos fijos
@@ -19,7 +18,7 @@
 - [Parcial ] Validaciones de tablas con relaciones antes de eliminar, no permitir sin antes reasignar
 - [ ] crear Jobs o Tasks para los sofdeletes de movimientos pendientes vencidos, para mostrarlos en la configuracion del sistema
 - [Completado ] terminar de hacer la migration de archivos_movimientos y completar el backend de movimientos_pendientes para que en la marcacion de pagado, inserte en movimientos y suba los archivos que llegan desde el frontend
-- [ ] Eliminar el modulo de presupuestos por periodo, ya que no hace sintonia con la app
+- [ COmpletado ] Eliminar el modulo de presupuestos por periodo, ya que no hace sintonia con la app
 
 ## 3. Frontend / UX
 - [ Parcial] Interfaces separadas para:

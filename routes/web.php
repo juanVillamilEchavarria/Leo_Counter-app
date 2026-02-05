@@ -13,7 +13,7 @@ use App\Http\Controllers\Categoria\CategoriaController;
 use App\Http\Controllers\Reporte\ReporteController;
 use App\Http\Controllers\Presupuesto\PresupuestoHistoricoController;
 use App\Http\Controllers\Presupuesto\PresupuestoMesActualController;
-use App\Http\Controllers\Presupuesto\PresupuestoPorPeriodoController;
+
 use App\Http\Controllers\PagoPendiente\PagoPendienteController;
 use App\Http\Controllers\Historial\HistorialController;
 Route::get('/', [LoginController::class, 'index'])->name('login');
@@ -55,10 +55,6 @@ Route::middleware('auth')->group( function () {
     // PRESUPUESTOS MES ACTUAL
     Route::resource('presupuestos/mes-actual', PresupuestoMesActualController::class)->names('presupuestosMesActual')->parameters([
         'mes-actual' => 'presupuesto'
-    ]);
-    // PRESUPUESTOS POR PERIODO
-    Route::resource('presupuestos/por-periodo', PresupuestoPorPeriodoController::class)->names('presupuestosPorPeriodo')->parameters([
-        'por-periodo' => 'presupuesto'
     ]);
     // PAGOS PENDIENTES
     Route::resource('pagos-pendientes',PagoPendienteController::class)->names('pagosPendientes');
