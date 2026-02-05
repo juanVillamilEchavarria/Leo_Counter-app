@@ -7,7 +7,8 @@ import { type ChangeEvent, useMemo } from "react"
 import { type TanStackTableProps } from "../../../types/components" 
 export default function TanStackTable<T extends Record<string,any>>({
     columns,
-    data
+    data,
+
 }:TanStackTableProps<T>) {
     if(columns === undefined|| data=== undefined)return null
     const {
@@ -41,7 +42,7 @@ export default function TanStackTable<T extends Record<string,any>>({
         <table className="table-general">
             <thead className="table-thead">
                 {table.getHeaderGroups().map((headerGroup) => (
-                    <tr key={headerGroup.id}>
+                    <tr  key={headerGroup.id} >
                         {headerGroup.headers.map((header) => {
                             // variable para saber si se esta filtrando la columna de menor a mayor 
                             const isSorted = header.column.getIsSorted()
@@ -70,10 +71,13 @@ export default function TanStackTable<T extends Record<string,any>>({
             </thead>
             <tbody className="table-tbody">
                 {table.getRowModel().rows.map((row) => (
-                    <tr key={row.id}>
+                    <tr 
+                    key={row.id} 
+
+                    >
                         {row.getVisibleCells().map((cell) => (
                             <td key={cell.id}>
-                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                {cell.getValue()!== null ?flexRender(cell.column.columnDef.cell, cell.getContext()): <span className="text-gray-400">CAMPO VACIO</span>}
                             </td>
                         ))}
                     </tr>

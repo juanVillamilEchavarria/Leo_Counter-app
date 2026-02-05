@@ -3,6 +3,7 @@ import EditAndDeleteActions from "@/app/shared/components/table/actions/EditAndD
 import SuccessOrFailText from "@/app/shared/components/common/SuccessOrFailText"
 import { MovimientoFijoActions, MovimientoFijoRoutes } from "../../types/movimientoFijo.types"
 import { dateFormat } from "@/app/shared/helpers"
+import { moneyFormat } from "@/app/shared/helpers"
 import { type MovimientoFijoTableData } from "../../types/movimientoFijo.types"
 export const MovimientoFijoColumns = (({
     onDelete
@@ -22,7 +23,7 @@ export const MovimientoFijoColumns = (({
             )
             },
            { key: "categoria", label: "Categoria" },
-           { key: "monto", label: "Monto" },
+           { key: "monto", label: "Monto", render: (row: MovimientoFijoTableData)=>(moneyFormat(Number(row.monto))) },
            { key: "fecha_proximo", label: "Fecha Del Proximo Pago", render: (row: MovimientoFijoTableData)=>(dateFormat(row.fecha_proximo)) },
            { key: "frecuencia_movimiento", label: "Frecuencia" },
            { key: "descripcion", label: "Descripcion", className: 'w-30' },

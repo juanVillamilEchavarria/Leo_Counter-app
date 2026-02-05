@@ -24,6 +24,9 @@ use App\Domains\MovimientoPendiente\DTOs\MarkMovimientoPendienteDTO;
 use App\Domains\MovimientoPendiente\Enums\EstadosMovimientoPendiente;
 use App\Domains\Movimiento\DTOs\StoreMovimientoDTO;
 use App\Domains\ArchivoMovimiento\DTOs\ThrowArchivoMovimientoDTO;
+// Resources
+use App\Domains\MovimientoPendiente\Resources\MovimientoPendienteResource;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class MovimientoPendienteService
 {
@@ -55,8 +58,9 @@ class MovimientoPendienteService
         return $this->destroyMovimientoPendienteAction->destroy($movimientoPendiente);
     }
 
-    public function getAll(){
-        return $this->getMovimientoPendienteAction->getAll();
+    public function getAll(): AnonymousResourceCollection {
+        $movimientos = $this->getMovimientoPendienteAction->getAll();
+        return MovimientoPendienteResource::collection($movimientos);
     }
 
     public function getOptions(){
@@ -69,7 +73,7 @@ class MovimientoPendienteService
     }
 
     public function getRecordsCount(){
-        return $this->getMovimientoPendienteAction->getRecordsCount();
+        return $this->getMovimientoPendienteAction->getAvalaibleRecordsCount();
     }
 
     public function markAsDone(MovimientoPendiente $movimientoPendiente, array $data): bool{

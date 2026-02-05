@@ -20,6 +20,7 @@ use App\Models\Cuenta\Cuenta;
 // CLASES DE LARAVEL PARA TIPAR
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Database\Eloquent\Builder;
+use App\Domains\Cuenta\Resources\CuentaResource;
 
 class CuentaService{
     public function __construct(
@@ -58,7 +59,8 @@ class CuentaService{
     }
 
     public function getAllAvailableWhitDetails(): AnonymousResourceCollection{
-        return $this->getCuentaAction->getAllAvalaibleWhitDetails();
+        $cuentas = $this->getCuentaAction->getAllAvalaibleWithDetails();
+        return CuentaResource::collection($cuentas);
     }
     public function getAllAvailable(): Builder{
         return $this->getCuentaAction->allAvailable();

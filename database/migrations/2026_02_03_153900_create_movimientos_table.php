@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('movimientos', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre');
             $table->foreignId('cuenta_id')->constrained('cuentas')->onDelete('cascade');
             $table->foreignId('categoria_id')->constrained('categorias')->onDelete('cascade');
             $table->foreignId('tipo_movimiento_id')->constrained('tipo_movimientos')->onDelete('cascade');

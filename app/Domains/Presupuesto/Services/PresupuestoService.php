@@ -18,6 +18,7 @@ use App\Models\Presupuesto\Presupuesto;
 use App\Domains\Presupuesto\Enums\DTOEnum;
 use App\Domains\Presupuesto\Enums\PresupuestoVariants;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use App\Domains\Presupuesto\Resources\PresupuestoResource;
 
 class PresupuestoService
 {
@@ -81,9 +82,16 @@ class PresupuestoService
 
     public function getAllWithDetails(PresupuestoVariants $type): AnonymousResourceCollection
     {
-        if($type === PresupuestoVariants::MES_ACTUAL) return $this->getPresupuestoAction->getActualMesWithDetails();
-        if($type === PresupuestoVariants::POR_PERIODO) return $this->getPresupuestoAction->getPorPeriodoWithDetails();
-        return $this->getPresupuestoAction->getAllWithDetails();
+        if($type === PresupuestoVariants::MES_ACTUAL) {
+            $presupuestos = $this->getPresupuestoAction->getActualMesWithDetails();
+            return PresupuestoResource::collection($presupuestos);
+        }
+        if($type === PresupuestoVariants::POR_PERIODO) {
+            $presupuestos = $this->getPresupuestoAction->getPorPeriodoWithDetails();
+            return PresupuestoResource::collection($presupuestos);
+        }
+        $presupuestos = $this->getPresupuestoAction->getAllWithDetails();
+        return PresupuestoResource::collection($presupuestos);
     }
 
 }

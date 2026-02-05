@@ -10,6 +10,7 @@ use App\Shared\DTOs\UploadFileDTO;
 use App\Domains\ArchivoMovimiento\DTOs\ThrowArchivoMovimientoDTO;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 class ArchivoMovimientoService  {
     public function __construct(
         private StoreArchivoMovimientoAction $storeArchivoMovimientoAction,
@@ -46,4 +47,5 @@ class ArchivoMovimientoService  {
         }
        
     }
+
 }

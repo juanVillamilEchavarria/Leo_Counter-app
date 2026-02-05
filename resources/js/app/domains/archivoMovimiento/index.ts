@@ -1,0 +1,1 @@
+export {type Comprobante, ArchivoMovimientoRoutes}from './types/archivoMovimiento.types';

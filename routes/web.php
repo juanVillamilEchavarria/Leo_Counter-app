@@ -8,6 +8,7 @@ use App\Http\Controllers\Propietario\PropietarioController;
 use App\Http\Controllers\Movimiento\MovimientoController;
 use App\Http\Controllers\MovimientoPendiente\MovimientoPendienteController;
 use App\Http\Controllers\MovimientoFijo\MovimientoFijoController;
+use App\Http\Controllers\ArchivoMovimiento\ArchivoMovimientoController;
 use App\Http\Controllers\Categoria\CategoriaController;
 use App\Http\Controllers\Reporte\ReporteController;
 use App\Http\Controllers\Presupuesto\PresupuestoHistoricoController;
@@ -28,6 +29,7 @@ Route::middleware('auth')->group( function () {
     Route::resource('propietarios',PropietarioController::class)->names('propietarios');
     // MOVIMIENTOS
     Route::get('/movimientos', [MovimientoController::class, 'index'])->name('movimientos.index');
+    Route::get('/movimientos/{movimiento}', [MovimientoController::class, 'show'])->name('movimientos.show');
     // MOVIMIENTOS PENDIENTES
     Route::resource('movimientos-pendientes',MovimientoPendienteController::class)->names('movimientosPendientes')->parameters([
         'movimientos-pendientes'=> 'movimientoPendiente'
@@ -37,6 +39,10 @@ Route::middleware('auth')->group( function () {
     Route::resource('movimientos-fijos',MovimientoFijoController::class)->names('movimientosFijos')->parameters([
         'movimientos-fijos'=> 'movimientoFijo'
     ]);
+    // ARCHIVOS_MOVIMIENTOS 
+    Route::get('movimientos/archivos/{archivoMovimiento}', [ArchivoMovimientoController::class, 'show'])->name('movimientos.archivos.show');
+    Route::get('movimientos/archivos/{archivoMovimiento}/download', [ArchivoMovimientoController::class, 'download'])->name('movimientos.archivos.download');
+
     Route::patch('movimientos-fijos/{movimientoFijo}/toggle-active', [MovimientoFijoController::class, 'toggleActive'])->name('movimientosFijos.toggle-active');
     Route::patch('movimientos-fijos/{movimientoFijo}/toggle-registrar-automaticamente', [MovimientoFijoController::class, 'toggleRegistrarAutomaticamente'])->name('movimientosFijos.toggle-registrar-automaticamente');
     // CATEGORIAS

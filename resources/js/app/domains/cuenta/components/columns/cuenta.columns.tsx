@@ -2,6 +2,7 @@
 import { CuentaActions, type Cuenta, CuentaRoutes } from "../../types/cuenta.types"
 import EditAndDeleteActions from "@/app/shared/components/table/actions/EditAndDeleteActions"
 import ModelToggle from "@/app/shared/components/table/actions/ModelToggle"
+import { moneyFormat } from "@/app/shared/helpers"
 
 
 export const CuentaColumns=({ // la hacemos de esta manera para poder pasarle la funcion onDelete que se encargara de abrir el modal
@@ -11,8 +12,8 @@ export const CuentaColumns=({ // la hacemos de esta manera para poder pasarle la
 })=>[
     { key: "id", label: "ID" },
     { key: "nombre", label: "Nombre" },
-    { key: "saldo_inicial", label: "Saldo Inicial" },
-    { key: "saldo_actual", label: "Saldo Actual" },
+    { key: "saldo_inicial", label: "Saldo Inicial", render: (row: Cuenta) => moneyFormat(Number(row.saldo_inicial)) },
+    { key: "saldo_actual", label: "Saldo Actual", render: (row: Cuenta) => moneyFormat(Number(row.saldo_actual)) },
     {key: "propietario", label: "Propietario"},
     { key: "tipo_cuenta", label: "Tipo de cuenta" },
     { key: "notas", label: "Notas" },

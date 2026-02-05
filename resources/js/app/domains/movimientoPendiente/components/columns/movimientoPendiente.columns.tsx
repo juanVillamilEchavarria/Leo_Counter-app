@@ -6,6 +6,7 @@ import SuccessOrFailText from "@/app/shared/components/common/SuccessOrFailText"
 import {type MovimientoPendienteTableData, MovimientoPendienteActions, MovimientoPendienteRoutes } from "../../types/movimientoPendiente.types"
 import { MovimientoFijoRoutes } from "@/app/domains/movimientoFijo"
 import { dateFormat } from "@/app/shared/helpers"
+import { moneyFormat } from "@/app/shared/helpers"
 import CrudButton from "@/app/shared/components/common/CrudButton"
 const buildMovimientoPendienteActions = (
   row: MovimientoPendienteTableData,
@@ -52,7 +53,7 @@ export const MovimientoPendienteColumns=(({
         return row.movimiento_fijo ? <Link href={MovimientoFijoRoutes.index()}>{row.movimiento_fijo}</Link> : <span className="text-gray-400 uppercase">No Aplica</span>
       }
          },
-    { key : 'monto', label : 'Monto' },
+    { key : 'monto', label : 'Monto', render: (row: MovimientoPendienteTableData) => moneyFormat(Number(row.monto)) },
     { key : 'fecha_programada', label : 'Fecha Programada', render: (row: MovimientoPendienteTableData)=>(dateFormat(row.fecha_programada)) },
     {
         key: 'estado',

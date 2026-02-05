@@ -12,7 +12,9 @@ export type DropZoneProps = {
 
 
 export type UploadedFileListProps = {
+  as?: React.ElementType
   files: FileWithPreview[];
   handleDeleteFile: (index: number) => void;
   active?: boolean;
+  modifyable?: boolean
 };

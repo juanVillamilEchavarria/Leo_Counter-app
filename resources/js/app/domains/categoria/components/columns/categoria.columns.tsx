@@ -16,7 +16,7 @@ export const CategoriaColumns=(({
         { key: "descripcion", label: "Descripcion"},
         {
           key: 'es_fijo',
-          label: 'Es Fijo',
+          label: 'Su frecuencia es fija',
           className: 'w-40',
           render: (row : Categoria)=>(
             <ModelToggle 

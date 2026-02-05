@@ -10,6 +10,7 @@ import{ TextSize,
 import { type FlashMessages } from "./intertia/flash";
 import { type InertiaProps } from "./intertia/props";
 import { type DropZoneProps,  type UploadedFileListProps } from "./dropZone";
+import { BaseIcons, IconAliases } from "./icons/icons.types";
 export {
     type FormDataNormalProps,
     type CreateAndEditViewWithOptionsProps,
@@ -24,5 +25,7 @@ export {
     type FlashMessages,
     type InertiaProps,
     type DropZoneProps,
-    type UploadedFileListProps
+    type UploadedFileListProps,
+    BaseIcons,
+    IconAliases
 }

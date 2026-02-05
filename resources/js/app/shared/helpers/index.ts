@@ -2,7 +2,7 @@ import { dateFormat, dateToLocal, today, monthLimitFromToday } from "./date/date
 import { getVisiblePages } from "./table/table.helper";
 import { toastHelper } from "./messages/toast.helper";
 import { isRouteActive } from "./nav/nav.helper";
-import { formatMoney } from "./money/money.helper";
+import { moneyFormat } from "./money/money.helper";
 
 export{
     dateFormat,
@@ -11,7 +11,7 @@ export{
     today,
     getVisiblePages,
     isRouteActive,
-    formatMoney,
+    moneyFormat,
     toastHelper
 
 }

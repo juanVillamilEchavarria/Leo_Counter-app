@@ -4,8 +4,6 @@ namespace App\Domains\Categoria\Actions;
 
 use App\Models\Categoria\Categoria;
 use Illuminate\Database\Eloquent\Collection;
-use App\Domains\Categoria\Resources\CategoriaResource;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class GetCategoriaAction
 {
@@ -25,10 +23,5 @@ class GetCategoriaAction
     public function getAllWithFullDetails() : Collection
     {
         return Categoria::with('tipoMovimiento')->get();
-    }
-    public function getAllWithDetails() : AnonymousResourceCollection
-    {
-        $categoria = $this->getAllWithFullDetails();
-        return CategoriaResource::collection($categoria);
     }
 }

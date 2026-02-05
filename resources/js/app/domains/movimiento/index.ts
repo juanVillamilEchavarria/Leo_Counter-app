@@ -1,8 +1,11 @@
 
-import { ColumnsTableMovimientos } from "./types/movimiento.types";
+import { type MovimientoTableData, type Movimiento, type MovimientoShowData, MovimientoRoutes} from "./types/movimiento.types";
 import MovimientoTable from "./components/MovimientoTable";
 
 export {
-    ColumnsTableMovimientos,
-    MovimientoTable
+    type Movimiento,
+    type MovimientoTableData,
+    type MovimientoShowData,
+    MovimientoTable,
+    MovimientoRoutes
 }

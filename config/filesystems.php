@@ -63,7 +63,7 @@ return [
             'driver' => 'local',
             'root' => storage_path('app/data/movimientos'),
             'throw' => false,
-            'visibility' => 'public',
+            'visibility' => 'private',
             'report' => false
         ]
 

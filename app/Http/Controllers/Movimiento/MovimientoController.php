@@ -5,14 +5,37 @@ namespace App\Http\Controllers\Movimiento;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Domains\Movimiento\Service\MovimientoService;
+use App\Models\Movimiento\Movimiento;
 
 class MovimientoController extends Controller
 {
-   public function index(){
-    return Inertia::render('Movimientos/Movimiento',[
-        'title'=>'Movimientos',
-        'NoRegistros'=>10
 
+    public function __construct(
+        private MovimientoService $movimientoService
+    )
+    {
+    }
+
+    private function props (){
+        return [
+            'title'=>'Movimientos',
+            'NoRegistros'=>$this->movimientoService->getRecordsCount(),
+            'movimientos'=>$this->movimientoService->getAll()
+
+        ];
+    }
+   public function index(){
+    return Inertia::render('Movimientos/Index',$this->props());
+   }
+
+   public function show(Movimiento $movimiento){
+    
+    $props = array_merge($this->props(),[
+        'data'=>$this->movimientoService->getWithDetails($movimiento)
     ]);
+
+    return Inertia::render('Movimientos/Index', $props);
+
    }
 }

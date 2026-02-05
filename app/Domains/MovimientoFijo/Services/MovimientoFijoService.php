@@ -17,6 +17,9 @@ use App\Domains\FrecuenciaMovimiento\Actions\GetFrecuenciaMovimientoAction;
 use App\Domains\MovimientoFijo\DTOs\MovimientoFijoFormOptionsDTO;
 use App\Domains\MovimientoFijo\DTOs\UpdateMovimientoFijoDTO;
 use App\Domains\MovimientoFijo\DTOs\StoreMovimientoFijoDTO;
+// Resources
+use App\Domains\MovimientoFijo\Resources\MovimientoFijoResource;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class MovimientoFijoService
 {
@@ -56,8 +59,9 @@ class MovimientoFijoService
         return $this->updateMovimientoFijoAction->toggleRegistrarAutomatico($movimientoFijo);
     }
 
-    public function getAll(){
-        return $this->getMovimientoFijoAction->getAll();
+    public function getAll(): AnonymousResourceCollection {
+        $movimientos = $this->getMovimientoFijoAction->getAll();
+        return MovimientoFijoResource::collection($movimientos);
     }
    public function getOptions(){
         return new MovimientoFijoFormOptionsDTO(

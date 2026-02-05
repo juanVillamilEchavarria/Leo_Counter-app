@@ -10,6 +10,7 @@ use App\Domains\Categoria\Actions\GetCategoriaAction;
 use App\Domains\TipoMovimiento\Actions\GetTipoMovimientoAction;
 use App\Domains\Categoria\DTOs\CategoriaFormOptionsDTO;
 use App\Domains\Categoria\DTOs\StoreAndUpdateCategoriaDTO;
+use App\Domains\Categoria\Resources\CategoriaResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 
@@ -55,6 +56,7 @@ class CategoriaService{
 
     public function getAllWithDetails() : AnonymousResourceCollection
     {
-        return $this->getCategoriaAction->getAllWithDetails();
+        $categorias = $this->getCategoriaAction->getAllWithFullDetails();
+        return CategoriaResource::collection($categorias);
     }
 }
