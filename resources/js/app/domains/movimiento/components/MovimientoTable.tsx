@@ -1,6 +1,5 @@
 import TanStackTable from "@/app/shared/components/table/advanced/TanStackTable"
-import ShowModal from "@/app/shared/components/modal/ShowModal"
-import MovimientoShowModal from "./MovimientoShowModal"
+import ShowMovimientoModal from "./ShowMovimientoModal"
 import { router } from "@inertiajs/react"
 import { useMemo, useState, useEffect } from "react"
 import { BaseIcons } from "@/app/shared/types"
@@ -9,25 +8,15 @@ import { type MovimientoTableData, type MovimientoShowData, MovimientoRoutes } f
 import { ArchivoMovimientoRoutes } from "../../archivoMovimiento"
 export default function MovimientoTable({
   data,
-  showData
+  onSelect
+
 }:{
   data: MovimientoTableData[]
-  showData?: MovimientoShowData
+  onSelect : (item: MovimientoTableData) => void
 }) {
-  const [itemSelected, setItemSelected] = useState<MovimientoShowData | null>(null)
-  useEffect(() => {
-    if (showData) {
-      setItemSelected(showData)
-    }
-  }, [showData])
    const columns = useMemo(()=>
     MovimientoColumns({
-      onSelect: (item: MovimientoTableData) => {
-        router.get(MovimientoRoutes.show(item.id),{},{
-          preserveState: true,
-          preserveScroll: true
-        })
-      }
+      onSelect
     })
    , [MovimientoColumns])
   return (
@@ -36,16 +25,6 @@ export default function MovimientoTable({
            columns={columns}
            data={data}
             />
-    <MovimientoShowModal 
-    movimiento={itemSelected}
-    onClose={()=>{
-              setItemSelected(null)
-              router.get(MovimientoRoutes.index,{},{
-                preserveState: true,
-                preserveScroll: true
-              })
-            }}
-    />
     </>
   )
 }

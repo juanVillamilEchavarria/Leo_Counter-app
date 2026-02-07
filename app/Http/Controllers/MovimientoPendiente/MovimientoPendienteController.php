@@ -10,24 +10,27 @@ use App\Models\MovimientoPendiente\MovimientoPendiente;
 use App\Http\Requests\MovimientoPendiente\MarkAsDoneRequest;
 class MovimientoPendienteController extends Controller
 {
+    
     public function __construct(
         protected MovimientoPendienteService $movimientoPendienteService
     ) {
     }
 
-    private function NoRegistros(){
-        return $this->movimientoPendienteService->getRecordsCount();
+    private function props(string $title = 'Movimientos Pendientes') : array{
+        return [
+            'title'=> $title,
+            'NoRegistros'=>$this->movimientoPendienteService->getRecordsCount(),
+
+        ];
     }
 
     public function index()
     {
         $movimientos= $this->movimientoPendienteService->getAll();
-
-        return Inertia::render('MovimientosPendientes/Index', [
-            'title' => 'Movimientos Pendientes',
-            'NoRegistros'=> $this->NoRegistros(),
-            'movimientos' => $movimientos
+        $props = array_merge($this->props(),[
+            'movimientos'=>$movimientos
         ]);
+        return Inertia::render('MovimientosPendientes/Index', $props);
     }
 
     /**
@@ -35,11 +38,10 @@ class MovimientoPendienteController extends Controller
      */
     public function create()
     {
-        return Inertia::render('MovimientosPendientes/Create', [
-            'title' => 'Crear Movimiento Pendiente',
-            'NoRegistros'=> $this->NoRegistros(),
+        $props = array_merge($this->props('Crear Movimiento Pendiente'),[
             'options' => $this->movimientoPendienteService->getOptions()
         ]);
+        return Inertia::render('MovimientosPendientes/Create', $props);
     }
 
     /**
@@ -55,9 +57,13 @@ class MovimientoPendienteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(MovimientoPendiente $movimientoPendiente)
     {
-        //
+        $props = array_merge($this->props('Detalle Movimiento Pendiente'),[
+            'movimientos' => $this->movimientoPendienteService->getAll(),
+            'data' => $this->movimientoPendienteService->getWithDetails($movimientoPendiente)
+        ]);
+        return Inertia::render('MovimientosPendientes/Index', $props);
     }
 
     /**
@@ -65,12 +71,11 @@ class MovimientoPendienteController extends Controller
      */
     public function edit(MovimientoPendiente $movimientoPendiente)
     {
-        return Inertia::render('MovimientosPendientes/Edit', [
-            'title' => 'Editar Movimiento Pendiente',
-            'NoRegistros'=> $this->NoRegistros(),
+        $props = array_merge($this->props('Editar Movimiento Pendiente'),[
             'data' => $movimientoPendiente,
             'options' => $this->movimientoPendienteService->getOptions()
         ]);
+        return Inertia::render('MovimientosPendientes/Edit', $props);
     }
 
     /**

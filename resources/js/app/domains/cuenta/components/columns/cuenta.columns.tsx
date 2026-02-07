@@ -5,10 +5,10 @@ import ModelToggle from "@/app/shared/components/table/actions/ModelToggle"
 import { moneyFormat } from "@/app/shared/helpers"
 
 
-export const CuentaColumns=({ // la hacemos de esta manera para poder pasarle la funcion onDelete que se encargara de abrir el modal
-  onDelete,
+export const CuentaColumns=({ // la hacemos de esta manera para poder pasarle la funcion onSelect que se encargara de abrir el modal
+  onSelect,
 }:{
-  onDelete: (cuenta : Cuenta) => void
+  onSelect: (cuenta : Cuenta) => void
 })=>[
     { key: "id", label: "ID" },
     { key: "nombre", label: "Nombre" },
@@ -35,7 +35,7 @@ export const CuentaColumns=({ // la hacemos de esta manera para poder pasarle la
         <EditAndDeleteActions
          editHref={CuentaRoutes.edit(row.id)} 
         deleteIcon='fa-solid fa-box-archive' 
-        deleteOnClick={()=> onDelete(row)}
+        deleteOnClick={()=> onSelect(row)}
         /> //se devuelven los botones de editar y eliminar con su respectivo enlace
       )
     }

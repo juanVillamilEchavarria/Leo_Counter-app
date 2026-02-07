@@ -7,7 +7,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Domains\Movimiento\Resources\MovimientoResource;
 use App\Domains\ArchivoMovimiento\Resources\ComprobanteResource;
 
-class MovimientoShowResource extends MovimientoResource
+class ShowMovimientoResource extends MovimientoResource
 {
     /**
      * Transform the resource into an array.

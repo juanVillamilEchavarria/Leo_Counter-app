@@ -9,10 +9,10 @@ abstract class PresupuestoDTO extends DTO {
     public function __construct(
         public int $categoria_id,
         public float $monto,
-         public ?Carbon $periodo = null,
+         public Carbon | string $periodo = '',
         public ?string $descripcion = null,
  
     ){
-        $this->periodo = Carbon::now()->firstOfMonth();
+        $this->periodo = strlen($this->periodo) ? Carbon::parse($this->periodo) : Carbon::now()->firstOfMonth();
     }
 }

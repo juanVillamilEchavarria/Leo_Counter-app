@@ -1,16 +1,17 @@
-import EditAndDeleteActions from "@/app/shared/components/table/actions/EditAndDeleteActions"
 import ActionSection from "@/app/shared/components/table/actions/ActionSection"
 import { Link } from "@inertiajs/react"
-import Button from "@/app/shared/components/common/Button"
+import EditAndDeleteActions from "@/app/shared/components/table/actions/EditAndDeleteActions"
 import SuccessOrFailText from "@/app/shared/components/common/SuccessOrFailText"
-import {type MovimientoPendienteTableData, MovimientoPendienteActions, MovimientoPendienteRoutes } from "../../types/movimientoPendiente.types"
+import { router } from "@inertiajs/react"
+import {type MovimientoPendienteShowData ,MovimientoPendienteRoutes } from "../../types/movimientoPendiente.types"
+import { CuentaRoutes } from "@/app/domains/cuenta"
 import { MovimientoFijoRoutes } from "@/app/domains/movimientoFijo"
 import { dateFormat } from "@/app/shared/helpers"
 import { moneyFormat } from "@/app/shared/helpers"
 import CrudButton from "@/app/shared/components/common/CrudButton"
 const buildMovimientoPendienteActions = (
-  row: MovimientoPendienteTableData,
-  onDelete: (row: MovimientoPendienteTableData, modal: string) => void
+  row: MovimientoPendienteShowData,
+  onSelect: (row: MovimientoPendienteShowData, modal: string) => void
 ) => [
   {
     as: Link,
@@ -18,11 +19,11 @@ const buildMovimientoPendienteActions = (
     Crudvariant: 'Edit',
   },
   {
-    onClick: () => onDelete(row, 'delete'),
+    onClick: () => onSelect(row, 'delete'),
     Crudvariant: 'Delete',
   },
   {
-    onClick: () => onDelete(row, 'pagar'),
+    onClick: () => onSelect(row, 'markAsDone'),
     Crudvariant: 'Create',
     icon: 'fa-solid fa-cash-register fa-sm',
     className: 'p-2! m-0!',
@@ -31,15 +32,46 @@ const buildMovimientoPendienteActions = (
 ]
 
 export const MovimientoPendienteColumns=(({
-    onDelete
+    onSelect
 }:{
-    onDelete: (movimientoPendiente: MovimientoPendienteTableData, modal : string)=>void
-})=> {return [
+    onSelect: (movimientoPendiente: MovimientoPendienteShowData, modal : string)=>void
+})=> {return  [
     { key : 'id', label : 'ID' },
-    { key : 'nombre', label : 'Nombre' },
-    { key : 'cuenta', label : 'Cuenta' },
+    { key : 'nombre', label : 'Nombre',
+      render: (row: MovimientoPendienteShowData) => (
+        <button 
+        onClick={()=>{
+          onSelect(row, 'show')
+          router.get(MovimientoPendienteRoutes.show(row.id),{},{
+                    preserveState: true,
+                    preserveScroll: true
+                  })}
+
+        }
+         className="cursor-pointer hover:underline hover:text-blue-500 transition-all">
+                <p>{row.nombre}</p>
+            </button>
+      )
+     },
+    {
+       key : 'cuenta',
+        label : 'Cuenta' ,
+        render : (row: MovimientoPendienteShowData) => {
+          return row.enough_balance ? (
+            <Link className="cursor-pointer hover:underline transition-all" href={CuentaRoutes.index()}>{row.cuenta}</Link>
+          ):(
+            <div className="flex items-center text-red-400">
+             
+              <Link className="cursor-pointer hover:underline transition-all" href={CuentaRoutes.index()}>{row.cuenta}</Link>
+               <i className="fa-solid fa-coins"></i>
+               <i className="fa-solid fa-exclamation"></i>
+               
+            </div>
+          )
+        }
+      },
     { key : 'tipo_movimiento', label : 'Tipo',
-      render: (row: MovimientoPendienteTableData) => (
+      render: (row: MovimientoPendienteShowData) => (
        <SuccessOrFailText
          attribute={row.tipo_movimiento}
          value="Ingreso"
@@ -49,16 +81,16 @@ export const MovimientoPendienteColumns=(({
     { key : 'categoria', label : 'Categoria' },
     { key : 'movimiento_fijo',
       label : 'Movimiento Fijo',
-      render : (row: MovimientoPendienteTableData) => {
+      render : (row: MovimientoPendienteShowData) => {
         return row.movimiento_fijo ? <Link href={MovimientoFijoRoutes.index()}>{row.movimiento_fijo}</Link> : <span className="text-gray-400 uppercase">No Aplica</span>
       }
          },
-    { key : 'monto', label : 'Monto', render: (row: MovimientoPendienteTableData) => moneyFormat(Number(row.monto)) },
-    { key : 'fecha_programada', label : 'Fecha Programada', render: (row: MovimientoPendienteTableData)=>(dateFormat(row.fecha_programada)) },
+    { key : 'monto', label : 'Monto', render: (row: MovimientoPendienteShowData) => moneyFormat(Number(row.monto)) },
+    { key : 'fecha_programada', label : 'Fecha Programada', render: (row: MovimientoPendienteShowData)=>(dateFormat(row.fecha_programada)) },
     {
         key: 'estado',
         label: 'Estado',
-        render: (row: MovimientoPendienteTableData) => (
+        render: (row: MovimientoPendienteShowData) => (
           <span className={` font-bold ${row.estado === 'pendiente' ? 'text-yellow-600' : row.estado === 'realizado' ? 'text-green-600' : 'text-red-600'}`}>{row.estado}</span>
         ),
 
@@ -66,9 +98,11 @@ export const MovimientoPendienteColumns=(({
     {
       key: 'actions',
       label: '',
-      render: (row: MovimientoPendienteTableData) => (
-        <ActionSection actions={buildMovimientoPendienteActions(row, onDelete)} as={CrudButton} />
-      ),
+      render: (row: MovimientoPendienteShowData) => {return row.enough_balance ?(
+        <ActionSection actions={buildMovimientoPendienteActions(row, onSelect)} as={CrudButton} />
+      ):(
+        <EditAndDeleteActions editHref={MovimientoPendienteRoutes.edit(row.id)} deleteOnClick={()=> onSelect(row,'delete')} />
+      )},
     },
 
 ]})

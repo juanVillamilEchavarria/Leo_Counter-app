@@ -2,9 +2,9 @@ import EditAndDeleteActions from "@/app/shared/components/table/actions/EditAndD
 import { type Propietario, PropietarioActions, PropietarioRoutes } from "../../types/propietario.types";
 
 export const PropietarioColumns=({
-    onDelete
+    onSelect
 }:{
-    onDelete: (propietario: Propietario)=> void // cuando se le de click al boton de eliminar hace esta funcion, en este caso, recibe un propietario
+    onSelect: (propietario: Propietario)=> void // cuando se le de click al boton de eliminar hace esta funcion, en este caso, recibe un propietario
 })=>{
 
   return [
@@ -20,7 +20,7 @@ export const PropietarioColumns=({
       render: (row: Propietario)=>(
         <EditAndDeleteActions
          editHref={PropietarioRoutes.edit(row.id)} 
-        deleteOnClick={()=> onDelete(row)} // onDelete recibe el registro de la fila
+        deleteOnClick={()=> onSelect(row)} // onSelect recibe el registro de la fila
         />
       )
     },

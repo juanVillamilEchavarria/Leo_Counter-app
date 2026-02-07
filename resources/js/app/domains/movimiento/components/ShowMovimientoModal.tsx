@@ -1,9 +1,10 @@
 import ShowModal from "@/app/shared/components/modal/ShowModal"
-import { useMemo } from "react"
+import { router } from "@inertiajs/react"
+import { useMemo, useCallback } from "react"
 import { ArchivoMovimientoRoutes } from "../../archivoMovimiento"
 import { BaseIcons } from "@/app/shared/types"
-import { type MovimientoShowData } from "../types/movimiento.types"
-export default function MovimientoShowModal({
+import { type MovimientoShowData, MovimientoRoutes } from "../types/movimiento.types"
+export default function ShowMovimientoModal({
     movimiento,
     onClose,
 }:{
@@ -13,12 +14,18 @@ export default function MovimientoShowModal({
     const comprobantes = useMemo(()=>{
         return movimiento?.comprobantes
     }, [movimiento])
-    console.log(comprobantes);
+    const handleOnClose= useCallback(() => {
+        onClose()
+        router.get(MovimientoRoutes.index(),{},{
+          preserveState: true,
+          preserveScroll: true
+        })
+    }, [onClose])
   return (
     <ShowModal
     tittle="Movimiento"
     open={movimiento !== null}
-    onClose={()=> onClose()}
+    onClose={handleOnClose}
     item={movimiento}
     > 
           

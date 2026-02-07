@@ -1,0 +1,11 @@
+<?php
+
+namespace App\Shared\Enums;
+
+enum ComparativeOperators : string {
+    case EQUALS = '=';
+    case GREATER_THAN = '>';
+    case LESS_THAN = '<';
+    case GREATER_THAN_OR_EQUAL = '>=';
+    case LESS_THAN_OR_EQUAL = '<=';
+}

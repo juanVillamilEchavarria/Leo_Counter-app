@@ -1,21 +1,17 @@
 <?php
 namespace App\Domains\Cuenta\DTOs;
 
-use App\Shared\DTOs\DTO;
+use App\Domains\Cuenta\DTOs\CuentaDTO;
 
-class StoreCuentaDTO extends DTO
+class StoreCuentaDTO extends CuentaDTO
 {
-    public function __construct(
-        public readonly string $propietario_id,
-        public readonly string $tipo_cuenta_id,
-        public readonly string $nombre,
-        public readonly string $saldo_inicial,
-        public readonly ?string $notas = null
-    ){}
+
     public function toArray(): array
     {
         return array_merge(parent::toArray(), [
             'saldo_actual' => $this->saldo_inicial
         ]);
     }
+
+
 }

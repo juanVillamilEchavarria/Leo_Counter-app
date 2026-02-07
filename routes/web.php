@@ -56,6 +56,7 @@ Route::middleware('auth')->group( function () {
     Route::resource('presupuestos/mes-actual', PresupuestoMesActualController::class)->names('presupuestosMesActual')->parameters([
         'mes-actual' => 'presupuesto'
     ]);
+    Route::post('presupuestos/mes-actual/{presupuesto}/duplicate', [PresupuestoMesActualController::class, 'duplicate'])->name('presupuestosMesActual.duplicate');
     // PAGOS PENDIENTES
     Route::resource('pagos-pendientes',PagoPendienteController::class)->names('pagosPendientes');
     Route::get('/historial', [HistorialController::class, 'index'])->name('historial.index');

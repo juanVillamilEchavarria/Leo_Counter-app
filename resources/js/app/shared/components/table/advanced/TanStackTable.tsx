@@ -70,7 +70,7 @@ export default function TanStackTable<T extends Record<string,any>>({
                 ))}
             </thead>
             <tbody className="table-tbody">
-                {table.getRowModel().rows.map((row) => (
+                {table.getRowModel().rows.length>0 ? table.getRowModel().rows.map((row) => (
                     <tr 
                     key={row.id} 
 
@@ -81,7 +81,13 @@ export default function TanStackTable<T extends Record<string,any>>({
                             </td>
                         ))}
                     </tr>
-                ))}
+                )):(
+                    <tr>
+                        <td colSpan={columns.length} className="text-gray-500  text-xl text-center">
+                            No hay registros
+                        </td>
+                    </tr>
+                )}
               
             </tbody>
         </table>

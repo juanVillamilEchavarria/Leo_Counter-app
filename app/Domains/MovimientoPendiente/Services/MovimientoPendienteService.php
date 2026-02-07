@@ -16,6 +16,8 @@ use App\Domains\Movimiento\Actions\StoreMovimientoAction;
 use App\Domains\TipoMovimiento\Actions\GetTipoMovimientoAction;
 //Services 
 use App\Domains\ArchivoMovimiento\Services\ArchivoMovimientoService;
+use App\Domains\Movimiento\Service\MovimientoService;
+use App\Shared\Services\BalanceCheckerService;
 //DTOs
 use App\Domains\MovimientoPendiente\DTOs\MovimientoPendienteFormOptionsDTO;
 use App\Domains\MovimientoPendiente\DTOs\UpdateMovimientoPendienteDTO;
@@ -26,7 +28,11 @@ use App\Domains\Movimiento\DTOs\StoreMovimientoDTO;
 use App\Domains\ArchivoMovimiento\DTOs\ThrowArchivoMovimientoDTO;
 // Resources
 use App\Domains\MovimientoPendiente\Resources\MovimientoPendienteResource;
+use App\Domains\MovimientoPendiente\Resources\ShowMovimientoPendienteResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+
+//ENUMS
+use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 
 class MovimientoPendienteService
 {
@@ -38,11 +44,12 @@ class MovimientoPendienteService
         private GetCuentaAction $getCuentaAction,
         private GetCategoriaAction $getCategoriaAction,
         private GetTipoMovimientoAction $getTipoMovimientoAction,
-        private StoreMovimientoAction $storeMovimientoAction,
-        private ArchivoMovimientoService $archivoMovimientoService
+        private MovimientoService $movimientoService,
+        private BalanceCheckerService $balanceCheckerService
     )
     {
     }
+
 
     public function store (array $data): MovimientoPendiente{
         $dto = StoreMovimientoPendienteDTO::fromArray($data);
@@ -58,8 +65,20 @@ class MovimientoPendienteService
         return $this->destroyMovimientoPendienteAction->destroy($movimientoPendiente);
     }
 
+    public function getWithDetails(MovimientoPendiente $movimientoPendiente): ShowMovimientoPendienteResource{
+        $movimiento = $this->getMovimientoPendienteAction->getWithDetails($movimientoPendiente);
+        $movimiento->enough_balance = $this->balanceCheckerService->canAfford($movimiento->cuenta_id, $movimiento->monto);
+        return ShowMovimientoPendienteResource::make($this->getMovimientoPendienteAction->getWithDetails($movimiento));
+    }
+
     public function getAll(): AnonymousResourceCollection {
         $movimientos = $this->getMovimientoPendienteAction->getAll();
+        $movimientos->map(function ($movimiento) {
+            if($movimiento->tipo_movimiento_id === TipoMovimientoEnum::GASTO->value){
+                $movimiento->enough_balance = $this->balanceCheckerService->canAfford($movimiento->cuenta_id, $movimiento->monto);
+            }
+            
+        });
         return MovimientoPendienteResource::collection($movimientos);
     }
 
@@ -77,16 +96,8 @@ class MovimientoPendienteService
     }
 
     public function markAsDone(MovimientoPendiente $movimientoPendiente, array $data): bool{
-        $dtoMovimiento = StoreMovimientoDTO::fromObject($movimientoPendiente);
-        $movInserted= $this->storeMovimientoAction->store($dtoMovimiento);
-        if(!empty($data['comprobantes'])){
-           $dtoArchivo = new ThrowArchivoMovimientoDTO(
-                comprobantes: $data['comprobantes'],
-                categoria: $movimientoPendiente->categoria->nombre,
-                tipo_movimiento: $movimientoPendiente->tipo_movimiento->tipo_movimiento,
-                movimiento_id: $movInserted->id);
-            $this->archivoMovimientoService->store($dtoArchivo);
-        }
+        $dtoMov = StoreMovimientoDTO::fromMovimientoPendiente($movimientoPendiente, $data['comprobantes'] ?? []);
+        $this->movimientoService->store($dtoMov);
         $dto = MarkMovimientoPendienteDTO::fromArray(['estado'=> EstadosMovimientoPendiente::REALIZADO]);
         return $this->updateMovimientoPendienteAction->update($movimientoPendiente, $dto);
     }

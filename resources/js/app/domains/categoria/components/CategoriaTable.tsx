@@ -1,51 +1,36 @@
 import SimpleTable from "@/app/shared/components/table/simple/SimpleTable"
-import DeleteModal from "@/app/shared/components/modal/DeleteModal"
-import useCategoria from "../hooks/useCategoria"
 import { useSimpleTable } from "@/app/shared/hooks"
 import { CategoriaColumns } from "./columns/categoria.columns"
 import { type Categoria } from "../types/categoria.types"
+import { useMemo } from "react"
 
 export default function CategoriaTable({
   data,
-  pageSize = 10
+  pageSize = 10,
+  onSelect
 }: {
   data: Categoria[],
-  pageSize?: number
+  pageSize?: number,
+  onSelect: (item: Categoria, modalType: string) => void
 }) {
-  const config = useSimpleTable({
+  const {data: paginatedData}  = useSimpleTable({
     data,
     pageSize,
-    tableColumns: CategoriaColumns,
-    formModelHook: useCategoria
-  })
-
-  const {
-    data: paginatedData,
-    columns,
-    pagination,
-    handleDelete,
-    itemSelected,
-    setItemSelected
-  } = config
+   })
+  const columns = useMemo(()=>{
+    return CategoriaColumns({
+      onSelect: (row: Categoria) => {
+        onSelect(row, 'delete')
+      }
+    })
+  }, [onSelect])
 
   return (
-    <>
-      <SimpleTable
-        data={paginatedData}
-        columns={columns}
-        pagination={true}
-        controller={pagination}
-      />
-      <DeleteModal
-        open={itemSelected !== null}
-        onClose={() => setItemSelected(null)}
-        onSubmit={handleDelete}
-        spanTitle={'Eliminar'}
-        title={' Categoria'}
-        paragraph={`¿Esta seguro de eliminar la Categoria: ${itemSelected?.nombre} ?`}
-      >
-        <small>las categorias no pueden ser recuperadas, si esta categoria esta asociada a algun tipo de movimiento fijo, considera inmediatamente luego de esta accion asignar una categoria a dicho movimiento</small>
-      </DeleteModal>
-    </>
+    <SimpleTable
+      data={paginatedData}
+      columns={columns}
+      pagination={true}
+      pageSize={pageSize}
+    />
   )
 }

@@ -79,4 +79,9 @@ class PresupuestoMesActualController extends Controller
         Inertia::flash('success', 'Presupuesto eliminado con exito');
         return redirect()->route('presupuestosMesActual.index');
     }
+    public function duplicate(Presupuesto $presupuesto){
+        $this->presupuestoService->duplicate($presupuesto);
+        Inertia::flash('success', 'Presupuesto duplicado con exito');
+        return redirect()->route('presupuestosMesActual.index');
+    }
 }

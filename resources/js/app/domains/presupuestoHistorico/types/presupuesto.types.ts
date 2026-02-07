@@ -1,7 +1,6 @@
 import { type ColumnDef } from "@tanstack/react-table"
 import { type InertiaProps } from "@/app/shared/types/intertia/props"
-import { moneyFormat } from "@/app/shared/helpers"
-import { dateFormat } from "@/app/shared/helpers"
+import { moneyFormat, dateFormat, normalizePeriod } from "@/app/shared/helpers"
 
 export const ColumnsTablePresupuestoHistorico: ColumnDef<PresupuestoHistoricoTableData>[]=[
     {
@@ -29,7 +28,7 @@ export const ColumnsTablePresupuestoHistorico: ColumnDef<PresupuestoHistoricoTab
         id: 'periodo',
         header: 'Periodo',
         accessorKey: 'periodo',
-        cell: ({ row }) => dateFormat(row.original.periodo, 'MMM [de] YYYY')
+        cell: ({ row }) => dateFormat(normalizePeriod(row.original.periodo), 'MMM [de] YYYY')
         
     },
 ]

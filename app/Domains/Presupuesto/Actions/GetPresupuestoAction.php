@@ -5,6 +5,7 @@ namespace App\Domains\Presupuesto\Actions;
 use App\Models\Presupuesto\Presupuesto;
 use Illuminate\Database\Eloquent\Collection;
 use Carbon\Carbon;
+use App\Shared\Enums\ComparativeOperators;
 use App\Domains\Presupuesto\DTOs\UpdatePresupuestoMesActualDTO;
 use App\Domains\Presupuesto\DTOs\StorePresupuestoMesActualDTO;
 
@@ -25,7 +26,12 @@ class GetPresupuestoAction
         return Presupuesto::count();
     }
 
-    public function getRecordsCountMesActual(): int
+    public function getHistoricRecordsCount(): int{
+        return Presupuesto::whereDate('periodo', '<=', Carbon::now()->firstOfMonth())
+        ->count();
+    }
+
+    public function getMesActualRecordsCount(): int
     {
         $now = Carbon::now();
         return Presupuesto::whereDate('periodo', '=', $now->firstOfMonth())
@@ -42,12 +48,7 @@ class GetPresupuestoAction
             ->whereDate('periodo', $periodo);
 
     }
-
-    public function getActualMesWithDetails(): Collection
-    {
-        $now = Carbon::now();
-        return $this->baseQueryWithDetails()
-            ->whereDate('periodo', '=', $now->firstOfMonth())
-            ->get();
+    public function getAllWithDetailsUntilPeriodo(ComparativeOperators $operator, Carbon | string $periodo): Collection{
+        return $this->baseQueryWithDetails()->whereDate('periodo', $operator->value, $periodo)->get();
     }
 }

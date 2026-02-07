@@ -1,6 +1,7 @@
 import MovimientoPendienteTable from "./components/MovimientoPendienteTable";
 import MovimientoPendienteForm from "./components/MovimientoPendienteForm";
 import MarkAsDoneModal from "./components/MarkAsDoneModal";
+import ShowMovimientoPendienteModal from "./components/ShowMovimientoPendienteModal";
 import useMovimientoPendiente from "./hooks/useMovimientoPendiente";
 import useMovimientoPendienteActions from "./hooks/useMovimientoPendienteActions";
 import useMarkAsDone from "./hooks/useMarkAsDone";
@@ -18,6 +19,7 @@ export {
     MovimientoPendienteTable,
     MovimientoPendienteForm,
     MarkAsDoneModal,
+    ShowMovimientoPendienteModal,
     useMovimientoPendiente,
     useMovimientoPendienteActions,
     useMarkAsDone

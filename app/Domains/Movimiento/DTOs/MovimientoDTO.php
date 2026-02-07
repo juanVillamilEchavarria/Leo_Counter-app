@@ -11,7 +11,8 @@ abstract class MovimientoDTO extends DTO{
         public int $tipo_movimiento_id,
         public float $monto,
         public ?string $descripcion = null,
-        public ?int $movimiento_pendiente_id = null
+        public ?int $movimiento_pendiente_id = null,
+         public readonly ?array $comprobantes = null
     )
     {
     }

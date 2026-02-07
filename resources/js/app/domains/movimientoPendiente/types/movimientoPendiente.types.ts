@@ -49,6 +49,11 @@ export type MovimientoPendienteTableData = Omit< MovimientoPendiente, 'cuenta_id
     tipo_movimiento : string
     categoria : string
     movimiento_fijo : string | null
+    enough_balance : boolean
+}
+
+export type MovimientoPendienteShowData = MovimientoPendienteTableData &{
+    automatic   ?: boolean | null
 }
 
 export type MovimientoPendienteFormData = Omit<MovimientoPendiente,'id'>

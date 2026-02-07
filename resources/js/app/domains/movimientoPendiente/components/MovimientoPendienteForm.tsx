@@ -6,7 +6,7 @@ import AlertMessage from "@/app/shared/components/common/AlertMessage"
 import Button from "@/app/shared/components/common/Button"
 import SelectModel from "@/app/shared/components/form/SelectModel"
 import { useCategoriasMovimientoFilter } from "@/app/shared/hooks"
-import { dateToLocal } from "@/app/shared/helpers"
+import { dateToLocal, moneyFormat } from "@/app/shared/helpers"
 import { type MovimientoPendienteFormProps } from "../types/movimientoPendiente.types"
 
 export default function MovimientoPendienteForm({

@@ -1,8 +1,9 @@
 import SuccessOrFailText from "@/app/shared/components/common/SuccessOrFailText"
+import { router } from "@inertiajs/react"
 import { moneyFormat } from "@/app/shared/helpers"
 import { dateFormat } from "@/app/shared/helpers"
 import { type ColumnDef } from "@tanstack/react-table"
-import { type MovimientoTableData, type MovimientoShowData } from "../../types/movimiento.types"
+import { type MovimientoTableData, type MovimientoShowData, MovimientoRoutes } from "../../types/movimiento.types"
 export const MovimientoColumns = ({onSelect}:{onSelect: (item: MovimientoTableData | MovimientoShowData)=> void}) : ColumnDef<MovimientoTableData>[]=>[
     {
         id: 'id',
@@ -14,7 +15,15 @@ export const MovimientoColumns = ({onSelect}:{onSelect: (item: MovimientoTableDa
         header: 'Nombre',
         accessorKey: 'nombre',
         cell: ({row})=>(
-            <button onClick={()=>onSelect(row.original)} className="cursor-pointer hover:underline hover:text-blue-500 transition-all">
+            <button onClick={
+                ()=>{
+                onSelect(row.original)
+                 router.get(MovimientoRoutes.show(row.original.id),{},{
+                          preserveState: true,
+                          preserveScroll: true
+                        })
+
+            }} className="cursor-pointer hover:underline hover:text-blue-500 transition-all">
                 <p>{row.original.nombre}</p>
             </button>
         )

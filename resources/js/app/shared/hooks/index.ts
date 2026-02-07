@@ -7,6 +7,7 @@ import useSimpleTable from "./table/simple/useSimpleTable";
 import useTanStackTable from "./table/advanced/useTanStackTable";
 import  useTanStackPagination  from "./table/advanced/useTanStackPagination";
 import useOpen from "./open/useOpen";
+import { useModalItem } from "./modal/useModalItem";
 import useCategoriasMovimientoFilter from "./filter/useCategoriasMovimientoFilter";
 export {
     useFormNormal,
@@ -17,6 +18,7 @@ export {
     useSimplePagination,
     useSimpleTable,
     useTanStackTable,
+    useModalItem,
     useTanStackPagination,
     useCategoriasMovimientoFilter
 }

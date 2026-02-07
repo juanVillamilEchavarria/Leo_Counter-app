@@ -27,6 +27,7 @@ class MovimientoPendienteResource extends JsonResource
             'url_pago'=>$this->url_pago,
             'estado'=>$this->estado,
             'dias_aviso'=>$this->dias_aviso,
+            'enough_balance'=>$this->enough_balance ?? null 
         ];
     }
 }

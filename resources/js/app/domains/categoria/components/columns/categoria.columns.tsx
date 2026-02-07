@@ -3,9 +3,9 @@ import ModelToggle from "@/app/shared/components/table/actions/ModelToggle";
 import EditAndDeleteActions from "@/app/shared/components/table/actions/EditAndDeleteActions";
 
 export const CategoriaColumns=(({
-    onDelete
+    onSelect
 }:{
-    onDelete: (categoria: Categoria)=>void
+    onSelect: (categoria: Categoria)=>void
 }
     
 )=>{
@@ -38,7 +38,7 @@ export const CategoriaColumns=(({
             return row.is_system ? '' :(
             <EditAndDeleteActions 
               editHref={CategoriaRoutes.edit(row.id)}
-              deleteOnClick={()=> onDelete(row)}
+              deleteOnClick={()=> onSelect(row)}
             />
           )}
         }

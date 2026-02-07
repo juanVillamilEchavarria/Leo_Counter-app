@@ -5,12 +5,18 @@ import SectionTransition from "@/app/shared/components/common/SectionTransition"
 import { CategoriaTable } from "@/app/domains/categoria"
 import { Link } from "@inertiajs/react"
 import { type Categoria, CategoriaRoutes } from "@/app/domains/categoria"
+import DeleteModal from "@/app/shared/components/modal/DeleteModal"
+import { useModalItem } from "@/app/shared/hooks"
+import useCategoria from "@/app/domains/categoria/hooks/useCategoria"
+
 export default function Index({
   categorias
 }:{
-  categorias: {data :Categoria[]} // lo extraemos asi porque asi llega desde el resource que hicimos de categoria para enviarlo con los detalles de sus relaciones
+  categorias: {data :Categoria[]}
 }) {
-  console.log(categorias)
+  const {item, modal, open, close}= useModalItem<Categoria>()
+  const {handleSubmit}= useCategoria({method: 'delete', id: item?.id})
+
   return (
     <SectionTransition>
         <SectionDescription title="Categorias" paragraph="Gestiona Tus Categorias" />
@@ -23,7 +29,18 @@ export default function Index({
           >
           </CrudButton>
         </CreateButtonSection>
-        <CategoriaTable data={categorias.data} />
+        <CategoriaTable data={categorias.data} onSelect={(item, modalType)=>open(item,modalType)} />
+        
+        <DeleteModal
+          open={item !== null && modal === 'delete'}
+          onClose={close}
+          onSubmit={handleSubmit}
+          spanTitle={'Eliminar'}
+          title={' Categoria'}
+          paragraph={`¿Esta seguro de eliminar la Categoria: ${item?.nombre} ?`}
+        >
+          <small>las categorias no pueden ser recuperadas, si esta categoria esta asociada a algun tipo de movimiento fijo, considera inmediatamente luego de esta accion asignar una categoria a dicho movimiento</small>
+        </DeleteModal>
     </SectionTransition>
   )
 }

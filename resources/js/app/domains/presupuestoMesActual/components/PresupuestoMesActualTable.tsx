@@ -1,51 +1,36 @@
 import SimpleTable from "@/app/shared/components/table/simple/SimpleTable"
-import DeleteModal from "@/app/shared/components/modal/DeleteModal"
-import usePresupuesto from "../hooks/usePresupuesto"
 import { useSimpleTable } from "@/app/shared/hooks"
 import { PresupuestoMesActualColumns } from "./columns/presupuestoMesActual.columns"
 import { type PresupuestoMesActualTableData } from "../types/presupuestoMesActual.types"
+import { useMemo } from "react"
 
 export default function PresupuestoMesActualTable({
   data,
-  pageSize = 10
+  pageSize = 10,
+  onSelect
 }: {
   data: PresupuestoMesActualTableData[],
-  pageSize?: number
+  pageSize?: number,
+  onSelect: (item: PresupuestoMesActualTableData, modalType: string) => void
 }) {
-  const config = useSimpleTable({
+  const {data: paginatedData}  = useSimpleTable({
     data,
     pageSize,
-    tableColumns: PresupuestoMesActualColumns,
-    formModelHook: usePresupuesto
-  })
-
-  const {
-    data: paginatedData,
-    columns,
-    pagination,
-    handleDelete,
-    itemSelected,
-    setItemSelected
-  } = config
+   })
+  const columns = useMemo(()=>{
+    return PresupuestoMesActualColumns({
+      onSelect: (row: PresupuestoMesActualTableData, modalType: string) => {
+        onSelect(row, modalType)
+      }
+    })
+  }, [onSelect])
 
   return (
-    <>
-      <SimpleTable
-        data={paginatedData}
-        columns={columns}
-        pagination={true}
-        controller={pagination}
-      />
-      <DeleteModal
-        open={itemSelected !== null}
-        onClose={() => setItemSelected(null)}
-        onSubmit={handleDelete}
-        spanTitle={'Eliminar'}
-        title={' Presupuesto'}
-        paragraph={`¿Esta seguro de eliminar el Presupuesto de: ${itemSelected?.categoria} (${itemSelected?.descripcion || 'Sin descripción'}) ?`}
-      >
-        <small>Los presupuestos eliminados estaran en la configuración del sistema</small>
-      </DeleteModal>
-    </>
+    <SimpleTable
+      data={paginatedData}
+      columns={columns}
+      pagination={true}
+      pageSize={pageSize}
+    />
   )
 }

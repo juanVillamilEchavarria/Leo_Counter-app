@@ -24,7 +24,8 @@ export const PresupuestoMesActualActions = {
     post: route('presupuestosMesActual.store'),
     put : (id: number) => route('presupuestosMesActual.update', {id}),
     patch : (id: number) => route('presupuestosMesActual.update', {id}),
-    delete : (id: number) => route('presupuestosMesActual.destroy', {id})
+    delete : (id: number) => route('presupuestosMesActual.destroy', {id}),
+    duplicate : (id: number) => route('presupuestosMesActual.duplicate', {id})
 
 }
 

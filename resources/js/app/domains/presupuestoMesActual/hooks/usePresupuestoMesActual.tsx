@@ -1,7 +1,7 @@
 import { useFormNormal } from "@/app/shared/hooks"
 import { FormMethods } from "@/app/shared/types/components"
 import { type Presupuesto, PresupuestoMesActualActions } from "../types/presupuestoMesActual.types"
-export default function usePresupuesto({
+export default function usePresupuestoMesActual({
     method = 'post',
     id,
     data

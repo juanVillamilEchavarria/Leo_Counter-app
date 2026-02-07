@@ -4,12 +4,13 @@ namespace App\Domains\Cuenta\Actions;
 
 use App\Models\Cuenta\Cuenta;
 use App\Domains\Cuenta\DTOs\UpdateCuentaDTO;
+use App\Domains\Cuenta\DTOs\UpdateSaldoDTO;
 
 use App\Domains\Cuenta\Exceptions\CannotUpdateCuentaException;
 
 class UpdateCuentaAction
 {
-    public function update(Cuenta $cuenta, UpdateCuentaDTO $dto): bool
+    public function update(Cuenta $cuenta, UpdateCuentaDTO | UpdateSaldoDTO $dto): bool
     {
         if(!$cuenta){
            throw new CannotUpdateCuentaException;

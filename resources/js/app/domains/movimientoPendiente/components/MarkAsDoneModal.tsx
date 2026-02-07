@@ -4,7 +4,7 @@ import DropZone from "@/app/shared/components/dropZone/DropZone";
 import ErrorList from "@/app/shared/components/dropZone/ErrorList";
 import UploadedFileList from "@/app/shared/components/dropZone/UploadedFileList";
 import useMarkAsDone from "../hooks/useMarkAsDone";
-import { type MovimientoPendienteTableData, type MarkAsDonePayload } from "../types/movimientoPendiente.types";
+import { type MovimientoPendienteShowData } from "../types/movimientoPendiente.types";
 export default function MarkAsDoneModal({
     open,
     onClose,
@@ -14,7 +14,7 @@ export default function MarkAsDoneModal({
     open: boolean,
     onClose: () => void,
     onSubmit: () => void,
-    itemSelected: MovimientoPendienteTableData | undefined| null,
+    itemSelected: MovimientoPendienteShowData | undefined| null,
 }) {
     const {
      onDrop,

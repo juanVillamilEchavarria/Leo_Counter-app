@@ -3,7 +3,7 @@ import { route } from "ziggy-js"
 import { type Comprobante } from "../../archivoMovimiento"
 
 export const MovimientoRoutes={
-    index : route('movimientos.index'),
+    index : ()=>route('movimientos.index'),
     show : (id: number) => route('movimientos.show', {id}),
 }
 export type Movimiento={
@@ -23,8 +23,14 @@ export type MovimientoTableData= Omit<Movimiento, 'movimiento_pendiente_id'| 'ca
         cuenta: string,
         tipo_movimiento: string
     }
+    export type MovimientoData =  Omit<Movimiento, 'movimiento_pendiente_id'| 'categoria_id' | 'cuenta_id' | 'tipo_movimiento_id'> & {
+        categoria: string,
+        cuenta: string,
+        tipo_movimiento: string
+        comprobantes : Comprobante[]
+    }
 
     export type MovimientoShowData= MovimientoTableData &{
-        comprobantes : Comprobante[]
+        comprobantes ?: Comprobante[]
 
     }

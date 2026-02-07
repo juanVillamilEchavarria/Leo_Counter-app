@@ -21,7 +21,8 @@ class GetCuentaAction
         return $this->allAvailable()->count();
     }
 
-    public function where(string $attribute, $value): ?Cuenta{
-        return Cuenta::where($attribute, $value)->first();
+    public function where(string $attribute, $value): Builder{
+        
+        return Cuenta::query()->where($attribute, $value);
     }
 }

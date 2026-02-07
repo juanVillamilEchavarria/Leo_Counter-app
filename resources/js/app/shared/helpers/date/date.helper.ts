@@ -16,9 +16,19 @@ export function monthLimitFromToday(months : number = 1){
     return dayjs().add(months, 'month').locale('es').format('YYYY-MM-DD');
 }
 
-export function dateFormat(date : string| Date | undefined, format : string = 'DD [de] MM [de] YYYY') {
+export function dateFormat(date : string| Date | undefined, format : string = 'DD [de] MMM [de] YYYY') {
+  if(!date) return '';
   return dayjs(date).format(format);
 }
+
+export const normalizePeriod = (period: string | Date | undefined) =>{
+  if(!period) return '';
+  if(period instanceof Date){
+    return dayjs(period).format('YYYY-MM-DD');
+  } 
+  return period.slice(0,10);
+
+}; // entra 2025-01-01T00:00:00.000000Z y sale 2025-01-01
 export const months: Record<string, string> = {
         'january': 'Enero',
         'february': 'Febrero',

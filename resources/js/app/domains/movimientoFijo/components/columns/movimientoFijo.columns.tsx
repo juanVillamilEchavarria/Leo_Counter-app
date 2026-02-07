@@ -6,9 +6,9 @@ import { dateFormat } from "@/app/shared/helpers"
 import { moneyFormat } from "@/app/shared/helpers"
 import { type MovimientoFijoTableData } from "../../types/movimientoFijo.types"
 export const MovimientoFijoColumns = (({
-    onDelete
+    onSelect
 }:{
-    onDelete: (movimientoFijo: MovimientoFijoTableData)=>void
+    onSelect: (movimientoFijo: MovimientoFijoTableData)=>void
 }) => {
     return [
            { key: "id", label: "ID" },
@@ -58,7 +58,7 @@ export const MovimientoFijoColumns = (({
              render: (row : MovimientoFijoTableData)=>(
                <EditAndDeleteActions
                     editHref={MovimientoFijoRoutes.edit(row.id)}
-                    deleteOnClick={()=> onDelete(row)}
+                    deleteOnClick={()=> onSelect(row)}
                 />
              )
            }
