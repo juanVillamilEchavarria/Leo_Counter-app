@@ -3,7 +3,7 @@ import SuccessOrFailText from "@/app/shared/components/common/SuccessOrFailText"
 import { useCallback, useMemo } from "react"
 import { router } from "@inertiajs/react"
 import { BaseIcons } from "@/app/shared/types"
-import { type MovimientoPendienteShowData, MovimientoPendienteRoutes } from "../types/movimientoPendiente.types"
+import { type MovimientoPendienteShowData, MovimientoPendienteRoutes, MovimientoPendienteIcons } from "../types/movimientoPendiente.types"
 
 export default function ShowMovimientoPendienteModal({
   movimiento,
@@ -38,10 +38,11 @@ export default function ShowMovimientoPendienteModal({
       open={ open }
       onClose={handleOnClose}
       item={modalData}
+      icons={MovimientoPendienteIcons}
     >
       <div className="flex flex-col gap-2">
         <ul className="grid grid-cols-1 gap-4 my-4">
-          {movimiento && movimiento.enough_balance !== null && movimiento.enough_balance !== undefined && (
+          {movimiento && movimiento.enough_balance !== null && movimiento.enough_balance !== undefined && movimiento.tipo_movimiento === 'GASTO' && (
             <li className="ml-2 text-lg flex gap-2 items-center">
               <button className="bg-blue-200/20 p-2 rounded-3xl flex items-center " disabled={true}>
                 <i className={`${BaseIcons.cuenta ?? 'fa-solid fa-wallet'}`}></i>

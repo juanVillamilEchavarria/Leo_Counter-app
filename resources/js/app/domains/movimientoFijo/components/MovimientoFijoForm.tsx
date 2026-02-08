@@ -6,7 +6,8 @@ import AlertMessage from "@/app/shared/components/common/AlertMessage"
 import Button from "@/app/shared/components/common/Button"
 import SelectModel from "@/app/shared/components/form/SelectModel"
 import { useCategoriasMovimientoFilter } from "@/app/shared/hooks"
-import { dateToLocal } from "@/app/shared/helpers"
+import { useMemo } from "react"
+import { dateToLocal, today as todayFunction } from "@/app/shared/helpers"
 import { type MovimientoFijoFormProps } from "../types/movimientoFijo.types"
 export default function MovimientoFijoForm({
     data,
@@ -20,9 +21,10 @@ export default function MovimientoFijoForm({
     tipoMovimientoId,
     setTipoMovimientoId,
     categoriasFiltered,
-    today
    } = useCategoriasMovimientoFilter({options, data})
-   console.log(data);
+   const today= useMemo(()=>{
+                      return todayFunction();
+                  },[])
   return (
     <Card>
     <form onSubmit={submit} className="formulario-general">
@@ -167,24 +169,6 @@ export default function MovimientoFijoForm({
                 <AlertMessage message={errors?.dias_aviso} />
             </TransitionMotion>
         </div>
-        <TransitionMotion initial={{x:0, y:-30, opacity:0}}  exit={{x: 0, y:-30, opacity:0}} active={tipoMovimientoId==2}>
-            <div className="formulario-campo">
-                <label htmlFor="url_pago">Url de pago</label>
-                <small>Opcional si aplica</small>
-                <InputFillable
-                    type="text"
-                    name="url_pago"
-                    id="url_pago"
-                    value={data?.url_pago}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('url_pago', e.target.value)}  
-                    className={` ${errors.url_pago && 'border-red-500! text-red-500!'} `}
-                ></InputFillable>
-
-                <TransitionMotion active={errors?.url_pago}>
-                    <AlertMessage message={errors?.url_pago} />
-                </TransitionMotion>
-            </div>
-        </TransitionMotion>
         <div className="formulario-campo">
             <label htmlFor="descripcion">Descripcion</label>
             <TextArea

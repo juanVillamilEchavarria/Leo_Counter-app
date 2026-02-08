@@ -1,4 +1,5 @@
 import { useRoute } from "ziggy-js"
+import { BaseIcons } from "@/app/shared/types"
 import { type FormCommonProps } from "@/app/shared/types/components"
 import { type TipoMovimiento } from "../../tipoMovimiento"
 import { type Categoria } from "../../categoria"
@@ -35,7 +36,6 @@ export type MovimientoPendiente = {
     fecha_programada : string
     estado : MovimientoPendienteEstados
     dias_aviso: number | null
-    url_pago ?: string
     monto : number
     descripcion ?: string
 }
@@ -73,5 +73,13 @@ export type UseMarkAsDoneParams = {
     onClose: () => void
     onSubmit: () => void
     itemSelected: MovimientoPendienteTableData | undefined | null
+}
+
+export const MovimientoPendienteIcons ={
+    ...BaseIcons,
+    fecha_programada : 'fa-solid fa-calendar-days',
+    movimiento_fijo : 'fa-solid fa-diagram-project',
+    dias_aviso : 'fa-solid fa-envelope-open-text',
+
 }
 

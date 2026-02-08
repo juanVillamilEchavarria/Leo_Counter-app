@@ -5,7 +5,7 @@ import ShowMovimientoPendienteModal from "./components/ShowMovimientoPendienteMo
 import useMovimientoPendiente from "./hooks/useMovimientoPendiente";
 import useMovimientoPendienteActions from "./hooks/useMovimientoPendienteActions";
 import useMarkAsDone from "./hooks/useMarkAsDone";
-import { type MovimientoPendiente, type MarkAsDonePayload, type MovimientoPendienteTableData, MovimientoPendienteActions, MovimientoPendienteRoutes, type MovimientoPendienteFormData, type MovimientoPendienteFormOptions, type MovimientoPendienteFormProps } from "./types/movimientoPendiente.types";
+import { type MovimientoPendiente, type MarkAsDonePayload, type MovimientoPendienteTableData, MovimientoPendienteActions, MovimientoPendienteRoutes, type MovimientoPendienteFormData, type MovimientoPendienteFormOptions, type MovimientoPendienteFormProps, MovimientoPendienteIcons, type MovimientoPendienteEstados, type MovimientoPendienteShowData } from "./types/movimientoPendiente.types";
 
 export {
     type MovimientoPendiente,
@@ -14,6 +14,9 @@ export {
     type MovimientoPendienteFormProps,
     type MovimientoPendienteTableData,
     type MarkAsDonePayload,
+    type MovimientoPendienteShowData,
+    type MovimientoPendienteEstados,
+    MovimientoPendienteIcons,
     MovimientoPendienteActions,
     MovimientoPendienteRoutes,
     MovimientoPendienteTable,

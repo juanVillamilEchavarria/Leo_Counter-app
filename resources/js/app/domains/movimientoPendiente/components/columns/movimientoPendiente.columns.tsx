@@ -57,6 +57,9 @@ export const MovimientoPendienteColumns=(({
        key : 'cuenta',
         label : 'Cuenta' ,
         render : (row: MovimientoPendienteShowData) => {
+           if(row.tipo_movimiento === 'Ingreso' ){
+            return <Link className="cursor-pointer hover:underline transition-all" href={CuentaRoutes.index()}>{row.cuenta}</Link>  
+           }
           return row.enough_balance ? (
             <Link className="cursor-pointer hover:underline transition-all" href={CuentaRoutes.index()}>{row.cuenta}</Link>
           ):(
@@ -98,7 +101,12 @@ export const MovimientoPendienteColumns=(({
     {
       key: 'actions',
       label: '',
-      render: (row: MovimientoPendienteShowData) => {return row.enough_balance ?(
+      render: (row: MovimientoPendienteShowData) => {
+         if(row.tipo_movimiento === 'Ingreso' ){
+            return <ActionSection actions={buildMovimientoPendienteActions(row, onSelect)} as={CrudButton} /> 
+           }
+        
+        return row.enough_balance ?(
         <ActionSection actions={buildMovimientoPendienteActions(row, onSelect)} as={CrudButton} />
       ):(
         <EditAndDeleteActions editHref={MovimientoPendienteRoutes.edit(row.id)} deleteOnClick={()=> onSelect(row,'delete')} />

@@ -29,7 +29,6 @@ class MovimientoFijo extends Model
         'fecha_proximo',
         'monto',
         'dias_aviso',
-        'url_pago',
         'active',
         'registrar_automatico'
 

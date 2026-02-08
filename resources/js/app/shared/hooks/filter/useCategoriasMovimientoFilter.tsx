@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react"
 import { filterCategoriasByTipoMovimiento } from "../../helpers/filters/filters.helper"
-import { today as todayFunction } from "../../helpers";
 import { type MovimientoFilter } from "../../types/hooks";
 export default function useCategoriasMovimientoFilter< TOptions extends Record<string, any>>({
     data,
@@ -11,13 +10,11 @@ export default function useCategoriasMovimientoFilter< TOptions extends Record<s
 }) {
     
       const [tipoMovimientoId, setTipoMovimientoId] = useState<number | string>(data?.tipo_movimiento_id ?? '');
-            const categoriasFiltered = filterCategoriasByTipoMovimiento(options.categorias, tipoMovimientoId);
-            const today= useMemo(()=>{
-                return todayFunction();
-            },[])
+            const categoriasFiltered = useMemo(() => {
+                return filterCategoriasByTipoMovimiento(options.categorias, tipoMovimientoId);
+            }, [options.categorias, tipoMovimientoId]);
       return {
         categoriasFiltered,
-        today,
         tipoMovimientoId,
         setTipoMovimientoId
       }

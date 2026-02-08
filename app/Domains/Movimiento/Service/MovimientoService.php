@@ -25,6 +25,7 @@ use App\Models\Cuenta\Cuenta;
 use App\Shared\Exceptions\InsufficientBalanceException;
 // Enums y types
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 
 use Illuminate\Support\Facades\DB;
 
@@ -33,6 +34,7 @@ class MovimientoService{
         private GetMovimientoAction $getMovimientoAction,
         private StoreMovimientoAction $storeMovimientoAction,
         private UpdateCuentaAction $updateCuentaAction,
+        private GetCuentaAction $getCuentaAction,
         private BalanceCheckerService $balanceCheckerService,
         private ArchivoMovimientoService $archivoMovimientoService
     )
@@ -40,27 +42,35 @@ class MovimientoService{
     }
     private function executeMovimientoTransaction(StoreMovimientoDTO $dto, Cuenta $cuenta): Movimiento{
         return DB::transaction(function() use ($dto, $cuenta){
-            $updateSaldoDTO = (new UpdateSaldoDTO($cuenta->saldo_actual))->outflow($dto->monto);
+            $updateSaldoDTO = $this->resolveUpdateSaldoDTO($dto, $cuenta);
             $this->updateCuentaAction->update($cuenta, $updateSaldoDTO);
             $movimiento = $this->storeMovimientoAction->store($dto);
             if(!empty($dto->comprobantes)){
-                $dtoArchivo = new ThrowArchivoMovimientoDTO(
-                        comprobantes: $dto->comprobantes,
-                        categoria: $movimiento->categoria->nombre,
-                        tipo_movimiento: $movimiento->tipo_movimiento->tipo_movimiento,
-                        movimiento_id: $movimiento->id);
+                $dtoArchivo = ThrowArchivoMovimientoDTO::fromMovimientoAndDTO($dto, $movimiento);
                     $this->archivoMovimientoService->store($dtoArchivo);
                 }
                 return $movimiento;
         });
     }
+    private function resolveUpdateSaldoDTO(StoreMovimientoDTO $dto, Cuenta $cuenta) : UpdateSaldoDTO{
+        return $dto->tipo_movimiento_id === TipoMovimientoEnum::INGRESO->value ?
+         (new UpdateSaldoDTO($cuenta->saldo_actual))->inflow($dto->monto)
+        :(new UpdateSaldoDTO($cuenta->saldo_actual))->outflow($dto->monto);
+    }
+    private function resolveCuenta(StoreMovimientoDTO $dto) : Cuenta{
+        if($dto->tipo_movimiento_id === TipoMovimientoEnum::INGRESO->value ){
+            return $this->getCuentaAction->where('id', $dto->cuenta_id)->firstOrFail();
+        }
+         try {
+             return $this->balanceCheckerService->getCuentaIfCanAfford($dto->cuenta_id, $dto->monto);
+            } catch (InsufficientBalanceException $e) {
+                throw new CannotStoreMovimientoException(message: 'No se pudo almacenar el movimiento: '. $e->getMessage());
+            }
+        
+    }
     public function store(StoreMovimientoDTO | array $data): Movimiento{
         if(is_array($data)) $data = StoreMovimientoDTO::fromArray($data);
-        try {
-             $cuenta= $this->balanceCheckerService->getCuentaIfCanAfford($data->cuenta_id, $data->monto);
-        } catch (InsufficientBalanceException $e) {
-            throw new CannotStoreMovimientoException(message: 'No se pudo almacenar el movimiento: '. $e->getMessage());
-        }
+        $cuenta = $this->resolveCuenta($data);
         return $this->executeMovimientoTransaction($data, $cuenta);
     }
 

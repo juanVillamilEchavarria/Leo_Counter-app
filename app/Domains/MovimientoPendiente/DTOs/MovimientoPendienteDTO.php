@@ -16,7 +16,6 @@ class MovimientoPendienteDTO extends DTO{
         public ?string $fecha_programada,
         public ?int $dias_aviso = null,
         public ?string $descripcion = null,
-        public ?string $url_pago = null,
         public ?EstadosMovimientoPendiente $estado= EstadosMovimientoPendiente::PENDIENTE
     )
     {

@@ -24,7 +24,6 @@ class MovimientoPendienteResource extends JsonResource
             'movimiento_fijo'=>$this->movimiento_fijo ? $this->movimiento_fijo->nombre : null,
             'fecha_programada'=>$this->fecha_programada,   
             'monto'=>$this->monto,
-            'url_pago'=>$this->url_pago,
             'estado'=>$this->estado,
             'dias_aviso'=>$this->dias_aviso,
             'enough_balance'=>$this->enough_balance ?? null 

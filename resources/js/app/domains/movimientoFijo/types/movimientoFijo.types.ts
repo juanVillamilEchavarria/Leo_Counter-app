@@ -18,7 +18,6 @@ export type MovimientoFijo={
     dias_aviso: number,
     descripcion: string,
     active: boolean,
-    url_pago: string,
     registrar_automatico: boolean
 
 }

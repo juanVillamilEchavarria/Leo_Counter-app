@@ -24,7 +24,6 @@ return new class extends Migration
             $table->unsignedTinyInteger('dias_aviso')->nullable()->default(0);
             $table->text('descripcion')->nullable();
             $table->timestamp('paid_at')->nullable();
-            $table->string('url_pago')->nullable();
             $table->softDeletes();
             $table->timestamps();
 

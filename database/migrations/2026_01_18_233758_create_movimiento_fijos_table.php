@@ -21,7 +21,6 @@ return new class extends Migration
             $table->foreignId('frecuencia_movimiento_id')->constrained('frecuencia_movimientos');
             $table->decimal('monto', 12, 2);
             $table->date('fecha_proximo');
-            $table->string('url_pago')->nullable();
             $table->boolean('active')->default(true);
             $table->boolean('registrar_automatico')->default(false);
             $table->timestamps();

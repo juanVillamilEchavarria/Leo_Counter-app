@@ -22,7 +22,6 @@ class MovimientoPendiente extends Model
         'fecha_programada',
         'estado',
         'dias_aviso',
-        'url_pago',
         'monto',
         'descripcion'
     ];
