@@ -1,24 +1,21 @@
 import SectionDescription from "@/app/shared/components/common/SectionDescription"
 import CreateButtonSection from "@/app/shared/components/common/CreateButtonSection"
-import TransitionMotion from "@/app/shared/components/transitions/TransitionMotion"
 import CrudButton from "@/app/shared/components/common/CrudButton"
 import SectionTransition from "@/app/shared/components/common/SectionTransition"
 import { Link } from "@inertiajs/react"
 import { PresupuestoMesActualTable } from "@/app/domains/presupuestoMesActual"
 import { PresupuestoMesActualRoutes, type PresupuestoMesActualTableData } from "@/app/domains/presupuestoMesActual"
-import { dateFormat } from "@/app/shared/helpers"
+import { dateFormat, normalizePeriod } from "@/app/shared/helpers"
 import DeleteModal from "@/app/shared/components/modal/DeleteModal"
 import DuplicateModal from "@/app/domains/presupuestoMesActual/components/DuplicateModal"
 import { useModalItem } from "@/app/shared/hooks"
 import usePresupuestoMesActual from "@/app/domains/presupuestoMesActual/hooks/usePresupuestoMesActual"
 
 export default function Index({
-    fechaInicio,
-    fechaFin,
+    periodo,
     presupuestos
 }: {
-    fechaInicio: Date | string,
-    fechaFin: Date | string,
+    periodo: Date | string,
     presupuestos: { data: PresupuestoMesActualTableData[] }
 }) {
     const {item, modal, open, close}= useModalItem<PresupuestoMesActualTableData>()
@@ -28,7 +25,11 @@ export default function Index({
         <SectionTransition>
             <SectionDescription 
                 title="Presupuestos Del Mes" 
-                paragraph={`${dateFormat(fechaInicio)} - ${dateFormat(fechaFin)}`} 
+                paragraph={(
+                    <div>
+                        <p>Gestiona Tus Presupuestos del Mes de <span className="font-bold capitalize">{dateFormat(normalizePeriod(periodo), 'MMMM YYYY')}</span></p>
+                    </div>
+                )} 
             />
             <CreateButtonSection>
                 <CrudButton

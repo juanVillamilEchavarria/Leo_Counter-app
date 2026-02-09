@@ -4,7 +4,7 @@ export default function SectionDescription({
     paragraph
 }:{
     title: string,
-    paragraph: string
+    paragraph: string | React.ReactNode
 }) {
   return (
    <> 

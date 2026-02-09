@@ -43,5 +43,5 @@
 
 ## 5. Pendientes menores / UX
 - [ ] Crear sección para registros eliminados (archivadas)  
-- [ ] Crear componentes reutilizables sencillos de PDF + nombre del archivo y un rounded-icon que sea un boton 
-
+- [Completado ] Crear componentes reutilizables sencillos de PDF + nombre del archivo y un rounded-icon que sea un boton 
+- [ ] terminar de configurar las API

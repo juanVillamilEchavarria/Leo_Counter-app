@@ -15,7 +15,7 @@
         "@types/react-dom": "^19.2.3",
         "@vitejs/plugin-react": "^4.7.0",
         "autoprefixer": "^10.4.12",
-        "axios": "^1.11.0",
+        "axios": "^1.13.5",
         "concurrently": "^9.0.1",
         "laravel-vite-plugin": "^2.0.0",
         "postcss": "^8.4.31",
@@ -26,11 +26,13 @@
     },
     "dependencies": {
         "@tailwindcss/postcss": "^4.1.18",
+        "@tanstack/react-query": "^5.90.20",
         "@tanstack/react-table": "^8.21.3",
         "dayjs": "^1.11.19",
         "framer-motion": "^12.23.26",
         "react-dropzone": "^14.4.0",
         "react-toastify": "^11.0.5",
+        "use-debounce": "^10.1.0",
         "ziggy-js": "^2.6.0"
     }
 }

@@ -23,8 +23,8 @@ export default function MovimientoFijoForm({
     categoriasFiltered,
    } = useCategoriasMovimientoFilter({options, data})
    const today= useMemo(()=>{
-                      return todayFunction();
-                  },[])
+        return todayFunction();
+    },[])
   return (
     <Card>
     <form onSubmit={submit} className="formulario-general">

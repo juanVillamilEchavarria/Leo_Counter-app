@@ -61,7 +61,8 @@ export const NavItems: NavItemConfig[] = [
             routeName: [
                 'movimientos.*',
                 'movimientosFijos.*',
-                'movimientosPendientes.*'
+                'movimientosPendientes.*',
+                'movimientosEspontaneos.*'
             ],
             childrenNav:[
                 {
@@ -84,6 +85,13 @@ export const NavItems: NavItemConfig[] = [
                     icon: 'fa-solid fa-hand-holding-dollar fa-lg',
                     routeName: 'movimientosPendientes.*',
                     href: route('movimientosPendientes.index'),
+                },
+                {
+                    key: 'movimientosEspontaneos',
+                    title: 'Movimientos Espontaneos',
+                    icon: 'fa-solid fa-person-walking fa-lg',
+                    routeName: 'movimientosEspontaneos.*',
+                    href: route('movimientosEspontaneos.index'),
                 }
             ],
            href: route('movimientos.index')

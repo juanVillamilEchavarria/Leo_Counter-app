@@ -26,7 +26,7 @@ class MovimientoController extends Controller
         ];
     }
    public function index(){
-    return Inertia::render('Movimientos/Index',$this->props());
+    return Inertia::render('Movimientos/Historicos/Index',$this->props());
    }
 
    public function show(Movimiento $movimiento){
@@ -35,7 +35,7 @@ class MovimientoController extends Controller
         'data'=>$this->movimientoService->getWithDetails($movimiento)
     ]);
 
-    return Inertia::render('Movimientos/Index', $props);
+    return Inertia::render('Movimientos/Historicos/Index', $props);
 
    }
 }

@@ -1,14 +1,14 @@
 import TransitionMotion from "../transitions/TransitionMotion"
-import { type FileWithPreview } from "../../types"
 import { type UploadedFileListProps } from "../../types"
 export default function UploadedFileList({
     files,
     handleDeleteFile,
-    active = true
+    active = true,
+    className = 'text-white/80'
 }: UploadedFileListProps) {
   return (
     <TransitionMotion active={active} transition={{duration: .5}}>
-            <ul className="w-3/4 flex flex-col gap-2 ">
+            <ul className={`w-3/4 flex flex-col gap-2 ${className}`}>
             {files.map((file, index) => (
             <li
                 key={index}
@@ -25,7 +25,7 @@ export default function UploadedFileList({
                 src={file.preview}
                 className="w-full h-40 rounded-xl border"
                 />
-                <p className="text-sm text-white/80 truncate">
+                <p className="text-sm  truncate">
                 {file.name}
                 </p>
             </li>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Cuenta\CuentaController;
 use App\Http\Controllers\Propietario\PropietarioController;
 use App\Http\Controllers\Movimiento\MovimientoController;
+use App\Http\Controllers\Movimiento\MovimientoEspontaneoController;
 use App\Http\Controllers\MovimientoPendiente\MovimientoPendienteController;
 use App\Http\Controllers\MovimientoFijo\MovimientoFijoController;
 use App\Http\Controllers\ArchivoMovimiento\ArchivoMovimientoController;
@@ -28,8 +29,12 @@ Route::middleware('auth')->group( function () {
     Route::patch('cuentas/{cuenta}/toggle-active', [CuentaController::class, 'toggleActive'])->name('cuentas.toggle-active');
     Route::resource('propietarios',PropietarioController::class)->names('propietarios');
     // MOVIMIENTOS
-    Route::get('/movimientos', [MovimientoController::class, 'index'])->name('movimientos.index');
-    Route::get('/movimientos/{movimiento}', [MovimientoController::class, 'show'])->name('movimientos.show');
+    Route::get('/movimientos/historicos', [MovimientoController::class, 'index'])->name('movimientos.index');
+    Route::get('/movimientos/historicos/{movimiento}', [MovimientoController::class, 'show'])->name('movimientos.show');
+    //MOVIMIENTOS ESPONTANEOS
+    Route::resource('movimientos-espontaneos',MovimientoEspontaneoController::class)->names('movimientosEspontaneos')->parameters([
+        'movimientos-espontaneos'=> 'movimientoEspontaneo'
+    ]);
     // MOVIMIENTOS PENDIENTES
     Route::resource('movimientos-pendientes',MovimientoPendienteController::class)->names('movimientosPendientes')->parameters([
         'movimientos-pendientes'=> 'movimientoPendiente'

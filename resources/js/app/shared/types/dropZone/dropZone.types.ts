@@ -17,4 +17,5 @@ export type UploadedFileListProps = {
   handleDeleteFile: (index: number) => void;
   active?: boolean;
   modifyable?: boolean
+  className?: string
 };

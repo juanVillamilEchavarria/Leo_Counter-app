@@ -11,9 +11,13 @@ import { type FlashMessages } from "./intertia/flash";
 import { type InertiaProps } from "./intertia/props";
 import { type DropZoneProps,  type UploadedFileListProps } from "./dropZone";
 import { BaseIcons, IconAliases } from "./icons/icons.types";
+import { type ApiParams, ApiMethods, type ValidateSaldoCuentaData } from "./api";
 export {
     type FormDataNormalProps,
     type CreateAndEditViewWithOptionsProps,
+    ApiMethods,
+    type ApiParams,
+    type ValidateSaldoCuentaData,   
     type FileWithPreview,
     TextSize,
     type TitleProps,

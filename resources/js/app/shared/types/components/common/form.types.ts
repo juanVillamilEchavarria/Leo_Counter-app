@@ -5,7 +5,7 @@ export const FormMethods= {
     put : 'put',
     patch : 'patch',
     delete : 'delete'
-}
+} as const
 export type FormCommonProps<TData extends Record<string,any>>={
      data: TData | undefined,
     setData: SetDataAction<TData>,

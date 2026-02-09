@@ -29,8 +29,7 @@ class PresupuestoMesActualController extends Controller
         return Inertia::render('Presupuestos/MesActual/Index', [
             'title' => 'Presupuestos del mes',
             'NoRegistros' => $this->NoRegistros(),
-            'fechaInicio' => Carbon::now()->firstOfMonth(),
-            'fechaFin' => Carbon::now()->lastOfMonth(),
+            'periodo' => Carbon::now()->firstOfMonth(),
             'presupuestos' => $presupuestos
         ]);
     }
