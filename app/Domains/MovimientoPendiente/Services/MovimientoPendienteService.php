@@ -68,7 +68,7 @@ class MovimientoPendienteService
     public function getWithDetails(MovimientoPendiente $movimientoPendiente): ShowMovimientoPendienteResource{
         $movimiento = $this->getMovimientoPendienteAction->getWithDetails($movimientoPendiente);
         $movimiento->enough_balance = $this->balanceCheckerService->canAfford($movimiento->cuenta_id, $movimiento->monto);
-        return ShowMovimientoPendienteResource::make($this->getMovimientoPendienteAction->getWithDetails($movimiento));
+        return ShowMovimientoPendienteResource::make($movimiento);
     }
 
     public function getAll(): AnonymousResourceCollection {
@@ -84,9 +84,9 @@ class MovimientoPendienteService
 
     public function getOptions(){
         return new MovimientoPendienteFormOptionsDTO(
-            $this->getCategoriaAction->getAllWithFullDetails(),
+            $this->getCategoriaAction->getAll(),
             $this->getTipoMovimientoAction->getAll(),
-            $this->getCuentaAction->allAvailable()->get(),
+            $this->getCuentaAction->where('active', true)->get(),
             MovimientoFijo::all()
         );
     }

@@ -3,19 +3,30 @@ import CreateButtonSection from "@/app/shared/components/common/CreateButtonSect
 import { PropietarioTable } from "@/app/domains/propietario"
 import CrudButton from "@/app/shared/components/common/CrudButton"
 import SectionTransition from "@/app/shared/components/common/SectionTransition"
+import ShowModal from "@/app/shared/components/modal/ShowModal"
 import { Link } from "@inertiajs/react"
 import { PropietarioRoutes } from "@/app/domains/propietario"
-import { type Propietario } from "@/app/domains/propietario"
+import { type PropietarioShowData, type PropietarioTableData, ShowPropietarioModal } from "@/app/domains/propietario"
+import { BaseIcons } from "@/app/shared/types"
 import DeleteModal from "@/app/shared/components/modal/DeleteModal"
 import { useModalItem } from "@/app/shared/hooks"
 import usePropietario from "@/app/domains/propietario/hooks/usePropietario"
+import { useEffect } from "react"
 
 export default function Index({
-  propietarios
+  propietarios,
+  data 
 }:{
-  propietarios: Propietario[]
+  propietarios: {data:PropietarioTableData[]}
+  data ?: {data: PropietarioShowData}
 }) {
-  const {item, modal, open, close}= useModalItem<Propietario>()
+  useEffect(()=>{
+    if(data){
+      setItem(data.data)
+    }
+  },[data])
+  console.log(data);
+  const {item, modal, open, close, setItem}= useModalItem<PropietarioShowData>()
   const {handleSubmit}= usePropietario({method: 'delete', id: item?.id})
 
   return (
@@ -28,18 +39,23 @@ export default function Index({
             icon="fa-solid fa-users"
             />
         </CreateButtonSection>
-        <PropietarioTable data={propietarios} onSelect={(item, modalType)=>open(item,modalType)} />
+        <PropietarioTable data={propietarios.data} onSelect={(item, modal)=>open(item,modal)} />
         
         <DeleteModal
           open={item !== null && modal === 'delete'}
           onClose={close}
-          onSubmit={handleSubmit}
+          onSubmit={(e)=>{handleSubmit(e) ; setItem(null)}}
           spanTitle={'Eliminar'}
           title={' Propietario'}
           paragraph={`¿Esta seguro de eliminar el propietario: ${item?.nombre} ${item?.apellido} ?`}
         >
-          <small>los propietarios eliminados no son recuperables, si este propietario esta asignado a una cuenta, considera inmediatamente luego de esta accion asignarle un nuevo propietario</small>
+          <small>los propietarios eliminados no son recuperables, si este propietario esta asignado a una cuenta, no podra ser eliminado</small>
         </DeleteModal>
+        <ShowPropietarioModal
+        open={item !== null && modal === 'show'}
+        item={item}
+        onClose={close}
+        />
     </SectionTransition>
   )
 }

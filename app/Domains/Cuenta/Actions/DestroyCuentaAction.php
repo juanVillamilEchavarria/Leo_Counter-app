@@ -12,8 +12,6 @@ class DestroyCuentaAction
         if(!$cuenta){
             throw new CannotDeleteCuentaException;
         }
-        return $cuenta->update([
-            'archived' => true
-        ]); // realmete la archiva, no la elimina, esto se hace para mantener la integridad de los datos
+        return $cuenta->delete(); 
     }
 }

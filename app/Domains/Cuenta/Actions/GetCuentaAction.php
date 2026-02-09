@@ -9,16 +9,22 @@ use Illuminate\Database\Eloquent\Builder;
 class GetCuentaAction
 {
 
+    private array $relations = ['propietario', 'tipo_cuenta'];
+
     public function getAllAvalaibleWithDetails(): Collection {
-        return $this->allAvailable()->with(['propietario', 'tipo_cuenta'])->get();
+        return $this->baseQueryWithDetails()->get();
     }
 
-    public function allAvailable(): Builder{
-        return Cuenta::query()->where('archived', false);
+    private function baseQueryWithDetails(){
+        return Cuenta::query()->with($this->relations);
+    }
+
+    public function getAll(): Collection {
+        return Cuenta::all();
     }
 
     public function getRecordsCount(): int{
-        return $this->allAvailable()->count();
+        return Cuenta::count();
     }
 
     public function where(string $attribute, $value): Builder{

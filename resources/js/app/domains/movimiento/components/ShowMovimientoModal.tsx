@@ -1,4 +1,5 @@
 import ShowModal from "@/app/shared/components/modal/ShowModal"
+import ShowFile from "@/app/shared/components/common/ShowFile"
 import { router } from "@inertiajs/react"
 import { useMemo, useCallback } from "react"
 import { ArchivoMovimientoRoutes } from "../../archivoMovimiento"
@@ -32,10 +33,10 @@ export default function ShowMovimientoModal({
            
             <div className="flex flex-col gap-2">
                         <div className="flex gap-2 items-center">
-                        <button className="bg-blue-200/20 p-2 rounded-3xl flex items-center " disabled={true}>
-                            <i className={`${BaseIcons.comprobante ?? 'fa-solid fa-file'} `}></i>
-                        </button>
-                        <span className="font-bold capitalize">Comprobantes : </span>
+                            <button className="bg-blue-200/20 p-2 rounded-3xl flex items-center " disabled={true}>
+                                <i className={`${BaseIcons.comprobante ?? 'fa-solid fa-file'} `}></i>
+                            </button>
+                            <span className="font-bold capitalize">Comprobantes : </span>
                         </div>
                         <ul className="grid grid-cols-2 ">
                             {comprobantes && Object.keys(comprobantes).length > 0 ? (Object.entries(comprobantes).map(([key, value]) => (
@@ -44,10 +45,7 @@ export default function ShowMovimientoModal({
                                 className=" p-4 rounded-2xl  flex flex-col gap-2 scrollbar-modern"
                             >
                                 <div className="flex w-full justify-between items-center gap-3">
-                                <div className="flex items-center gap-2">
-                                    <i className="fa-solid fa-file-pdf text-red-500 text-xl" />
-                                    <p className="text-sm">{value.nombre}</p>
-                                </div>
+                                <ShowFile name={value.nombre} />
                                 <div className="flex justify-between">
                                 <a href={ArchivoMovimientoRoutes.movimientosArchivosShow(value.id)} target="_blank" rel="noreferrer noopener" >
                                     <i className="fa-solid fa-eye "></i>

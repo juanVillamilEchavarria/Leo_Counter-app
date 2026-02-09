@@ -65,10 +65,10 @@ class MovimientoFijoService
     }
    public function getOptions(){
         return new MovimientoFijoFormOptionsDTO(
-            $this->getCategoriaAction->getAllWithFullDetails(),
+            $this->getCategoriaAction->getAll(),
             $this->getTipoMovimientoAction->getAll(),
             $this->getFrecuenciaMovimientoAction->getAll(),
-            $this->getCuentaAction->allAvailable()->get()
+            $this->getCuentaAction->where('active', true)->get()
         );
 
    }

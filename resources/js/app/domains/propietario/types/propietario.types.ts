@@ -1,5 +1,7 @@
 import { useRoute } from "ziggy-js"
 import { type FormCommonProps } from "@/app/shared/types/components"
+import type { Cuenta } from "../../cuenta"
+import { BaseIcons } from "@/app/shared/types"
 const route= useRoute()
 
 export const PropietarioRoutes={
@@ -20,4 +22,19 @@ export type Propietario={
     apellido: string,
     email: string,
     telefono: string
+}
+
+export type PropietarioTableData = Propietario &{
+    no_cuentas : number
+}
+export type PropietarioShowData = PropietarioTableData &{
+    cuentas ? : Cuenta[]
+}
+
+export const PropietarioIcons ={
+    ...BaseIcons,
+    apellido: 'fa-solid fa-file-signature',
+    email: 'fa-solid fa-envelope',
+    telefono: 'fa-solid fa-phone',
+    no_cuentas : 'fa-solid fa-wallet'
 }

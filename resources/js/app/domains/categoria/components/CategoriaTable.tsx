@@ -13,7 +13,7 @@ export default function CategoriaTable({
   pageSize?: number,
   onSelect: (item: Categoria, modalType: string) => void
 }) {
-  const {data: paginatedData}  = useSimpleTable({
+  const {data: paginatedData, pagination}  = useSimpleTable({
     data,
     pageSize,
    })
@@ -31,6 +31,7 @@ export default function CategoriaTable({
       columns={columns}
       pagination={true}
       pageSize={pageSize}
+      controller={pagination}
     />
   )
 }

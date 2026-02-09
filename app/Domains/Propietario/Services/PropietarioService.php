@@ -7,6 +7,9 @@ use App\Domains\Propietario\Actions\StorePropietarioAction;
 use App\Domains\Propietario\Actions\UpdatePropietarioAction;
 use App\Domains\Propietario\Actions\DestroyPropietarioAction;
 use App\Domains\Propietario\DTOs\StoreAndUpdatePropietarioDTO;
+use App\Domains\Propietario\Resources\PropietarioResource;
+use App\Domains\Propietario\Exceptions\CannotDeletePropietarioException;
+use App\Domains\Propietario\Resources\ShowPropietarioResource;
 use App\Models\Propietario\Propietario;
 
 class PropietarioService{
@@ -29,12 +32,20 @@ class PropietarioService{
         
     }
     public function destroy(Propietario $propietario): bool{
+        $cuentas = $propietario->cuentas;
+        if(!empty($cuentas->toArray())){
+            throw new CannotDeletePropietarioException ('No se puede eliminar el propietario, tiene cuentas asociadas');
+        }
         return $this->destroyPropietarioAction->destroy($propietario);
+    }
+
+    public function getWithDetails(Propietario $propietario): ShowPropietarioResource{
+        return ShowPropietarioResource::make($propietario->load('cuentas:id,nombre,propietario_id'));
     }
     public function getRecordsCount(): int{
         return $this->getPropietarioAction->getRecordsCount();
     }
     public function getAll(){
-        return $this->getPropietarioAction->getAll();
+        return PropietarioResource::collection($this->getPropietarioAction->getAll());
     }
 }

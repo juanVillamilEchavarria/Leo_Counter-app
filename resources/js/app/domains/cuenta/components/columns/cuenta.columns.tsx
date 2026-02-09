@@ -34,7 +34,6 @@ export const CuentaColumns=({ // la hacemos de esta manera para poder pasarle la
       render: (row: Cuenta)=>(
         <EditAndDeleteActions
          editHref={CuentaRoutes.edit(row.id)} 
-        deleteIcon='fa-solid fa-box-archive' 
         deleteOnClick={()=> onSelect(row)}
         /> //se devuelven los botones de editar y eliminar con su respectivo enlace
       )

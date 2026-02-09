@@ -5,13 +5,18 @@ import { type DeleteModalProps } from "../../types/components"
 export default function DeleteModal({
     open = false,
     onClose,
-    spanTitle,
+    spanTitle = 'Eliminar',
     title,
     paragraph,
     children,
     onSubmit
 }:DeleteModalProps
+
 ) {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    onSubmit(e);
+    onClose();
+  }
   return (
     <Modal 
             open={open} 
@@ -26,7 +31,7 @@ export default function DeleteModal({
           variant="secondary">
             <p>{paragraph}</p>
                 {children}
-            <form onSubmit={onSubmit}>
+            <form onSubmit={handleSubmit}>
               <div className="flex w-2/3 mx-auto mt-7 gap-2">
                 <Button
                 type="button"

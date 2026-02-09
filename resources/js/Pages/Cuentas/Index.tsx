@@ -15,7 +15,7 @@ export default function Index({
 }:{
   cuentas : {data: Cuenta[]}
 }) {
-  const {item, modal, open, close}= useModalItem<Cuenta>()
+  const {item, modal, open, close, setItem}= useModalItem<Cuenta>()
   const {handleSubmit}= useCuenta({method: 'delete', id: item?.id})
 
   return (
@@ -36,12 +36,11 @@ export default function Index({
         <DeleteModal
           open={item !== null && modal === 'delete'}
           onClose={close}
-          onSubmit={handleSubmit}
-          spanTitle={'Archivar'}
+          onSubmit={(e)=>{handleSubmit(e) ; setItem(null)}}
           title={' Cuenta'}
           paragraph={`¿Esta seguro de eliminar la Cuenta: ${item?.nombre} ?`}
         >
-          <small>las cuentas archivadas estaran en la configuracion del sistema</small>
+          <small>las cuentas eliminadas estaran en la configuracion del sistema</small>
         </DeleteModal>
     </SectionTransition>
   )

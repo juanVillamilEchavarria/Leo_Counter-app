@@ -4,6 +4,7 @@ namespace App\Models\Propietario;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Cuenta\Cuenta;
 
 class Propietario extends Model
 {
@@ -14,4 +15,8 @@ class Propietario extends Model
         'email',
         'telefono'
     ];
+
+    public function cuentas (){
+        return $this->hasMany(Cuenta::class);
+    }
 }

@@ -24,7 +24,6 @@ class CuentaResource extends JsonResource
             'propietario' => $this->propietario ? $this->propietario->nombre . ' ' . $this->propietario->apellido : null,
             'notas' => $this->notas,
             'active' => $this->active,
-            'archived' => $this->archived,
         ];
     }
 }

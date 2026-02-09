@@ -14,6 +14,13 @@ class PropietarioController extends Controller
     public function __construct(
         private PropietarioService $propietarioService
     ){}
+    private function props(string $title = 'Propietarios') : array{
+        return [
+            'title' => $title,
+            'NoRegistros' => $this->propietarioService->getRecordsCount(),
+
+        ];
+    }
 
     /**
      * Display a listing of the resource.
@@ -21,11 +28,10 @@ class PropietarioController extends Controller
     public function index()
     {
         $propietarios = $this->propietarioService->getAll();
-        return Inertia::render('Propietarios/Index',[
-            'title' => 'Propietarios',
-            'NoRegistros' => $this->propietarioService->getRecordsCount(),
+        $props = array_merge($this->props(),[
             'propietarios' => $propietarios
         ]);
+        return Inertia::render('Propietarios/Index',$props);
     }
 
     /**
@@ -33,9 +39,7 @@ class PropietarioController extends Controller
      */
     public function create()
     {
-       return Inertia::render('Propietarios/Create',[
-            'title' => 'Crear Propietario'
-       ]);
+       return Inertia::render('Propietarios/Create',$this->props('Crear Propietario'));
     }
 
     /**
@@ -51,9 +55,13 @@ class PropietarioController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Propietario $propietario)
     {
-        //
+        $props = array_merge($this->props('Detalle Propietario'),[
+            'propietarios' => $this->propietarioService->getAll(),
+            'data'=> $this->propietarioService->getWithDetails($propietario)
+        ]);
+          return Inertia::render('Propietarios/Index',$props);
     }
 
     /**
@@ -61,10 +69,10 @@ class PropietarioController extends Controller
      */
     public function edit(Propietario $propietario)
     {
-        return Inertia::render('Propietarios/Edit',[
-            'title' => 'Editar Propietario',
+        $props = array_merge($this->props('Editar Propietario'),[
             'data' => $propietario
         ]);
+        return Inertia::render('Propietarios/Edit',$props);
     }
 
     /**

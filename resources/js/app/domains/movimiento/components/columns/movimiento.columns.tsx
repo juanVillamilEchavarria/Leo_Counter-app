@@ -4,7 +4,7 @@ import { moneyFormat } from "@/app/shared/helpers"
 import { dateFormat } from "@/app/shared/helpers"
 import { type ColumnDef } from "@tanstack/react-table"
 import { type MovimientoTableData, type MovimientoShowData, MovimientoRoutes } from "../../types/movimiento.types"
-export const MovimientoColumns = ({onSelect}:{onSelect: (item: MovimientoTableData | MovimientoShowData)=> void}) : ColumnDef<MovimientoTableData>[]=>[
+export const MovimientoColumns = ({onSelect}:{onSelect: (item:MovimientoShowData)=> void}) : ColumnDef<MovimientoTableData>[]=>[
     {
         id: 'id',
         header: 'ID',
@@ -48,7 +48,15 @@ export const MovimientoColumns = ({onSelect}:{onSelect: (item: MovimientoTableDa
         id: 'monto',
         header: 'Monto',
         accessorKey: 'monto',
-        cell: ({row}) => moneyFormat(Number(row.original.monto))
+        cell: ({row}) => {
+            const signo = row.original.tipo_movimiento === 'Ingreso' ? '+' : '-'
+            return (
+                <div className="flex items-center">
+                    <span>{}</span>
+                <SuccessOrFailText output={signo + moneyFormat(Number(row.original.monto))} attribute={row.original.tipo_movimiento} value={'Ingreso'}  />
+                </div>
+            )
+        }
     },
     {
         id: 'fecha',
