@@ -7,6 +7,9 @@ class GetArchivoMovimientoAction {
     public function getAll(){
         return ArchivoMovimiento::all();
     }
+    public function find(int $id){
+        return ArchivoMovimiento::find($id);
+    }
 
     public function getAllByMovimientoId(int $movimiento_id){
         return ArchivoMovimiento::where('movimiento_id', $movimiento_id)->get();

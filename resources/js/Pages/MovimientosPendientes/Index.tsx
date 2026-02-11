@@ -27,6 +27,7 @@ export default function Index({
   },[data])
   const {item, modal, open, close, setItem}= useModalItem<MovimientoPendienteShowData>()
   const {handleSubmit}= useMovimientoPendiente({method: 'delete', id: item?.id})
+  console.log('Cookies:', document.cookie);
   return (
     <SectionTransition>
         <SectionDescription title="Movimientos Pendientes" paragraph="Gestiona tus movimientos pendientes de pago" />

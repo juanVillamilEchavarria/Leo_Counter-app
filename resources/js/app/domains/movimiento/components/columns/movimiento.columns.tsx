@@ -1,4 +1,5 @@
 import SuccessOrFailText from "@/app/shared/components/common/SuccessOrFailText"
+import MoneyFlow from "@/app/shared/components/common/MoneyFlow"
 import { router } from "@inertiajs/react"
 import { moneyFormat } from "@/app/shared/helpers"
 import { dateFormat } from "@/app/shared/helpers"
@@ -49,12 +50,8 @@ export const MovimientoColumns = ({onSelect}:{onSelect: (item:MovimientoShowData
         header: 'Monto',
         accessorKey: 'monto',
         cell: ({row}) => {
-            const signo = row.original.tipo_movimiento === 'Ingreso' ? '+' : '-'
             return (
-                <div className="flex items-center">
-                    <span>{}</span>
-                <SuccessOrFailText output={signo + moneyFormat(Number(row.original.monto))} attribute={row.original.tipo_movimiento} value={'Ingreso'}  />
-                </div>
+                <MoneyFlow monto={row.original.monto} tipo_movimiento={row.original.tipo_movimiento} />
             )
         }
     },

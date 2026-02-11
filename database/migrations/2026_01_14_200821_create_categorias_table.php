@@ -22,9 +22,8 @@ return new class extends Migration
             $table->timestamps();
             //indices
             $table->index('tipo_movimiento_id');
-
             //uniques
-            $table->unique(['nombre', 'tipo_movimiento_id', 'deleted_at']);
+            $table->unique(['nombre', 'tipo_movimiento_id']);
         });
     }
 

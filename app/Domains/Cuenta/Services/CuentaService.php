@@ -47,6 +47,9 @@ class CuentaService{
 
     public function update(Cuenta $cuenta, array $data): bool{
         $dto = UpdateCuentaDTO::fromArray($data);
+        if(!$this->canUpdateSaldoInicial($cuenta)){
+            $dto->setExcept(['saldo_actual']);
+        }
         return $this->updateCuentaAction->update($cuenta, $dto);
     }
 
@@ -62,15 +65,11 @@ class CuentaService{
         $cuentas = $this->getCuentaAction->getAllAvalaibleWithDetails();
         return CuentaResource::collection($cuentas);
     }
-    public function getAllAvailable(): Builder{
-        return $this->getCuentaAction->allAvailable();
-    }
-
-    public function getById(string $id): ?Cuenta{
-        return $this->getCuentaAction->where('id', $id)->firstOrFail();
-    }
-
     public function getRecordsCount(): int{
         return $this->getCuentaAction->getRecordsCount();
+    }
+
+    public function canUpdateSaldoInicial(Cuenta $cuenta): bool{
+        return !$cuenta->movimientos()->exists();
     }
 }

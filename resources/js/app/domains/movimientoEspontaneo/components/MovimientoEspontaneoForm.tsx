@@ -3,14 +3,16 @@ import InputFillable from "@/app/shared/components/form/InputFillable"
 import SelectModel from "@/app/shared/components/form/SelectModel"
 import TextArea from "@/app/shared/components/form/TextArea"
 import TransitionMotion from "@/app/shared/components/transitions/TransitionMotion"
+import SuccessOrFailText from "@/app/shared/components/common/SuccessOrFailText"
 import AlertMessage from "@/app/shared/components/common/AlertMessage"
 import Button from "@/app/shared/components/common/Button"
 import DropZone from "@/app/shared/components/dropZone/DropZone"
 import UploadedFileList from "@/app/shared/components/dropZone/UploadedFileList"
 import ErrorList from "@/app/shared/components/dropZone/ErrorList"
-import useMovimientoEspontaneoUploadFiles from "../hooks/orchestrators/useMovimientoEspontaneoUploadFiles"
-import useFormValidateSaldo from "../hooks/orchestrators/useFormValidateSaldo"
+import useMovimientoEspontaneoUploadFiles from "../hooks/useMovimientoEspontaneoUploadFiles"
+import useFormSaldoValidate from "../hooks/useFormSaldoValidate"
 import { useCategoriasMovimientoFilter } from "@/app/shared/hooks"
+import { ArchivoMovimientoRoutes } from "@/app/domains/archivoMovimiento"
 import { type MovimientoEspontaneoFormProps } from "../types/movimientoEspontaneo.types"
 
 export default function MovimientoEspontaneoForm({
@@ -28,8 +30,9 @@ export default function MovimientoEspontaneoForm({
    } = useCategoriasMovimientoFilter({options, data})
 
    const {onDrop,onDropRejected,rejectedFiles,removeFile}= useMovimientoEspontaneoUploadFiles({files: data?.comprobantes, setFiles : (files) => setData('comprobantes', files)})
-   const {data : dataValidate, isLoading}= useFormValidateSaldo({cuentaId:data?.cuenta_id, monto: data?.monto})
-   console.log(dataValidate);
+   const {data : dataValidate, isLoading, isError, error}= useFormSaldoValidate({cuentaId:data?.cuenta_id, monto: data?.monto, tipo_movimiento_id: data?.tipo_movimiento_id})
+
+   console.log(data);
   return (
     <Card>
         <form onSubmit={submit} className="formulario-general">
@@ -105,9 +108,24 @@ export default function MovimientoEspontaneoForm({
                         className={`${errors.cuenta_id && 'border-red-500! text-red-500!'}`}
                         placeholder="Seleccione una cuenta"
                         />
-                    <TransitionMotion active={errors?.cuenta_id}>
-                        <AlertMessage message={errors?.cuenta_id} />
-                    </TransitionMotion>
+                       {/* Validación de Laravel */}
+                        <TransitionMotion active={errors?.cuenta_id}>
+                            <AlertMessage message={errors?.cuenta_id} />
+                        </TransitionMotion>
+                        {/* Error de API */}
+                        <TransitionMotion active={isError}>
+                            <AlertMessage message={error?.message || 'Error al validar saldo'} />
+                        </TransitionMotion>
+                        
+                        {/* Saldo insuficiente */}
+                        <TransitionMotion active={dataValidate?.allowed !== undefined}>
+                            <SuccessOrFailText attribute={dataValidate?.allowed} value={false} output={(
+                                 <div className={`flex items-center gap-2 ${dataValidate?.allowed === true ? 'text-green-500' : 'text-red-500'} text-sm mt-1`}>
+                                        <i className={`fas ${dataValidate?.allowed === true ? 'fa-check-circle' : 'fa-times-circle'}`}></i>
+                                        <span>{dataValidate?.allowed === true ? 'Saldo disponible' : 'Saldo insuficiente'}</span>
+                                    </div>
+                            )} />
+                        </TransitionMotion>
                 </div>
                 <div className="formulario-campo w-full">
                     <label htmlFor="monto">Monto</label>
@@ -146,7 +164,10 @@ export default function MovimientoEspontaneoForm({
                     <ErrorList rejectedFiles={rejectedFiles}/>
                     <p className="text-gray-400 font-bold">Archivos Subidos:</p>
                     { data?.comprobantes && data?.comprobantes?.length>0  ?(
-                        <UploadedFileList  files={data.comprobantes} handleDeleteFile={removeFile} className="text-black" />
+                        <UploadedFileList preview_route={ArchivoMovimientoRoutes.movimientosArchivosShow}  files={data.comprobantes} handleDeleteFile={(index : number, id?: number)=>{
+                            removeFile(index);
+                            setData('comprobantes_delete_ids', [...(data?.comprobantes_delete_ids ?? []), id ?? 0])
+                        }} className="text-black" />
                     ):(
                         <p className="text-gray-400">No hay archivos subidos</p>
                     )}
@@ -156,7 +177,7 @@ export default function MovimientoEspontaneoForm({
                 <Button
                 variant="secondary"
                     type="submit"
-                    disabled={processing}
+                    disabled={processing || !dataValidate?.allowed || isLoading}
                 >
                     Guardar
                 </Button>

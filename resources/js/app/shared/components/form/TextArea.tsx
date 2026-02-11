@@ -13,7 +13,7 @@ export default function TextArea({
   return icon ? (
     <div className="flex relative">
         <i className={`absolute top-3 left-2 ${icon}`}></i>
-        <textarea name={name} id={id} value={value} onChange={onChange} className={` pl-10 formulario-fillable ${className}`} disabled={disabled} required={required} placeholder={placeholder}></textarea> 
+        <textarea name={name} id={id} value={value || ''} onChange={onChange} className={` pl-10 formulario-fillable ${className}`} disabled={disabled} required={required} placeholder={placeholder}></textarea> 
     </div>  
   ):(
     <textarea name={name} id={id} value={value} onChange={onChange} className={`formulario-fillable ${className}`} disabled={disabled} required={required} placeholder={placeholder}></textarea>

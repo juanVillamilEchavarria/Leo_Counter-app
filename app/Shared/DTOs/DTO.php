@@ -48,4 +48,12 @@ abstract class DTO{
             }
             return new static(...array_values($data));
         }
+   
+        public function setExcept (array $except){
+            $this->except =[
+                ...$this->except,
+                ...$except
+            ];
+            return $this;
+        }
 }

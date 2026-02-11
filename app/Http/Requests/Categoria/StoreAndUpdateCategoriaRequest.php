@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Categoria;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreAndUpdateCategoriaRequest extends FormRequest
 {
@@ -23,7 +24,16 @@ class StoreAndUpdateCategoriaRequest extends FormRequest
     {
         return [
             'nombre' => 'required|string|max:255',
-            'tipo_movimiento_id' => ['required','integer','exists:tipo_movimientos,id'],
+            'tipo_movimiento_id' => [
+                                'required',
+                                'integer',
+                                'exists:tipo_movimientos,id', 
+                                Rule::unique('categorias')
+                                ->where(fn ($q) => 
+                                $q->where('nombre', $this->nombre)
+                                )
+                                ->ignore(optional($this->route('categoria'))->id)
+                            ],
             'descripcion' => 'nullable|string|max:1000',
         ];
     }

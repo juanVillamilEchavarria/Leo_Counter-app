@@ -71,12 +71,12 @@ class CuentaController extends Controller
     public function edit(Cuenta $cuenta)
     {
          $options = $this->cuentaService->getOptions();
-        
         return Inertia::render('Cuentas/Edit',[
             'title'=>'Cuentas',
             'NoRegistros'=>$this->NoRegistros(),
             'options'=>$options,
-            'data'=>$cuenta
+            'data'=>$cuenta,
+            'can_update_saldo'=>$this->cuentaService->canUpdateSaldoInicial($cuenta)
         ]);
     }
 

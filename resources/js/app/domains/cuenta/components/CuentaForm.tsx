@@ -12,6 +12,7 @@ export default function CuentaForm({
     submit,
     options,
     processing,
+    can_update_saldo
 }: CuentaFormProps) {
     console.log(errors)
   return (
@@ -50,9 +51,14 @@ export default function CuentaForm({
                     type="number"
                     name="saldo_inicial"
                     id="saldo_inicial"
+                    disabled={can_update_saldo === false}
                     value={data?.saldo_inicial}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('saldo_inicial', Number(e.target.value))}
-                    className={`border-2 p-3 border-gray-300 text-gray-800 ${errors.saldo_inicial && 'border-red-500! text-red-500!'} `}
+                    className={`
+                            border-2 p-3 border-gray-300 text-gray-800
+                            ${errors.saldo_inicial && 'border-red-500! text-red-500!'} 
+                            ${can_update_saldo === false && 'bg-gray-200 cursor-not-allowed'} 
+                         `}
                     icon={`fa-solid fa-coins fa-xl top-6 text-gray-400 ${errors.saldo_inicial && 'text-red-500!'} `}
                 />
                 <TransitionMotion

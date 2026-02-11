@@ -10,4 +10,10 @@ export type CreateAndEditViewWithOptionsProps<TData extends Record<string,any>, 
     options : TOptions
 }
 
-export type FileWithPreview = File & { preview : string }
+export type FileWithPreview = {
+    file?: File
+    preview: string,
+    id?: number,
+    name?: string,
+    nombre?: string
+}

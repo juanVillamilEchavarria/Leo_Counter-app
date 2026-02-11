@@ -1,6 +1,7 @@
 import { useRoute } from "ziggy-js"
 import { type Propietario } from "../../propietario"
 import { type FormCommonProps } from "@/app/shared/types/components"
+import { type CreateAndEditViewWithOptionsProps } from "@/app/shared/types"
 const route= useRoute()
 
 export const CuentaRoutes = {
@@ -42,7 +43,12 @@ export type CuentaFormOptions = { // declaramos las opciones seleccionables del 
 }
 export type CuentaFormProps = // declaramos las propiedades del formulario
   FormCommonProps<CuentaFormData> & {
-    options: CuentaFormOptions
+    options: CuentaFormOptions,
+    can_update_saldo ?: boolean
+  }
+
+  export type CuentaEditViewProps = CreateAndEditViewWithOptionsProps<Cuenta, CuentaFormOptions> &{
+    can_update_saldo : boolean
   }
 
   

@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\MovimientoEspontaneo;
 
 use Illuminate\Foundation\Http\FormRequest;
-
-class StoreAndUpdateMovimientoEspontaneoRequest extends FormRequest
+class StoreMovimientoEspontaneoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

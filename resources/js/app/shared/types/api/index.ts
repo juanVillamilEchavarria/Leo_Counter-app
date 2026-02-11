@@ -1,8 +1,9 @@
 import { type ApiParams, ApiMethods } from "./api.types";
-import { type ValidateSaldoCuentaData } from "./apiData.types";
+import { type SaldoValidateCuentaData, type SaldoValidateResponse } from "./apiData.types";
 
 export {
     ApiMethods,
     type ApiParams,
-    type ValidateSaldoCuentaData
+    type SaldoValidateCuentaData,
+    type SaldoValidateResponse
 }

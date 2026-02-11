@@ -15,7 +15,7 @@ export default function Index({
   return (
         <SectionTransition>
             <SectionDescription title="Movimientos Espontaneos" paragraph={(
-                <p>Gestiona tus movimientos del dia de hoy <span className="font-bold">{dateFormat(dia)}</span></p>
+                <span>Gestiona tus movimientos del dia de hoy <span className="font-bold">{dateFormat(dia)}</span></span>
             )} />
             <CreateButtonSection>
                 <CrudButton

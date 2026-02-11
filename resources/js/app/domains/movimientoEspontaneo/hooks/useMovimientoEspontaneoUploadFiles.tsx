@@ -8,11 +8,11 @@ export default function useMovimientoEspontaneoUploadFiles({
     files: FileWithPreview[] | undefined | null,
     setFiles: (files: FileWithPreview[]) => void
 }) {
-  const {onDrop, onDropRejected, rejectedFiles}= useMyDropZone({
+  const {onDrop, onDropRejected, rejectedFiles}= useMyDropZone({ // llamamos al hook que orquesta la subida de los archivos
     onFilesChange: (files) => setFiles(files)
   })
 
-  const {removeFile}= useFilePreviewList({
+  const {removeFile}= useFilePreviewList({ //llamamos al hook que orquesta la eliminacion de los archivos
     files,
     setFiles
   })

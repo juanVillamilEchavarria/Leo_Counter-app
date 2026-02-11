@@ -3,20 +3,21 @@ import CreateOrEditFormSection from "@/app/shared/components/common/CreateOrEdit
 import CuentaForm from "@/app/domains/cuenta/components/CuentaForm"
 import { useCuenta } from "@/app/domains/cuenta"
 import { CuentaRoutes } from "@/app/domains/cuenta"
-import { type Cuenta, type CuentaFormOptions} from "@/app/domains/cuenta"
+import { type Cuenta, type CuentaFormOptions, type CuentaEditViewProps} from "@/app/domains/cuenta"
 import {type CreateAndEditViewWithOptionsProps } from "@/app/shared/types/formData"
 export default function Edit({
     options,
-    data
-}:CreateAndEditViewWithOptionsProps<Cuenta, CuentaFormOptions>) {
+    data,
+    can_update_saldo
+}:CuentaEditViewProps) {
    const {form, handleSubmit}= useCuenta({method: 'put', id: data?.id, data})
-   console.log(form);
+   console.log(can_update_saldo);
    
     return (
       <div className="section">
           <CreateOrEditDescription type="edit" model="Cuenta" />
           <CreateOrEditFormSection buttonHref={CuentaRoutes.index()}>
-              <CuentaForm {...form} options={options} submit={handleSubmit} />
+              <CuentaForm {...form} options={options} submit={handleSubmit} can_update_saldo={can_update_saldo} />
           </CreateOrEditFormSection>
   
       </div>

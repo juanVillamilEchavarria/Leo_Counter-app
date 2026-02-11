@@ -1,9 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Movimiento\MovimientoEspontaneoController;
+use App\Http\Controllers\Shared\SaldoValidateController;
 
-
-Route::middleware(['auth:sanctum'])->group( function () {
-    Route::post('movimientos-espontaneos/validate-saldo', [MovimientoEspontaneoController::class, 'validateSaldo'])->name('movimientos-espontaneos.validate-saldo');
+Route::middleware(['auth'])->group( function () {
+    Route::post('validate-saldo', SaldoValidateController::class)->name('validate-saldo');
 });

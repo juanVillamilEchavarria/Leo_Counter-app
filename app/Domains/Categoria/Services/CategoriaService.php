@@ -10,6 +10,7 @@ use App\Domains\Categoria\Actions\GetCategoriaAction;
 use App\Domains\TipoMovimiento\Actions\GetTipoMovimientoAction;
 use App\Domains\Categoria\DTOs\CategoriaFormOptionsDTO;
 use App\Domains\Categoria\DTOs\StoreAndUpdateCategoriaDTO;
+use App\Domains\Categoria\Exceptions\CannotStoreCategoriaException;
 use App\Domains\Categoria\Resources\CategoriaResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
@@ -24,8 +25,15 @@ class CategoriaService{
     {
     }
 
+
+    private function storeValidate(StoreAndUpdateCategoriaDTO $dto){
+        if($this->getCategoriaAction->getEqual($dto->nombre, $dto->tipo_movimiento_id)->exists()){
+            throw new CannotStoreCategoriaException;
+        }
+    }
     public function store(array $data): Categoria{
         $dto = StoreAndUpdateCategoriaDTO::fromArray($data);
+        $this->storeValidate($dto);
         return $this->storeCategoriaAction->store($dto);
     }
 

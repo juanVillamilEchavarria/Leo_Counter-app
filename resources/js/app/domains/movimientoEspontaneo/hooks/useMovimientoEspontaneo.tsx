@@ -1,5 +1,5 @@
 import { useFormNormal } from "@/app/shared/hooks"
-import { MovimientoEspontaneoActions, type MovimientoEspontaneo } from "../../types/movimientoEspontaneo.types"
+import { MovimientoEspontaneoActions, type MovimientoEspontaneo } from "../types/movimientoEspontaneo.types"
 import { FormMethods } from "@/app/shared/types/components"
 
 export default function useMovimientoEspontaneo({

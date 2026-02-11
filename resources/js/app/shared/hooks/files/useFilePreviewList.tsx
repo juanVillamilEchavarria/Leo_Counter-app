@@ -11,12 +11,12 @@ export function useFilePreviewList({
 }) {
   const removeFile = useCallback((index: number) => {
     if (!files) return
-    setFiles(filterItemByIndex(index, files))
+    setFiles(filterItemByIndex(index, files)) // se llama al helper que elimina el item del array de archivos
   }, [files, setFiles])
 
   useEffect(() => {
     return () => {
-      files?.forEach(file => URL.revokeObjectURL(file.preview))
+      files?.forEach(file => URL.revokeObjectURL(file.preview)) // se revocan las urls
     }
   }, [files])
 

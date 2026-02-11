@@ -4,8 +4,8 @@ export default function SuccessOrFailText({
     output
 
 }:{
-    attribute: string | number | boolean,
-    value: string
+    attribute: string | number | boolean | undefined,
+    value: string | number | boolean
     output ? : string | React.ReactNode
 }) {
   return (

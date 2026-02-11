@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\TipoCuenta\TipoCuenta;
 use App\Models\Propietario\Propietario;
-
+use App\Models\Movimiento\Movimiento;
 class Cuenta extends Model
 {
   use HasFactory;
@@ -26,5 +26,8 @@ class Cuenta extends Model
   }
   public function tipo_cuenta(){
     return $this->belongsTo(TipoCuenta::class);
+  }
+  public function movimientos(){
+    return $this->hasMany(Movimiento::class);
   }
 }

@@ -16,7 +16,6 @@ class TipoMovimientoSeeder extends Seeder
        $tipos = [
         'Ingreso',
         'Gasto',
-        'Transferencia'
        ];
          foreach($tipos as $tipo){
           TipoMovimiento::firstOrCreate(['tipo_movimiento' => $tipo]);

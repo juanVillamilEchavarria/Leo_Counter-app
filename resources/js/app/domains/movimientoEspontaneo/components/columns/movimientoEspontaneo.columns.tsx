@@ -1,4 +1,6 @@
 import EditAndDeleteActions from "@/app/shared/components/table/actions/EditAndDeleteActions"
+import SuccessOrFailText from "@/app/shared/components/common/SuccessOrFailText"
+import MoneyFlow from "@/app/shared/components/common/MoneyFlow"
 import { type MovimientoEspontaneoTableData, MovimientoEspontaneoRoutes } from "../../types/movimientoEspontaneo.types"
 
 export const MovimientoEspontaneoColumns = ({
@@ -21,11 +23,17 @@ export const MovimientoEspontaneoColumns = ({
         },
         {
             key: 'tipo_movimiento',
-            label: 'Tipo'
+            label: 'Tipo',
+            render: (row: MovimientoEspontaneoTableData) => (
+                <SuccessOrFailText attribute={row.tipo_movimiento} value={'Ingreso'}  />
+            )
         },
         {
             key: 'monto',
-            label: 'Monto'
+            label: 'Monto',
+            render: (row: MovimientoEspontaneoTableData) => (
+                <MoneyFlow monto={row.monto} tipo_movimiento={row.tipo_movimiento} />
+            )
         },
         {
             key: 'descripcion',

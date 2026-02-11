@@ -39,7 +39,7 @@ export default function Index({
           title={' Categoria'}
           paragraph={`¿Esta seguro de eliminar la Categoria: ${item?.nombre} ?`}
         >
-          <small>las categorias no pueden ser recuperadas, si esta categoria esta asociada a algun tipo de movimiento fijo, considera inmediatamente luego de esta accion asignar una categoria a dicho movimiento</small>
+          <small>las categorias eliminadas estaran en la configuracion del sistema</small>
         </DeleteModal>
     </SectionTransition>
   )

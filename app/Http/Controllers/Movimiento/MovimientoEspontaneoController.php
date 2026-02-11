@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Movimiento;
 
+use App\Models\Movimiento\Movimiento;
 use App\Http\Controllers\Controller;
 use App\Domains\Movimiento\Service\MovimientoService;
-use App\Shared\Services\BalanceCheckerService;
-use App\Http\Requests\StoreAndUpdateMovimientoEspontaneoRequest;
-use Illuminate\Http\Request;
-use Carbon\Carbon;
+use App\Http\Requests\MovimientoEspontaneo\StoreMovimientoEspontaneoRequest;
+use App\Http\Requests\MovimientoEspontaneo\UpdateMovimientoEspontaneoRequest;
 use App\Domains\Movimiento\Enums\MovimientoVariants;
-use App\Models\Cuenta\Cuenta;
+use App\Domains\Movimiento\Enums\ResourceEnum;
+
+use Carbon\Carbon;
 use Inertia\Inertia;
 
 class MovimientoEspontaneoController extends Controller
@@ -17,21 +18,25 @@ class MovimientoEspontaneoController extends Controller
 
     public function __construct(
         private MovimientoService $movimientoService,
-        private BalanceCheckerService $balanceCheckerService
     )
     {
     }
     /**
      * Display a listing of the resource.
      */
+    private function props(string $title = 'Movimientos Espontaneos') : array{
+        return [
+            'title'=> $title,
+            'NoRegistros'=> $this->movimientoService->getRecordsCount(MovimientoVariants::ESPONTANEO),
+        ];
+    }
     public function index()
     {
-        return Inertia::render('Movimientos/Espontaneos/Index',[
-            'title'=>'Movimientos Espontaneos',
-            'dia' => Carbon::now()->format('Y-m-d'),
-            'NoRegistros'=> 24,
+        $props = array_merge($this->props(),[
+            'dia'=> Carbon::now()->format('Y-m-d'),
             'movimientos'=>$this->movimientoService->getAll(MovimientoVariants::ESPONTANEO)
         ]);
+        return Inertia::render('Movimientos/Espontaneos/Index',$props);
     }
 
     /**
@@ -39,17 +44,16 @@ class MovimientoEspontaneoController extends Controller
      */
     public function create()
     {
-       return Inertia::render('Movimientos/Espontaneos/Create',[
-        'title'=> 'Crear Movimiento Espontaneo',
-        'NoRegistros'=> 24,
-        'options'=> $this->movimientoService->getOptions()
-       ]);
+        $props = array_merge($this->props('Crear Movimiento Espontaneo'),[
+            'options'=> $this->movimientoService->getOptions()
+        ]);
+       return Inertia::render('Movimientos/Espontaneos/Create',$props);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAndUpdateMovimientoEspontaneoRequest $request)
+    public function store(StoreMovimientoEspontaneoRequest $request)
     {
         $this->movimientoService->store($request->validated());
         Inertia::flash('success','Movimiento creado con exito');
@@ -67,17 +71,24 @@ class MovimientoEspontaneoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Movimiento $movimientoEspontaneo)
     {
-        //
+
+        $props = array_merge($this->props('Editar Movimiento Espontaneo'),[
+            'data'=>$this->movimientoService->getWithDetails($movimientoEspontaneo, ResourceEnum::EDIT),
+            'options'=> $this->movimientoService->getOptions()
+        ]);
+        return Inertia::render('Movimientos/Espontaneos/Edit',$props);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateMovimientoEspontaneoRequest $request, Movimiento $movimientoEspontaneo)
     {
-        //
+        $this->movimientoService->update($movimientoEspontaneo, $request->validated());
+        Inertia::flash('success','Movimiento actualizado con exito');
+        return redirect()->route('movimientosEspontaneos.index');
     }
 
     /**
@@ -86,11 +97,5 @@ class MovimientoEspontaneoController extends Controller
     public function destroy(string $id)
     {
         //
-    }
-
-    public function validateSaldo(Cuenta $cuenta, float $monto){
-        return response()->json([
-            'allowed'=>(bool) $this->balanceCheckerService->canAfford($cuenta->id, $monto)
-        ]);
     }
 }

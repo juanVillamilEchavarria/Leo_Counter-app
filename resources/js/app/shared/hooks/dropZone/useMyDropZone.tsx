@@ -11,15 +11,15 @@ export default function useMyDropZone<T extends string>({
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const files = acceptedFiles.map(file =>
       Object.assign(file, {
-        preview: URL.createObjectURL(file)
+        preview: URL.createObjectURL(file) // para cada archivo se crea una url del preview
       })
     )
-    onFilesChange(files)
-    setRejectedFiles([])
+    onFilesChange(files) // luego se setean los archivos
+    setRejectedFiles([]) // se limpian los archivos rechazados
   }, [onFilesChange])
 
   const onDropRejected = useCallback((fileRejections: FileRejection[]) => {
-    setRejectedFiles(fileRejections)
+    setRejectedFiles(fileRejections) // cuando se rechazan archivos se setean
   }, [])
 
   return { onDrop, onDropRejected, rejectedFiles }

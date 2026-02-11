@@ -8,7 +8,8 @@ export type MovimientoEspontaneo =Movimiento & Omit<Movimiento, 'movimiento_pend
 export type MovimientoEspontaneoTableData = MovimientoTableData & Omit<MovimientoTableData , 'fecha'| 'movimiento_pendiente_id'>
 
 export type MovimientoEspontaneoFormData = Omit<MovimientoEspontaneo, 'id'> &{
-    comprobantes ? : FileWithPreview[]
+    comprobantes ? : FileWithPreview[],
+    comprobantes_delete_ids ? : number[]
 }
 export type MovimientoEspontaneoFormProps = FormCommonProps <MovimientoEspontaneoFormData> & {
     options : MovimientoFijoFormOptions
@@ -28,6 +29,6 @@ export const MovimientoEspontaneoActions ={
 } as const
 
 export const MovimientoEspontaneoAPIActions={
-    validateSaldo : route('movimientos-espontaneos.validate-saldo')
+    validateSaldo : '/validate-saldo'
 
 }
