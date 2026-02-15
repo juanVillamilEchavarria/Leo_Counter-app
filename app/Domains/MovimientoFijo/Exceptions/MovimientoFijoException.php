@@ -2,7 +2,7 @@
 
 namespace App\Domains\MovimientoFijo\Exceptions;
 
-use App\Shared\Exceptions\DomainException;
+use App\Shared\Abstracts\Exceptions\DomainException;
 
 abstract class MovimientoFijoException extends DomainException
 {

@@ -3,7 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use App\Shared\Exceptions\DomainException;
+use App\Shared\Abstracts\Exceptions\DomainException;
 use App\Http\Middleware\HandleInertiaRequests;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 use Inertia\Inertia;

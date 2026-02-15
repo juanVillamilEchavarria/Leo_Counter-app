@@ -2,7 +2,7 @@
 
 namespace App\Domains\MovimientoFijo\DTOs;
 
-use App\Shared\DTOs\DTO;
+use App\Shared\Abstracts\DTOs\DTO;
 use Illuminate\Support\Carbon;
 use App\Domains\MovimientoPendiente\Enums\EstadosMovimientoPendiente;
 

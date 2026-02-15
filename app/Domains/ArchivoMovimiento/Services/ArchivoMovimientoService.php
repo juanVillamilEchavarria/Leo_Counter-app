@@ -8,6 +8,7 @@ use App\Models\ArchivoMovimiento\ArchivoMovimiento;
 use App\Shared\Actions\UploadFileAction;
 use App\Shared\DTOs\UploadFileDTO;
 use App\Domains\ArchivoMovimiento\DTOs\ThrowArchivoMovimientoDTO;
+use App\Domains\ArchivoMovimiento\Exceptions\CannotDeleteArchivoMovimientoException;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
@@ -46,6 +47,18 @@ class ArchivoMovimientoService  {
                 $this->storeArchivoMovimientoAction->store($dto);
         }
        
+    }
+
+    public function delete(ArchivoMovimiento $archivoMovimiento): void{
+        try {
+              $archivoMovimiento->delete();
+              if(Storage::disk($archivoMovimiento->disk)->exists($archivoMovimiento->path . $archivoMovimiento->nombre_guardado)){
+                    Storage::disk($archivoMovimiento->disk)->delete($archivoMovimiento->path . $archivoMovimiento->nombre_guardado);
+                 }
+        } catch (\Throwable $th) {
+            throw new CannotDeleteArchivoMovimientoException("No se pudo eliminar el archivo del movimiento. Error: " . $th->getMessage());
+            
+        }
     }
 
 }

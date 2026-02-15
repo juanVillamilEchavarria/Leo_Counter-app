@@ -5,13 +5,15 @@ import { Link } from '@inertiajs/react'
 
 export default function CreateOrEditFormSection({
     buttonHref='',
-    children
+    children,
+    className = ''
 }:{
     buttonHref ?: string,
     children : React.ReactNode
+    className ?: string
 }) {
   return (
-     <div className="w-1/2 mt-10 mx-auto">
+     <div className={`w-1/2 mt-10 mx-auto ${className ?? ''}`}>
          <Button
             as={Link} 
             variant="primaryPagination" 

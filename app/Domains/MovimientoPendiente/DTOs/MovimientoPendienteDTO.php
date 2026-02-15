@@ -3,7 +3,7 @@
 namespace App\Domains\MovimientoPendiente\DTOs;
 
 use App\Domains\MovimientoPendiente\Enums\EstadosMovimientoPendiente;
-use App\Shared\DTOs\DTO;
+use App\Shared\Abstracts\DTOs\DTO;
 use Illuminate\Support\Carbon;
 
 class MovimientoPendienteDTO extends DTO{

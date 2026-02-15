@@ -11,14 +11,14 @@ export default function AppLayout({
     const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
-    <div className="flex h-screen">
+    <div className="flex h-screen overflow-hidden">
 
         <ToastContainer className={`mt-20`}  />
         <FlashToastListener />
         <SideBarApp />
         <section className="flex flex-col h-screen w-full">
             <Header />
-            <main className="overflow-y-auto h-screen">
+            <main className="overflow-y-scroll h-screen">
                 {children}
             </main>
 

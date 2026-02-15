@@ -9,7 +9,7 @@ export const MovimientoRoutes={
 export type Movimiento={
     id: number,
     nombre: string,
-    categoria_id: number,
+    categoria_id?: number,
     cuenta_id: number,
     tipo_movimiento_id: number,
     monto: number,

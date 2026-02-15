@@ -14,7 +14,7 @@ class PropietarioController extends Controller
     public function __construct(
         private PropietarioService $propietarioService
     ){}
-    private function props(string $title = 'Propietarios') : array{
+    protected function props(string $title = 'Propietarios') : array{
         return [
             'title' => $title,
             'NoRegistros' => $this->propietarioService->getRecordsCount(),

@@ -3,7 +3,7 @@ import InputFillable from "@/app/shared/components/form/InputFillable"
 import SelectModel from "@/app/shared/components/form/SelectModel"
 import TextArea from "@/app/shared/components/form/TextArea"
 import TransitionMotion from "@/app/shared/components/transitions/TransitionMotion"
-import SuccessOrFailText from "@/app/shared/components/common/SuccessOrFailText"
+import SaldoValidationFeedback from "./SaldoValidationFeedback"
 import AlertMessage from "@/app/shared/components/common/AlertMessage"
 import Button from "@/app/shared/components/common/Button"
 import DropZone from "@/app/shared/components/dropZone/DropZone"
@@ -11,6 +11,7 @@ import UploadedFileList from "@/app/shared/components/dropZone/UploadedFileList"
 import ErrorList from "@/app/shared/components/dropZone/ErrorList"
 import useMovimientoEspontaneoUploadFiles from "../hooks/useMovimientoEspontaneoUploadFiles"
 import useFormSaldoValidate from "../hooks/useFormSaldoValidate"
+import { useEffect, useMemo } from "react"
 import { useCategoriasMovimientoFilter } from "@/app/shared/hooks"
 import { ArchivoMovimientoRoutes } from "@/app/domains/archivoMovimiento"
 import { type MovimientoEspontaneoFormProps } from "../types/movimientoEspontaneo.types"
@@ -27,12 +28,17 @@ export default function MovimientoEspontaneoForm({
     tipoMovimientoId,
     setTipoMovimientoId,
     categoriasFiltered,
-   } = useCategoriasMovimientoFilter({options, data})
+   } = useCategoriasMovimientoFilter({
+        options,
+        data,
+        onCategoriaInvalid : () => setData('categoria_id', undefined)
+   })
 
    const {onDrop,onDropRejected,rejectedFiles,removeFile}= useMovimientoEspontaneoUploadFiles({files: data?.comprobantes, setFiles : (files) => setData('comprobantes', files)})
+   const {removeFile: removeExistingFile}= useMovimientoEspontaneoUploadFiles({files: data?.comprobantes_existing, setFiles : (files) => setData('comprobantes_existing', files)})
    const {data : dataValidate, isLoading, isError, error}= useFormSaldoValidate({cuentaId:data?.cuenta_id, monto: data?.monto, tipo_movimiento_id: data?.tipo_movimiento_id})
-
-   console.log(data);
+    const maxFiles = useMemo(() => 3 - (data?.comprobantes_existing ? data.comprobantes_existing.length : 0), [data?.comprobantes_existing])
+    const hasExistingFiles = useMemo(() => data?.comprobantes_existing && data?.comprobantes_existing.length > 0, [data?.comprobantes_existing])
   return (
     <Card>
         <form onSubmit={submit} className="formulario-general">
@@ -119,12 +125,7 @@ export default function MovimientoEspontaneoForm({
                         
                         {/* Saldo insuficiente */}
                         <TransitionMotion active={dataValidate?.allowed !== undefined}>
-                            <SuccessOrFailText attribute={dataValidate?.allowed} value={false} output={(
-                                 <div className={`flex items-center gap-2 ${dataValidate?.allowed === true ? 'text-green-500' : 'text-red-500'} text-sm mt-1`}>
-                                        <i className={`fas ${dataValidate?.allowed === true ? 'fa-check-circle' : 'fa-times-circle'}`}></i>
-                                        <span>{dataValidate?.allowed === true ? 'Saldo disponible' : 'Saldo insuficiente'}</span>
-                                    </div>
-                            )} />
+                            <SaldoValidationFeedback allowed={dataValidate?.allowed} />
                         </TransitionMotion>
                 </div>
                 <div className="formulario-campo w-full">
@@ -160,24 +161,49 @@ export default function MovimientoEspontaneoForm({
                 </TransitionMotion>
             </div>
             <div className="w-full flex flex-col">
-                <DropZone onDrop={onDrop} onDropRejected={onDropRejected} rejectedFiles={rejectedFiles}/>
+                <p className="text-gray-400 font-bold">Archivos Adjuntos <small>({data?.comprobantes?.length ?? 0} de {maxFiles} permitidos)</small>:</p>
+                {maxFiles > 0 ? (
+                    <DropZone onDrop={onDrop} onDropRejected={onDropRejected} rejectedFiles={rejectedFiles} maxFiles={maxFiles}/>
+                ) : (
+                    <p className="text-gray-400 italic">Has alcanzado el límite máximo de archivos adjuntos. Elimina algunos archivos existentes para agregar nuevos.</p>
+                )}
+                
                     <ErrorList rejectedFiles={rejectedFiles}/>
-                    <p className="text-gray-400 font-bold">Archivos Subidos:</p>
-                    { data?.comprobantes && data?.comprobantes?.length>0  ?(
-                        <UploadedFileList preview_route={ArchivoMovimientoRoutes.movimientosArchivosShow}  files={data.comprobantes} handleDeleteFile={(index : number, id?: number)=>{
-                            removeFile(index);
-                            setData('comprobantes_delete_ids', [...(data?.comprobantes_delete_ids ?? []), id ?? 0])
-                        }} className="text-black" />
-                    ):(
-                        <p className="text-gray-400">No hay archivos subidos</p>
-                    )}
+                    <div className={`${hasExistingFiles ? ' grid grid-cols-2' : 'flex flex-col gap-4'} mt-5`}>
+                       
+                            { data?.comprobantes_existing && data?.comprobantes_existing?.length>0  &&(
+                                
+                                 <div className="flex flex-col">
+                                    <p className="text-gray-400 font-bold">Archivos Guardados:</p>
+                                <UploadedFileList preview_route={ArchivoMovimientoRoutes.movimientosArchivosShow}  files={data.comprobantes_existing} handleDeleteFile={(index : number, id?: number)=>{
+                                    console.log(data?.comprobantes_existing);
+                                    removeExistingFile(index);
+                                    setData('comprobantes_delete_ids', [...(data?.comprobantes_delete_ids ?? []), id ?? 0])
+                                }} className="text-black" />
+                                </div>
+                            )}
+                            
+                        <div className="flex flex-col">
+                            <p className="text-gray-400 font-bold">Archivos Nuevos:</p>
+                            {data?.comprobantes && data?.comprobantes?.length > 0 ? (
+                                <>
+                                    <UploadedFileList files={data.comprobantes} handleDeleteFile={(index : number)=>{
+                                        removeFile(index);
+                                    }} className="text-black" />
+                                </>
+
+                            ):(
+                                <p className="text-gray-400 font-bold">No hay archivos nuevos</p>
+                            )}
+                            </div>
+                    </div>
             </div>
                         
             <div className="w-1/6 my-5 mx-auto">
                 <Button
                 variant="secondary"
                     type="submit"
-                    disabled={processing || !dataValidate?.allowed || isLoading}
+                    disabled={processing || isLoading || (!dataValidate?.allowed && data?.tipo_movimiento_id === 2) }
                 >
                     Guardar
                 </Button>

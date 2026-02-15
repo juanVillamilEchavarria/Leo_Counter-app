@@ -2,7 +2,7 @@
 
 namespace App\Domains\Cuenta\DTOs;
 
-use App\Shared\DTOs\DTO;
+use App\Shared\Abstracts\DTOs\DTO;
 use Illuminate\Database\Eloquent\Collection;
 class CuentaFormOptionsDTO extends DTO{
     public function __construct(

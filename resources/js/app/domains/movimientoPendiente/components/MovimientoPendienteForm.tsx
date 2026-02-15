@@ -22,7 +22,12 @@ export default function MovimientoPendienteForm({
     tipoMovimientoId,
     setTipoMovimientoId,
     categoriasFiltered,
-   } = useCategoriasMovimientoFilter({options, data})
+   } = useCategoriasMovimientoFilter({
+        options,
+        data,
+        onCategoriaInvalid : () => setData('categoria_id', undefined)
+
+})
     const today= useMemo(()=>{
                    return todayFunction();
                },[])

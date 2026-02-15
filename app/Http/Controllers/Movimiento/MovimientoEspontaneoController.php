@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Movimiento;
 
 use App\Models\Movimiento\Movimiento;
 use App\Http\Controllers\Controller;
-use App\Domains\Movimiento\Service\MovimientoService;
+use App\Domains\Movimiento\Service\Application\MovimientoService;
 use App\Http\Requests\MovimientoEspontaneo\StoreMovimientoEspontaneoRequest;
 use App\Http\Requests\MovimientoEspontaneo\UpdateMovimientoEspontaneoRequest;
 use App\Domains\Movimiento\Enums\MovimientoVariants;
@@ -24,7 +24,7 @@ class MovimientoEspontaneoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    private function props(string $title = 'Movimientos Espontaneos') : array{
+    protected function props(string $title = 'Movimientos Espontaneos') : array{
         return [
             'title'=> $title,
             'NoRegistros'=> $this->movimientoService->getRecordsCount(MovimientoVariants::ESPONTANEO),
@@ -86,6 +86,8 @@ class MovimientoEspontaneoController extends Controller
      */
     public function update(UpdateMovimientoEspontaneoRequest $request, Movimiento $movimientoEspontaneo)
     {
+
+
         $this->movimientoService->update($movimientoEspontaneo, $request->validated());
         Inertia::flash('success','Movimiento actualizado con exito');
         return redirect()->route('movimientosEspontaneos.index');

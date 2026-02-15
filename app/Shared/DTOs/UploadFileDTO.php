@@ -1,7 +1,7 @@
 <?php
 namespace App\Shared\DTOs;
 
-use App\Shared\DTOs\DTO;
+use App\Shared\Abstracts\DTOs\DTO;
 use Illuminate\Http\UploadedFile;
 class UploadFileDTO extends DTO{
     public function __construct(

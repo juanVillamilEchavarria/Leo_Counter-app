@@ -24,7 +24,7 @@ export const MovimientoColumns = ({onSelect}:{onSelect: (item:MovimientoShowData
                           preserveScroll: true
                         })
 
-            }} className="cursor-pointer hover:underline hover:text-blue-500 transition-all">
+            }} className="cursor-pointer hover:underline hover:text-blue-500 transition-all w-full text-left">
                 <p>{row.original.nombre}</p>
             </button>
         )

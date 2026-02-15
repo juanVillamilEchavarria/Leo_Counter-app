@@ -5,11 +5,14 @@ namespace App\Domains\Movimiento\Actions;
 
 use App\Models\Movimiento\Movimiento;
 use App\Domains\Movimiento\DTOs\UpdateMovimientoDTO;
-use App\Domains\Movimiento\Exceptions\CannotUpdateMovimientoException;
+use App\Shared\Abstracts\Actions\UpdateAction;
 
-class UpdateMovimientoAction
+
+/** @method Movimiento update(UpdateMovimientoDTO $dto) */
+class UpdateMovimientoAction extends UpdateAction
 {
-    public function update(Movimiento $movimiento, UpdateMovimientoDTO $dto): bool{
-        return $movimiento->update($dto->toArray());
-    }
+   public function __construct()
+   {
+    parent::__construct(Movimiento::class);
+   }
 }

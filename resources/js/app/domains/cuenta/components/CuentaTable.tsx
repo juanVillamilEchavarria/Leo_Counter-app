@@ -13,7 +13,7 @@ export default function CuentaTable({
   data: Cuenta[],
   onSelect: (item: Cuenta, modalType: string) => void
 }) {
-  const {data: paginatedData}  = useSimpleTable({
+  const {data: paginatedData, pagination}  = useSimpleTable({
     data,
     pageSize,
    })
@@ -30,6 +30,7 @@ export default function CuentaTable({
       data={paginatedData}
       columns={columns}
       pagination={true}
+      controller={pagination}
       pageSize={pageSize}
     />
   )

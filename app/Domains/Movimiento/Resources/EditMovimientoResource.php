@@ -23,7 +23,7 @@ class EditMovimientoResource extends JsonResource
             'monto'=>$this->monto,
             'fecha'=>$this->fecha,
             'descripcion'=>$this->descripcion,
-            'comprobantes'=> $this->archivoMovimientos ? ComprobanteResource::collection($this->archivoMovimientos) : []
+            'comprobantes_existing'=> $this->archivoMovimientos ? ComprobanteResource::collection($this->archivoMovimientos) : []
         ];
     }
 }

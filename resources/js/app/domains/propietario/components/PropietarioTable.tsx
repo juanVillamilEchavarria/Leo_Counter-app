@@ -13,7 +13,7 @@ export default function PropietarioTable({
   data: PropietarioTableData[],
   onSelect: (item: PropietarioTableData, modalType: string) => void
 }) {
-  const {data: paginatedData}  = useSimpleTable({
+  const {data: paginatedData, pagination}  = useSimpleTable({
     data,
     pageSize,
    })
@@ -28,6 +28,7 @@ export default function PropietarioTable({
       data={paginatedData}
       columns={columns}
       pagination={true}
+      controller={pagination}
       pageSize={pageSize}
     />
   )

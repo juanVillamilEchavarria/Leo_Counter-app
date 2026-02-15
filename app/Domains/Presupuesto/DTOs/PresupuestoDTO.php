@@ -2,7 +2,7 @@
 
 namespace App\Domains\Presupuesto\DTOs;
 
-use App\Shared\DTOs\DTO;
+use App\Shared\Abstracts\DTOs\DTO;
 use Illuminate\Support\Carbon;
 
 abstract class PresupuestoDTO extends DTO {

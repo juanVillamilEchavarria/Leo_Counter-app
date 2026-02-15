@@ -65,7 +65,7 @@
     @apply flex flex-col gap-2
   }
   .contenedor-fieldset{
-    @apply flex w-full justify-center items-center
+    @apply flex w-full justify-center gap-2 items-center
   }
   .legend{
     @apply text-gray-600 text-lg

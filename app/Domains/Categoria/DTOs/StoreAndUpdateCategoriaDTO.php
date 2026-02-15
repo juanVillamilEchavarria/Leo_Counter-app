@@ -2,7 +2,7 @@
 
 namespace App\Domains\Categoria\DTOs;
 
-use App\Shared\DTOs\DTO;
+use App\Shared\Abstracts\DTOs\DTO;
 
 class StoreAndUpdateCategoriaDTO extends DTO
 {

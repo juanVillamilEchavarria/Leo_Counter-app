@@ -23,6 +23,7 @@ class UpdateMovimientoEspontaneoRequest extends StoreMovimientoEspontaneoRequest
     {
         return array_merge(parent::rules(),[
             'comprobantes_delete_ids'=> ['nullable', 'array'],
+            'comprobantes_existing'=> ['nullable', 'array'],
         ]);
     }
 }

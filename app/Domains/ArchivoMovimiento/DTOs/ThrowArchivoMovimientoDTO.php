@@ -5,7 +5,7 @@ namespace App\Domains\ArchivoMovimiento\DTOs;
 use App\Domains\Movimiento\DTOs\StoreMovimientoDTO;
 use App\Domains\Movimiento\DTOs\UpdateMovimientoDTO;
 use App\Models\Movimiento\Movimiento;
-use App\Shared\DTOs\DTO;
+use App\Shared\Abstracts\DTOs\DTO;
 
 class ThrowArchivoMovimientoDTO extends DTO{
     public function __construct(

@@ -16,7 +16,7 @@ class MovimientoPendienteController extends Controller
     ) {
     }
 
-    private function props(string $title = 'Movimientos Pendientes') : array{
+    protected function props(string $title = 'Movimientos Pendientes') : array{
         return [
             'title'=> $title,
             'NoRegistros'=>$this->movimientoPendienteService->getRecordsCount(),

@@ -2,7 +2,7 @@
 
 namespace App\Domains\ArchivoMovimiento\DTOs;
 
-use App\Shared\DTOs\DTO;
+use App\Shared\Abstracts\DTOs\DTO;
 
 abstract class ArchivoMovimientoDTO extends DTO{
     public function __construct(

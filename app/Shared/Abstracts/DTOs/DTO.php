@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\DTOs;
+namespace App\Shared\Abstracts\DTOs;
 
 abstract class DTO{
     protected array $only = []; // solo se devolveran estos campos

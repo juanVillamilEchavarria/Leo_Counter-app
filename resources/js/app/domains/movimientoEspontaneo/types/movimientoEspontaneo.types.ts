@@ -9,6 +9,7 @@ export type MovimientoEspontaneoTableData = MovimientoTableData & Omit<Movimient
 
 export type MovimientoEspontaneoFormData = Omit<MovimientoEspontaneo, 'id'> &{
     comprobantes ? : FileWithPreview[],
+    comprobantes_existing ? : FileWithPreview[],
     comprobantes_delete_ids ? : number[]
 }
 export type MovimientoEspontaneoFormProps = FormCommonProps <MovimientoEspontaneoFormData> & {

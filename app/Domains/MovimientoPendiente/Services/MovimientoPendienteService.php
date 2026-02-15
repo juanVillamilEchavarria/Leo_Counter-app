@@ -16,7 +16,7 @@ use App\Domains\Movimiento\Actions\StoreMovimientoAction;
 use App\Domains\TipoMovimiento\Actions\GetTipoMovimientoAction;
 //Services 
 use App\Domains\ArchivoMovimiento\Services\ArchivoMovimientoService;
-use App\Domains\Movimiento\Service\MovimientoService;
+use App\Domains\Movimiento\Service\Application\MovimientoService;
 use App\Shared\Services\BalanceCheckerService;
 //DTOs
 use App\Domains\MovimientoPendiente\DTOs\MovimientoPendienteFormOptionsDTO;

@@ -7,9 +7,10 @@ export default function DropZone({
     onDropRejected,
     children,
     accept = {'application/pdf': []},
-    className = ''
+    className = '',
+    maxFiles = 3
 }:DropZoneProps) {
-      const {getRootProps, getInputProps, isDragActive, acceptedFiles, fileRejections} = useDropzone({onDrop, accept: accept, maxFiles: 3, onDropRejected})
+      const {getRootProps, getInputProps, isDragActive, acceptedFiles, fileRejections} = useDropzone({onDrop, accept: accept, maxFiles: maxFiles, onDropRejected})
   return (
         <div {...getRootProps()} className={` p-2 rounded-lg border-2  border-dashed cursor-pointer ${rejectedFiles.length > 0 ?'border-red-500 bg-red-500/20 text-red-500' : 'bg-white/2 border-gray-500 hover:bg-white/10' } ${className}`}>
         <input {...getInputProps()} />

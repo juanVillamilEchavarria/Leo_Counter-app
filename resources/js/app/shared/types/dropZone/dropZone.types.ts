@@ -8,6 +8,7 @@ export type DropZoneProps = {
   onDropRejected: (fileRejections: FileRejection[]) => void;
   accept?: { [key: string]: string[] };
   className?: string;
+  maxFiles?: number
 };
 
 

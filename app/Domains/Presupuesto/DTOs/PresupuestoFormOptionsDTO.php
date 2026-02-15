@@ -2,7 +2,7 @@
 
 namespace App\Domains\Presupuesto\DTOs;
 
-use App\Shared\DTOs\DTO;
+use App\Shared\Abstracts\DTOs\DTO;
 use Illuminate\Database\Eloquent\Collection;
 class PresupuestoFormOptionsDTO extends DTO
 {

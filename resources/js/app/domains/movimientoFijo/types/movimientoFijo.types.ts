@@ -11,7 +11,7 @@ export type MovimientoFijo={
     nombre: string,
     cuenta_id : number,
     tipo_movimiento_id : number,
-    categoria_id: number,
+    categoria_id?: number,
     monto: number,
     fecha_proximo : string,
     frecuencia_movimiento_id: string,

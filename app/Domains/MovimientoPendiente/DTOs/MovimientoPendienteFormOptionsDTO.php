@@ -2,7 +2,7 @@
 
 namespace App\Domains\MovimientoPendiente\DTOs;
 use Illuminate\Database\Eloquent\Collection;
-use App\Shared\DTOs\DTO;
+use App\Shared\Abstracts\DTOs\DTO;
 
 class MovimientoPendienteFormOptionsDTO extends DTO{
     public function __construct(

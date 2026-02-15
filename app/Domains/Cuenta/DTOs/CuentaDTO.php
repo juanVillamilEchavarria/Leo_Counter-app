@@ -2,7 +2,7 @@
 
 namespace App\Domains\Cuenta\DTOs;
 
-use App\Shared\DTOs\DTO;
+use App\Shared\Abstracts\DTOs\DTO;
 
 abstract class CuentaDTO extends DTO{
 

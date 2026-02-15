@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Domains\Movimiento\DTOs;
-use App\Shared\DTOs\DTO;
+use App\Shared\Abstracts\DTOs\DTO;
+use Illuminate\Http\UploadedFile;
 
 abstract class MovimientoDTO extends DTO{
     public function __construct(
@@ -15,5 +16,9 @@ abstract class MovimientoDTO extends DTO{
          public readonly ?array $comprobantes = null
     )
     {
+    }
+
+    public function newComprobantes (){
+        return collect($this->comprobantes)->filter(fn($comprobante)=> $comprobante instanceof UploadedFile)->all();
     }
 }

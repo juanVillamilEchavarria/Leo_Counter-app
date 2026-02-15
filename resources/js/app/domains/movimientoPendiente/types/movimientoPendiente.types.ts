@@ -31,7 +31,7 @@ export type MovimientoPendiente = {
     nombre : string
     cuenta_id : number
     tipo_movimiento_id : number
-    categoria_id : number
+    categoria_id ?: number
     movimiento_fijo_id : number | null
     fecha_programada : string
     estado : MovimientoPendienteEstados

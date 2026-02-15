@@ -2,7 +2,7 @@
 
 namespace App\Domains\Propietario\Exceptions;
 
-use App\Shared\Exceptions\DomainException;
+use App\Shared\Abstracts\Exceptions\DomainException;
 
  abstract class PropietarioException extends DomainException
 {

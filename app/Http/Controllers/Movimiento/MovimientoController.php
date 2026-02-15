@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Movimiento;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Domains\Movimiento\Service\MovimientoService;
+use App\Domains\Movimiento\Service\Application\MovimientoService;
 use App\Models\Movimiento\Movimiento;
 
 class MovimientoController extends Controller
@@ -17,7 +17,7 @@ class MovimientoController extends Controller
     {
     }
 
-    private function props (){
+    protected function props (): array{
         return [
             'title'=>'Movimientos',
             'NoRegistros'=>$this->movimientoService->getRecordsCount(),

@@ -2,7 +2,7 @@
 
 namespace App\Shared\Exceptions;
 
-use DomainException;
+use App\Shared\Abstracts\Exceptions\DomainException;
 
 class CannotUploadFileException extends DomainException {
     public function __construct($message = 'No se pudo subir el archivo')

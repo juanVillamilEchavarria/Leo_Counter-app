@@ -2,7 +2,7 @@
 
 namespace App\Domains\Categoria\DTOs;
 
-use App\Shared\DTOs\DTO;
+use App\Shared\Abstracts\DTOs\DTO;
 use Illuminate\Database\Eloquent\Collection;
 
 class CategoriaFormOptionsDTO extends DTO
