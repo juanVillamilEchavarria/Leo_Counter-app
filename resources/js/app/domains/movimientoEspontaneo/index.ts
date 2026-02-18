@@ -8,6 +8,7 @@ export {
     type MovimientoEspontaneoTableData,
     type MovimientoEspontaneoFormProps,
     type MovimientoEspontaneoFormData,
+
     MovimientoEspontaneoTable,
     MovimientoEspontaneoForm,
     useMovimientoEspontaneo,

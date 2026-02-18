@@ -5,6 +5,8 @@ namespace App\Domains\Movimiento\Strategies\Domain;
 use App\Domains\Cuenta\Actions\GetCuentaAction;
 use App\Domains\Movimiento\Contracts\CuentaResolveStrategyContract;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
+use App\Domains\Cuenta\Exceptions\CannotFindCuentaException;
+use App\Models\Cuenta\Cuenta;
 
 class IngresoResolveStrategy implements CuentaResolveStrategyContract{
 
@@ -13,8 +15,13 @@ class IngresoResolveStrategy implements CuentaResolveStrategyContract{
     )
     {
     }
-    public function resolve(int $cuenta_id, float $monto) {
-        return $this->getCuentaAction->where('id', $cuenta_id)->firstOrFail();
+    public function resolve(int $cuenta_id, float $monto, ?int $movimiento_id = null): Cuenta {
+        try {
+            $cuenta = $this->getCuentaAction->where('id', $cuenta_id)->firstOrFail();
+            return $cuenta;
+        } catch (\Throwable $th) {
+            throw new CannotFindCuentaException('No se encontro la cuenta asociada al movimiento, error: ' . $th->getMessage());
+        }
     }
 
     public function supports(int $tipo_movimiento_id): bool

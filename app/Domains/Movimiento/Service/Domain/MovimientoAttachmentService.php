@@ -3,25 +3,38 @@
 namespace App\Domains\Movimiento\Service\Domain;
 
 use App\Domains\ArchivoMovimiento\Services\ArchivoMovimientoService;
+use App\Domains\Categoria\Actions\GetCategoriaAction;
 use App\Domains\Movimiento\DTOs\UpdateMovimientoDTO;
 use App\Domains\Movimiento\DTOs\StoreMovimientoDTO;
 use App\Domains\ArchivoMovimiento\DTOs\ThrowArchivoMovimientoDTO;
 use App\Shared\Exceptions\CannotUploadFileException;
 use App\Models\Movimiento\Movimiento;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+
 class MovimientoAttachmentService{
 
     public function __construct(
-        private ArchivoMovimientoService $archivoMovimientoService
+        private ArchivoMovimientoService $archivoMovimientoService,
+        private GetCategoriaAction $getCategoriaAction
     )
     {
     }
         public function sync(UpdateMovimientoDTO | StoreMovimientoDTO $dto, Movimiento $movimiento){
             DB::transaction(function() use ($dto, $movimiento){
+                $this->updateFilesWhenCategoriaChanged($dto, $movimiento);
                     $this->validateNumberOfFiles($dto);
                     $this->deleteExistingFiles($dto, $movimiento);
                     $this->storeNewFiles($dto, $movimiento);
             });
+    }
+
+
+    public function deleteAllAttachments(Movimiento $movimiento){
+        $archivos = $movimiento->archivoMovimientos;
+        foreach($archivos as $archivo){
+            $this->archivoMovimientoService->delete($archivo);
+        }
     }
 
 
@@ -44,6 +57,26 @@ class MovimientoAttachmentService{
          }
     }
 
+    private function updateFilesWhenCategoriaChanged (UpdateMovimientoDTO $dto, Movimiento $movimiento){
+        if($dto->categoria_id === $movimiento->categoria_id && $dto->tipo_movimiento_id === $movimiento->tipo_movimiento_id ) return;
+        $categoria = $this->getCategoriaAction->find($dto->categoria_id);
+        $tipo_movimiento = $categoria->tipoMovimiento;
+        foreach($dto->comprobantes_existing as $comprobante){
+             $archivos = $movimiento->archivoMovimientos()->where('id', $comprobante['id'])->get();
+             foreach($archivos as $archivo){
+                $dtoThrow= new ThrowArchivoMovimientoDTO(
+                    comprobantes: $archivos->all(),
+                    categoria: $categoria->nombre,
+                    tipo_movimiento: $tipo_movimiento->tipo_movimiento,
+                    movimiento_id: $movimiento->id
+                );
+          
+                $this->archivoMovimientoService->updateLocation($dtoThrow, $archivo);
+             }
+            
+        }
+        dd('termino');
+    }
     private function storeNewFiles(UpdateMovimientoDTO | StoreMovimientoDTO $dto, Movimiento $movimiento){
         if(empty($dto->newComprobantes())) return;
         $dtoArchivo = ThrowArchivoMovimientoDTO::fromMovimientoAndDTO($dto, $movimiento);

@@ -5,14 +5,15 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Domains\Auth\Services\LoginService;
+use App\Domains\Auth\Services\Application\AuthService;
+use App\Domains\Auth\Services\Domain\LoginService;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
     public function __construct(
-        private LoginService $loginService
+        private AuthService $authService
     )
     {
     }
@@ -22,14 +23,14 @@ class LoginController extends Controller
         return Inertia::render('Auth/Login');
     }
     public function login(LoginRequest $request){
-        if(!$this->loginService->login($request->validated(), $request->remember())){
+        if(!$this->authService->login($request->validated(), $request->remember())){
             Inertia::flash('error', 'Credenciales incorrectas');
             return back();
         }
         return redirect()->route('home',['user'=>Auth::user()->name]);
     }
     public function logout(){
-        $this->loginService->logout();
+        $this->authService->logout();
         return redirect()->route('login');
     }
 }

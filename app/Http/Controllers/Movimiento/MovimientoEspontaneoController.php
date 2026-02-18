@@ -9,9 +9,10 @@ use App\Http\Requests\MovimientoEspontaneo\StoreMovimientoEspontaneoRequest;
 use App\Http\Requests\MovimientoEspontaneo\UpdateMovimientoEspontaneoRequest;
 use App\Domains\Movimiento\Enums\MovimientoVariants;
 use App\Domains\Movimiento\Enums\ResourceEnum;
-
+use App\Http\Requests\MovimientoEspontaneo\DestroyMovimientoEspontaneoRequest;
 use Carbon\Carbon;
 use Inertia\Inertia;
+use Illuminate\Http\Client\Request;
 
 class MovimientoEspontaneoController extends Controller
 {
@@ -96,8 +97,10 @@ class MovimientoEspontaneoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(DestroyMovimientoEspontaneoRequest $request, Movimiento $movimientoEspontaneo )
     {
-        //
+        $this->movimientoService->destroy($movimientoEspontaneo, $request->validated());
+        Inertia::flash('success','Movimiento eliminado con exito');
+        return redirect()->route('movimientosEspontaneos.index');
     }
 }

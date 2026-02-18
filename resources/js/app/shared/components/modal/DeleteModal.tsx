@@ -9,7 +9,9 @@ export default function DeleteModal({
     title,
     paragraph,
     children,
-    onSubmit
+    onSubmit,
+    className = '',
+    size = 'lg',
 }:DeleteModalProps
 
 ) {
@@ -27,8 +29,9 @@ export default function DeleteModal({
                 <span> {title}</span>
             </div>
             } 
-            size="lg"
-          variant="secondary">
+            size={size}
+          variant="secondary"
+          className={className}>
             <p>{paragraph}</p>
                 {children}
             <form onSubmit={handleSubmit}>

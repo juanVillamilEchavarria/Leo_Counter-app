@@ -6,7 +6,7 @@ namespace App\Domains\Movimiento\Service\Application;
 // Actions
 use App\Domains\Cuenta\Actions\GetCuentaAction;
 // Services 
-use App\Shared\Services\BalanceCheckerService;
+use App\Domains\Auth\Services\Application\AuthService;
 use App\Domains\Movimiento\Service\Domain\MovimientoFinancialService;
 use App\Domains\Movimiento\Service\Domain\MovimientoQueryService;
 // Strategies
@@ -14,33 +14,35 @@ use App\Domains\Movimiento\Strategies\Application\CuentaResolverStrategy;
 // DTOs y Resources
 use App\Domains\Movimiento\DTOs\StoreMovimientoDTO;
 use App\Domains\Movimiento\DTOs\UpdateMovimientoDTO;
+use App\Domains\Movimiento\DTOs\DestroyMovimientoDTO;
 use App\Domains\Movimiento\Resources\ShowMovimientoResource;
 use App\Domains\Movimiento\Resources\EditMovimientoResource;
 // Models
 use App\Models\Movimiento\Movimiento;
-// Exceptions
-use App\Domains\Movimiento\Exceptions\CannotStoreMovimientoException;
 use App\Models\Cuenta\Cuenta;
-use App\Shared\Exceptions\InsufficientBalanceException;
+// Exceptions
+use App\Domains\Cuenta\Exceptions\CannotFindCuentaException;
+use App\Domains\Movimiento\Exceptions\CannotDeleteMovimientoException;
+
 // Enums y types
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use App\Domains\Movimiento\Enums\MovimientoVariants;
 use App\Domains\Movimiento\Enums\ResourceEnum;
-use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
+
 
 class MovimientoService{
     public function __construct(
-        private GetCuentaAction $getCuentaAction,
         private MovimientoQueryService $movimientoQueryService,
         private MovimientoFinancialService $movimientoFinancialService,
-        private BalanceCheckerService $balanceCheckerService,
+        private AuthService $authService,
         private CuentaResolverStrategy $cuentaResolverStrategy,
+        private GetCuentaAction $getCuentaAction
     )
     {
     }
     // METODOS PRIVADOS PARA LA LOGICA PROPIA DEL SERVICE
-    private function resolveCuenta(StoreMovimientoDTO | UpdateMovimientoDTO $dto){
-        return $this->cuentaResolverStrategy->resolve($dto->tipo_movimiento_id, $dto->cuenta_id, $dto->monto);
+    private function resolveCuenta(StoreMovimientoDTO | UpdateMovimientoDTO | DestroyMovimientoDTO $dto, ?Movimiento $movimiento = null): Cuenta{
+        return $this->cuentaResolverStrategy->resolve($dto->tipo_movimiento_id, $dto->cuenta_id, $dto->monto, $movimiento?->id);
         
     }
     // METODOS PUBLICOS
@@ -51,7 +53,21 @@ class MovimientoService{
     }
     public function update(Movimiento $movimiento, array $data){
         $dto = UpdateMovimientoDTO::fromArray($data);
-        $cuenta = $this->resolveCuenta($dto);
+        $cuenta = $this->resolveCuenta($dto, $movimiento);
+        return $this->movimientoFinancialService->executeMovimientoTransaction($dto, $cuenta, $movimiento);
+        
+    }
+
+    public function destroy(Movimiento $movimiento, array $data){
+        $dto = DestroyMovimientoDTO::fromArray($data);
+        if(!$this->authService->verifyPassword($dto->password)){
+            throw new CannotDeleteMovimientoException('No se puede eliminar el movimiento, la contraseña proporcionada es incorrecta');
+        }
+        try {
+            $cuenta = $this->getCuentaAction->where('id', $movimiento->cuenta_id)->firstOrFail();
+        } catch (\Throwable $th) {
+            throw new CannotFindCuentaException('No se encontro la cuenta asociada al movimiento, error: ' . $th->getMessage());
+        }
         return $this->movimientoFinancialService->executeMovimientoTransaction($dto, $cuenta, $movimiento);
         
     }

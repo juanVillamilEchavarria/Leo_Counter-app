@@ -33,12 +33,17 @@ export default function MovimientoEspontaneoForm({
         data,
         onCategoriaInvalid : () => setData('categoria_id', undefined)
    })
+   const montoMov = data?.monto;
+   console.log(montoMov);
+   console.log(data);
+   console.log(options)
 
    const {onDrop,onDropRejected,rejectedFiles,removeFile}= useMovimientoEspontaneoUploadFiles({files: data?.comprobantes, setFiles : (files) => setData('comprobantes', files)})
    const {removeFile: removeExistingFile}= useMovimientoEspontaneoUploadFiles({files: data?.comprobantes_existing, setFiles : (files) => setData('comprobantes_existing', files)})
-   const {data : dataValidate, isLoading, isError, error}= useFormSaldoValidate({cuentaId:data?.cuenta_id, monto: data?.monto, tipo_movimiento_id: data?.tipo_movimiento_id})
+   const {data : dataValidate, isLoading, isError, error}= useFormSaldoValidate({cuentaId:data?.cuenta_id, monto: data?.monto, tipo_movimiento_id: data?.tipo_movimiento_id, movimiento_id: data?.id})
     const maxFiles = useMemo(() => 3 - (data?.comprobantes_existing ? data.comprobantes_existing.length : 0), [data?.comprobantes_existing])
     const hasExistingFiles = useMemo(() => data?.comprobantes_existing && data?.comprobantes_existing.length > 0, [data?.comprobantes_existing])
+    console.log(dataValidate, isLoading, isError, error);
   return (
     <Card>
         <form onSubmit={submit} className="formulario-general">
@@ -203,7 +208,7 @@ export default function MovimientoEspontaneoForm({
                 <Button
                 variant="secondary"
                     type="submit"
-                    disabled={processing || isLoading || (!dataValidate?.allowed && data?.tipo_movimiento_id === 2) }
+                    disabled={processing || isLoading || (dataValidate?.allowed === false && data?.tipo_movimiento_id === 2) }
                 >
                     Guardar
                 </Button>

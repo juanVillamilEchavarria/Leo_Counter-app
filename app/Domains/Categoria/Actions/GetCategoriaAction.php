@@ -25,6 +25,10 @@ class GetCategoriaAction
         return Categoria::count();
     }
 
+    public function find(int $id) : ?Categoria {
+        return Categoria::where('id', $id)->firstOrFail();
+    }
+
     public function getAllWithFullDetails() : Collection
     {
         return Categoria::with('tipoMovimiento')->get();

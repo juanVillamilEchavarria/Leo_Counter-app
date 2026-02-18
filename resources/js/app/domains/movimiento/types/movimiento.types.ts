@@ -1,6 +1,7 @@
 
 import { route } from "ziggy-js"
 import { type Comprobante } from "../../archivoMovimiento"
+import type { MovimientoEspontaneoFormData } from "../../movimientoEspontaneo"
 
 export const MovimientoRoutes={
     index : ()=>route('movimientos.index'),

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Shared;
+namespace App\Http\Requests\MovimientoEspontaneo;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SaldoValidateRequest extends FormRequest
+class DestroyMovimientoEspontaneoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,7 @@ class SaldoValidateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cuenta_id'=>['required', 'integer', 'exists:cuentas,id'],
-            'monto'=>['required', 'numeric', 'min:0'],
-            'movimiento_id'=>['nullable', 'integer', 'exists:movimientos,id']
+            'password'=> ['required', 'string']
         ];
     }
 }

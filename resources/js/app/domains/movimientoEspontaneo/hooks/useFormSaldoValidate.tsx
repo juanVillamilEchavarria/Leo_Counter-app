@@ -6,11 +6,13 @@ import { isGasto as isGastoFunc } from "../../tipoMovimiento"
 export default function useFormSaldoValidate({
     cuentaId,
     monto,
-    tipo_movimiento_id
+    tipo_movimiento_id,
+    movimiento_id
 }:{
     cuentaId?: number | undefined,
     monto?: number | undefined
     tipo_movimiento_id?: number
+    movimiento_id?: number | undefined
 }) {
     const [debounceMonto] = useDebounce(monto, 500)
     const isGasto = useMemo(() => {
@@ -24,7 +26,7 @@ export default function useFormSaldoValidate({
                 throw new Error('cuentaId y monto son requeridos')
 
             }
-            return saldoValidate({cuentaId, monto: debounceMonto!})
+            return saldoValidate({cuentaId, monto: debounceMonto!, movimiento_id})
     },
         staleTime: 0,
         retry: false

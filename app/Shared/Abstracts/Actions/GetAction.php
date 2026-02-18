@@ -47,6 +47,9 @@ abstract class GetAction extends Action implements GetActionContract{
     public function firstOrFail(array $wheres): Model{
         return $this->where($wheres)->firstOrFail();
     }
+    public function find(int $id){
+        return $this->model::find($id);
+    }
     public function getRecordsCount(): int{
         return $this->model::count();
     }

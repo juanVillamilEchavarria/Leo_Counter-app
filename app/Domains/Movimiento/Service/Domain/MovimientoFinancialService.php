@@ -5,15 +5,16 @@ namespace App\Domains\Movimiento\Service\Domain;
 use App\Domains\Movimiento\Service\Domain\MovimientoAttachmentService;
 use App\Domains\Movimiento\Actions\StoreMovimientoAction;
 use App\Domains\Movimiento\Actions\UpdateMovimientoAction;
+use App\Domains\Movimiento\Actions\DestroyMovimientoAction;
 use App\Domains\Cuenta\Actions\UpdateCuentaAction;
 use App\Domains\Cuenta\Actions\GetCuentaAction;
 use App\Domains\Movimiento\DTOs\StoreMovimientoDTO;
 use App\Domains\Movimiento\DTOs\UpdateMovimientoDTO;
+use App\Domains\Movimiento\DTOs\DestroyMovimientoDTO;
 use App\Domains\Cuenta\DTOs\UpdateSaldoDTO;
 use App\Models\Cuenta\Cuenta;
 use App\Models\Movimiento\Movimiento;
 use App\Domains\Movimiento\Enums\MoneyFlowEnum;
-use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 use Illuminate\Support\Facades\DB;
 
 class MovimientoFinancialService {
@@ -22,31 +23,43 @@ class MovimientoFinancialService {
         private UpdateCuentaAction $updateCuentaAction,
         private StoreMovimientoAction $storeMovimientoAction,
         private UpdateMovimientoAction $updateMovimientoAction,
+        private DestroyMovimientoAction $destroyMovimientoAction,
         private MovimientoAttachmentService $movimientoAttachmentService
     )
     {
     }
 
     // METODO PUBLICO PARA EJECUTAR LA TRANSACCION FINANCIERA
-     public function executeMovimientoTransaction(StoreMovimientoDTO | UpdateMovimientoDTO $dto, Cuenta $cuenta, ?Movimiento $movimiento): Movimiento{
+     public function executeMovimientoTransaction(StoreMovimientoDTO | UpdateMovimientoDTO | DestroyMovimientoDTO $dto, Cuenta $cuenta, ?Movimiento $movimiento): Movimiento{
         return DB::transaction(function() use ($dto, $cuenta, $movimiento){
+    
             if($dto instanceof StoreMovimientoDTO){
                 $movimiento = $this->storeMovimientoAction->store($dto);
             }
             $updateSaldoDTO = $this->resolveUpdateSaldoDTO($dto, $cuenta, $movimiento);
+                       $this->executeAttachmentServiceFunction($dto, $movimiento);
             $dto instanceof UpdateMovimientoDTO && $this->updateMovimientoAction->update($movimiento, $dto);
-            $this->movimientoAttachmentService->sync($dto, $movimiento);
+
             $this->updateCuentaAction->update($cuenta, $updateSaldoDTO); // si todo sale bien se actualiza el saldo
-                return $movimiento; // se retorna el movimiento
+            $dto instanceof DestroyMovimientoDTO && $this->destroyMovimientoAction->destroy($movimiento);
+                return $movimiento ; // se retorna el movimiento
         });
     }
 
     // METODOS PRIVADOS
+
+    private function executeAttachmentServiceFunction(UpdateMovimientoDTO | StoreMovimientoDTO | DestroyMovimientoDTO $dto, Movimiento $movimiento): void{
+            !$dto instanceof DestroyMovimientoDTO ? 
+            $this->movimientoAttachmentService->sync($dto, $movimiento):
+            $this->movimientoAttachmentService->deleteAllAttachments($movimiento);
+    }
     // funcion que resuelve la actualizacion del saldo
-        private function resolveUpdateSaldoDTO(StoreMovimientoDTO | UpdateMovimientoDTO $dto, Cuenta $cuenta, Movimiento $movimiento): UpdateSaldoDTO{
-            return  $dto instanceof UpdateMovimientoDTO ?  
-                $this->resolveUpdateSaldoTransaction($dto, $movimiento, new UpdateSaldoDTO($cuenta->saldo_actual), $cuenta)
-                : $this->resolveUpdateSaldo($dto, $cuenta);
+        private function resolveUpdateSaldoDTO(StoreMovimientoDTO | UpdateMovimientoDTO | DestroyMovimientoDTO $dto, Cuenta $cuenta, Movimiento $movimiento): UpdateSaldoDTO | null{
+            if($dto instanceof StoreMovimientoDTO) return $this->resolveUpdateSaldo($dto, $cuenta);
+            if($dto instanceof UpdateMovimientoDTO) return $this->resolveUpdateSaldoTransaction($dto, $movimiento, new UpdateSaldoDTO($cuenta->saldo_actual), $cuenta);
+            if($dto instanceof DestroyMovimientoDTO) return $this->resolveDestroyMovimientoTransaction($movimiento, $cuenta);
+            return null;
+
         }
 
 
@@ -65,7 +78,11 @@ class MovimientoFinancialService {
             $updateSaldoDTO->moneyFlow($dto->tipo_movimiento_id, $dto->monto, MoneyFlowEnum::APPLY);
             return $updateSaldoDTO;
     }
-    
+
+    private function resolveDestroyMovimientoTransaction(Movimiento $movimiento, Cuenta $cuenta): UpdateSaldoDTO{
+        $updateSaldoDTO = new UpdateSaldoDTO($cuenta->saldo_actual);
+        return $updateSaldoDTO->moneyFlow($movimiento->tipo_movimiento_id, $movimiento->monto, MoneyFlowEnum::REVERT);
+    }
 
      // funcion que resuelve la actualizacion de saldo cuando es para crear el movimiento   
         private function resolveUpdateSaldo (StoreMovimientoDTO $dto,Cuenta $cuenta){

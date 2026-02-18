@@ -25,4 +25,22 @@ class ThrowArchivoMovimientoDTO extends DTO{
             movimiento_id: $movimiento->id
         );
     }
+
+    public static function fromDTOAndArchivos(StoreMovimientoDTO | UpdateMovimientoDTO $dto, array $comprobantes){
+        return new self(
+            comprobantes: $comprobantes,
+            categoria: '',
+            tipo_movimiento: '',
+            movimiento_id: 0
+        );
+    }
+
+    public static function fromMovimientoAndArchivos(Movimiento $movimiento, array $comprobantes){
+        return new self(
+            comprobantes: $comprobantes,
+            categoria: $movimiento->categoria->nombre,
+            tipo_movimiento: $movimiento->tipo_movimiento->tipo_movimiento,
+            movimiento_id: $movimiento->id
+        );
+    }
 }

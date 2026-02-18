@@ -5,7 +5,7 @@ export default function useFormNormal<TData extends Record<string, any>>({
     method = 'post',
     data ,
 }: FormDataNormalProps<TData>) {
-    const form = useForm(data);
+    const form = useForm<TData>(data as TData);
     const {delete : destroy} = form
             const submit = (options?: Parameters<typeof form.post>[1]) => { // se le pueden pasar opciones, la posicion 1 es options de form.post
                   if (!action) return // si no hay action no hace nada

@@ -19,7 +19,7 @@ export type ModalProps={
     className? : string
 }
 
-export type DeleteModalProps= Omit<ModalProps, 'variant'| 'size'>&{
+export type DeleteModalProps= Omit<ModalProps, 'variant'>&{
     spanTitle? : string,
     paragraph : string,
     onSubmit : (e: React.FormEvent<HTMLFormElement>) => void

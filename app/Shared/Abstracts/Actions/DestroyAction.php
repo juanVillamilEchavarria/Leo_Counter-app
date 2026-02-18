@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Shared\Contracts\Actions\DestroyActionContract;
 
 abstract class DestroyAction extends Action implements DestroyActionContract{
-    public function delete(Model $model): bool
+    public function destroy(Model $model): bool
     {
         return $model->delete();
     }

@@ -25,10 +25,11 @@ class CuentaResolverStrategy{
         ];
     }
 
-    public function resolve(int $tipo_movimiento_id, int $cuenta_id, float $monto) : Cuenta{
+    public function resolve(int $tipo_movimiento_id, int $cuenta_id, float $monto, ?int $movimiento_id = null) : Cuenta{
         foreach($this->getStrategies() as $strategy){
             if($strategy->supports($tipo_movimiento_id)){
-                return $strategy->resolve($cuenta_id, $monto);
+
+                return $strategy->resolve($cuenta_id, $monto, $movimiento_id);
             }
         }
         throw new \InvalidArgumentException("Tipo de movimiento no soportado");

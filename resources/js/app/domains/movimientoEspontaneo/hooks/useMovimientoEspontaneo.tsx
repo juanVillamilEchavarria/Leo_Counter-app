@@ -1,5 +1,5 @@
 import { useFormNormal } from "@/app/shared/hooks"
-import { MovimientoEspontaneoActions, type MovimientoEspontaneo } from "../types/movimientoEspontaneo.types"
+import { MovimientoEspontaneoActions, type MovimientoEspontaneoFormData } from "../types/movimientoEspontaneo.types"
 import { FormMethods } from "@/app/shared/types/components"
 
 export default function useMovimientoEspontaneo({
@@ -9,7 +9,7 @@ export default function useMovimientoEspontaneo({
 }:{
     method ?: keyof typeof FormMethods,
     id ?: number | null
-    data ?: MovimientoEspontaneo
+    data ?:  MovimientoEspontaneoFormData
 }) {
   const action = (() => {
                   const current = MovimientoEspontaneoActions[method]
@@ -19,9 +19,9 @@ export default function useMovimientoEspontaneo({
                       return current
               })() // es una funcion que se llama inmediatamente para obtener la accion correcta segun el metodo y el id
                
-           const { form, handleSubmit, submit } = useFormNormal<MovimientoEspontaneo>({
+           const { form, handleSubmit, submit } = useFormNormal< MovimientoEspontaneoFormData>({
                action,
-               data: data ?? {} as MovimientoEspontaneo,
+               data: data ?? {} as MovimientoEspontaneoFormData,
                method
            })
     return {

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Shared;
 
 use App\Http\Controllers\Controller;
-use App\Shared\Services\BalanceCheckerService;
+use App\Shared\Services\Financial\BalanceCheckerService;
 use App\Http\Requests\Shared\SaldoValidateRequest;
 use Illuminate\Support\Facades\Response;
 
@@ -18,7 +18,7 @@ class SaldoValidateController extends Controller
     {
         $validate = $request->validated();
         return Response::json([
-            'allowed'=>(bool) $this->balanceCheckerService->canAfford($validate['cuenta_id'], $validate['monto'])
+            'allowed'=>(bool) $this->balanceCheckerService->canAfford($validate['cuenta_id'], $validate['monto'], $validate['movimiento_id'] ?? null)
         ]);
     }
 }

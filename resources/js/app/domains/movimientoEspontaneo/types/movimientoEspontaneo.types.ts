@@ -4,13 +4,14 @@ import { type MovimientoFijoFormOptions } from "../../movimientoFijo"
 import type { FormCommonProps } from "@/app/shared/types/components"
 import type { FileWithPreview } from "@/app/shared/types"
 const route = useRoute()
-export type MovimientoEspontaneo =Movimiento & Omit<Movimiento, 'movimiento_pendiente_id'>
-export type MovimientoEspontaneoTableData = MovimientoTableData & Omit<MovimientoTableData , 'fecha'| 'movimiento_pendiente_id'>
+export type MovimientoEspontaneo =Omit<Movimiento, 'movimiento_pendiente_id'>
+export type MovimientoEspontaneoTableData = Omit<MovimientoTableData , 'fecha'| 'movimiento_pendiente_id'>
 
-export type MovimientoEspontaneoFormData = Omit<MovimientoEspontaneo, 'id'> &{
+export type MovimientoEspontaneoFormData = MovimientoEspontaneo  &{
     comprobantes ? : FileWithPreview[],
     comprobantes_existing ? : FileWithPreview[],
-    comprobantes_delete_ids ? : number[]
+    comprobantes_delete_ids ? : number[],
+    password?: string
 }
 export type MovimientoEspontaneoFormProps = FormCommonProps <MovimientoEspontaneoFormData> & {
     options : MovimientoFijoFormOptions
