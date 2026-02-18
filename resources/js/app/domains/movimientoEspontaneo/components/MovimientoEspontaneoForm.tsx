@@ -11,7 +11,7 @@ import UploadedFileList from "@/app/shared/components/dropZone/UploadedFileList"
 import ErrorList from "@/app/shared/components/dropZone/ErrorList"
 import useMovimientoEspontaneoUploadFiles from "../hooks/useMovimientoEspontaneoUploadFiles"
 import useFormSaldoValidate from "../hooks/useFormSaldoValidate"
-import { useEffect, useMemo } from "react"
+import {  useMemo } from "react"
 import { useCategoriasMovimientoFilter } from "@/app/shared/hooks"
 import { ArchivoMovimientoRoutes } from "@/app/domains/archivoMovimiento"
 import { type MovimientoEspontaneoFormProps } from "../types/movimientoEspontaneo.types"
@@ -33,17 +33,12 @@ export default function MovimientoEspontaneoForm({
         data,
         onCategoriaInvalid : () => setData('categoria_id', undefined)
    })
-   const montoMov = data?.monto;
-   console.log(montoMov);
-   console.log(data);
-   console.log(options)
 
    const {onDrop,onDropRejected,rejectedFiles,removeFile}= useMovimientoEspontaneoUploadFiles({files: data?.comprobantes, setFiles : (files) => setData('comprobantes', files)})
    const {removeFile: removeExistingFile}= useMovimientoEspontaneoUploadFiles({files: data?.comprobantes_existing, setFiles : (files) => setData('comprobantes_existing', files)})
    const {data : dataValidate, isLoading, isError, error}= useFormSaldoValidate({cuentaId:data?.cuenta_id, monto: data?.monto, tipo_movimiento_id: data?.tipo_movimiento_id, movimiento_id: data?.id})
     const maxFiles = useMemo(() => 3 - (data?.comprobantes_existing ? data.comprobantes_existing.length : 0), [data?.comprobantes_existing])
     const hasExistingFiles = useMemo(() => data?.comprobantes_existing && data?.comprobantes_existing.length > 0, [data?.comprobantes_existing])
-    console.log(dataValidate, isLoading, isError, error);
   return (
     <Card>
         <form onSubmit={submit} className="formulario-general">

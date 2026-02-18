@@ -29,6 +29,10 @@ export const MovimientoEspontaneoColumns = ({
             )
         },
         {
+            key: 'categoria',
+            label: 'Categoria'
+        },
+        {
             key: 'monto',
             label: 'Monto',
             render: (row: MovimientoEspontaneoTableData) => (

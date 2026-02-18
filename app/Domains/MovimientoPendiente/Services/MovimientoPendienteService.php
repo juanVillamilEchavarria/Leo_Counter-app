@@ -25,7 +25,7 @@ use App\Domains\MovimientoPendiente\DTOs\StoreMovimientoPendienteDTO;
 use App\Domains\MovimientoPendiente\DTOs\MarkMovimientoPendienteDTO;
 use App\Domains\MovimientoPendiente\Enums\EstadosMovimientoPendiente;
 use App\Domains\Movimiento\DTOs\StoreMovimientoDTO;
-use App\Domains\ArchivoMovimiento\DTOs\ThrowArchivoMovimientoDTO;
+use App\Domains\ArchivoMovimiento\DTOs\ArchivoMovimientoTransferDTO;
 // Resources
 use App\Domains\MovimientoPendiente\Resources\MovimientoPendienteResource;
 use App\Domains\MovimientoPendiente\Resources\ShowMovimientoPendienteResource;

@@ -4,14 +4,13 @@ namespace App\Domains\ArchivoMovimiento\DTOs;
 
 use App\Domains\Movimiento\DTOs\StoreMovimientoDTO;
 use App\Domains\Movimiento\DTOs\UpdateMovimientoDTO;
+use App\Models\Categoria\Categoria;
 use App\Models\Movimiento\Movimiento;
 use App\Shared\Abstracts\DTOs\DTO;
 
-class ThrowArchivoMovimientoDTO extends DTO{
+class ArchivoMovimientoTransferDTO extends DTO{
     public function __construct(
         public array $comprobantes = [],
-        public string $categoria = '',
-        public string $tipo_movimiento = '',
         public int $movimiento_id
     )
     {
@@ -20,26 +19,19 @@ class ThrowArchivoMovimientoDTO extends DTO{
     public static function fromMovimientoAndDTO(StoreMovimientoDTO | UpdateMovimientoDTO $dto, Movimiento $movimiento){
         return new self(
             comprobantes: $dto->comprobantes,
-            categoria: $movimiento->categoria->nombre,
-            tipo_movimiento: $movimiento->tipo_movimiento->tipo_movimiento,
+            movimiento_id: $movimiento->id
+        );
+    }
+    public static function fromMovimientoAndArchivos(Movimiento $movimiento, array $comprobantes){
+        return new self(
+            comprobantes: $comprobantes,
             movimiento_id: $movimiento->id
         );
     }
 
-    public static function fromDTOAndArchivos(StoreMovimientoDTO | UpdateMovimientoDTO $dto, array $comprobantes){
+    public static function fromFileQueryAndCategoriaAndMovimiento($archivos, Categoria $categoria, Movimiento $movimiento){
         return new self(
-            comprobantes: $comprobantes,
-            categoria: '',
-            tipo_movimiento: '',
-            movimiento_id: 0
-        );
-    }
-
-    public static function fromMovimientoAndArchivos(Movimiento $movimiento, array $comprobantes){
-        return new self(
-            comprobantes: $comprobantes,
-            categoria: $movimiento->categoria->nombre,
-            tipo_movimiento: $movimiento->tipo_movimiento->tipo_movimiento,
+            comprobantes: $archivos->all(),
             movimiento_id: $movimiento->id
         );
     }

@@ -12,7 +12,6 @@ use App\Domains\Movimiento\Enums\ResourceEnum;
 use App\Http\Requests\MovimientoEspontaneo\DestroyMovimientoEspontaneoRequest;
 use Carbon\Carbon;
 use Inertia\Inertia;
-use Illuminate\Http\Client\Request;
 
 class MovimientoEspontaneoController extends Controller
 {

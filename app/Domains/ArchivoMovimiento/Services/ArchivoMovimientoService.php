@@ -2,82 +2,79 @@
 
 namespace App\Domains\ArchivoMovimiento\Services;
 
+use App\Shared\Services\Files\FileService;
 use App\Domains\ArchivoMovimiento\Actions\StoreArchivoMovimientoAction;
 use App\Domains\ArchivoMovimiento\Actions\UpdateArchivoMovimientoAction;
 use App\Domains\ArchivoMovimiento\DTOs\StoreArchivoMovimientoDTO;
 use App\Domains\ArchivoMovimiento\DTOs\UpdateArchivoMovimientoLocationDTO;
 use App\Models\ArchivoMovimiento\ArchivoMovimiento;
-use App\Shared\Actions\Files\UploadFileAction;
+use App\Shared\DTOs\Files\MoveFileDTO;
 use App\Shared\DTOs\UploadFileDTO;
-use App\Domains\ArchivoMovimiento\DTOs\ThrowArchivoMovimientoDTO;
+use App\Domains\ArchivoMovimiento\DTOs\ArchivoMovimientoTransferDTO;
 use App\Domains\ArchivoMovimiento\Exceptions\CannotDeleteArchivoMovimientoException;
+use App\Domains\ArchivoMovimiento\ValueObjects\FilePath;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Storage;
+
 class ArchivoMovimientoService  {
+
+    private static string $disk = 'movimientos';
     public function __construct(
+        private FileService $fileService,
         private StoreArchivoMovimientoAction $storeArchivoMovimientoAction,
         private UpdateArchivoMovimientoAction $updateArchivoMovimientoAction,
-        private UploadFileAction $uploadFileAction
     )
     {
     }
 
-    private function makePath(int $year, int $month, string $tipo_movimiento, string $categoria): string{
-        return "{$year}/{$month}/{$tipo_movimiento}/{$categoria}/";
-    }
+    private function storeFile(int $movimiento_id, $file, FilePath $filePath): ArchivoMovimiento{
+        $nombre_guardado = Str::uuid() . '.pdf';
+         $dtoUpload = new UploadFileDTO(
+            disk: self::$disk, 
+            path: $filePath->toString(),
+            name: $nombre_guardado,
+            file: $file
+        );
+        $dto = new StoreArchivoMovimientoDTO(
+            movimiento_id: $movimiento_id,
+            nombre_guardado: $nombre_guardado,
+            nombre_original: $file->getClientOriginalName(),
+            path: $filePath->toString(),
+            tamano_bytes: $file->getSize(),
+        );
 
-    public function store(ThrowArchivoMovimientoDTO $dto) : void{
-        $categoria = Str::slug($dto->categoria);
-        $movimiento_id = $dto->movimiento_id;
-        $tipo_movimiento = $dto->tipo_movimiento;
-        
+        $this->fileService->upload($dtoUpload);
+        return $this->storeArchivoMovimientoAction->store($dto);
+    }
+    public function store(ArchivoMovimientoTransferDTO $dto, FilePath $filePath) : void{
         foreach($dto->comprobantes as $file){
-                    $nombre_guardado = Str::uuid() . '.pdf';
-                $year = Carbon::now()->year;
-                $month = Carbon::now()->month;
-                $path = $this->makePath($year, $month, $tipo_movimiento, $categoria);
-                $dto = new StoreArchivoMovimientoDTO(
-                    movimiento_id: $movimiento_id,
-                    nombre_guardado: $nombre_guardado,
-                    nombre_original: $file->getClientOriginalName(),
-                    path: $path,
-                    tamano_bytes: $file->getSize(),
-                );
-                $dtoUpload = new UploadFileDTO(
-                    disk: $dto->disk,
-                    path: $path,
-                    name: $nombre_guardado,
-                    file: $file
-                );
-                $this->uploadFileAction->upload($dtoUpload);
-                $this->storeArchivoMovimientoAction->store($dto);
+            $this->storeFile($dto->movimiento_id, $file, $filePath);
         }
        
     }
 
-    public function updateLocation(ThrowArchivoMovimientoDTO $dto): void{
-        $categoria = Str::slug($dto->categoria);
-        /** @var ArchivoMovimiento $file */
-        foreach($dto->comprobantes as $file){
-           $yearPath = Str::of($file->path)->explode('/')->take(2)->implode('/');
-           $year = (int) explode('/', $yearPath)[0];
-           $month = (int) explode('/', $yearPath)[1];
-           $newPath = $this->makePath($year, $month, $dto->tipo_movimiento, $categoria);
-               
-           $dtoUpdate = new UpdateArchivoMovimientoLocationDTO(
-            path: $newPath
-           );
-           dd($dtoUpdate);
-            $this->updateArchivoMovimientoAction->update($file, $dto);
+    public function moveFiles(array | Collection $files, FilePath $filePath):void{
+        foreach($files as $file){
+            $this->moveFile($file, $filePath);
         }
+
     }
 
+    private function moveFile(ArchivoMovimiento $file, FilePath $filePath): void{
+        $dtoUpdate = new UpdateArchivoMovimientoLocationDTO(
+            path: $filePath->toString(),
+        );
+        $oldPath = FilePath::fromString($file->path);
+        if($oldPath->equals($filePath)) return; // si la nueva ruta es igual a la antigua no se hace nada
+        $dtoMove = MoveFileDTO::fromArchivoMovimientoAndNewPath($file, $filePath->toString());
+        $this->updateArchivoMovimientoAction->update($file, $dtoUpdate);
+        $this->fileService->move($dtoMove);
+    }
     public function delete(ArchivoMovimiento $archivoMovimiento): void{
         try {
               $archivoMovimiento->delete();
-              if(Storage::disk($archivoMovimiento->disk)->exists($archivoMovimiento->path . $archivoMovimiento->nombre_guardado)){
-                    Storage::disk($archivoMovimiento->disk)->delete($archivoMovimiento->path . $archivoMovimiento->nombre_guardado);
+              if($this->fileService->exists($archivoMovimiento->path . $archivoMovimiento->nombre_guardado, $archivoMovimiento->disk)){
+                   $this->fileService->destroy($archivoMovimiento->path . $archivoMovimiento->nombre_guardado, $archivoMovimiento->disk);
                  }
         } catch (\Throwable $th) {
             throw new CannotDeleteArchivoMovimientoException("No se pudo eliminar el archivo del movimiento. Error: " . $th->getMessage());

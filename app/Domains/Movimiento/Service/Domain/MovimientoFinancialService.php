@@ -37,7 +37,7 @@ class MovimientoFinancialService {
                 $movimiento = $this->storeMovimientoAction->store($dto);
             }
             $updateSaldoDTO = $this->resolveUpdateSaldoDTO($dto, $cuenta, $movimiento);
-                       $this->executeAttachmentServiceFunction($dto, $movimiento);
+            $this->executeAttachmentServiceFunction($dto, $movimiento);
             $dto instanceof UpdateMovimientoDTO && $this->updateMovimientoAction->update($movimiento, $dto);
 
             $this->updateCuentaAction->update($cuenta, $updateSaldoDTO); // si todo sale bien se actualiza el saldo
