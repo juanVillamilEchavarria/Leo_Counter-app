@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Presupuesto;
 
-use App\Domains\Presupuesto\Services\PresupuestoService;
+use App\Domains\Presupuesto\Services\Application\PresupuestoService;
 use App\Http\Requests\Presupuesto\StoreAndUpdatePresupuestoMesActualRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Presupuesto\Presupuesto;

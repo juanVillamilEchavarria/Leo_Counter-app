@@ -5,7 +5,7 @@ use App\Shared\Actions\Files\DestroyFileAction;
 use App\Shared\Actions\Files\UploadFileAction;
 use App\Shared\Actions\Files\MoveFileAction;
 use App\Shared\DTOs\Files\MoveFileDTO;
-use App\Shared\DTOs\UploadFileDTO;
+use App\Shared\DTOs\Files\UploadFileDTO;
 use Illuminate\Support\Facades\Storage;
 
 class FileService{

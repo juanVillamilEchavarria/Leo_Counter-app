@@ -1,4 +1,4 @@
-import { type ColumnDef, type Table } from "@tanstack/react-table"
+import { type ColumnDef, type PaginationState, type SortingState } from "@tanstack/react-table"
 export type EditAndDeleteActionsProps={
     editHref?: string,
     deleteOnClick?: () => void | undefined
@@ -64,4 +64,34 @@ export type ModelToggleProps = {
     active?: string
     inactive?: string
   }
+}
+export interface ServerSideTableParams {
+    pagination: PaginationState;
+    sorting: SortingState;
+    globalFilter: string;
+}
+
+export type ServerSideTableResponse <T>={
+    data: T[];
+    meta: {
+        currentPage: number;
+        perPage: number;
+        total: number;
+        lastPage: number;
+        from: number;
+        to: number;
+    };
+}
+
+export interface UseServerSideTableProps {
+    endpoint: string;
+    queryKey: string[];
+    params: ServerSideTableParams;
+    enabled?: boolean;
+}
+export type UseServerSideTanStackTableProps<T extends Record<string, any>>={
+    columns: ColumnDef<T, any>[];
+    endpoint: string
+    queryKey: string[]
+    initialPageSize?: number
 }

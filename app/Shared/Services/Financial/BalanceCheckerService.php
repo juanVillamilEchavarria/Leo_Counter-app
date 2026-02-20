@@ -5,7 +5,7 @@ use App\Domains\Cuenta\Actions\GetCuentaAction;
 use App\Domains\Movimiento\Actions\GetMovimientoAction;
 use App\Shared\Enums\ComparativeOperators;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
-use App\Shared\DTOs\WhereFilterQueryDTO;
+use App\Shared\DTOs\Querys\WhereFilterQueryDTO;
 use App\Models\Cuenta\Cuenta;
 use App\Models\Movimiento\Movimiento;
 use App\Shared\Exceptions\InsufficientBalanceException;

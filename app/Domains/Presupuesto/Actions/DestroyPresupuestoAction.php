@@ -3,11 +3,13 @@
 namespace App\Domains\Presupuesto\Actions;
 
 use App\Models\Presupuesto\Presupuesto;
+use App\Shared\Abstracts\Actions\DestroyAction;
 
-class DestroyPresupuestoAction
+/** @method bool destroy(Presupuesto $model) */
+class DestroyPresupuestoAction extends DestroyAction
 {
-    public function destroy(Presupuesto $presupuesto): bool
+    public function __construct()
     {
-        return $presupuesto->delete();
+        parent::__construct(Presupuesto::class);
     }
 }

@@ -22,16 +22,17 @@ export const MovimientoEspontaneoColumns = ({
             label: 'Cuenta'
         },
         {
+            key: 'categoria',
+            label: 'Categoria'
+        },
+        {
             key: 'tipo_movimiento',
             label: 'Tipo',
             render: (row: MovimientoEspontaneoTableData) => (
                 <SuccessOrFailText attribute={row.tipo_movimiento} value={'Ingreso'}  />
             )
         },
-        {
-            key: 'categoria',
-            label: 'Categoria'
-        },
+  
         {
             key: 'monto',
             label: 'Monto',

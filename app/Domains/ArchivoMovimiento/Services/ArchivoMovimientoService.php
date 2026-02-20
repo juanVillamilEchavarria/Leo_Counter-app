@@ -9,7 +9,7 @@ use App\Domains\ArchivoMovimiento\DTOs\StoreArchivoMovimientoDTO;
 use App\Domains\ArchivoMovimiento\DTOs\UpdateArchivoMovimientoLocationDTO;
 use App\Models\ArchivoMovimiento\ArchivoMovimiento;
 use App\Shared\DTOs\Files\MoveFileDTO;
-use App\Shared\DTOs\UploadFileDTO;
+use App\Shared\DTOs\Files\UploadFileDTO;
 use App\Domains\ArchivoMovimiento\DTOs\ArchivoMovimientoTransferDTO;
 use App\Domains\ArchivoMovimiento\Exceptions\CannotDeleteArchivoMovimientoException;
 use App\Domains\ArchivoMovimiento\ValueObjects\FilePath;

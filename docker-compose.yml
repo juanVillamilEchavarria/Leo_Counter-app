@@ -11,7 +11,17 @@ services:
     ports:
       - "8080:80"
     volumes:
+      # Código de la aplicación
       - .:/var/www/html
+      
+      #  VOLUMEN PARA ARCHIVOS SUBIDOS DE MOVIMIENTOS
+      - movimientos_data:/var/www/html/storage/app/data/movimientos
+      
+      # Storage completo en volumen 
+      - app_storage:/var/www/html/storage
+      
+      #  LOGS en volumen separado
+      - app_logs:/var/www/html/storage/logs
     env_file:
       - .env
     depends_on:
@@ -29,7 +39,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./docker/mysql/data:/var/lib/mysql
+      - mariadb_data:/var/lib/mysql
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
@@ -48,6 +58,42 @@ services:
     container_name: mailhog
     ports:
       - "1025:1025"   # SMTP
-      - "8025:8025"   # Web UI
+      - "8025:8025"   # Web 
     restart: unless-stopped
 
+volumes:
+  # Archivos de movimientos (PDFs, comprobantes)
+  movimientos_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./storage/app/data/movimientos 
+
+  # Storage completo
+  app_storage:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./storage 
+
+  # Logs separados
+  app_logs:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./storage/logs
+
+  # Base de datos
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./docker/mysql/data
+
+networks:
+  leo_network:
+    driver: bridge

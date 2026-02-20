@@ -1,15 +1,16 @@
-import TanStackTable from "@/app/shared/components/table/advanced/TanStackTable"
-import { ColumnsTablePresupuestoHistorico, type PresupuestoHistoricoTableData } from "../types/presupuesto.types"
+import TanStackTableServerSide from "@/app/shared/components/table/advanced/TanStackTableServerSIde"
+import { useMemo } from "react"
+import { ColumnsTablePresupuestoHistorico, type PresupuestoHistoricoTableData, PresupuestoHistoricoApiActions } from "../types/presupuesto.types"
 
-interface PresupuestoHistoricoTableProps {
-  data: PresupuestoHistoricoTableData[]
-}
+export default function PresupuestoHistoricoTable() {
+    const columns = useMemo(() => ColumnsTablePresupuestoHistorico, [])
 
-export default function PresupuestoHistoricoTable({ data }: PresupuestoHistoricoTableProps) {        
-  return (
-    <TanStackTable<PresupuestoHistoricoTableData>
-      columns={ColumnsTablePresupuestoHistorico}
-      data={data}
-    />
-  )
+    return (
+        <TanStackTableServerSide<PresupuestoHistoricoTableData>
+            columns={columns}
+            endpoint={PresupuestoHistoricoApiActions.paginatedData}
+            queryKey={['presupuestos', 'historicos']}
+            pageSize={10}
+        />
+    )
 }

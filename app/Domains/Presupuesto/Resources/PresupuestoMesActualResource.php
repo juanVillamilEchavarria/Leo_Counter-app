@@ -5,7 +5,7 @@ namespace App\Domains\Presupuesto\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Domains\Presupuesto\Resources\PresupuestoResource;
-use App\Domains\Presupuesto\Services\PresupuestoService;
+use App\Domains\Presupuesto\Services\Application\PresupuestoService;
 class PresupuestoMesActualResource extends PresupuestoResource
 {
     /**

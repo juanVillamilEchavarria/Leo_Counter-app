@@ -3,12 +3,13 @@
 namespace App\Domains\Presupuesto\Actions;
 
 use App\Models\Presupuesto\Presupuesto;
-use App\Domains\Presupuesto\DTOs\UpdatePresupuestoMesActualDTO;
+use App\Shared\Abstracts\Actions\UpdateAction;
 
-class UpdatePresupuestoAction
+/** @method bool update(Presupuesto $model, \App\Domains\Presupuesto\DTOs\UpdatePresupuestoMesActualDTO $dto) */
+class UpdatePresupuestoAction extends UpdateAction
 {
-    public function update(Presupuesto $presupuesto, UpdatePresupuestoMesActualDTO $dto): bool
+    public function __construct()
     {
-        return $presupuesto->update($dto->toArray());
+        parent::__construct(Presupuesto::class);
     }
 }

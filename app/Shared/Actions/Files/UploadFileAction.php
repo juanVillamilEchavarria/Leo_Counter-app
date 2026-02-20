@@ -3,7 +3,7 @@
 namespace App\Shared\Actions\Files;
 
 use Illuminate\Support\Facades\Storage;
-use App\Shared\DTOs\UploadFileDTO;
+use App\Shared\DTOs\Files\UploadFileDTO;
 
 use App\Shared\Exceptions\CannotUploadFileException;
 class UploadFileAction{

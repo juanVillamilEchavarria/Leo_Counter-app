@@ -4,7 +4,8 @@ namespace App\Domains\Movimiento\Service\Domain;
 use App\Models\Movimiento\Movimiento;
 use App\Domains\MovimientoFijo\Services\MovimientoFijoService;
 use App\Domains\Movimiento\Actions\GetMovimientoAction;
-use App\Shared\DTOs\WhereFilterQueryDTO;
+use App\Shared\DTOs\Querys\WhereFilterQueryDTO;
+use App\Shared\DTOs\Querys\TableQueryDTO;
 use App\Domains\Movimiento\Resources\MovimientoResource;
 use App\Domains\Movimiento\Resources\ShowMovimientoResource;
 use App\Domains\Movimiento\Resources\EditMovimientoResource;
@@ -33,9 +34,8 @@ class MovimientoQueryService{
         ;
     }
 
-    public function getAll(MovimientoVariants $variant = MovimientoVariants::TOTAL) : AnonymousResourceCollection{
-        if($variant === MovimientoVariants::ESPONTANEO){
-            $wheres = [
+    private function getEspontaneoQuery(): array{
+        return [
                 new WhereFilterQueryDTO(
                     'fecha',
                     ComparativeOperators::EQUALS,
@@ -47,9 +47,29 @@ class MovimientoQueryService{
                     null
                 )
             ];
-            return MovimientoResource::collection($this->getMovimientoAction->getAllWithDetailsWhere($wheres));
+    }
+
+    private function applyVariantQuery(MovimientoVariants $variant){
+        if($variant === MovimientoVariants::ESPONTANEO){
+            $wheres = $this->getEspontaneoQuery();
+           return $this->getMovimientoAction->getAllWithDetailsWhere($wheres);
         }
-         return MovimientoResource::collection($this->getMovimientoAction->getAllWithDetails());
+
+        return $this->getMovimientoAction->getAllWithDetails();
+    }
+
+    public function getAll(MovimientoVariants $variant = MovimientoVariants::TOTAL) : AnonymousResourceCollection{
+       return MovimientoResource::collection($this->applyVariantQuery($variant));
+    }
+
+    public function getPaginator(){
+        return $this->getMovimientoAction->getPaginator();
+    }
+
+    public function getAllPaginated(MovimientoVariants $variant = MovimientoVariants::TOTAL, TableQueryDTO $dto){
+        $variant === MovimientoVariants::ESPONTANEO ? $wheres = $this->getEspontaneoQuery(): $wheres = [];
+        $data = $this->getMovimientoAction->allPaginated($dto, $wheres);
+        return MovimientoResource::collection($data->get());
     }
     public function getRecordsCount(MovimientoVariants $variant = MovimientoVariants::TOTAL): int{
             return $variant === MovimientoVariants::ESPONTANEO ? $this->getMovimientoAction->getEspontaneoRecordsCount() :

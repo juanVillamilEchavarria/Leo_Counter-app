@@ -6,10 +6,8 @@ import { useModalItem } from "@/app/shared/hooks"
 import { MovimientoTable, type Movimiento } from "@/app/domains/movimiento"
 import { type MovimientoTableData, type MovimientoShowData } from "@/app/domains/movimiento"
 export default function Index({
-  movimientos,
   data
 }:{
-  movimientos : {data: MovimientoTableData[]}
   data?: {data: MovimientoShowData}
 }) {
   const {item, modal, setItem, open, close}= useModalItem<MovimientoShowData>()
@@ -22,7 +20,7 @@ export default function Index({
   return (
     <SectionTransition>
         <SectionDescription title="Movimientos" paragraph="Mira el historial de tus ingresos y gastos" />
-        <MovimientoTable data={movimientos.data} onSelect={(item)=> open(item, 'show')} />
+        <MovimientoTable onSelect={(item)=> open(item, 'show')} />
         <ShowMovimientoModal 
             movimiento={item}
             onClose={close}

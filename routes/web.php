@@ -18,7 +18,7 @@ use App\Http\Controllers\Presupuesto\PresupuestoMesActualController;
 use App\Http\Controllers\PagoPendiente\PagoPendienteController;
 use App\Http\Controllers\Historial\HistorialController;
 Route::get('/', [LoginController::class, 'index'])->name('login');
-Route::post('/login', [LoginController::class, 'login'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login.store');
 Route::get('/register', function (){
     return view('auth.register');
 })->name('register');

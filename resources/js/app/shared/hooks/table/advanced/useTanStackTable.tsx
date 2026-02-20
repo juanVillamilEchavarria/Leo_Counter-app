@@ -12,10 +12,6 @@ import {
     useState,
     type JSX
 } from "react"
-// helpers
-import {
-     getVisiblePages 
-} from "../../../helpers"
 import { type useTanStackTableProps } from "../../../types/components"
 
 

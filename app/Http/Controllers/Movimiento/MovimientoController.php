@@ -21,13 +21,13 @@ class MovimientoController extends Controller
         return [
             'title'=>'Movimientos',
             'NoRegistros'=>$this->movimientoService->getRecordsCount(),
-            'movimientos'=>$this->movimientoService->getAll()
 
         ];
     }
    public function index(){
     return Inertia::render('Movimientos/Historicos/Index',$this->props());
    }
+
 
    public function show(Movimiento $movimiento){
     

@@ -1,5 +1,5 @@
 <?php
-namespace App\Shared\DTOs;
+namespace App\Shared\DTOs\Files;
 
 use App\Shared\Abstracts\DTOs\DTO;
 use Illuminate\Http\UploadedFile;

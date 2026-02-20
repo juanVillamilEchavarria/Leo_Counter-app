@@ -15,6 +15,7 @@ use App\Domains\Movimiento\Strategies\Application\CuentaResolverStrategy;
 use App\Domains\Movimiento\DTOs\StoreMovimientoDTO;
 use App\Domains\Movimiento\DTOs\UpdateMovimientoDTO;
 use App\Domains\Movimiento\DTOs\DestroyMovimientoDTO;
+use App\Shared\DTOs\Querys\TableQueryDTO;
 use App\Domains\Movimiento\Resources\ShowMovimientoResource;
 use App\Domains\Movimiento\Resources\EditMovimientoResource;
 // Models
@@ -87,6 +88,28 @@ class MovimientoService{
 
         return $this->movimientoQueryService->getAll($variant);
 
+    }
+
+    public function getAllPaginated(MovimientoVariants $variant = MovimientoVariants::TOTAL, array $data){
+
+        $dto = TableQueryDTO::fromArray($data);
+        return $this->movimientoQueryService->getAllPaginated($variant, $dto);
+    }
+
+    public function getPaginatorMetaData(){
+        $paginator= $this->movimientoQueryService->getPaginator();
+        return [
+            'currentPage'=> $paginator->currentPage(),
+            'perPage'=> $paginator->perPage(),
+            'lastPage'=> $paginator->lastPage(),
+            'total' => $paginator->total(),
+            'from' => $paginator->firstItem(),
+            'to' => $paginator->lastItem()
+        ];
+    }
+
+    public function getPaginator(){
+        return $this->movimientoQueryService->getPaginator();
     }
     public function getRecordsCount(MovimientoVariants $variant = MovimientoVariants::TOTAL): int{
 

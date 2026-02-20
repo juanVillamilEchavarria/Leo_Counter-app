@@ -1,3 +1,4 @@
+import { type ServerSideTableParams } from "../../types";
 export function getVisiblePages(
     current : number,
     total: number,
@@ -29,3 +30,15 @@ export function getVisiblePages(
     };
 }
 
+
+export function convertServerSideQueryParams( params : ServerSideTableParams){
+  const { pagination, sorting, globalFilter } = params;
+  const queryParams = {
+      page: pagination.pageIndex + 1, // tanStack por default usa 0, asi que sumamos 1
+      perPage: pagination.pageSize,
+      search: globalFilter || undefined,
+      sortBy: sorting[0]?.id || undefined,
+      sortOrder: sorting[0]?.desc ? 'desc' : 'asc',
+  };
+  return queryParams
+}

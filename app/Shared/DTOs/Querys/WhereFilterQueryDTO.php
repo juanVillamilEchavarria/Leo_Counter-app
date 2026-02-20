@@ -1,5 +1,5 @@
 <?php
-namespace App\Shared\DTOs;
+namespace App\Shared\DTOs\Querys;
 use App\Shared\Enums\ComparativeOperators;
 final class WhereFilterQueryDTO{
     public function __construct(

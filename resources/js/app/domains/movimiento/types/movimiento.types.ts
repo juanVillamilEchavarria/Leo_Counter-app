@@ -7,6 +7,9 @@ export const MovimientoRoutes={
     index : ()=>route('movimientos.index'),
     show : (id: number) => route('movimientos.show', {id}),
 }
+export const MovimientoApiActions={
+    paginatedData: '/movimientos' 
+}
 export type Movimiento={
     id: number,
     nombre: string,

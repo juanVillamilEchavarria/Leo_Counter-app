@@ -3,52 +3,52 @@
 namespace App\Domains\Presupuesto\Actions;
 
 use App\Models\Presupuesto\Presupuesto;
-use Illuminate\Database\Eloquent\Collection;
 use Carbon\Carbon;
-use App\Shared\Enums\ComparativeOperators;
-use App\Domains\Presupuesto\DTOs\UpdatePresupuestoMesActualDTO;
-use App\Domains\Presupuesto\DTOs\StorePresupuestoMesActualDTO;
+use App\Shared\Abstracts\Actions\GetAction;
 
-class GetPresupuestoAction
+class GetPresupuestoAction extends GetAction
 {
+    protected array $relations = ['categoria', 'user'];
+    protected array $searchColumns = [
+        'categoria' => [
+            'categorias.nombre'
+        ],
+        'user' => [
+            'users.name',
+            'users.apellido'
+        ]
+    ];
+    protected array $relationsColumns = [
+        'categoria' => [
+            'relation' => 'categoria',
+            'column' => 'categorias.nombre'
+        ],
+        'user' => [
+            'relation' => 'user',
+            'column' => 'users.name'
+        ]
+    ];
 
-    private function baseQueryWithDetails(){
-        return Presupuesto::query()
-        ->with(['categoria', 'user']);
-    }
-    public function getAll(): Collection
+    public function __construct()
     {
-        return Presupuesto::all();
+        parent::__construct(Presupuesto::class);
     }
 
-    public function getRecordsCount(): int
+    public function getHistoricRecordsCount(): int
     {
-        return Presupuesto::count();
-    }
-
-    public function getHistoricRecordsCount(): int{
-        return Presupuesto::whereDate('periodo', '<=', Carbon::now()->firstOfMonth())
-        ->count();
+        return Presupuesto::whereDate('periodo', '<=', Carbon::now()->firstOfMonth())->count();
     }
 
     public function getMesActualRecordsCount(): int
     {
         $now = Carbon::now();
-        return Presupuesto::whereDate('periodo', '=', $now->firstOfMonth())
-        ->count();
+        return Presupuesto::whereDate('periodo', '=', $now->firstOfMonth())->count();
     }
 
-    public function getAllWithDetails(): Collection
+    public function getEqualPresupuesto(int $categoria_id, Carbon | string $periodo): mixed
     {
-        return $this->baseQueryWithDetails()->get();
-    }
-     public function getEqualPresupuesto(int $categoria_id, Carbon | string $periodo): mixed{
         return Presupuesto::query()
             ->where('categoria_id', $categoria_id)
             ->whereDate('periodo', $periodo);
-
-    }
-    public function getAllWithDetailsUntilPeriodo(ComparativeOperators $operator, Carbon | string $periodo): Collection{
-        return $this->baseQueryWithDetails()->whereDate('periodo', $operator->value, $periodo)->get();
     }
 }

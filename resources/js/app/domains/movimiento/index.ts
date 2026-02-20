@@ -1,5 +1,5 @@
 
-import { type MovimientoTableData, type Movimiento, type MovimientoShowData, MovimientoRoutes} from "./types/movimiento.types";
+import { type MovimientoTableData, type Movimiento, type MovimientoShowData, MovimientoRoutes, MovimientoApiActions} from "./types/movimiento.types";
 import MovimientoTable from "./components/MovimientoTable";
 
 export {
@@ -7,5 +7,6 @@ export {
     type MovimientoTableData,
     type MovimientoShowData,
     MovimientoTable,
-    MovimientoRoutes
+    MovimientoRoutes,
+    MovimientoApiActions
 }

@@ -1,9 +1,8 @@
-import InputFillable from "../../form/InputFillable"
+import Search from "../actions/Search"
 import TablePagination from "../pagination/TablePagination"
 import { flexRender} from "@tanstack/react-table"
 import useTanStackTable from "../../../hooks/table/advanced/useTanStackTable"
 import { useTanStackPagination } from "@/app/shared/hooks"
-import { type ChangeEvent, useMemo } from "react"
 import { type TanStackTableProps } from "../../../types/components" 
 export default function TanStackTable<T extends Record<string,any>>({
     columns,
@@ -15,8 +14,6 @@ export default function TanStackTable<T extends Record<string,any>>({
         filtering,
         setFiltering,
         table, 
-        pageCurrentIndex,
-        totalPages,
         UpDown
     }= useTanStackTable<T>({
         columns,
@@ -26,18 +23,7 @@ export default function TanStackTable<T extends Record<string,any>>({
  
   return (
     <div>
-        <div className="flex w-full my-2 justify-start">
-            <InputFillable 
-                type="text" 
-                icon="fa-solid fa-search"
-                name="search"
-                id="search"
-                value={filtering}
-                placeholder="Busqueda"
-                className="border border-azul-oscuro/50 rounded-2xl transition-all "
-                onChange={(e: ChangeEvent<HTMLInputElement>)=> setFiltering(e.target.value)}
-            />
-        </div>
+        <Search value={filtering} setValue={setFiltering} />
         <div className="table-container">
         <table className="table-general">
             <thead className="table-thead">

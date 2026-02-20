@@ -1,17 +1,12 @@
-import TanStackTable from "@/app/shared/components/table/advanced/TanStackTable"
-import ShowMovimientoModal from "./ShowMovimientoModal"
-import { router } from "@inertiajs/react"
-import { useMemo, useState, useEffect } from "react"
-import { BaseIcons } from "@/app/shared/types"
+import TanStackTableServerSide from "@/app/shared/components/table/advanced/TanStackTableServerSIde"
+import { useMemo } from "react"
 import { MovimientoColumns } from "./columns/movimiento.columns"
-import { type MovimientoTableData, type MovimientoShowData, MovimientoRoutes } from "../types/movimiento.types"
-import { ArchivoMovimientoRoutes } from "../../archivoMovimiento"
+import { type MovimientoTableData, MovimientoApiActions} from "../types/movimiento.types"
+
 export default function MovimientoTable({
-  data,
   onSelect
 
 }:{
-  data: MovimientoTableData[]
   onSelect : (item: MovimientoTableData) => void
 }) {
    const columns = useMemo(()=>
@@ -21,10 +16,12 @@ export default function MovimientoTable({
    , [MovimientoColumns])
   return (
     <>
-    <TanStackTable
-           columns={columns}
-           data={data}
-            />
+        <TanStackTableServerSide<MovimientoTableData>
+            columns={columns}
+            endpoint={MovimientoApiActions.paginatedData}
+            queryKey={['movimientos', 'historicos']}
+            pageSize={10}
+        />
     </>
   )
 }
