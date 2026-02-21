@@ -4,10 +4,10 @@ namespace App\Domains\Presupuesto\Services\Application;
 
 use App\Domains\Presupuesto\Services\Domain\PresupuestoQueryService;
 use App\Domains\Presupuesto\Actions\StorePresupuestoAction;
-use App\Domains\Presupuesto\Actions\GetPresupuestoAction;
+use App\Domains\Presupuesto\Repositories\Contracts\PresupuestoReadRepositoryContract;
 use App\Domains\Presupuesto\Actions\UpdatePresupuestoAction;
 use App\Domains\Presupuesto\Actions\DestroyPresupuestoAction;
-use App\Domains\Categoria\Actions\GetCategoriaAction;
+use App\Domains\Categoria\Repositories\Contracts\CategoriaReadRepositoryContract;
 use App\Domains\Presupuesto\DTOs\PresupuestoFormOptionsDTO;
 use App\Domains\Presupuesto\DTOs\StorePresupuestoMesActualDTO;
 use App\Shared\DTOs\Querys\TableQueryDTO;
@@ -27,24 +27,24 @@ class PresupuestoService
 {
     public function __construct(
         private StorePresupuestoAction $storePresupuestoMesActualAction,
-        private GetPresupuestoAction $getPresupuestoAction,
+        private PresupuestoReadRepositoryContract $presupuestoReadRepository,
         private UpdatePresupuestoAction $updatePresupuestoAction,
         private DestroyPresupuestoAction $destroyPresupuestoAction,
-        private GetCategoriaAction $getCategoriaAction,
+        private CategoriaReadRepositoryContract $categoriaReadRepository,
         private PresupuestoQueryService $presupuestoQueryService
     ) {
     }
 
     private function storeValidate(StorePresupuestoMesActualDTO $dto): void
     {
-        if ($this->getPresupuestoAction->getEqualPresupuesto($dto->categoria_id, $dto->periodo)->exists()) {
+        if ($this->presupuestoReadRepository->getEqualPresupuesto($dto->categoria_id, $dto->periodo)->exists()) {
             throw new CannotStorePresupuestoException(message: 'Ya existe un presupuesto para la fecha seleccionada');
         }
     }
 
     private function updateValidate(UpdatePresupuestoMesActualDTO $dto, Presupuesto $presupuesto): void
     {
-        if ($this->getPresupuestoAction->getEqualPresupuesto($dto->categoria_id, $dto->periodo)
+        if ($this->presupuestoReadRepository->getEqualPresupuesto($dto->categoria_id, $dto->periodo)
             ->where('id', '!=', $presupuesto->id)
             ->exists()
         ) {
@@ -89,7 +89,7 @@ class PresupuestoService
     public function getOptions()
     {
         return new PresupuestoFormOptionsDTO(
-            $this->getCategoriaAction->getAllByType(2)
+            $this->categoriaReadRepository->getAllByType(2)
         );
     }
 

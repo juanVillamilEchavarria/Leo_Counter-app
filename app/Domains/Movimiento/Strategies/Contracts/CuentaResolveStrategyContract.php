@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Movimiento\Contracts;
+namespace App\Domains\Movimiento\Strategies\Contracts;
 
 interface CuentaResolveStrategyContract
 {

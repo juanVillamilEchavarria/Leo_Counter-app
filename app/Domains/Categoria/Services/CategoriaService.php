@@ -6,8 +6,8 @@ use App\Models\Categoria\Categoria;
 use App\Domains\Categoria\Actions\StoreCategoriaAction;
 use App\Domains\Categoria\Actions\UpdateCategoriaAction;    
 use App\Domains\Categoria\Actions\DestroyCategoriaAction;
-use App\Domains\Categoria\Actions\GetCategoriaAction;
-use App\Domains\TipoMovimiento\Actions\GetTipoMovimientoAction;
+use App\Domains\Categoria\Repositories\Contracts\CategoriaReadRepositoryContract;
+use App\Domains\TipoMovimiento\Repositories\Contracts\TipoMovimientoReadRepositoryContract;
 use App\Domains\Categoria\DTOs\CategoriaFormOptionsDTO;
 use App\Domains\Categoria\DTOs\StoreAndUpdateCategoriaDTO;
 use App\Domains\Categoria\Exceptions\CannotStoreCategoriaException;
@@ -20,14 +20,14 @@ class CategoriaService{
         private StoreCategoriaAction $storeCategoriaAction,
         private UpdateCategoriaAction $updateCategoriaAction,
         private DestroyCategoriaAction $destroyCategoriaAction,
-        private GetCategoriaAction $getCategoriaAction,
-        private GetTipoMovimientoAction $getTipoMovimientoAction)
+        private CategoriaReadRepositoryContract $categoriaReadRepository,
+        private TipoMovimientoReadRepositoryContract $tipoMovimientoReadRepository)
     {
     }
 
 
     private function storeValidate(StoreAndUpdateCategoriaDTO $dto){
-        if($this->getCategoriaAction->getEqual($dto->nombre, $dto->tipo_movimiento_id)->exists()){
+        if($this->categoriaReadRepository->getEqual($dto->nombre, $dto->tipo_movimiento_id)->exists()){
             throw new CannotStoreCategoriaException;
         }
     }
@@ -54,17 +54,17 @@ class CategoriaService{
     public function getOptions() : CategoriaFormOptionsDTO
     {
         return new CategoriaFormOptionsDTO(
-            tipos: $this->getTipoMovimientoAction->getAll()
+            tipos: $this->tipoMovimientoReadRepository->getAll()
         );
     }
 
     public function getRecordsCount() : int{
-        return $this->getCategoriaAction->getRecordsCount();
+        return $this->categoriaReadRepository->getRecordsCount();
     }
 
     public function getAllWithDetails() : AnonymousResourceCollection
     {
-        $categorias = $this->getCategoriaAction->getAllWithFullDetails();
+        $categorias = $this->categoriaReadRepository->getAllWithFullDetails();
         return CategoriaResource::collection($categorias);
     }
 }

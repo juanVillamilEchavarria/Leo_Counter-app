@@ -5,7 +5,7 @@ namespace App\Domains\Presupuesto\Services\Domain;
 use App\Models\Presupuesto\Presupuesto;
 use App\Shared\DTOs\Querys\TableQueryDTO;
 use App\Shared\DTOs\Querys\WhereFilterQueryDTO;
-use App\Domains\Presupuesto\Actions\GetPresupuestoAction;
+use App\Domains\Presupuesto\Repositories\Contracts\PresupuestoReadRepositoryContract;
 use App\Domains\Presupuesto\Resources\PresupuestoResource;
 use App\Domains\Presupuesto\Enums\PresupuestoVariants;
 use App\Domains\Presupuesto\Resources\PresupuestoMesActualResource;
@@ -15,8 +15,10 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class PresupuestoQueryService
 {
+    private ?\Illuminate\Pagination\LengthAwarePaginator $paginator = null;
+
     public function __construct(
-        private GetPresupuestoAction $getPresupuestoAction
+        private PresupuestoReadRepositoryContract $presupuestoReadRepository
     )
     {
     }
@@ -24,13 +26,13 @@ class PresupuestoQueryService
     public function canDuplicate(Presupuesto $presupuesto): bool
     {
         $nextMonth = $presupuesto->periodo->copy()->firstOfMonth()->addMonth();
-        return !$this->getPresupuestoAction->getEqualPresupuesto($presupuesto->categoria_id, $nextMonth)->exists();
+        return !$this->presupuestoReadRepository->getEqualPresupuesto($presupuesto->categoria_id, $nextMonth)->exists();
     }
 
     public function getAllWithDetails(PresupuestoVariants $type): AnonymousResourceCollection
     {
         if ($type === PresupuestoVariants::MES_ACTUAL) {
-            $presupuestos = $this->getPresupuestoAction
+            $presupuestos = $this->presupuestoReadRepository
                 ->getAllWithDetailsWhere($this->getMesActualQuery())
                 ->map(function ($presupuesto) {
                     $presupuesto->isDuplicate = !$this->canDuplicate($presupuesto);
@@ -39,7 +41,7 @@ class PresupuestoQueryService
             return PresupuestoMesActualResource::collection($presupuestos);
         }
         
-        $presupuestos = $this->getPresupuestoAction->getAllWithDetailsWhere($this->getHistoricoQuery());
+        $presupuestos = $this->presupuestoReadRepository->getAllWithDetailsWhere($this->getHistoricoQuery());
         return PresupuestoResource::collection($presupuestos);
     }
 
@@ -49,8 +51,10 @@ class PresupuestoQueryService
     public function getAllPaginated(PresupuestoVariants $variant = PresupuestoVariants::HISTORICO, TableQueryDTO $dto): AnonymousResourceCollection
     {
         $wheres = $variant === PresupuestoVariants::MES_ACTUAL ? $this->getMesActualQuery() : $this->getHistoricoQuery();
-        $data = $this->getPresupuestoAction->allPaginated($dto, $wheres);
-        return PresupuestoResource::collection($data->get());
+        $paginator = $this->presupuestoReadRepository->paginate($dto, $wheres);
+        $this->paginator = $paginator;
+      
+        return PresupuestoResource::collection($paginator->items());
     }
 
     /**
@@ -67,8 +71,8 @@ class PresupuestoQueryService
     public function getRecordsCount(PresupuestoVariants $variant = PresupuestoVariants::HISTORICO): int
     {
         return $variant === PresupuestoVariants::MES_ACTUAL
-            ? $this->getPresupuestoAction->getMesActualRecordsCount()
-            : $this->getPresupuestoAction->getHistoricRecordsCount();
+            ? $this->presupuestoReadRepository->getMesActualRecordsCount()
+            : $this->presupuestoReadRepository->getHistoricRecordsCount();
     }
 
     /**
@@ -76,7 +80,7 @@ class PresupuestoQueryService
      */
     public function getPaginator()
     {
-        return $this->getPresupuestoAction->getPaginator();
+        return $this->paginator;
     }
 
     /**
@@ -84,7 +88,7 @@ class PresupuestoQueryService
      */
     public function getWithDetails(Presupuesto $presupuesto)
     {
-        return PresupuestoResource::make($this->getPresupuestoAction->getWithDetails($presupuesto));
+        return PresupuestoResource::make($this->presupuestoReadRepository->getWithDetails($presupuesto));
     }
 
     /**
@@ -92,7 +96,7 @@ class PresupuestoQueryService
      */
     public function getOptions()
     {
-        return $this->getPresupuestoAction->getAllWithDetails();
+        return $this->presupuestoReadRepository->getAllWithDetails();
     }
 
     /**

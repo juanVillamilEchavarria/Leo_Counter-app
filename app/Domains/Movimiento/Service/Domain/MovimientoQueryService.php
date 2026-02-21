@@ -1,9 +1,13 @@
 <?php
 
 namespace App\Domains\Movimiento\Service\Domain;
+// MODELS
 use App\Models\Movimiento\Movimiento;
+// SERVICES
 use App\Domains\MovimientoFijo\Services\MovimientoFijoService;
-use App\Domains\Movimiento\Actions\GetMovimientoAction;
+// CONTRACTS
+use App\Domains\Movimiento\Repositories\Contracts\MovimientoReadRepositoryContract;
+// DTO
 use App\Shared\DTOs\Querys\WhereFilterQueryDTO;
 use App\Shared\DTOs\Querys\TableQueryDTO;
 use App\Domains\Movimiento\Resources\MovimientoResource;
@@ -14,12 +18,15 @@ use App\Shared\Enums\ComparativeOperators;
 use App\Domains\Movimiento\Enums\MovimientoVariants;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class MovimientoQueryService{
 
+
+    protected readonly ?LengthAwarePaginator $paginator;
     public function __construct(
         private MovimientoFijoService $movimientoFijoService,
-        private GetMovimientoAction $getMovimientoAction
+        private MovimientoReadRepositoryContract $repository
     )
     {
     }
@@ -27,9 +34,16 @@ class MovimientoQueryService{
       return $this->movimientoFijoService->getOptions();
     }
 
+    public function getPaginator(){
+        return $this->paginator;
+    }
+    public function setPaginator(LengthAwarePaginator $paginator){
+        $this->paginator = $paginator;
+    }
+
     public function getWithDetails(Movimiento $movimiento, ResourceEnum $resource = ResourceEnum::SHOW) : ShowMovimientoResource | EditMovimientoResource{
         return $resource === ResourceEnum::SHOW ?
-        ShowMovimientoResource::make($this->getMovimientoAction->getWithDetails($movimiento)):
+        ShowMovimientoResource::make($this->repository->getWithDetails($movimiento)):
         EditMovimientoResource::make($movimiento->load('archivoMovimientos'));
         ;
     }
@@ -52,27 +66,24 @@ class MovimientoQueryService{
     private function applyVariantQuery(MovimientoVariants $variant){
         if($variant === MovimientoVariants::ESPONTANEO){
             $wheres = $this->getEspontaneoQuery();
-           return $this->getMovimientoAction->getAllWithDetailsWhere($wheres);
+           return $this->repository->getAllWithDetailsWhere($wheres);
         }
 
-        return $this->getMovimientoAction->getAllWithDetails();
+        return $this->repository->getAllWithDetails();
     }
 
     public function getAll(MovimientoVariants $variant = MovimientoVariants::TOTAL) : AnonymousResourceCollection{
        return MovimientoResource::collection($this->applyVariantQuery($variant));
     }
 
-    public function getPaginator(){
-        return $this->getMovimientoAction->getPaginator();
-    }
-
     public function getAllPaginated(MovimientoVariants $variant = MovimientoVariants::TOTAL, TableQueryDTO $dto){
         $variant === MovimientoVariants::ESPONTANEO ? $wheres = $this->getEspontaneoQuery(): $wheres = [];
-        $data = $this->getMovimientoAction->allPaginated($dto, $wheres);
-        return MovimientoResource::collection($data->get());
+        $data = $this->repository->paginate($dto, $wheres);
+        $this->setPaginator($data);
+        return MovimientoResource::collection($data->items());
     }
     public function getRecordsCount(MovimientoVariants $variant = MovimientoVariants::TOTAL): int{
-            return $variant === MovimientoVariants::ESPONTANEO ? $this->getMovimientoAction->getEspontaneoRecordsCount() :
-            $this->getMovimientoAction->getRecordsCount();
+            return $variant === MovimientoVariants::ESPONTANEO ? $this->repository->getEspontaneoRecordsCount() :
+            $this->repository->getRecordsCount();
     }
 }

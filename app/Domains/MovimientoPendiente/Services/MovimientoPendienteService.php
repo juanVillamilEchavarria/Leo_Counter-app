@@ -6,14 +6,14 @@ namespace App\Domains\MovimientoPendiente\Services;
 use App\Models\MovimientoPendiente\MovimientoPendiente;
 use App\Models\MovimientoFijo\MovimientoFijo;
 //Actions
-use App\Domains\MovimientoPendiente\Actions\GetMovimientoPendienteAction;
+use App\Domains\MovimientoPendiente\Repositories\Contracts\MovimientoPendienteReadRepositoryContract;
 use App\Domains\MovimientoPendiente\Actions\StoreMovimientoPendienteAction;
 use App\Domains\MovimientoPendiente\Actions\UpdateMovimientoPendienteAction;
 use App\Domains\MovimientoPendiente\Actions\DestroyMovimientoPendienteAction;
-use App\Domains\Cuenta\Actions\GetCuentaAction;
-use App\Domains\Categoria\Actions\GetCategoriaAction;
+use App\Domains\Cuenta\Repositories\Contracts\CuentaReadRepositoryContract;
+use App\Domains\Categoria\Repositories\Contracts\CategoriaReadRepositoryContract;
 use App\Domains\Movimiento\Actions\StoreMovimientoAction;
-use App\Domains\TipoMovimiento\Actions\GetTipoMovimientoAction;
+use App\Domains\TipoMovimiento\Repositories\Contracts\TipoMovimientoReadRepositoryContract;
 //Services 
 use App\Domains\ArchivoMovimiento\Services\ArchivoMovimientoService;
 use App\Domains\Movimiento\Service\Application\MovimientoService;
@@ -37,13 +37,13 @@ use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 class MovimientoPendienteService
 {
     public function __construct(
-        private GetMovimientoPendienteAction $getMovimientoPendienteAction,
+        private MovimientoPendienteReadRepositoryContract $movimientoPendienteReadRepository,
         private StoreMovimientoPendienteAction $storeMovimientoPendienteAction,
         private UpdateMovimientoPendienteAction $updateMovimientoPendienteAction,
         private DestroyMovimientoPendienteAction $destroyMovimientoPendienteAction,
-        private GetCuentaAction $getCuentaAction,
-        private GetCategoriaAction $getCategoriaAction,
-        private GetTipoMovimientoAction $getTipoMovimientoAction,
+        private CuentaReadRepositoryContract $cuentaReadRepository,
+        private CategoriaReadRepositoryContract $categoriaReadRepository,
+        private TipoMovimientoReadRepositoryContract $tipoMovimientoReadRepository,
         private MovimientoService $movimientoService,
         private BalanceCheckerService $balanceCheckerService
     )
@@ -66,13 +66,13 @@ class MovimientoPendienteService
     }
 
     public function getWithDetails(MovimientoPendiente $movimientoPendiente): ShowMovimientoPendienteResource{
-        $movimiento = $this->getMovimientoPendienteAction->getWithDetails($movimientoPendiente);
+        $movimiento = $this->movimientoPendienteReadRepository->getWithDetails($movimientoPendiente);
         $movimiento->enough_balance = $this->balanceCheckerService->canAfford($movimiento->cuenta_id, $movimiento->monto);
         return ShowMovimientoPendienteResource::make($movimiento);
     }
 
     public function getAll(): AnonymousResourceCollection {
-        $movimientos = $this->getMovimientoPendienteAction->getAll();
+        $movimientos = $this->movimientoPendienteReadRepository->getAll();
         $movimientos->map(function ($movimiento) {
             if($movimiento->tipo_movimiento_id === TipoMovimientoEnum::GASTO->value){
                 $movimiento->enough_balance = $this->balanceCheckerService->canAfford($movimiento->cuenta_id, $movimiento->monto);
@@ -84,15 +84,15 @@ class MovimientoPendienteService
 
     public function getOptions(){
         return new MovimientoPendienteFormOptionsDTO(
-            $this->getCategoriaAction->getAll(),
-            $this->getTipoMovimientoAction->getAll(),
-            $this->getCuentaAction->where('active', true)->get(),
+            $this->categoriaReadRepository->getAllWithFullDetails(),
+            $this->tipoMovimientoReadRepository->getAll(),
+            $this->cuentaReadRepository->whereAttr('active', true)->get(),
             MovimientoFijo::all()
         );
     }
 
     public function getRecordsCount(){
-        return $this->getMovimientoPendienteAction->getAvalaibleRecordsCount();
+        return $this->movimientoPendienteReadRepository->getAvailableRecordsCount();
     }
 
     public function markAsDone(MovimientoPendiente $movimientoPendiente, array $data): bool{

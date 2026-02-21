@@ -68,23 +68,25 @@ abstract class GetAction extends Action implements GetActionContract{
         }
         if(!empty($dto->sortBy) && !empty($dto->sortOrder)){
             if(array_key_exists($dto->sortBy, $this->getRelationsColumns())){
-                $relationData = $this->getRelationsColumns()[$dto->sortBy];
-                $relation = $relationData['relation'];
-                $column = $relationData['column'];
-                $relationInstance = $this->model::query()->getModel()->{$relation}();
-
-                $relatedTable = $relationInstance->getRelated()->getTable();
-                $foreignKey = $relationInstance->getQualifiedForeignKeyName();
-                $ownerKey = $relationInstance->getQualifiedOwnerKeyName();
-                $query->leftJoin($relatedTable, $foreignKey, '=', $ownerKey)
-                        ->orderBy($column, $dto->sortOrder)
-                        ->select($this->model::query()->getModel()->getTable().'.*');
+                $this->executeOrderQueryWithRelations($dto, $query);
             }else{
               $query->orderBy($dto->sortBy, $dto->sortOrder);
             }
         }
         $dto->perPage && $this->setPaginator($query->paginate($dto->perPage));
         return $query;
+    }
+    private function executeOrderQueryWithRelations (TableQueryDTO $dto, Builder $query): void{
+        $relationData = $this->getRelationsColumns()[$dto->sortBy];
+            $relation = $relationData['relation'];
+            $column = $relationData['column'];
+            $relationInstance = $this->model::query()->getModel()->{$relation}();
+            $relatedTable = $relationInstance->getRelated()->getTable();
+            $foreignKey = $relationInstance->getQualifiedForeignKeyName();
+            $ownerKey = $relationInstance->getQualifiedOwnerKeyName();
+            $query->leftJoin($relatedTable, $foreignKey, '=', $ownerKey)
+                    ->orderBy($column, $dto->sortOrder)
+                    ->select($this->model::query()->getModel()->getTable().'.*');
     }
     
 

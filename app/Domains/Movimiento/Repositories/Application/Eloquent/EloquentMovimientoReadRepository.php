@@ -1,13 +1,14 @@
 <?php
+namespace App\Domains\Movimiento\Repositories\Application\Eloquent;
 
-namespace App\Domains\Movimiento\Actions;
-
+use App\Domains\Movimiento\Repositories\Contracts\MovimientoReadRepositoryContract;
+use App\Shared\Abstracts\Repositories\EloquentReadRepository;
 use App\Models\Movimiento\Movimiento;
-use App\Shared\Abstracts\Actions\GetAction;
 use Illuminate\Support\Carbon;
 
-class GetMovimientoAction extends GetAction{
-    protected array $relations = ['cuenta', 'categoria', 'movimientoPendiente', 'tipo_movimiento'];
+class EloquentMovimientoReadRepository extends EloquentReadRepository implements MovimientoReadRepositoryContract{
+
+     protected array $relations = ['cuenta', 'categoria', 'movimientoPendiente', 'tipo_movimiento'];
     protected array $searchColumns = [
         'nombre'=> 'nombre',
         'descripcion'=> 'descripcion',
@@ -20,7 +21,7 @@ class GetMovimientoAction extends GetAction{
             'categorias.nombre'
         ]
     ];
-    protected array $relationsColumns = [
+    protected array $sortableRelations  = [
         'cuenta'=>[
            'relation'=> 'cuenta',
            'column'=> 'cuentas.nombre'
@@ -36,13 +37,9 @@ class GetMovimientoAction extends GetAction{
     ];
     public function __construct()
     {
-        return parent::__construct(Movimiento::class);
-    }
-   protected function getDetailsRelations(): array{
-        return array_merge($this->relations,['archivoMovimientos']);
+        parent::__construct(Movimiento::class);
     }
     public function getEspontaneoRecordsCount(): int{
         return Movimiento::where('movimiento_pendiente_id', null)->where('fecha', Carbon::now()->format('Y-m-d'))->count();
     }
-    
 }

@@ -4,7 +4,7 @@ namespace App\Domains\Movimiento\Service\Application;
 
 
 // Actions
-use App\Domains\Cuenta\Actions\GetCuentaAction;
+use App\Domains\Cuenta\Repositories\Contracts\CuentaReadRepositoryContract;
 // Services 
 use App\Domains\Auth\Services\Application\AuthService;
 use App\Domains\Movimiento\Service\Domain\MovimientoFinancialService;
@@ -24,7 +24,8 @@ use App\Models\Cuenta\Cuenta;
 // Exceptions
 use App\Domains\Cuenta\Exceptions\CannotFindCuentaException;
 use App\Domains\Movimiento\Exceptions\CannotDeleteMovimientoException;
-
+// Contracts
+use App\Domains\Movimiento\Repositories\Contracts\MovimientoWriteRepositoryContract;
 // Enums y types
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use App\Domains\Movimiento\Enums\MovimientoVariants;
@@ -36,8 +37,9 @@ class MovimientoService{
         private MovimientoQueryService $movimientoQueryService,
         private MovimientoFinancialService $movimientoFinancialService,
         private AuthService $authService,
+        private MovimientoWriteRepositoryContract $repository,
         private CuentaResolverStrategy $cuentaResolverStrategy,
-        private GetCuentaAction $getCuentaAction
+        private CuentaReadRepositoryContract $cuentaReadRepository
     )
     {
     }
@@ -65,7 +67,7 @@ class MovimientoService{
             throw new CannotDeleteMovimientoException('No se puede eliminar el movimiento, la contraseña proporcionada es incorrecta');
         }
         try {
-            $cuenta = $this->getCuentaAction->where('id', $movimiento->cuenta_id)->firstOrFail();
+            $cuenta = $this->cuentaReadRepository->whereAttr('id', $movimiento->cuenta_id)->firstOrFail();
         } catch (\Throwable $th) {
             throw new CannotFindCuentaException('No se encontro la cuenta asociada al movimiento, error: ' . $th->getMessage());
         }
@@ -108,9 +110,6 @@ class MovimientoService{
         ];
     }
 
-    public function getPaginator(){
-        return $this->movimientoQueryService->getPaginator();
-    }
     public function getRecordsCount(MovimientoVariants $variant = MovimientoVariants::TOTAL): int{
 
         return $this->movimientoQueryService->getRecordsCount($variant);

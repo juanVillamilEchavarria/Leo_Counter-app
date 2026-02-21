@@ -2,7 +2,7 @@
 
 namespace App\Domains\Propietario\Services;
 
-use App\Domains\Propietario\Actions\GetPropietarioAction;
+use App\Domains\Propietario\Repositories\Contracts\PropietarioReadRepositoryContract;
 use App\Domains\Propietario\Actions\StorePropietarioAction;
 use App\Domains\Propietario\Actions\UpdatePropietarioAction;
 use App\Domains\Propietario\Actions\DestroyPropietarioAction;
@@ -14,7 +14,7 @@ use App\Models\Propietario\Propietario;
 
 class PropietarioService{
     public function __construct(
-        private GetPropietarioAction $getPropietarioAction,
+        private PropietarioReadRepositoryContract $propietarioReadRepository,
         private StorePropietarioAction $storePropietarioAction,
         private UpdatePropietarioAction $updatePropietarioAction,
         private DestroyPropietarioAction $destroyPropietarioAction
@@ -43,9 +43,9 @@ class PropietarioService{
         return ShowPropietarioResource::make($propietario->load('cuentas:id,nombre,propietario_id'));
     }
     public function getRecordsCount(): int{
-        return $this->getPropietarioAction->getRecordsCount();
+        return $this->propietarioReadRepository->getRecordsCount();
     }
     public function getAll(){
-        return PropietarioResource::collection($this->getPropietarioAction->getAll());
+        return PropietarioResource::collection($this->propietarioReadRepository->getAll());
     }
 }

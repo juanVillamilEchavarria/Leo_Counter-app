@@ -3,7 +3,7 @@
 namespace App\Domains\Movimiento\Strategies\Application;
 use App\Domains\Movimiento\Strategies\Domain\GastoResolveStrategy;
 use App\Domains\Movimiento\Strategies\Domain\IngresoResolveStrategy;
-use App\Domains\Movimiento\Contracts\CuentaResolveStrategy;
+use App\Domains\Movimiento\Strategies\Contracts\CuentaResolveStrategy;
 use App\Models\Cuenta\Cuenta;
 
 class CuentaResolverStrategy{

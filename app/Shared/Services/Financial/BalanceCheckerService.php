@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Shared\Services\Financial;
-use App\Domains\Cuenta\Actions\GetCuentaAction;
-use App\Domains\Movimiento\Actions\GetMovimientoAction;
+use App\Domains\Cuenta\Repositories\Contracts\CuentaReadRepositoryContract;
+use App\Domains\Movimiento\Repositories\Contracts\MovimientoReadRepositoryContract;
 use App\Shared\Enums\ComparativeOperators;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 use App\Shared\DTOs\Querys\WhereFilterQueryDTO;
@@ -11,19 +11,19 @@ use App\Models\Movimiento\Movimiento;
 use App\Shared\Exceptions\InsufficientBalanceException;
 class BalanceCheckerService{
     public function __construct(
-        private GetCuentaAction $getCuentaAction,
-        private GetMovimientoAction $getMovimientoAction,
+        private CuentaReadRepositoryContract $cuentaReadRepository,
+        private MovimientoReadRepositoryContract $repository
     )
     {
     }
      public function canAfford(int $cuenta_id, float $monto, Movimiento | int | null $movimiento=null): bool{
-        $cuenta = $this->getCuentaAction->where('id', $cuenta_id)->firstOrFail();
+        $cuenta = $this->cuentaReadRepository->whereAttr('id', $cuenta_id)->firstOrFail();
         $saldo = $this->calculateAvalaibleBalance($movimiento, $cuenta->saldo_actual,$cuenta_id);
         return $saldo >= $monto;
     }
 
     public function getCuentaIfCanAfford(int $cuenta_id, float $monto, Movimiento | int | null $movimiento=null): ?Cuenta{
-              $cuenta = $this->getCuentaAction->where('id', $cuenta_id)->firstOrFail();
+              $cuenta = $this->cuentaReadRepository->whereAttr('id', $cuenta_id)->firstOrFail();
               $saldo = $this->calculateAvalaibleBalance($movimiento, $cuenta->saldo_actual,$cuenta_id);
         if($saldo < $monto){
             throw new InsufficientBalanceException;
@@ -44,7 +44,7 @@ class BalanceCheckerService{
         $wheres = [
             new WhereFilterQueryDTO('id', ComparativeOperators::EQUALS, $movimiento)
         ];
-        return $this->getMovimientoAction->where($wheres)->firstOrFail();
+        return $this->repository->where($wheres)->firstOrFail();
     }
 
     private function revertMovimientoEffect(Movimiento $movimiento, float $saldo): float{

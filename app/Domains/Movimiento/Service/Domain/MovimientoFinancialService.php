@@ -3,11 +3,10 @@
 namespace App\Domains\Movimiento\Service\Domain;
 
 use App\Domains\Movimiento\Service\Domain\MovimientoAttachmentService;
-use App\Domains\Movimiento\Actions\StoreMovimientoAction;
-use App\Domains\Movimiento\Actions\UpdateMovimientoAction;
-use App\Domains\Movimiento\Actions\DestroyMovimientoAction;
+//Contracts
+use App\Domains\Movimiento\Repositories\Contracts\MovimientoWriteRepositoryContract;
 use App\Domains\Cuenta\Actions\UpdateCuentaAction;
-use App\Domains\Cuenta\Actions\GetCuentaAction;
+use App\Domains\Cuenta\Repositories\Contracts\CuentaReadRepositoryContract;
 use App\Domains\Movimiento\DTOs\StoreMovimientoDTO;
 use App\Domains\Movimiento\DTOs\UpdateMovimientoDTO;
 use App\Domains\Movimiento\DTOs\DestroyMovimientoDTO;
@@ -19,11 +18,9 @@ use Illuminate\Support\Facades\DB;
 
 class MovimientoFinancialService {
     public function __construct(
-        private GetCuentaAction $getCuentaAction,
+        private CuentaReadRepositoryContract $cuentaReadRepository,
+        private MovimientoWriteRepositoryContract $repository,
         private UpdateCuentaAction $updateCuentaAction,
-        private StoreMovimientoAction $storeMovimientoAction,
-        private UpdateMovimientoAction $updateMovimientoAction,
-        private DestroyMovimientoAction $destroyMovimientoAction,
         private MovimientoAttachmentService $movimientoAttachmentService
     )
     {
@@ -34,14 +31,14 @@ class MovimientoFinancialService {
         return DB::transaction(function() use ($dto, $cuenta, $movimiento){
     
             if($dto instanceof StoreMovimientoDTO){
-                $movimiento = $this->storeMovimientoAction->store($dto);
+                $movimiento = $this->repository->store($dto);
             }
             $updateSaldoDTO = $this->resolveUpdateSaldoDTO($dto, $cuenta, $movimiento);
             $this->executeAttachmentServiceFunction($dto, $movimiento);
-            $dto instanceof UpdateMovimientoDTO && $this->updateMovimientoAction->update($movimiento, $dto);
+            $dto instanceof UpdateMovimientoDTO && $this->repository->update($movimiento, $dto);
 
             $this->updateCuentaAction->update($cuenta, $updateSaldoDTO); // si todo sale bien se actualiza el saldo
-            $dto instanceof DestroyMovimientoDTO && $this->destroyMovimientoAction->destroy($movimiento);
+            $dto instanceof DestroyMovimientoDTO && $this->repository->destroy($movimiento);
                 return $movimiento ; // se retorna el movimiento
         });
     }
@@ -67,7 +64,7 @@ class MovimientoFinancialService {
         private function resolveUpdateSaldoTransaction(UpdateMovimientoDTO $dto, Movimiento $movimiento, UpdateSaldoDTO $updateSaldoDTO, Cuenta $cuenta): UpdateSaldoDTO{
             
             if($cuenta->id !== $movimiento->cuenta_id){ // si la cuenta cambio, se resta restaura el monto de la cuenta anterior
-                    $oldCuenta= $this->getCuentaAction->where('id', $movimiento->cuenta_id)->firstOrFail();
+                    $oldCuenta= $this->cuentaReadRepository->whereAttr('id', $movimiento->cuenta_id)->firstOrFail();
                     $saldoDto = new UpdateSaldoDTO($oldCuenta->saldo_actual);
                     $saldoDto->moneyFlow($movimiento->tipo_movimiento_id, $movimiento->monto, MoneyFlowEnum::REVERT);
                     $this->updateCuentaAction->update($oldCuenta, $saldoDto);

@@ -4,7 +4,7 @@ namespace App\Domains\Movimiento\Service\Domain;
 
 use App\Domains\ArchivoMovimiento\Services\ArchivoMovimientoService;
 use App\Domains\ArchivoMovimiento\Services\FilePathBuilder;
-use App\Domains\Categoria\Actions\GetCategoriaAction;
+use App\Domains\Categoria\Repositories\Contracts\CategoriaReadRepositoryContract;
 use App\Domains\Movimiento\DTOs\UpdateMovimientoDTO;
 use App\Domains\Movimiento\DTOs\StoreMovimientoDTO;
 use App\Domains\ArchivoMovimiento\DTOs\ArchivoMovimientoTransferDTO;
@@ -20,7 +20,7 @@ class MovimientoAttachmentService{
     public function __construct(
         private ArchivoMovimientoService $archivoMovimientoService,
         private FilePathBuilder $filePathBuilder,
-        private GetCategoriaAction $getCategoriaAction,
+        private CategoriaReadRepositoryContract $categoriaReadRepository,
         private MovimientoLocationChanged $movimientoLocationChanged
     )
     {
@@ -37,7 +37,7 @@ class MovimientoAttachmentService{
 
 
     private function getCategoria ( UpdateMovimientoDTO | StoreMovimientoDTO $dto){
-        return $this->getCategoriaAction->find($dto->categoria_id);
+        return $this->categoriaReadRepository->find($dto->categoria_id);
     }
     public function deleteAllAttachments(Movimiento $movimiento){
         $archivos = $movimiento->archivoMovimientos;
