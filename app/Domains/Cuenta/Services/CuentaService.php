@@ -5,11 +5,8 @@ namespace App\Domains\Cuenta\Services;
 // ACTIONS
 use App\Domains\Propietario\Repositories\Contracts\PropietarioReadRepositoryContract;
 use App\Domains\Cuenta\Repositories\Contracts\CuentaWriteRepositoryContract;
-use App\Domains\TipoCuenta\Actions\GetTipoCuentaAction;
-use App\Domains\Cuenta\Actions\StoreCuentaAction;
+use App\Domains\TipoCuenta\Repositories\Contracts\TipoCuentaReadRepositoryContract;
 use App\Domains\Cuenta\DTOs\CuentaFormOptionsDTO;
-use App\Domains\Cuenta\Actions\UpdateCuentaAction;
-use App\Domains\Cuenta\Actions\DestroyCuentaAction;
 use App\Domains\Cuenta\Repositories\Contracts\CuentaReadRepositoryContract;
 // DTOs
 use App\Domains\Cuenta\DTOs\StoreCuentaDTO;
@@ -27,18 +24,15 @@ class CuentaService{
     public function __construct(
         private PropietarioReadRepositoryContract $propietarioReadRepository,
         private CuentaWriteRepositoryContract $repository,
-        private GetTipoCuentaAction $getTipoCuentaAction,
-        private StoreCuentaAction $storeCuentaAction,
-        private UpdateCuentaAction $updateCuentaAction,
-        private CuentaReadRepositoryContract $cuentaReadRepository,
-        private DestroyCuentaAction $destroyCuentaAction
+        private TipoCuentaReadRepositoryContract $tipoCuentaReadRepository,
+        private CuentaReadRepositoryContract $cuentaReadRepository
     )
     {
     }
     public function getOptions(): CuentaFormOptionsDTO{
         return new CuentaFormOptionsDTO(
             $this->propietarioReadRepository->getAll(),
-            $this->getTipoCuentaAction->getAll()
+            $this->tipoCuentaReadRepository->getAll()
         );
     }
 

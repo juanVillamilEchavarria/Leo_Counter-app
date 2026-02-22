@@ -3,10 +3,8 @@
 namespace App\Domains\Presupuesto\Services\Application;
 
 use App\Domains\Presupuesto\Services\Domain\PresupuestoQueryService;
-use App\Domains\Presupuesto\Actions\StorePresupuestoAction;
 use App\Domains\Presupuesto\Repositories\Contracts\PresupuestoReadRepositoryContract;
-use App\Domains\Presupuesto\Actions\UpdatePresupuestoAction;
-use App\Domains\Presupuesto\Actions\DestroyPresupuestoAction;
+use App\Domains\Presupuesto\Repositories\Contracts\PresupuestoWriteRepositoryContract;
 use App\Domains\Categoria\Repositories\Contracts\CategoriaReadRepositoryContract;
 use App\Domains\Presupuesto\DTOs\PresupuestoFormOptionsDTO;
 use App\Domains\Presupuesto\DTOs\StorePresupuestoMesActualDTO;
@@ -26,10 +24,8 @@ use Illuminate\Support\Carbon;
 class PresupuestoService
 {
     public function __construct(
-        private StorePresupuestoAction $storePresupuestoMesActualAction,
+        private PresupuestoWriteRepositoryContract $presupuestoWriteRepository,
         private PresupuestoReadRepositoryContract $presupuestoReadRepository,
-        private UpdatePresupuestoAction $updatePresupuestoAction,
-        private DestroyPresupuestoAction $destroyPresupuestoAction,
         private CategoriaReadRepositoryContract $categoriaReadRepository,
         private PresupuestoQueryService $presupuestoQueryService
     ) {
@@ -60,19 +56,19 @@ class PresupuestoService
     {
         $dto = StorePresupuestoMesActualDTO::fromArray($data);
         $this->storeValidate($dto);
-        return $this->storePresupuestoMesActualAction->store($dto);
+        return $this->presupuestoWriteRepository->store($dto);
     }
 
     public function update(Presupuesto $presupuesto, array $data): bool
     {
         $dto = UpdatePresupuestoMesActualDTO::fromArray($data);
         $this->updateValidate($dto, $presupuesto);
-        return $this->updatePresupuestoAction->update($presupuesto, $dto);
+        return $this->presupuestoWriteRepository->update($presupuesto, $dto);
     }
 
     public function destroy(Presupuesto $presupuesto): bool
     {
-        return $this->destroyPresupuestoAction->destroy($presupuesto);
+        return $this->presupuestoWriteRepository->destroy($presupuesto);
     }
 
     public function duplicate(Presupuesto $presupuesto)
@@ -83,7 +79,7 @@ class PresupuestoService
         $dto = StorePresupuestoMesActualDTO::fromObject($presupuesto);
         $dto->periodo = $presupuesto->periodo->copy()->firstOfMonth()->addMonth();
         $this->storeValidate($dto);
-        return $this->storePresupuestoMesActualAction->store($dto);
+        return $this->presupuestoWriteRepository->store($dto);
     }
 
     public function getOptions()

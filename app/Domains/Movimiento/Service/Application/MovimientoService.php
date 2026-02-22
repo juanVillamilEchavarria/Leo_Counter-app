@@ -37,7 +37,6 @@ class MovimientoService{
         private MovimientoQueryService $movimientoQueryService,
         private MovimientoFinancialService $movimientoFinancialService,
         private AuthService $authService,
-        private MovimientoWriteRepositoryContract $repository,
         private CuentaResolverStrategy $cuentaResolverStrategy,
         private CuentaReadRepositoryContract $cuentaReadRepository
     )

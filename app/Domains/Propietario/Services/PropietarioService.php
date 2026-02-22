@@ -3,9 +3,7 @@
 namespace App\Domains\Propietario\Services;
 
 use App\Domains\Propietario\Repositories\Contracts\PropietarioReadRepositoryContract;
-use App\Domains\Propietario\Actions\StorePropietarioAction;
-use App\Domains\Propietario\Actions\UpdatePropietarioAction;
-use App\Domains\Propietario\Actions\DestroyPropietarioAction;
+use App\Domains\Propietario\Repositories\Contracts\PropietarioWriteRepositoryContract;
 use App\Domains\Propietario\DTOs\StoreAndUpdatePropietarioDTO;
 use App\Domains\Propietario\Resources\PropietarioResource;
 use App\Domains\Propietario\Exceptions\CannotDeletePropietarioException;
@@ -15,20 +13,18 @@ use App\Models\Propietario\Propietario;
 class PropietarioService{
     public function __construct(
         private PropietarioReadRepositoryContract $propietarioReadRepository,
-        private StorePropietarioAction $storePropietarioAction,
-        private UpdatePropietarioAction $updatePropietarioAction,
-        private DestroyPropietarioAction $destroyPropietarioAction
+        private PropietarioWriteRepositoryContract $propietarioWriteRepository
     ){}
 
     public function store (array $data): Propietario{
         $dto = StoreAndUpdatePropietarioDTO::fromArray($data);
-        return $this->storePropietarioAction->store($dto);
+        return $this->propietarioWriteRepository->store($dto);
 
     }
 
     public function update(Propietario $propietario, array $data ): bool{
         $dto = StoreAndUpdatePropietarioDTO::fromArray($data);
-        return $this->updatePropietarioAction->update($propietario, $dto);
+        return $this->propietarioWriteRepository->update($propietario, $dto);
         
     }
     public function destroy(Propietario $propietario): bool{
@@ -36,7 +32,7 @@ class PropietarioService{
         if(!empty($cuentas->toArray())){
             throw new CannotDeletePropietarioException ('No se puede eliminar el propietario, tiene cuentas asociadas');
         }
-        return $this->destroyPropietarioAction->destroy($propietario);
+        return $this->propietarioWriteRepository->destroy($propietario);
     }
 
     public function getWithDetails(Propietario $propietario): ShowPropietarioResource{

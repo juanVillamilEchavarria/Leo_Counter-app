@@ -7,12 +7,9 @@ use App\Models\MovimientoPendiente\MovimientoPendiente;
 use App\Models\MovimientoFijo\MovimientoFijo;
 //Actions
 use App\Domains\MovimientoPendiente\Repositories\Contracts\MovimientoPendienteReadRepositoryContract;
-use App\Domains\MovimientoPendiente\Actions\StoreMovimientoPendienteAction;
-use App\Domains\MovimientoPendiente\Actions\UpdateMovimientoPendienteAction;
-use App\Domains\MovimientoPendiente\Actions\DestroyMovimientoPendienteAction;
+use App\Domains\MovimientoPendiente\Repositories\Contracts\MovimientoPendienteWriteRepositoryContract;
 use App\Domains\Cuenta\Repositories\Contracts\CuentaReadRepositoryContract;
 use App\Domains\Categoria\Repositories\Contracts\CategoriaReadRepositoryContract;
-use App\Domains\Movimiento\Actions\StoreMovimientoAction;
 use App\Domains\TipoMovimiento\Repositories\Contracts\TipoMovimientoReadRepositoryContract;
 //Services 
 use App\Domains\ArchivoMovimiento\Services\ArchivoMovimientoService;
@@ -38,9 +35,7 @@ class MovimientoPendienteService
 {
     public function __construct(
         private MovimientoPendienteReadRepositoryContract $movimientoPendienteReadRepository,
-        private StoreMovimientoPendienteAction $storeMovimientoPendienteAction,
-        private UpdateMovimientoPendienteAction $updateMovimientoPendienteAction,
-        private DestroyMovimientoPendienteAction $destroyMovimientoPendienteAction,
+        private MovimientoPendienteWriteRepositoryContract $movimientoPendienteWriteRepository,
         private CuentaReadRepositoryContract $cuentaReadRepository,
         private CategoriaReadRepositoryContract $categoriaReadRepository,
         private TipoMovimientoReadRepositoryContract $tipoMovimientoReadRepository,
@@ -53,16 +48,16 @@ class MovimientoPendienteService
 
     public function store (array $data): MovimientoPendiente{
         $dto = StoreMovimientoPendienteDTO::fromArray($data);
-        return $this->storeMovimientoPendienteAction->store($dto);
+        return $this->movimientoPendienteWriteRepository->store($dto);
     }
 
     public function update(MovimientoPendiente $movimientoPendiente, array $data): bool{
         $dto = UpdateMovimientoPendienteDTO::fromArray($data);
-        return $this->updateMovimientoPendienteAction->update($movimientoPendiente, $dto);
+        return $this->movimientoPendienteWriteRepository->update($movimientoPendiente, $dto);
     }
 
     public function destroy(MovimientoPendiente $movimientoPendiente): bool{
-        return $this->destroyMovimientoPendienteAction->destroy($movimientoPendiente);
+        return $this->movimientoPendienteWriteRepository->destroy($movimientoPendiente);
     }
 
     public function getWithDetails(MovimientoPendiente $movimientoPendiente): ShowMovimientoPendienteResource{
@@ -99,6 +94,6 @@ class MovimientoPendienteService
         $dtoMov = StoreMovimientoDTO::fromMovimientoPendiente($movimientoPendiente, $data['comprobantes'] ?? []);
         $this->movimientoService->store($dtoMov);
         $dto = MarkMovimientoPendienteDTO::fromArray(['estado'=> EstadosMovimientoPendiente::REALIZADO]);
-        return $this->updateMovimientoPendienteAction->update($movimientoPendiente, $dto);
+        return $this->movimientoPendienteWriteRepository->update($movimientoPendiente, $dto);
     }
 }
