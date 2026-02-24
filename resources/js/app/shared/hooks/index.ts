@@ -13,6 +13,7 @@ import useOpen from "./open/useOpen";
 import { useModalItem } from "./modal/useModalItem";
 import useApi from "./api/useApi";
 import useCategoriasMovimientoFilter from "./filter/useCategoriasMovimientoFilter";
+import useEntries from "./table/pagination/useEntries";
 export {
     useFormNormal,
     useMessageRedirect,
@@ -28,5 +29,6 @@ export {
     useTanStackTable,
     useModalItem,
     useTanStackPagination,
-    useCategoriasMovimientoFilter
+    useCategoriasMovimientoFilter,
+    useEntries
 }

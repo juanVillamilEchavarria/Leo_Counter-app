@@ -13,10 +13,6 @@ export default function PresupuestoMesActualTable({
   pageSize?: number,
   onSelect: (item: PresupuestoMesActualTableData, modalType: string) => void
 }) {
-  const {data: paginatedData, pagination}  = useSimpleTable({
-    data,
-    pageSize,
-   })
   const columns = useMemo(()=>{
     return PresupuestoMesActualColumns({
       onSelect: (row: PresupuestoMesActualTableData, modalType: string) => {
@@ -27,10 +23,9 @@ export default function PresupuestoMesActualTable({
 
   return (
     <SimpleTable
-      data={paginatedData}
+      data={data}
       columns={columns}
       pagination={true}
-      controller={pagination}
       pageSize={pageSize}
     />
   )

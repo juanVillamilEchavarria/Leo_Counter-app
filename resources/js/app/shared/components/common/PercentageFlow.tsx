@@ -13,10 +13,18 @@ export default function PercentageFlow({
     tipo_movimiento: string,
     monto: number
 }) {
+  
   const signo = tipo_movimiento === 'Ingreso'  ? flow === 'normal' ? '+' : '-' : flow === 'normal' ? '-' : '+'
-  return (
+  const icon = tipo_movimiento === 'Ingreso' ? flow === 'normal' ? 'fa-solid fa-arrow-trend-up' : 'fa-solid fa-arrow-trend-down': flow === 'normal' ? 'fa-solid fa-arrow-trend-down' : 'fa-solid fa-arrow-trend-up'
+    return (
     <div className="flex items-center">
-    <SuccessOrFailText as={Tag} className={className} output={signo + monto + '%'} attribute={tipo_movimiento} value={'Ingreso'}  />
+    <SuccessOrFailText as={Tag} className={className} output={
+      <div className="flex items-center gap-2">
+        <i className={`${icon} text-lg`}></i>
+        <p>{signo + monto + '%'}</p>
+
+      </div>
+    } attribute={tipo_movimiento} value={'Ingreso'}  />
     </div>
   )
 }

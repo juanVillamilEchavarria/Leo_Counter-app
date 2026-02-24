@@ -22,7 +22,7 @@ export default function Header() {
                   )
               }    
               size="md" 
-              className=" text-azul-negro ml-10 font-principal whitespace-nowrap" 
+              className=" text-gray-900 ml-10 font-principal whitespace-nowrap" 
               />
         <div className="flex gap-2 items-center mr-4">
           {/* enlace a github con el icono */}

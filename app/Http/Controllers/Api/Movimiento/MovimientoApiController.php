@@ -16,6 +16,7 @@ class MovimientoApiController extends Controller
     }
 
     public function totalPaginated(TableQueryRequest $request){
+        
         return response()->json([
             'data'=>$this->movimientoService->getAllPaginated(MovimientoVariants::TOTAL, $request->validated()),
             'meta'=> $this->movimientoService->getPaginatorMetaData()

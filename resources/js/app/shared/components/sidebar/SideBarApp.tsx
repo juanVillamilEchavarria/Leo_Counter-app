@@ -24,7 +24,7 @@ export default function SideBarApp() {
                         </div>
                         
                         <TransitionMotion active={isOpen} initial={{opacity:0, x: -70}}>
-                            <Title size="md" title="Leo Counter" className="text-center text-gray-200 font-cursiva my-4 whitespace-nowrap" />
+                            <Title size="md" title="Leo Counter" className="text-center font-cursiva my-4 whitespace-nowrap" />
                         </TransitionMotion>
                     </div>
                     <div className={`flex  flex-col my-5 overflow-y-scroll scrollbar-modern ${TrasitionStyle}`}>
@@ -35,7 +35,7 @@ export default function SideBarApp() {
                             <SelfUserCard user={{name: user?.name, role: user?.role}} isOpen={isOpen} />
                             <div className="mt-5 h-5">
                                 <TransitionMotion active={isOpen} initial={{opacity:0, x: -70}}>
-                                     <p className="m-0 text-center text-gray-200 text-xs whitespace-nowrap">En memoria de Leonardo Villamil &copy;</p>
+                                     <p className="m-0 text-center text-xs whitespace-nowrap">En memoria de Leonardo Villamil &copy;</p>
                             </TransitionMotion>
 
                             </div>

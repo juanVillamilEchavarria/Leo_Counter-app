@@ -18,17 +18,13 @@ export default function MovimientoEspontaneoTable({
       onSelect
     })
   }, [onSelect])
-  const {data: paginatedData, pagination}  = useSimpleTable({
-    data,
-    pageSize
-  })
+
   return (
     <SimpleTable
-    data={paginatedData}
+    data={data}
     pagination={true}
     columns={columns}
     pageSize={pageSize}
-    controller={pagination}
      />
   )
 }

@@ -13,10 +13,6 @@ export default function CategoriaTable({
   pageSize?: number,
   onSelect: (item: Categoria, modalType: string) => void
 }) {
-  const {data: paginatedData, pagination}  = useSimpleTable({
-    data,
-    pageSize,
-   })
   const columns = useMemo(()=>{
     return CategoriaColumns({
       onSelect: (row: Categoria) => {
@@ -27,11 +23,10 @@ export default function CategoriaTable({
 
   return (
     <SimpleTable
-      data={paginatedData}
+      data={data}
       columns={columns}
       pagination={true}
       pageSize={pageSize}
-      controller={pagination}
     />
   )
 }

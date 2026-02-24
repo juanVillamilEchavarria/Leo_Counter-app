@@ -1,8 +1,10 @@
 import { flexRender, type ColumnDef } from '@tanstack/react-table';
 import Search from '../actions/Search';
 import TablePagination from '../pagination/TablePagination';
+import TableEntries from '../pagination/TableEntries';
 import { useTanStackPagination } from '@/app/shared/hooks';
 import useServerSideTanStackTable from '@/app/shared/hooks/table/advanced/useServerSideTanStackTable';
+import {useEntries} from '@/app/shared/hooks';
 
 interface TanStackTableServerSideProps<T> {
     columns: ColumnDef<T, any>[];
@@ -18,6 +20,7 @@ export default function TanStackTableServerSide<T extends Record<string, any>>({
     pageSize = 10,
 }: TanStackTableServerSideProps<T>) {
     
+    const {entries, setEntries} = useEntries({value:pageSize});
     const {
         table,
         isLoading,
@@ -31,7 +34,7 @@ export default function TanStackTableServerSide<T extends Record<string, any>>({
         columns,
         endpoint,
         queryKey,
-        initialPageSize: pageSize,
+        initialPageSize: entries,
     });
 
     console.log(table.getRowModel().rows);
@@ -126,8 +129,9 @@ export default function TanStackTableServerSide<T extends Record<string, any>>({
             </div>
 
             {/* Pagination */}
-            <div className="w-[80%] my-4 flex justify-start">
+            <div className="w-full flex justify-between mt-5">
                 <TablePagination controller={controller} />
+                <TableEntries entries={entries} setEntries={setEntries} />
             </div>
         </div>
     );

@@ -92,7 +92,7 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: ./docker/mysql/data
+      device: ../Leo_Counter_Docker/docker/mysql/data
 
 networks:
   leo_network:

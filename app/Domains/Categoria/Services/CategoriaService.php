@@ -48,7 +48,7 @@ class CategoriaService{
     {
     return $this->categoriaWriteRepository->toggleEsFijo($categoria);
     }
-    public function getFormOptions() : CategoriaFormOptionsDTO{
+    public function getOptions() : CategoriaFormOptionsDTO{
          return new CategoriaFormOptionsDTO(
             tipos: $this->tipoMovimientoReadRepository->getAll()
         );

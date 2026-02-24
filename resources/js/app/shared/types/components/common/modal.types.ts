@@ -6,8 +6,8 @@ export const ModalSizes={
         '2xl' : 'w-2/3 h-2/3'
     }
 export const ModalVariants={
-        primary : 'bg-white backdrop-blur-4xl',
-        secondary: 'bg-linear-to-br from-azul-oscuro/90  to-azul-negro/90 backdrop-blur-4xl text-white'
+    primary : 'bg-white backdrop-blur-sm text-gray-900',
+    secondary: 'bg-white border border-gray-200 shadow-sm backdrop-blur-sm text-gray-900'
 }    
 export type ModalProps={
     children : React.ReactNode,

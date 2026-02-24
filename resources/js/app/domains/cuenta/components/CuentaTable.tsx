@@ -13,10 +13,6 @@ export default function CuentaTable({
   data: Cuenta[],
   onSelect: (item: Cuenta, modalType: string) => void
 }) {
-  const {data: paginatedData, pagination}  = useSimpleTable({
-    data,
-    pageSize,
-   })
   const columns = useMemo(()=>{
     return CuentaColumns({
       onSelect: (item: Cuenta) => {
@@ -27,10 +23,9 @@ export default function CuentaTable({
 
   return (
     <SimpleTable
-      data={paginatedData}
+      data={data}
       columns={columns}
       pagination={true}
-      controller={pagination}
       pageSize={pageSize}
     />
   )

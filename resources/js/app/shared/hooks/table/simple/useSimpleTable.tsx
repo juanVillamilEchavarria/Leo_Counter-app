@@ -1,5 +1,6 @@
 import { useMemo } from "react"
 import useSimplePagination from "./useSimpleTablePagination"
+import useEntries from "../pagination/useEntries"
 
 export default function useSimpleTable<TData>({
   data = [],

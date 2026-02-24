@@ -1,6 +1,8 @@
 import TablePagination from "../pagination/TablePagination"
+import TableEntries from "../pagination/TableEntries"
 import { type SimpleTableProps } from "../../../types/components"
-import { span } from "framer-motion/client"
+import { useEntries } from "@/app/shared/hooks"
+import {useSimpleTable }from "@/app/shared/hooks"
 
 export default function SimpleTable<T>({ //en el T se le pasa el tipo de Modelo para tiparlo correctamente
     columns,
@@ -8,8 +10,14 @@ export default function SimpleTable<T>({ //en el T se le pasa el tipo de Modelo 
     emptyMessage= "No hay registros",
     pagination=true,
     pageSize=10,
-    controller
 }: SimpleTableProps<T>) {
+    const {entries, setEntries} = useEntries({
+        value: pageSize
+    })
+    const {data: paginatedData, pagination: controller}  = useSimpleTable({
+        data,
+        pageSize: entries,
+       })
   return (
     <div>
          <div className="table-container min-w-200">
@@ -25,14 +33,14 @@ export default function SimpleTable<T>({ //en el T se le pasa el tipo de Modelo 
                     </tr>
                 </thead>
                 <tbody className="table-tbody">
-                    {data.length===0 &&(
+                    {paginatedData.length===0 &&(
                         <tr>  
                             <td colSpan={columns.length} className="text-gray-500  text-xl text-center">
                                 {emptyMessage}
                              </td>  
                         </tr>
                     )}
-                    {data.map((row, i)=>
+                    {paginatedData.map((row, i)=>
                        (
                             <tr key={i}>  
                             {columns.map(col=>{
@@ -56,10 +64,13 @@ export default function SimpleTable<T>({ //en el T se le pasa el tipo de Modelo 
             
         </div>
         {pagination&&(
-                 <div className=" w-[80%] my-4 flex justify-start">
+                 <div className=" mt-10 w-full flex justify-between">
                         <TablePagination
                         controller={controller}        
                         />
+                        <TableEntries
+                        entries={entries}
+                        setEntries={setEntries} />
                     </div>
             )}
     </div>

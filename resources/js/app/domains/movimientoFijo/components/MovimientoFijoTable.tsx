@@ -11,10 +11,6 @@ export default function MovimientoFijoTable({
   data: MovimientoFijoTableData[],
   onSelect: (item: MovimientoFijoTableData, modalType: string) => void
 }) {
-  const {data: paginatedData}  = useSimpleTable({
-    data,
-    pageSize: data.length,
-   })
   const columns = useMemo(()=>{
     return MovimientoFijoColumns({
       onSelect: (row: MovimientoFijoTableData) => {
@@ -25,7 +21,7 @@ export default function MovimientoFijoTable({
 
   return (
     <SimpleTable
-      data={paginatedData}
+      data={data}
       columns={columns}
       pagination={false}
     />

@@ -43,8 +43,8 @@ export default function SelfUserCard({
                  }
                 >
                     <div className="flex flex-col">
-                        <p className="text-sm text-white whitespace-nowrap">{user.name}</p>
-                        <p className="text-xs text-white whitespace-nowrap">{user.role}</p>
+                        <p className="text-sm  whitespace-nowrap">{user.name}</p>
+                        <p className="text-xs  whitespace-nowrap">{user.role}</p>
                     </div>
                 </TransitionMotion>
             
@@ -60,9 +60,9 @@ export default function SelfUserCard({
                     opacity:0, x: -70
                     }
                 }>
-                    <div className="border-l-2  border-white/80">
+                    <div className="border-l-2  border-gray-700/80">
                         <button
-                        className="cursor-pointer ml-2 hover:bg-white/20 rounded-xl text-white py-1 "
+                        className="cursor-pointer ml-2 hover:bg-white/20 rounded-xlpy-1 "
                         onClick={() => setIsOpenCard(prev => !prev)}
                         ref={buttonRef}
                         >

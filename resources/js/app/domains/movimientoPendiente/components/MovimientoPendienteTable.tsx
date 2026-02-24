@@ -10,10 +10,6 @@ export default function MovimientoPendienteTable({
   data: MovimientoPendienteTableData[],
   onSelect: (item: MovimientoPendienteTableData, modalType: string) => void,
 }) {
-  const {data: paginatedData}  = useSimpleTable({
-    data,
-    pageSize: data.length,
-   })
   const columns = useMemo(()=>{
     return MovimientoPendienteColumns({
       onSelect 
@@ -22,7 +18,7 @@ export default function MovimientoPendienteTable({
   return (
     <>
       <SimpleTable
-        data={paginatedData}
+        data={data}
         columns={columns}
         pagination={false}
       />

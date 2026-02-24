@@ -15,20 +15,20 @@ export default function SideBarToggle({
                         z-50
                         w-8 h-8
                         rounded-full
-                        bg-zinc-900
-                        border-2 border-azul-claro
+                        bg-white
+                        border-2 border-gray-200
                         flex items-center justify-center
                         shadow-lg
                         cursor-pointer
-                        hover:bg-azul-claro
-                        hover:border-zinc-900
+                        hover:bg-gray-100
+                        hover:border-gray-300
                         transition-all
                         ease-in-out
                         duration-500
                         "
                     onClick={() => setIsOpen(prev => !prev)}
                     >
-                        <i className={`fa-solid fa-chevron-right ${isOpen ? 'rotate-180': ''} text-white text-sm transition-all ease-in-out duration-500`} />
+                        <i className={`fa-solid fa-chevron-right ${isOpen ? 'rotate-180': ''} text-gray-800 text-sm transition-all ease-in-out duration-500`} />
                 </button>
   )
 }

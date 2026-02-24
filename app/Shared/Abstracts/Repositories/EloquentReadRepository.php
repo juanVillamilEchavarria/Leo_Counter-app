@@ -44,6 +44,7 @@ abstract class EloquentReadRepository{
         if(!empty($initialWheres)){
             $query = $this->applyWheres($query, $initialWheres);
         }
+        
         return $this->applyPaginate($dto, $query);
     }
 
@@ -109,6 +110,7 @@ abstract class EloquentReadRepository{
                 $isFirst = false;
             }
         });
+      
         return $query;
     }
 
@@ -119,11 +121,19 @@ abstract class EloquentReadRepository{
     }
     private function applyRelationSearch(Builder $query, string $relation, array $columns, string $search, bool $isFirst): Builder{
         $method = $isFirst ? 'whereHas' : 'orWhereHas';
-        return $query->{$method}($relation, function ($query) use ($columns, $search) {
-            foreach($columns as $column){
-                $query->orWhere($column, 'like', "%$search%");
-            }
-        });
+        return $query->{$method}($relation, function ($q) use ($columns, $search) {
+                $q->where(function ($subQuery) use ($columns, $search) {
+                    $first = true;
+                    foreach ($columns as $column) {
+                        if ($first) {
+                            $subQuery->where($column, 'like', "%$search%");
+                            $first = false;
+                        } else {
+                            $subQuery->orWhere($column, 'like', "%$search%");
+                        }
+                    }
+                });
+            });
     }
 
 

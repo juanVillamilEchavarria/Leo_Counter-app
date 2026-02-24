@@ -6,7 +6,7 @@ export default function SideBar({
     className ?: string
 }) {
   return (
-    <div className={`h-screen  overflow-visible  relative  bg-linear-to-b from-azul-oscuro via-azul-gris to-azul-negro ${className}`}>
+    <div className={`h-screen  overflow-visible  relative  layout-background ${className}`}>
         {children}
     </div> 
   )
