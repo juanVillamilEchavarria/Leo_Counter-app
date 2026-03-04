@@ -4,7 +4,7 @@ import { moneyFormat } from "@/app/shared/helpers"
 import type React from "react"
 export default function CardReview({
     label,
-    monto,
+    percentage,
     tipo_movimiento,
     total,
     flow = 'normal',
@@ -12,7 +12,7 @@ export default function CardReview({
     children
 }:{
     label: string | React.ReactNode,
-    monto: number,
+    percentage: number,
     tipo_movimiento?: string,
     total: number,
     flow? : 'normal' | 'reverse'
@@ -26,7 +26,7 @@ export default function CardReview({
             <div className="w-full flex items-center justify-between">
                 <p className=" text-gray-500">{label}</p>
                 <div className="bg-blue-200/40 rounded-2xl px-3 py-1">
-                        <PercentageFlow flow={flow} className="text-sm"  tipo_movimiento={tipo_movimiento ?? 'Ingreso'} monto={monto} />
+                        <PercentageFlow flow={flow} className="text-sm"  tipo_movimiento={tipo_movimiento ?? 'Ingreso'} percentage={percentage} />
                 </div>
             </div>
             <div className="mt-2 flex justify-start items-center">

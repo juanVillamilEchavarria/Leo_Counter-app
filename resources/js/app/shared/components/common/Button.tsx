@@ -11,10 +11,10 @@ export default function Button({
     children
 }:ButtonProps) {
   if(Tag==='button')return(
-     <Tag onClick={onClick} type={type} className={` w-full p-2 rounded-2xl cursor-pointer ${ButtonVariants[variant]} ${className} ${disabled && 'cursor-not-allowed!'}`} disabled={disabled}>{children}</Tag>
+     <Tag onClick={onClick} type={type} className={`  ${ButtonVariants[variant]} ${className} ${disabled && 'cursor-not-allowed!'}`} disabled={disabled}>{children}</Tag>
   )
   if(Tag==='a' || Tag===Link )return(
-     <Tag href={href} className={` w-full p-2 rounded-2xl cursor-pointer ${ButtonVariants[variant]} ${className}`}>{children}</Tag>
+     <Tag href={href} className={`${ButtonVariants[variant]} ${className}`}>{children}</Tag>
 
   )
   return null

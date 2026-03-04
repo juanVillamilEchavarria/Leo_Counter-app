@@ -1,7 +1,7 @@
 import CardReview from "./CardReview"
 export default function IngresoCardReview() {
   return (
-    <CardReview label="Total de ingresos" monto={10.4} tipo_movimiento="Ingreso" total={1000000} tipo_total="dinero">
+    <CardReview label="Total de ingresos" percentage={10.4} tipo_movimiento="Ingreso" total={1000000} tipo_total="dinero">
         <div className="flex flex-col mt-5 gap-2 w-full">
             <div className="flex items-center gap-1">
                 <p className=" text-center font-bold"><span className="text-green-600">10.4%</span> de Incremento en este mes </p>

@@ -1,6 +1,8 @@
 // -----------
 // STYLES DEL BOTON
 // -----------
+
+const ButtonBaseStyles= `w-full p-2 rounded-2xl cursor-pointer`
 const ButtonTransitionBaseStyles = `
                     bg-[length:200%_100%]
                     bg-left
@@ -27,6 +29,7 @@ export const ButtonVariants = {
                       hover:bg-gray-400 
                       text-black 
                       ${TransitionCommonStyles}
+                      ${ButtonBaseStyles}
                       `,
   clean: '',
   primary:      `
@@ -34,45 +37,55 @@ export const ButtonVariants = {
                       hover:bg-azul-oscuro 
                       text-white 
                       ${TransitionCommonStyles}
+                      ${ButtonBaseStyles}
                       `,
   success:       `
                       bg-green-800 
                       text-white 
                       hover:bg-green-700 
                       ${TransitionCommonStyles}
+                      ${ButtonBaseStyles}
                       `,
   successSecondary: `
                       ${ButtonBorderedBaseStyles}
+                      ${ButtonBaseStyles}
                       border-green-800 
                       hover:bg-green-800 
                       text-green-800 
                       ${TransitionCommonStyles}
+                      ${ButtonBaseStyles}
                       `,
 secondary:       `
                       ${ButtonBorderedBaseStyles} 
+                      ${ButtonBaseStyles}
                       border-azul 
                       hover:bg-azul-oscuro 
                       text-azul
                       ${TransitionCommonStyles}
+                      ${ButtonBaseStyles}
                           `,
 danger:       `
                       bg-rojo 
                       hover:bg-rojo-oscuro 
                       text-white 
                       ${TransitionCommonStyles}
+                      ${ButtonBaseStyles}
                       `,
   dangerSecondary: `  
                       ${ButtonBorderedBaseStyles}
+                      ${ButtonBaseStyles}
                       border-rojo 
                       hover:bg-rojo
                       text-rojo
                       ${TransitionCommonStyles}
+                      ${ButtonBaseStyles}
                       `,
   dark:`
                       bg-slate-900
                       hover:bg-slate-800 
                       text-white 
                       ${TransitionCommonStyles}
+                      ${ButtonBaseStyles}
                       `,
   primaryPagination: `
                       bg-white/10 
@@ -82,6 +95,7 @@ danger:       `
                       text-gray-400
                       hover:text-black
                       ${TransitionCommonStyles}
+                      ${ButtonBaseStyles}
                       `,
 'transition-blue': `
                       bg-linear-to-r 
@@ -89,6 +103,7 @@ danger:       `
                       via-azul-claro
                       to-azul-oscuro
                       ${ButtonTransitionBaseStyles}
+                      ${ButtonBaseStyles}
                 `,
  'transition-blue-green': `
                       bg-linear-to-r 
@@ -96,6 +111,7 @@ danger:       `
                       via-verde
                       to-azul-claro
                       ${ButtonTransitionBaseStyles}
+                      ${ButtonBaseStyles}
                 `,               
 
 } as const

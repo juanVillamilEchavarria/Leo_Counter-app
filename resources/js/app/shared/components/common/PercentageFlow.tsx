@@ -5,13 +5,13 @@ export default function PercentageFlow({
     className = '',
     tipo_movimiento,
     flow ='normal',
-    monto,
+    percentage,
 }:{
     as?: React.ElementType
     className?: string
     flow ? : 'normal' | 'reverse'
     tipo_movimiento: string,
-    monto: number
+    percentage: number
 }) {
   
   const signo = tipo_movimiento === 'Ingreso'  ? flow === 'normal' ? '+' : '-' : flow === 'normal' ? '-' : '+'
@@ -21,7 +21,7 @@ export default function PercentageFlow({
     <SuccessOrFailText as={Tag} className={className} output={
       <div className="flex items-center gap-2">
         <i className={`${icon} text-lg`}></i>
-        <p>{signo + monto + '%'}</p>
+        <p>{signo + percentage + '%'}</p>
 
       </div>
     } attribute={tipo_movimiento} value={'Ingreso'}  />
