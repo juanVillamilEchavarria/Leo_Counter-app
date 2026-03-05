@@ -5,8 +5,9 @@ namespace App\Domains\Movimiento\Service\Domain;
 use App\Domains\Movimiento\Service\Domain\MovimientoAttachmentService;
 //Contracts
 use App\Domains\Movimiento\Repositories\Contracts\MovimientoWriteRepositoryContract;
-use App\Domains\Cuenta\Actions\UpdateCuentaAction;
+use App\Domains\Cuenta\Actions\cuentaWriteRepository;
 use App\Domains\Cuenta\Repositories\Contracts\CuentaReadRepositoryContract;
+use App\Domains\Cuenta\Repositories\Contracts\CuentaWriteRepositoryContract;
 use App\Domains\Movimiento\DTOs\StoreMovimientoDTO;
 use App\Domains\Movimiento\DTOs\UpdateMovimientoDTO;
 use App\Domains\Movimiento\DTOs\DestroyMovimientoDTO;
@@ -20,7 +21,7 @@ class MovimientoFinancialService {
     public function __construct(
         private CuentaReadRepositoryContract $cuentaReadRepository,
         private MovimientoWriteRepositoryContract $repository,
-        private UpdateCuentaAction $updateCuentaAction,
+        private CuentaWriteRepositoryContract $cuentaWriteRepository,
         private MovimientoAttachmentService $movimientoAttachmentService
     )
     {
@@ -37,7 +38,7 @@ class MovimientoFinancialService {
             $this->executeAttachmentServiceFunction($dto, $movimiento);
             $dto instanceof UpdateMovimientoDTO && $this->repository->update($movimiento, $dto);
 
-            $this->updateCuentaAction->update($cuenta, $updateSaldoDTO); // si todo sale bien se actualiza el saldo
+            $this->cuentaWriteRepository->update($cuenta, $updateSaldoDTO); // si todo sale bien se actualiza el saldo
             $dto instanceof DestroyMovimientoDTO && $this->repository->destroy($movimiento);
                 return $movimiento ; // se retorna el movimiento
         });
@@ -67,7 +68,7 @@ class MovimientoFinancialService {
                     $oldCuenta= $this->cuentaReadRepository->whereAttr('id', $movimiento->cuenta_id)->firstOrFail();
                     $saldoDto = new UpdateSaldoDTO($oldCuenta->saldo_actual);
                     $saldoDto->moneyFlow($movimiento->tipo_movimiento_id, $movimiento->monto, MoneyFlowEnum::REVERT);
-                    $this->updateCuentaAction->update($oldCuenta, $saldoDto);
+                    $this->cuentaWriteRepository->update($oldCuenta, $saldoDto);
              }else{ // sino, se revierte el movimiento para la cuenta
                  $updateSaldoDTO->moneyFlow($movimiento->tipo_movimiento_id, $movimiento->monto, MoneyFlowEnum::REVERT);
              } 

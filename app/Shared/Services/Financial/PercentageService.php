@@ -9,4 +9,11 @@ class PercentageService{
             };
                   return round((($currentValue - $previousValue) / abs($previousValue)) * 100, 2);
     }
+
+    public function calculatePercentage(float $value, float $divider): float {
+        if($divider == 0) {
+            return 0;
+        }
+        return round(($value / $divider) * 100, 2);
+    }
 }

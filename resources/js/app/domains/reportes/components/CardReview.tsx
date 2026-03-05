@@ -2,6 +2,7 @@ import Card from "@/app/shared/components/common/Card"
 import PercentageFlow from "@/app/shared/components/common/PercentageFlow"
 import { moneyFormat } from "@/app/shared/helpers"
 import type React from "react"
+
 export default function CardReview({
     label,
     percentage,
@@ -9,7 +10,8 @@ export default function CardReview({
     total,
     flow = 'normal',
     tipo_total = 'dinero',
-    children
+    children,
+    icon
 }:{
     label: string | React.ReactNode,
     percentage: number,
@@ -18,21 +20,41 @@ export default function CardReview({
     flow? : 'normal' | 'reverse'
     tipo_total? : 'dinero' | 'numero'
     children? : React.ReactNode
+    icon?: string
 }) {
     const variant = tipo_movimiento !== undefined ? tipo_movimiento === 'Ingreso' ? 'successSecondary' : 'dangerSecondary' : 'secondary'
+
+    const getIcon = () => {
+        if (icon) return icon
+        if (tipo_movimiento === 'Ingreso') return 'fa-arrow-trend-up'
+        if (tipo_movimiento === 'Gasto') return 'fa-arrow-trend-down'
+        return 'fa-chart-line'
+    }
+
   return (
-     <Card className={``} variant={variant} >
+     <Card className="hover:shadow-lg transition-shadow duration-200 border-0 shadow-sm" variant={variant}>
         <div className="flex flex-col p-6">
-            <div className="w-full flex items-center justify-between">
-                <p className=" text-gray-500">{label}</p>
-                <div className="bg-blue-200/40 rounded-2xl px-3 py-1">
-                        <PercentageFlow flow={flow} className="text-sm"  tipo_movimiento={tipo_movimiento ?? 'Ingreso'} percentage={percentage} />
+            <div className="w-full flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-gray-50">
+                        <i className={`fa-solid ${getIcon()} text-gray-600`}></i>
+                    </div>
+                    <p className="text-sm font-medium text-gray-600">{label}</p>
+                </div>
+                <div className="bg-gray-50 rounded-lg px-3 py-1">
+                    <PercentageFlow flow={flow} className="text-sm font-semibold" tipo_movimiento={tipo_movimiento ?? 'Ingreso'} percentage={percentage} />
                 </div>
             </div>
-            <div className="mt-2 flex justify-start items-center">
-            <h1 className="text-2xl">{tipo_total === 'dinero' ? moneyFormat(total) : total}</h1>
+            <div className="flex justify-start items-center mb-3">
+                <h1 className="text-3xl font-bold text-gray-900">
+                    {tipo_total === 'dinero' ? moneyFormat(total) : total.toLocaleString()}
+                </h1>
             </div>
-            {children}
+            {children && (
+                <div className="border-t border-gray-100 pt-3">
+                    {children}
+                </div>
+            )}
         </div>
     </Card>
   )

@@ -4,7 +4,7 @@ namespace App\Domains\Reporte\Repositories\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Domains\Reporte\Repositories\Contracts\ReporteRepositoryContract;
-use App\Domains\Reporte\Repositories\Application\Eloquent\ReporteRepository;
+use App\Domains\Reporte\Repositories\Application\Eloquent\EloquentReporteRepository;
 
 class ReporteProvider extends ServiceProvider
 {
@@ -13,7 +13,7 @@ class ReporteProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(ReporteRepositoryContract::class, ReporteRepository::class);
+        $this->app->singleton(ReporteRepositoryContract::class, EloquentReporteRepository::class);
     }
 
     /**

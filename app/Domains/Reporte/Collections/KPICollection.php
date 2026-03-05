@@ -3,7 +3,7 @@
 namespace App\Domains\Reporte\Collections;
 use Illuminate\Support\Collection;
 use App\Domains\Reporte\Builders\KPIBuilder;
-use App\Domains\Reporte\DTOs\KPIDTO;
+use App\Domains\Reporte\DTOs\KPI\KPIDTO;
 
 class KPICollection extends Collection{
     public static function fromQueryResults(Collection $queryResults){

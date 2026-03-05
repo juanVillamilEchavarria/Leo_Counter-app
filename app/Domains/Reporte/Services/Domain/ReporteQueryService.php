@@ -8,6 +8,13 @@ use App\Domains\Reporte\Collections\DistributionCategoryCollection;
 use App\Domains\Reporte\Collections\KPICollection;
 use App\Shared\Services\Financial\PercentageService;
 use App\Domains\Reporte\DTOs\ReporteQueryDTO;
+use App\Domains\Reporte\DTOs\KPI\PeriodKPIDTO;
+use App\Domains\Reporte\DTOs\KPI\TotalsKPIDTO;
+use App\Domains\Reporte\DTOs\KPI\VariationsKPIDTO;
+use App\Domains\Reporte\DTOs\IngresosVsGastos\IngresosVsGastosDTO;
+use App\Domains\Reporte\DTOs\Promedio\PromedioDTO;
+use App\Domains\Reporte\DTOs\Category\FullDistributionCategoryDTO;
+use App\Domains\Reporte\DTOs\Budget\UsedBudgetDTO;
 
 class ReporteQueryService {
     public function __construct(
@@ -17,48 +24,51 @@ class ReporteQueryService {
     {
     }
 
-    public function getPeriodKPIs(ReporteQueryDTO $reporteQueryDTO){
+    public function getPeriodKPIs(ReporteQueryDTO $reporteQueryDTO) : PeriodKPIDTO {
       $data = $this->reporteRepository->getKPIs($reporteQueryDTO->startDate, $reporteQueryDTO->endDate);
       $collection = KPICollection::fromQueryResults($data);
-
       $previousData = $this->getPreviousPeriodKPIs($reporteQueryDTO);
       $previousCollection = KPICollection::fromQueryResults($previousData);
-      return [
-          'total_ingresos' => $collection->totalIngresos(),
-          'total_gastos' => $collection->totalGastos(),
-          'balance_neto' => $collection->totalBalance(),
-          'total_movimientos' => $collection->totalMovimientos(),
-          'cambios'=>[
-            'ingresos'=> $this->percentageService->calculatePercentageChange($collection->totalIngresos(), $previousCollection->totalIngresos()),
-            'gastos'=> $this->percentageService->calculatePercentageChange($collection->totalGastos(), $previousCollection->totalGastos()),
-            'balance_neto'=> $this->percentageService->calculatePercentageChange($collection->totalBalance(), $previousCollection->totalBalance()),
-            'movimientos'=> $this->percentageService->calculatePercentageChange($collection->totalMovimientos(), $previousCollection->totalMovimientos())
-          ]
-      ];
+      $totalsDTO = new TotalsKPIDTO(
+        $collection->totalIngresos(),
+        $collection->totalGastos(),
+        $collection->totalBalance(),
+        $collection->totalMovimientos()
+      );
+      $variationsDTO = new VariationsKPIDTO(
+        ingresos: $this->percentageService->calculatePercentageChange($collection->totalIngresos(), $previousCollection->totalIngresos()),
+        gastos: $this->percentageService->calculatePercentageChange($collection->totalGastos(), $previousCollection->totalGastos()),
+        balance_neto: $this->percentageService->calculatePercentageChange($collection->totalBalance(), $previousCollection->totalBalance()),
+        movimientos:  $this->percentageService->calculatePercentageChange($collection->totalMovimientos(), $previousCollection->totalMovimientos())
+      );
+      return new PeriodKPIDTO(
+        totales: $totalsDTO,
+        variaciones: $variationsDTO
+      );
     }
 
     public function getIngresosVsGastos(ReporteQueryDTO $reporteQueryDTO){
         $data = $this->reporteRepository->getIngresosVsGastos($reporteQueryDTO->startDate, $reporteQueryDTO->endDate);
         $collection = FinancialMonthCollection::fromQueryResults($data);
-        return [
-            'data'=> $collection->all(),
-            'promedios'=> [
-                'promedio_ingresos' => $collection->promedioIngresos(),
-                'promedio_gastos' => $collection->promedioGastos()
-            ]
-        ];
+        $promedioDTO = new PromedioDTO(
+            $collection->promedioIngresos(),
+            $collection->promedioGastos()
+        );
+        return new IngresosVsGastosDTO(
+            $collection,
+            $promedioDTO
+        );
     }
 
-    public function getDistributionByCategory(ReporteQueryDTO $reporteQueryDTO, int $tipo_movimiento_id){
+    public function getDistributionByCategory(ReporteQueryDTO $reporteQueryDTO, int $tipo_movimiento_id): FullDistributionCategoryDTO{
         $data = $this->reporteRepository->getDistributionByCategory($reporteQueryDTO->startDate, $reporteQueryDTO->endDate, $tipo_movimiento_id);
         $collection = DistributionCategoryCollection::fromQueryResults($data);
-        return [
-            'data'=> $collection->all(),
-            'total_movimientos'=> $collection->totalMovimientos()
-        ];
+        return new FullDistributionCategoryDTO(
+            $collection,
+            $collection->totalMovimientos()
+        );
+        
     }
-
-  
     public function getTotalPresupuesto(ReporteQueryDTO $reporteQueryDTO){
         return $this->reporteRepository->getTotalPresupuesto($reporteQueryDTO->startDate, $reporteQueryDTO->endDate);
     }

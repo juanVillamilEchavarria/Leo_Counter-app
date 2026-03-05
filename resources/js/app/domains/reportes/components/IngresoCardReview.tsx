@@ -1,14 +1,37 @@
 import CardReview from "./CardReview"
-export default function IngresoCardReview() {
+
+interface IngresoCardReviewProps {
+  total: number
+  variacion: number | null
+}
+
+export default function IngresoCardReview({ total, variacion }: IngresoCardReviewProps) {
+  const percentage = variacion ?? 0
+  const trendMessage = percentage >= 0 ? "de Incremento en este mes" : "de Decremento en este mes"
+  const trendColor = percentage >= 0 ? "text-green-600" : "text-red-600"
+  const trendIcon = percentage >= 0 ? "fa-arrow-trend-up" : "fa-arrow-trend-down"
+  const trendIconColor = percentage >= 0 ? "text-green-500" : "text-red-500"
+
   return (
-    <CardReview label="Total de ingresos" percentage={10.4} tipo_movimiento="Ingreso" total={1000000} tipo_total="dinero">
-        <div className="flex flex-col mt-5 gap-2 w-full">
-            <div className="flex items-center gap-1">
-                <p className=" text-center font-bold"><span className="text-green-600">10.4%</span> de Incremento en este mes </p>
-            <i className="fa-solid fa-arrow-trend-up text-green-500"></i>
-            </div>
-            <small className="text-gray-400 text-center">Tendencia positiva en generación de ingresos</small>
+    <CardReview
+      label="Total de ingresos"
+      percentage={Math.abs(percentage)}
+      tipo_movimiento="Ingreso"
+      total={total}
+      tipo_total="dinero"
+      icon="fa-arrow-up"
+    >
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-2">
+          <p className="text-sm font-medium text-gray-700">
+            <span className={trendColor}>{Math.abs(percentage).toFixed(2)}%</span> {trendMessage}
+          </p>
+          <i className={`fa-solid ${trendIcon} ${trendIconColor}`}></i>
         </div>
-        </CardReview>
+        <small className="text-xs text-gray-500">
+          {percentage >= 0 ? "Tendencia positiva en generación de ingresos" : "Se recomienda revisar la generación de ingresos"}
+        </small>
+      </div>
+    </CardReview>
   )
 }

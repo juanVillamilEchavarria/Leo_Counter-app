@@ -12,7 +12,7 @@ class UpdateMovimientoDTO extends MovimientoDTO
   {
     $this->comprobantes_delete_ids = $comprobantes_delete_ids;
     $this->comprobantes_existing = $comprobantes_existing;
-    return parent::__construct($nombre, $cuenta_id, $categoria_id, $tipo_movimiento_id, $monto, $descripcion, $movimiento_pendiente_id, $comprobantes);
+     parent::__construct($nombre, $cuenta_id, $categoria_id, $tipo_movimiento_id, $monto, $descripcion, $movimiento_pendiente_id, $comprobantes);
   }
  protected array $except = [
    'comprobantes',

@@ -2,7 +2,7 @@
 
 namespace App\Domains\Reporte\Builders;
 
-use App\Domains\Reporte\DTOs\DistributionCategoryDTO;
+use App\Domains\Reporte\DTOs\Category\DistributionCategoryDTO;
 use Illuminate\Support\Collection;
 class DistributionCategoryBuilder{
 
