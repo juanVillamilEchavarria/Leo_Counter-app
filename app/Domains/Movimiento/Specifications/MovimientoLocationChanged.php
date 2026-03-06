@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Movimiento\Especifications;
+namespace App\Domains\Movimiento\Specifications;
 use App\Models\Movimiento\Movimiento;
 use App\Domains\Movimiento\DTOs\UpdateMovimientoDTO;
 

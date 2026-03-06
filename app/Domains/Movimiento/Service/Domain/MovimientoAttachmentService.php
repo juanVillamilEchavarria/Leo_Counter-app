@@ -10,7 +10,7 @@ use App\Domains\Movimiento\DTOs\StoreMovimientoDTO;
 use App\Domains\ArchivoMovimiento\DTOs\ArchivoMovimientoTransferDTO;
 use App\Shared\Exceptions\CannotUploadFileException;
 use App\Models\Movimiento\Movimiento;
-use App\Domains\Movimiento\Especifications\MovimientoLocationChanged;
+use App\Domains\Movimiento\Specifications\MovimientoLocationChanged;
 use App\Models\Categoria\Categoria;
 use Illuminate\Support\Facades\DB;
 

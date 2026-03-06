@@ -3,10 +3,11 @@
 namespace App\Domains\Reporte\Services\Domain;
 
 use App\Domains\Reporte\Repositories\Contracts\ReporteRepositoryContract;
-use App\Domains\Reporte\Collections\FinancialMonthCollection;
+use App\Domains\Reporte\Collections\FinancialPeriodCollection;
 use App\Domains\Reporte\Collections\DistributionCategoryCollection;
 use App\Domains\Reporte\Collections\KPICollection;
 use App\Shared\Services\Financial\PercentageService;
+use App\Domains\Reporte\ValueObjects\DateRange;
 use App\Domains\Reporte\DTOs\ReporteQueryDTO;
 use App\Domains\Reporte\DTOs\KPI\PeriodKPIDTO;
 use App\Domains\Reporte\DTOs\KPI\TotalsKPIDTO;
@@ -14,7 +15,6 @@ use App\Domains\Reporte\DTOs\KPI\VariationsKPIDTO;
 use App\Domains\Reporte\DTOs\IngresosVsGastos\IngresosVsGastosDTO;
 use App\Domains\Reporte\DTOs\Promedio\PromedioDTO;
 use App\Domains\Reporte\DTOs\Category\FullDistributionCategoryDTO;
-use App\Domains\Reporte\DTOs\Budget\UsedBudgetDTO;
 
 class ReporteQueryService {
     public function __construct(
@@ -25,7 +25,7 @@ class ReporteQueryService {
     }
 
     public function getPeriodKPIs(ReporteQueryDTO $reporteQueryDTO) : PeriodKPIDTO {
-      $data = $this->reporteRepository->getKPIs($reporteQueryDTO->startDate, $reporteQueryDTO->endDate);
+      $data = $this->reporteRepository->getKPIs($reporteQueryDTO);
       $collection = KPICollection::fromQueryResults($data);
       $previousData = $this->getPreviousPeriodKPIs($reporteQueryDTO);
       $previousCollection = KPICollection::fromQueryResults($previousData);
@@ -48,8 +48,8 @@ class ReporteQueryService {
     }
 
     public function getIngresosVsGastos(ReporteQueryDTO $reporteQueryDTO){
-        $data = $this->reporteRepository->getIngresosVsGastos($reporteQueryDTO->startDate, $reporteQueryDTO->endDate);
-        $collection = FinancialMonthCollection::fromQueryResults($data);
+        $data = $this->reporteRepository->getIngresosVsGastos($reporteQueryDTO);
+        $collection = FinancialPeriodCollection::fromQueryResults($data);
         $promedioDTO = new PromedioDTO(
             $collection->promedioIngresos(),
             $collection->promedioGastos()
@@ -61,7 +61,7 @@ class ReporteQueryService {
     }
 
     public function getDistributionByCategory(ReporteQueryDTO $reporteQueryDTO, int $tipo_movimiento_id): FullDistributionCategoryDTO{
-        $data = $this->reporteRepository->getDistributionByCategory($reporteQueryDTO->startDate, $reporteQueryDTO->endDate, $tipo_movimiento_id);
+        $data = $this->reporteRepository->getDistributionByCategory($reporteQueryDTO, $tipo_movimiento_id);
         $collection = DistributionCategoryCollection::fromQueryResults($data);
         return new FullDistributionCategoryDTO(
             $collection,
@@ -70,30 +70,35 @@ class ReporteQueryService {
         
     }
     public function getTotalPresupuesto(ReporteQueryDTO $reporteQueryDTO){
-        return $this->reporteRepository->getTotalPresupuesto($reporteQueryDTO->startDate, $reporteQueryDTO->endDate);
+        return $this->reporteRepository->getTotalPresupuesto($reporteQueryDTO);
     }
     public function getTotalGastos(ReporteQueryDTO $reporteQueryDTO){
-        return $this->reporteRepository->getTotalGastos($reporteQueryDTO->startDate, $reporteQueryDTO->endDate);
+        return $this->reporteRepository->getTotalGastos($reporteQueryDTO);
     }
 
     public function getBalanceNeto(ReporteQueryDTO $reporteQueryDTO){
-        return $this->reporteRepository->getBalanceNeto($reporteQueryDTO->startDate, $reporteQueryDTO->endDate);
+        return $this->reporteRepository->getBalanceNeto($reporteQueryDTO);
     }
 
     public function getIngresos(ReporteQueryDTO $reporteQueryDTO){
-        return $this->reporteRepository->getIngresos($reporteQueryDTO->startDate, $reporteQueryDTO->endDate);
+        return $this->reporteRepository->getIngresos($reporteQueryDTO);
     }
     public function getGastos(ReporteQueryDTO $reporteQueryDTO){
-        return $this->reporteRepository->getGastos($reporteQueryDTO->startDate, $reporteQueryDTO->endDate);
+        return $this->reporteRepository->getGastos($reporteQueryDTO);
     }
 
     protected function getPreviousPeriodKPIs(ReporteQueryDTO $reporteQueryDTO){
         // calcular la diferencia en días de las fechas
-        $duration = $reporteQueryDTO->startDate->diffInDays($reporteQueryDTO->endDate);
+        $duration = $reporteQueryDTO->dateRange->startDate->diffInDays($reporteQueryDTO->dateRange->endDate);
 
-        $previousStartDate = $reporteQueryDTO->startDate->copy()->subDays($duration + 1);
-        $previousEndDate = $reporteQueryDTO->startDate->copy()->subDay();
+        $previousStartDate = $reporteQueryDTO->dateRange->startDate->copy()->subDays($duration + 1);
+        $previousEndDate = $reporteQueryDTO->dateRange->startDate->copy()->subDay();
+        $dateRange = new DateRange($previousStartDate, $previousEndDate);
 
-        return $this->reporteRepository->getKPIs($previousStartDate, $previousEndDate);
+        $prevouisReporteQueryDTO = new ReporteQueryDTO(
+            $reporteQueryDTO->granularityStrategy,
+            $dateRange
+        );
+        return $this->reporteRepository->getKPIs($prevouisReporteQueryDTO);
     }
 }

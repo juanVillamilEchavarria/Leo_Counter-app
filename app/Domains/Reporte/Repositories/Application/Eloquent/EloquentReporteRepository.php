@@ -7,6 +7,8 @@ use App\Domains\Reporte\Repositories\Contracts\ReporteRepositoryContract;
 // Enums
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 use Illuminate\Database\Query\Builder;
+//DTOs
+use App\Domains\Reporte\DTOs\ReporteQueryDTO;
 // Carbon
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -23,7 +25,6 @@ class EloquentReporteRepository implements ReporteRepositoryContract
     private function presupuestos ():Builder{
         return DB::table('presupuestos');
     }
-   
     private function getSumQueryWithComparativeColumn (?string $comparativeColumn = 'movimientos.tipo_movimiento_id', ?string $column = 'monto' ): string {
           return "COALESCE(SUM(CASE WHEN {$comparativeColumn} = ? THEN {$column} END), 0)";
     }
@@ -35,22 +36,23 @@ class EloquentReporteRepository implements ReporteRepositoryContract
         return $query->whereBetween($column, [$startDate, $endDate]);
     }
 
-    private function queryIngresosVsGastos(Carbon $startDate, Carbon $endDate){
+    private function queryIngresosVsGastos(ReporteQueryDTO $dto){
         
         $query = $this->movimientos();
-        $query = $this->baseQuery($startDate, $endDate, $query);
+        $query = $this->baseQuery($dto->dateRange->startDate, $dto->dateRange->endDate, $query);
+        $date = $dto->granularityStrategy->groupBy();
         return $query
-                ->selectRaw($this->getSumQueryWithComparativeColumn().' AS ingresos, '.$this->getSumQueryWithComparativeColumn().' AS gastos, DATE(fecha) as fecha', [TipoMovimientoEnum::INGRESO->value, TipoMovimientoEnum::GASTO->value])
-                ->groupByRaw('DATE(fecha)')->orderBy('fecha')->get();
+                ->selectRaw($this->getSumQueryWithComparativeColumn().' AS ingresos, '.$this->getSumQueryWithComparativeColumn().' AS gastos, '.$date.' as fecha', [TipoMovimientoEnum::INGRESO->value, TipoMovimientoEnum::GASTO->value])
+                ->groupByRaw($date)->orderBy('fecha')->get();
     }
 
 
-    private function queryDistributionByCategory(Carbon $startDate, Carbon $endDate, int $tipo_movimiento_id){
+    private function queryDistributionByCategory(ReporteQueryDTO $dto, int $tipo_movimiento_id){
         $query = $this->movimientos();
         $query->join('categorias', 'movimientos.categoria_id', '=', 'categorias.id')
                      ->selectRaw('categorias.nombre as categoria, '.$this->getSumQuery('movimientos.monto').' as total, COUNT(movimientos.id) as cantidad')
                      ->where('movimientos.tipo_movimiento_id', $tipo_movimiento_id);
-        $query = $this->baseQuery($startDate, $endDate, $query);
+        $query = $this->baseQuery($dto->dateRange->startDate, $dto->dateRange->endDate, $query);
         return $query
         ->groupBy('categorias.id', 'categorias.nombre')
         ->orderByDesc('total')
@@ -61,69 +63,70 @@ class EloquentReporteRepository implements ReporteRepositoryContract
     /**
      * obtiene los ingresos ordenados por fecha, para cada una de las fechas  Ej:(enero - 200, febrero - 300)
      */
-    public function getIngresos(Carbon $startDate, Carbon $endDate): Collection{
+    public function getIngresos(ReporteQueryDTO $dto): Collection{
         $query = $this->movimientos()->where('tipo_movimiento_id', TipoMovimientoEnum::INGRESO->value);
-        $query = $this->baseQuery($startDate, $endDate, $query);
+        $query = $this->baseQuery($dto->dateRange->startDate, $dto->dateRange->endDate, $query);
+        $date = $dto->granularityStrategy->groupBy();
         return $query
-                ->selectRaw('DATE(fecha) as fecha, '.$this->getSumQuery('monto').' as monto')
-                ->groupByRaw('DATE(fecha)')->orderBy('fecha')->get();
+                ->selectRaw( $date .'as fecha, '.$this->getSumQuery('monto').' as monto')
+                ->groupByRaw($date)->orderBy('fecha')->get();
     }
 
     /**
      * obtiene los gastos ordenados por fecha, para cada una de las fechas  Ej:(enero - 200, febrero - 300)
      */
-
-    public function getGastos(Carbon $startDate, Carbon $endDate): Collection{
+    public function getGastos(ReporteQueryDTO $dto): Collection{
         $query = $this->movimientos()->where('tipo_movimiento_id', TipoMovimientoEnum::GASTO->value);
-        $query = $this->baseQuery($startDate, $endDate, $query);
+        $query = $this->baseQuery($dto->dateRange->startDate, $dto->dateRange->endDate, $query);
+        $date = $dto->granularityStrategy->groupBy();
         return $query
-                ->selectRaw('DATE(fecha) as fecha, '.$this->getSumQuery('monto').' as monto')
-                ->groupByRaw('DATE(fecha)')->orderBy('fecha')->get();
+                ->selectRaw($date.' as fecha, '.$this->getSumQuery('monto').' as monto')
+                ->groupByRaw($date)->orderBy('fecha')->get();
     }
 
     /**
      * Obtiene los montos totales de ingresos y gastos para cada uno de los periodos Ej : (enero - (gastos : 200 , ingresos : 300))
      */
-    public function getIngresosVsGastos(Carbon $startDate, Carbon $endDate): Collection{
+    public function getIngresosVsGastos(ReporteQueryDTO $dto): Collection{
         
-        return $this->queryIngresosVsGastos($startDate, $endDate);
+        return $this->queryIngresosVsGastos($dto);
     }
 
 
     /**
      * Obtiene las categorias cada una con los movimientos registrados asociados a si misma, y el total del monto
      */
-    public function getDistributionByCategory(Carbon $startDate, Carbon $endDate, int $tipo_movimiento_id): Collection{
-       return $this->queryDistributionByCategory($startDate, $endDate, $tipo_movimiento_id);
+    public function getDistributionByCategory(ReporteQueryDTO $dto, int $tipo_movimiento_id): Collection{
+       return $this->queryDistributionByCategory($dto, $tipo_movimiento_id);
     }
 
     /**
      * Suma todos los ingresos y gastos, generando el total de cada uno, al igual que el total de registros de movimientos
     */
-     public function getKPIs(Carbon $startDate, Carbon $endDate): Collection{
+     public function getKPIs(ReporteQueryDTO $dto): Collection{
         $query = 
-        $this->movimientos()->selectRaw( $this->getSumQueryWithComparativeColumn().'AS total_ingresos, '.$this->getSumQueryWithComparativeColumn().' AS total_gastos, COUNT(movimientos.id) AS total_movimientos, DATE(fecha) as fecha', [TipoMovimientoEnum::INGRESO->value, TipoMovimientoEnum::GASTO->value]);
-        $query = $this->baseQuery($startDate, $endDate, $query);
-        $query->groupByRaw('fecha');
+        $this->movimientos()->selectRaw( $this->getSumQueryWithComparativeColumn().'AS total_ingresos, '.$this->getSumQueryWithComparativeColumn().' AS total_gastos, COUNT(movimientos.id) AS total_movimientos, '.$dto->granularityStrategy->groupBy().' as fecha', [TipoMovimientoEnum::INGRESO->value, TipoMovimientoEnum::GASTO->value]);
+        $query = $this->baseQuery($dto->dateRange->startDate, $dto->dateRange->endDate, $query);
+        $query->groupByRaw($dto->granularityStrategy->groupBy());
         return $query->get();
     }
 
-    public function getBalanceNeto(Carbon $startDate, Carbon $endDate): Collection{
-        $query = $this->movimientos()->selectRaw('('.$this->getSumQueryWithComparativeColumn().' - '.$this->getSumQueryWithComparativeColumn().') AS balance, DATE(fecha) as fecha', [TipoMovimientoEnum::INGRESO->value, TipoMovimientoEnum::GASTO->value]);
-        $query = $this->baseQuery($startDate, $endDate, $query);
-        $query->groupByRaw('fecha');
+    public function getBalanceNeto(ReporteQueryDTO $dto): Collection{
+        $query = $this->movimientos()->selectRaw('('.$this->getSumQueryWithComparativeColumn().' - '.$this->getSumQueryWithComparativeColumn().') AS balance, '.$dto->granularityStrategy->groupBy().' as fecha', [TipoMovimientoEnum::INGRESO->value, TipoMovimientoEnum::GASTO->value]);
+        $query = $this->baseQuery($dto->dateRange->startDate, $dto->dateRange->endDate, $query);
+        $query->groupByRaw($dto->granularityStrategy->groupBy());
         return $query->get();
     }
 
-    public function getTotalPresupuesto(Carbon $startDate, Carbon $endDate): float{
+    public function getTotalPresupuesto(ReporteQueryDTO $dto): float{
         $query = $this->presupuestos();
-        $query = $this->baseQuery($startDate, $endDate, $query, 'created_at');
+        $query = $this->baseQuery($dto->dateRange->startDate, $dto->dateRange->endDate, $query, 'presupuestos.created_at');
         return $query->sum('monto');
     }
 
-    public function getTotalGastos(Carbon $startDate, Carbon $endDate): float{
+    public function getTotalGastos(ReporteQueryDTO $dto): float{
         $query = $this->movimientos()->where('tipo_movimiento_id', TipoMovimientoEnum::GASTO->value);
-        $query = $this->baseQuery($startDate, $endDate, $query);
+        $query = $this->baseQuery($dto->dateRange->startDate, $dto->dateRange->endDate, $query);
         return $query->sum('monto');
     }
 
