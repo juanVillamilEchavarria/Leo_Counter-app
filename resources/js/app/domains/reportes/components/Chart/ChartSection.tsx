@@ -2,7 +2,7 @@ import IngresoAndGastoChart from "./IngresoAndGastoChart"
 import CategoriaPieChart from "./CategoriaPieChart"
 import BalanceLineChart from "./BalanceLineChart"
 import PresupuestoPercentageChart from "./PresupuestoPercentageChart"
-import type { Tendencia, Distribuciones } from "../types/reporte.types"
+import type { Tendencia, Distribuciones } from "../../types/reporte.types"
 
 interface ChartSectionProps {
   tendencia: Tendencia

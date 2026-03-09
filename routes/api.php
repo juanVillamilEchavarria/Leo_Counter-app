@@ -11,4 +11,5 @@ Route::middleware(['auth'])->group( function () {
     Route::get('movimientos', [MovimientoApiController::class, 'totalPaginated'])->name('movimientos.total-paginated');
     Route::get('presupuestos/historicos', [PresupuestoHistoricoApiController::class, 'historicosPaginated'])->name('presupuestos.historicos-paginated');
     Route::get('reportes', [ReporteApiController::class, 'index'])->name('api.reportes.index');
+    Route::get('reportes/form-options', [ReporteApiController::class, 'formOptions'])->name('api.reportes.form-options');
 });

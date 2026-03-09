@@ -29,6 +29,12 @@ abstract class EloquentReadRepository{
      */
 
     protected array $sortableRelations= [];
+    /**
+     * Configuracion de $forOptionsColumns
+     * Formato : ['column_name']
+     */
+
+    protected array $forOptionsColumns = [];
 
 
     public function __construct(
@@ -36,6 +42,10 @@ abstract class EloquentReadRepository{
         protected string $model
     )
     {
+    }
+
+    public function getForOptions(): Collection{
+        return $this->model::query()->select($this->forOptionsColumns)->get();
     }
 
 

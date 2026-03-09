@@ -13,6 +13,7 @@ interface CategoriaReadRepositoryContract {
     public function find(int $id);
     public function where(array $wheres): Builder;
     public function getRecordsCount(): int;
+    public function getForOptions(): Collection;
     public function getAll(): Collection;
     public function getAllByType(int $tipo_movimiento_id): Collection;
     public function getEqual(string $nombre, int $tipo_movimiento_id): Builder;

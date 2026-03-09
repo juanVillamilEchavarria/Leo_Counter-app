@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Domains\Reporte\Services\Application;
+use App\Domains\Categoria\Repositories\Contracts\CategoriaReadRepositoryContract;
+use App\Domains\Cuenta\Repositories\Contracts\CuentaReadRepositoryContract;
 use App\Domains\Reporte\Services\Domain\ReporteQueryService;
 use App\Domains\Reporte\Services\Domain\ReporteFinancialService;
-
 use App\Domains\Reporte\Strategies\Resolvers\ReportGranularityResolver;
 use App\Domains\Reporte\Specifications\DefaultDateRangeSpecification;
 use App\Domains\Reporte\DTOs\ReporteQueryDTO;
@@ -16,8 +17,13 @@ class ReporteService{
     public function __construct(
         private ReporteQueryService $reporteQueryService,
         private ReporteFinancialService $reporteFinancialService,
-        private ReportGranularityResolver $granularityResolver
+        private ReportGranularityResolver $granularityResolver,
+
     ){}
+
+    public function getOptions(){
+        return $this->reporteQueryService->getOptions();
+    }
 
 
     public function getFullReport(array $data){

@@ -14,6 +14,7 @@ import { useModalItem } from "./modal/useModalItem";
 import useApi from "./api/useApi";
 import useCategoriasMovimientoFilter from "./filter/useCategoriasMovimientoFilter";
 import useEntries from "./table/pagination/useEntries";
+import { useMultiSelect } from "./useMultiSelect";
 export {
     useFormNormal,
     useMessageRedirect,
@@ -30,5 +31,6 @@ export {
     useModalItem,
     useTanStackPagination,
     useCategoriasMovimientoFilter,
-    useEntries
+    useEntries,
+    useMultiSelect
 }

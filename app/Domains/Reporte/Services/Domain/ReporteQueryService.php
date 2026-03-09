@@ -1,13 +1,19 @@
 <?php
 
 namespace App\Domains\Reporte\Services\Domain;
-
+// Contracts
 use App\Domains\Reporte\Repositories\Contracts\ReporteRepositoryContract;
+use App\Domains\Categoria\Repositories\Contracts\CategoriaReadRepositoryContract;
+use App\Domains\Cuenta\Repositories\Contracts\CuentaReadRepositoryContract;
+// Collections
 use App\Domains\Reporte\Collections\FinancialPeriodCollection;
 use App\Domains\Reporte\Collections\DistributionCategoryCollection;
 use App\Domains\Reporte\Collections\KPICollection;
+// Services
 use App\Shared\Services\Financial\PercentageService;
+// Value Objects
 use App\Domains\Reporte\ValueObjects\DateRange;
+// DTOs
 use App\Domains\Reporte\DTOs\ReporteQueryDTO;
 use App\Domains\Reporte\DTOs\KPI\PeriodKPIDTO;
 use App\Domains\Reporte\DTOs\KPI\TotalsKPIDTO;
@@ -15,13 +21,24 @@ use App\Domains\Reporte\DTOs\KPI\VariationsKPIDTO;
 use App\Domains\Reporte\DTOs\IngresosVsGastos\IngresosVsGastosDTO;
 use App\Domains\Reporte\DTOs\Promedio\PromedioDTO;
 use App\Domains\Reporte\DTOs\Category\FullDistributionCategoryDTO;
+use App\Domains\Reporte\DTOs\Form\ReporteFormOptionsDTO;
 
 class ReporteQueryService {
     public function __construct(
         private ReporteRepositoryContract $reporteRepository,
-        private PercentageService $percentageService
+        private PercentageService $percentageService,
+        private CategoriaReadRepositoryContract $categoriaReadRepository,
+        private CuentaReadRepositoryContract $cuentaReadRepository
     )
     {
+    }
+
+    public function getOptions(){
+        return new ReporteFormOptionsDTO(
+            $this->categoriaReadRepository->getForOptions(),
+            $this->cuentaReadRepository->getForOptions()
+        );
+
     }
 
     public function getPeriodKPIs(ReporteQueryDTO $reporteQueryDTO) : PeriodKPIDTO {

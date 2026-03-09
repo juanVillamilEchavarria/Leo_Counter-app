@@ -8,7 +8,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/app/shared/components/ui/chart"
-import type { IngresoVsGastosChart } from "../types/reporte.types"
+import type { IngresoVsGastosChart } from "../../types/reporte.types"
 
 type ChartMode = "ambos" | "ingresos" | "gastos"
 

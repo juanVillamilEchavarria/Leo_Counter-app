@@ -11,3 +11,12 @@ export function filterItemByIndex<T extends Record<string, any>>(index : number,
      }
     return iterable.filter((_ , i) => i !== index)
 }
+
+export function addUniqueItem<T extends { id: number }>(item: T, array: T[]): T[] {
+    if (array.some(existing => existing.id === item.id)) return array;
+    return [...array, item];
+}
+
+export function removeItemById<T extends { id: number }>(id: number, array: T[]): T[] {
+    return array.filter(item => item.id !== id);
+}

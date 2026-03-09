@@ -18,4 +18,8 @@ class ReporteApiController extends Controller
     public function index(ReporteApiRequest $request){
         return $this->reporteService->getFullReport($request->validated());
     }
+
+    public function formOptions(){
+        return $this->reporteService->getOptions()->toArray();
+    }
 }

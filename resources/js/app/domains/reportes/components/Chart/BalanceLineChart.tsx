@@ -2,7 +2,7 @@ import { LineChart, Line, YAxis, XAxis, CartesianGrid, Legend , Area, ComposedCh
 import Card from "@/app/shared/components/common/Card"
 import { moneyFormat } from "@/app/shared/helpers"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/app/shared/components/ui/chart"
-import type { BalanceNetoData } from "../types/reporte.types"
+import type { BalanceNetoData } from "../../types/reporte.types"
 
 const chartConfig = {
     balance:{

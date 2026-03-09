@@ -7,6 +7,10 @@ use App\Shared\Abstracts\Repositories\EloquentReadRepository;
 use App\Models\Categoria\Categoria;
 
 class EloquentCategoriaReadRepository extends EloquentReadRepository implements CategoriaReadRepositoryContract{
+    protected array $forOptionsColumns = [
+        'id',
+        'nombre'
+    ];
 
     public function __construct()
     {

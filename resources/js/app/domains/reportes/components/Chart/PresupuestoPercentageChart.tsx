@@ -1,7 +1,7 @@
 import { RadialBarChart, RadialBar, PolarAngleAxis } from "recharts"
 import { ChartContainer } from "@/app/shared/components/ui/chart"
 import Card from "@/app/shared/components/common/Card"
-import {type Presupuesto } from "../types/reporte.types"
+import {type Presupuesto } from "../../types/reporte.types"
 import { moneyFormat } from "@/app/shared/helpers"
 
 const chartConfig = {

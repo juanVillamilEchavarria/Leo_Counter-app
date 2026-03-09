@@ -23,7 +23,7 @@ export default function Reporte() {
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
           <div className="text-center space-y-2">
             <h3 className="text-lg font-semibold text-gray-900">Cargando reportes financieros</h3>
-            <p className="text-sm text-gray-500">Estamos procesando tus datos para generar los análisis más precisos</p>
+            <p className="text-sm teflex w-full justify-between mb-5xt-gray-500">Estamos procesando tus datos para generar los análisis más precisos</p>
           </div>
         </div>
       </SectionTransition>

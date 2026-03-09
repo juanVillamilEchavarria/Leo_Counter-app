@@ -3,7 +3,7 @@ import { getVisiblePages, convertServerSideQueryParams } from "./table/table.hel
 import { toastHelper } from "./messages/toast.helper";
 import { isRouteActive } from "./nav/nav.helper";
 import { moneyFormat } from "./money/money.helper";
-import { filterCategoriasByTipoMovimiento, filterItemByIndex } from "./filters/filters.helper";
+import { filterCategoriasByTipoMovimiento, filterItemByIndex, addUniqueItem, removeItemById } from "./filters/filters.helper";
 
 export{
     dateFormat,
@@ -12,6 +12,8 @@ export{
     monthLimitFromToday,
     filterCategoriasByTipoMovimiento,
     filterItemByIndex,
+    addUniqueItem,
+    removeItemById,
     today,
     getVisiblePages,
     convertServerSideQueryParams,

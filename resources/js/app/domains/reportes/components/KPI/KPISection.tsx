@@ -2,7 +2,7 @@ import IngresoCardReview from "./IngresoCardReview"
 import GastoCardReview from "./GastoCardReview"
 import MovimientosCardReview from "./MovimientosCardReview"
 import BalanceNetoCardReview from "./BalanceNetoCardReview"
-import type { KPIs } from "../types/reporte.types"
+import type { KPIs } from "../../types/reporte.types"
 
 interface KPISectionProps {
   kpis: KPIs

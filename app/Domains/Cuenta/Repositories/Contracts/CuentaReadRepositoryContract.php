@@ -13,6 +13,7 @@ interface CuentaReadRepositoryContract {
     public function find(int $id);
     public function where(array $wheres): Builder;
     public function whereAttr(string $attribute, $value): Builder;
+    public function getForOptions(): Collection;
     public function getRecordsCount(): int;
     public function getAllWithDetails(): Collection;
     public function getAllWithDetailsWhere(array $wheres): Collection;

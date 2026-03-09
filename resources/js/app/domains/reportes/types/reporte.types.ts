@@ -1,3 +1,5 @@
+import { type Categoria } from "../../categoria"
+import { type Cuenta } from "../../cuenta"
 export interface KPITotales {
   ingresos: number
   gastos: number
@@ -73,4 +75,9 @@ export interface ReporteData {
 
 export interface ReporteApiResponse {
   data: ReporteData
+}
+
+export interface ReporteFormOptionsApiReponse{
+    categorias: Categoria[]
+    cuentas: Cuenta[]
 }

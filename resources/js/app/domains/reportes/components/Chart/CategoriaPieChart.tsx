@@ -8,7 +8,7 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/app/shared/components/ui/chart"
-import type { DistribucionPorCategoria } from "../types/reporte.types"
+import type { DistribucionPorCategoria } from "../../types/reporte.types"
 
 const pieColors = [
   "var(--chart-1)",
