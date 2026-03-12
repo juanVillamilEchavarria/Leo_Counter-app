@@ -8,7 +8,6 @@ export default function Reporte() {
   const { isOpen, setIsOpen } = useOpen(false)
   const { isOpen: isOpenCuentas, setIsOpen: setIsOpenCuentas } = useOpen(false)
   const { data, isLoading, error } = useReporteApi()
-
   if (isLoading) {
     return (
       <SectionTransition>

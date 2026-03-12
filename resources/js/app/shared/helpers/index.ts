@@ -3,6 +3,7 @@ import { getVisiblePages, convertServerSideQueryParams } from "./table/table.hel
 import { toastHelper } from "./messages/toast.helper";
 import { isRouteActive } from "./nav/nav.helper";
 import { moneyFormat } from "./money/money.helper";
+import { parseApiErrors } from "./api/api.helpers";
 import { filterCategoriasByTipoMovimiento, filterItemByIndex, addUniqueItem, removeItemById } from "./filters/filters.helper";
 
 export{
@@ -19,6 +20,7 @@ export{
     convertServerSideQueryParams,
     isRouteActive,
     moneyFormat,
+    parseApiErrors,
     toastHelper
 
 }

@@ -5,6 +5,8 @@ namespace App\Domains\Categoria\Repositories\Application\Eloquent;
 use App\Domains\Categoria\Repositories\Contracts\CategoriaReadRepositoryContract;
 use App\Shared\Abstracts\Repositories\EloquentReadRepository;
 use App\Models\Categoria\Categoria;
+use Illuminate\Database\Eloquent\Collection;
+use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 
 class EloquentCategoriaReadRepository extends EloquentReadRepository implements CategoriaReadRepositoryContract{
     protected array $forOptionsColumns = [
@@ -15,6 +17,10 @@ class EloquentCategoriaReadRepository extends EloquentReadRepository implements 
     public function __construct()
     {
         parent::__construct(Categoria::class);
+    }
+    public function getForOptionsByTipoMovimiento(TipoMovimientoEnum $tipo_movimiento): Collection
+    {
+        return $this->model::query()->select($this->forOptionsColumns)->where('tipo_movimiento_id', $tipo_movimiento->value)->get();
     }
 
     public function getAllByType(int $tipo_movimiento_id): \Illuminate\Database\Eloquent\Collection{

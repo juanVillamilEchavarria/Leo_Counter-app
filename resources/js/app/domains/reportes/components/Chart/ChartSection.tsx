@@ -15,7 +15,7 @@ export default function ChartSection({ tendencia, distribuciones }: ChartSection
       {/* Tendencias Section */}
       <div>
         <div className="flex items-center gap-2 mb-6">
-          <i className="fa-solid fa-trend-up text-green-600"></i>
+          <i className="fa-solid fa-chart-line text-green-600"></i>
           <h2 className="text-xl font-bold text-gray-900">Tendencias y Evolución</h2>
         </div>
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">

@@ -1,10 +1,17 @@
 import { apiRequest } from "@/app/shared/api/client.api";
-import { type ReporteApiResponse, type ReporteFormOptionsApiReponse } from "../types/reporte.types";
+import { type ReporteApiResponse, type ReporteFormOptionsApiReponse, type ReporteFormData } from "../types/reporte.types";
 
 export const reporteApi = async (): Promise<ReporteApiResponse> => {
     return apiRequest<ReporteApiResponse, any>({
         method: 'get',
         url: '/reportes'
+    })
+}
+export const generateReporteApi = async (data: ReporteFormData): Promise<ReporteApiResponse> => {
+    return apiRequest<ReporteApiResponse, any>({
+        method: 'post',
+        url: '/reportes/generate',
+        data
     })
 }
 

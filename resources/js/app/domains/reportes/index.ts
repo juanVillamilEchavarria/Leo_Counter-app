@@ -11,9 +11,9 @@ import TopCategoriasReview from "./components/KPI/TopCategoriasReview";
 import KPISection from "./components/KPI/KPISection";
 import MovimientosCardReview from "./components/KPI/MovimientosCardReview";
 import ChartSection from "./components/Chart/ChartSection";
-import { type ReporteApiResponse, type ReporteFormOptionsApiReponse } from "./types/reporte.types";
+import { type ReporteApiResponse, type ReporteFormOptionsApiReponse, type ReporteFormData, ReporteApiActions } from "./types/reporte.types";
 import { reporteApi } from "./api/reporte.api";
-import useReporteApi from "./hooks/useReporteApi";
+import useReporteApi from "./hooks/api/useReporteApi";
 export {
     CardReview,
     ReporteSheet,
@@ -30,5 +30,8 @@ export {
     ChartSection,
     useReporteApi,
         reporteApi,
-    type ReporteApiResponse
+    ReporteApiActions,
+    type ReporteApiResponse,
+    type ReporteFormOptionsApiReponse,
+    type ReporteFormData
 }

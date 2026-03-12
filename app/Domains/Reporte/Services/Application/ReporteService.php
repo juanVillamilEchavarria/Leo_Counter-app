@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Domains\Reporte\Services\Application;
-use App\Domains\Categoria\Repositories\Contracts\CategoriaReadRepositoryContract;
-use App\Domains\Cuenta\Repositories\Contracts\CuentaReadRepositoryContract;
+use App\Domains\Reporte\Resources\ReporteFormOptionsResource;
 use App\Domains\Reporte\Services\Domain\ReporteQueryService;
 use App\Domains\Reporte\Services\Domain\ReporteFinancialService;
 use App\Domains\Reporte\Strategies\Resolvers\ReportGranularityResolver;
@@ -22,7 +21,7 @@ class ReporteService{
     ){}
 
     public function getOptions(){
-        return $this->reporteQueryService->getOptions();
+        return ReporteFormOptionsResource::make($this->reporteQueryService->getOptions());
     }
 
 

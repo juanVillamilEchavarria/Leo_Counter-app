@@ -15,6 +15,7 @@ use App\Shared\Services\Financial\PercentageService;
 use App\Domains\Reporte\ValueObjects\DateRange;
 // DTOs
 use App\Domains\Reporte\DTOs\ReporteQueryDTO;
+use App\Domains\Categoria\DTOs\IngresoAndGastoCategoriaDTO;
 use App\Domains\Reporte\DTOs\KPI\PeriodKPIDTO;
 use App\Domains\Reporte\DTOs\KPI\TotalsKPIDTO;
 use App\Domains\Reporte\DTOs\KPI\VariationsKPIDTO;
@@ -22,6 +23,8 @@ use App\Domains\Reporte\DTOs\IngresosVsGastos\IngresosVsGastosDTO;
 use App\Domains\Reporte\DTOs\Promedio\PromedioDTO;
 use App\Domains\Reporte\DTOs\Category\FullDistributionCategoryDTO;
 use App\Domains\Reporte\DTOs\Form\ReporteFormOptionsDTO;
+//Enums
+use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 
 class ReporteQueryService {
     public function __construct(
@@ -34,8 +37,12 @@ class ReporteQueryService {
     }
 
     public function getOptions(){
+        $categoriasDto= new IngresoAndGastoCategoriaDTO(
+            $this->categoriaReadRepository->getForOptionsByTipoMovimiento(TipoMovimientoEnum::INGRESO),
+            $this->categoriaReadRepository->getForOptionsByTipoMovimiento(TipoMovimientoEnum::GASTO)
+        );
         return new ReporteFormOptionsDTO(
-            $this->categoriaReadRepository->getForOptions(),
+            $categoriasDto,
             $this->cuentaReadRepository->getForOptions()
         );
 

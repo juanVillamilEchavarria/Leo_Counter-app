@@ -4,7 +4,7 @@ namespace App\Http\Requests\Reporte;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ReporteApiRequest extends FormRequest
+class GenerateReporteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,9 +21,12 @@ class ReporteApiRequest extends FormRequest
      */
     public function rules(): array
     {
-         return [
-            'startDate' => ['nullable', 'date', 'before_or_equal:end_date'],
-            'endDate' => ['nullable', 'date', 'after_or_equal:start_date'],
+        return [
+            'startDate' => ['required', 'date'],
+            'endDate' => ['required', 'date'],
+            'categorias' => ['nullable', 'array'],
+            'cuentas' => ['nullable', 'array'],
+            'only_categorias_fijas' => ['required', 'boolean'],
         ];
     }
 }

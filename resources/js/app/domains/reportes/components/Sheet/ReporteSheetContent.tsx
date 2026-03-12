@@ -1,89 +1,81 @@
 import { SheetContent, SheetClose, SheetDescription, SheetHeader, SheetTitle, SheetFooter } from "@/app/shared/components/ui/sheet"
-import Button from "@/app/shared/components/common/Button"
 import ReporteForm from "./ReporteForm"
-import ItemSelected from "@/app/shared/components/common/ItemSelected"
-import useReporteFormOptionsApi from "../../hooks/useReporteFormOptionsApi"
-import { useMultiSelect } from "@/app/shared/hooks"
-import { type Categoria } from "@/app/domains/categoria"
-import { type Cuenta } from "@/app/domains/cuenta"
-import { useState } from "react"
+import useReporteFormOptionsApi from "../../hooks/api/useReporteFormOptionsApi"
+import { useReporteForm } from "../../hooks/useReporteForm"
+import { useGenerateReportMutation } from "../../hooks/api/useGenerateReportMutation"
+import { useCallback } from "react"
 
 export default function ReporteSheetContent() {
-  const { data: options, isLoading, error } = useReporteFormOptionsApi()
-  const { selectedItems: categoriasSelected, addItem: addCategoria, removeItem: removeCategoria } = useMultiSelect<Categoria>()
-  const { selectedItems: cuentasSelected, addItem: addCuenta, removeItem: removeCuenta } = useMultiSelect<Cuenta>()
-  const [onlyCategoriasFijas, setOnlyCategoriasFijas] = useState(false)
+  const { data: options, isLoading: isLoadingOptions, error: errorOptions } = useReporteFormOptionsApi()
+  const form = useReporteForm()
+  const { mutate, isPending, validationErrors, reset } = useGenerateReportMutation(
+    // funcion de succes (exito)
+    (data) => {
+      console.log('Reporte generado exitosamente:', data)
+    },
+    // funcion de error
+    (errors) => {
+      console.error('Errores de validación:', errors)
+    }
+  )
 
-  if (error) {
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      form.clearErrors()
+      await mutate(form.data)
+    },
+    [form, mutate]
+  )
+
+  // Merge validationErrors from API with form errors
+  const mergedErrors = { ...form.errors, ...validationErrors }
+
+  if (errorOptions) {
     return (
       <SheetContent>
-        <div className="text-red-500 text-center font-bold">Error al cargar opciones</div>
+        <div className="text-red-500 text-center font-bold">Error al cargar opciones del formulario</div>
       </SheetContent>
     )
   }
 
   return (
-    <SheetContent className="layout-background flex flex-col">
+    <SheetContent className="layout-background flex flex-col overflow-y-auto">
       <SheetHeader>
         <SheetTitle className="text-gray-900">Generar Reporte</SheetTitle>
         <SheetDescription>
           Realiza los filtros para generar un reporte detallado de tu actividad financiera
         </SheetDescription>
       </SheetHeader>
-      
-      <div className="my-5">
-        {isLoading ? (
+
+      <div className="flex-1 overflow-y-auto py-4">
+        {isLoadingOptions ? (
           <div className="flex justify-center items-center p-8">
             <i className="fas fa-spinner fa-spin text-2xl text-blue-500"></i>
           </div>
         ) : (
-          <ReporteForm options={options} addCategoria={addCategoria} addCuenta={addCuenta} setOnlyCategoriasFijas={setOnlyCategoriasFijas} onlyCategoriasFijas={onlyCategoriasFijas} />
+          <ReporteForm
+            data={form.data}
+            setData={form.setData}
+            errors={mergedErrors}
+            onSubmit={handleSubmit}
+            isLoading={isPending}
+            options={options}
+          />
         )}
       </div>
-      <div className="flex flex-col gap-2">
-        <p className="text-sm text-gray-500">Cuentas seleccionadas:</p>
-        <div className="">
-          <ul className="flex flex-wrap gap-2">
-            {cuentasSelected.length>0 ? cuentasSelected.map((cuenta) => (
-                <li key={cuenta.id}><ItemSelected name={cuenta.nombre} onRemove={() => removeCuenta(cuenta.id)} />
-                </li>
-              
-            )):(
-              <div className="w-full text-center">
-                <p className="text-sm text-gray-500"> No hay cuentas seleccionadas</p>
-              </div>
-              
-            )}
-        </ul>
-        </div>
 
-        <p className="text-sm text-gray-500">Categorias seleccionadas:</p>
-        <div className="">
-          <ul className="flex flex-wrap gap-2">
-            {categoriasSelected.length>0 ? categoriasSelected.map((categoria) => (
-                <li key={categoria.id}><ItemSelected name={categoria.nombre} onRemove={() => removeCategoria(categoria.id)} />
-                </li>
-              
-            )):(
-              <div className="w-full text-center">
-                {onlyCategoriasFijas === true ? (
-                  <p className="text-sm text-blue-500 bg-blue-100 rounded-full px-3 py-1">Todas las categorias fijas seleccionadas</p>
-                ):(
-                  <p className="text-sm text-gray-500">No hay categorias seleccionadas</p>
-                )}
-                 
-              </div>
-             
-            )}
-        </ul>
-        </div>
-      </div>
-      
-      
-      <SheetFooter className="mt-auto flex flex-col! gap-2 w-full">
-        <Button type="submit" variant="primary">Generar</Button>
+      <SheetFooter className="border-t pt-4">
         <SheetClose asChild>
-          <Button variant="gray">Cerrar</Button>
+          <button
+            type="button"
+            className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded"
+            onClick={() => {
+              reset()
+            }}
+          >
+            Cerrar
+          </button>
         </SheetClose>
       </SheetFooter>
     </SheetContent>

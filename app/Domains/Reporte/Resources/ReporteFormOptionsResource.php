@@ -16,6 +16,7 @@ class ReporteFormOptionsResource extends JsonResource
     {
         return [
             'categorias'=> $this->categorias,
+            'cuentas'=> $this->cuentas
 
         ];
     }

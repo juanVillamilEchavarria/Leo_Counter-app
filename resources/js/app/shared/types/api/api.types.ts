@@ -11,3 +11,14 @@ export type ApiParams<TData extends Record<string,any>> = {
         data?: TData,
         params?: Record<string, any>
 }
+export interface ApiValidationError {
+  [key: string]: string[];
+}
+
+/**
+ * formato estandard de error de la API
+ */
+export interface ApiErrorResponse {
+  message: string;
+  errors?: ApiValidationError;
+}

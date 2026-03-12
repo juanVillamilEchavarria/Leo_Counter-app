@@ -1,5 +1,26 @@
+import { route } from "ziggy-js"
 import { type Categoria } from "../../categoria"
 import { type Cuenta } from "../../cuenta"
+
+export const ReporteApiActions = {
+  post: route('api.reportes.generate'),
+}
+
+/**
+ * Datos del formulario para generar reportes
+ * @property cuentas - Array de cuentas seleccionadas para filtrar
+ * @property categorias - Array de categorías seleccionadas para filtrar
+ * @property startDate - Fecha inicial del período en formato YYYY-MM-DD
+ * @property endDate - Fecha final del período en formato YYYY-MM-DD
+ * @property only_categorias_fijas - Si true, solo incluye categorías fijas
+ */
+export interface ReporteFormData {
+  cuentas: Cuenta[]
+  categorias: Categoria[]
+  startDate: string
+  endDate: string
+  only_categorias_fijas: boolean
+}
 export interface KPITotales {
   ingresos: number
   gastos: number
@@ -77,7 +98,16 @@ export interface ReporteApiResponse {
   data: ReporteData
 }
 
+interface CategoriaFormOption{
+  ingresos: Categoria[]
+  gastos: Categoria[]
+}
+
+
 export interface ReporteFormOptionsApiReponse{
-    categorias: Categoria[]
+  data:{
+     categorias: CategoriaFormOption
     cuentas: Cuenta[]
+  }
+   
 }

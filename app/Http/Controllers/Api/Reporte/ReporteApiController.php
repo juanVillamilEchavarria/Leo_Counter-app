@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Api\Reporte;
 use App\Domains\Reporte\Services\Application\ReporteService;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Reporte\GenerateReporteRequest;
 use Illuminate\Http\Request;
-use App\Http\Requests\Reporte\ReporteApiRequest;
-
 class ReporteApiController extends Controller
 {
     public function __construct(
@@ -15,11 +14,15 @@ class ReporteApiController extends Controller
     {
     }
 
-    public function index(ReporteApiRequest $request){
-        return $this->reporteService->getFullReport($request->validated());
+    public function index(){
+        return $this->reporteService->getFullReport([]);
+    }
+
+    public function generate(GenerateReporteRequest $request){
+        dd($request->all());
     }
 
     public function formOptions(){
-        return $this->reporteService->getOptions()->toArray();
+        return $this->reporteService->getOptions();
     }
 }

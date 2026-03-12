@@ -1,26 +1,31 @@
-import { useState, useCallback } from 'react';
+import React, {useCallback } from 'react';
 import { addUniqueItem, removeItemById } from '@/app/shared/helpers';
 
-export function useMultiSelect<T extends { id: number }>(initialItems: T[] = []) {
-  const [selectedItems, setSelectedItems] = useState<T[]>(initialItems);
-
+interface useMultiSelectProps<T extends { id: number }> {
+  items?: T[];
+  setItems: (items: T[]) => void;
+}
+export function useMultiSelect<T extends { id: number }>({
+  items = [],
+   setItems 
+  }: useMultiSelectProps<T>) {
   const addItem = useCallback((item: T) => {
-    setSelectedItems(prev => addUniqueItem(item, prev));
-  }, []);
+    setItems(addUniqueItem(item, items));
+  }, [items, setItems]);
 
   const removeItem = useCallback((id: number) => {
-    setSelectedItems(prev => removeItemById(id, prev));
-  }, []);
+    setItems(removeItemById(id, items));
+  }, [items, setItems]);
 
   const clearItems = useCallback(() => {
-    setSelectedItems([]);
-  }, []);
+    setItems([]);
+  }, [setItems]);
 
   return {
-    selectedItems,
+    items,
     addItem,
     removeItem,
     clearItems,
-    setSelectedItems,
+    setItems,
   };
 }

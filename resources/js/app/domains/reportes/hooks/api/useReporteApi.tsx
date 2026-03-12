@@ -1,4 +1,4 @@
-import { reporteApi } from '../api/reporte.api'
+import { reporteApi } from '../../api/reporte.api'
 import { useQuery } from '@tanstack/react-query'
 
 export default function useReporteApi() {
