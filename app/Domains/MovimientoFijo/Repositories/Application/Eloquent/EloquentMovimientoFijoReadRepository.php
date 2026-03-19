@@ -18,7 +18,7 @@ class EloquentMovimientoFijoReadRepository extends EloquentReadRepository implem
     }
 
     public function getAllWithDetails(): \Illuminate\Database\Eloquent\Collection{
-        return MovimientoFijo::with(['categoria','cuenta','frecuencia'])->get();
+        return MovimientoFijo::with(['categoria','cuenta','frecuencia_movimiento'])->get();
     }
 
 }

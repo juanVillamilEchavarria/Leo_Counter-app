@@ -1,5 +1,7 @@
 <?php
 
+use App\Domains\Reporte\Strategies\Providers\Relations\QueryIdRelationStrategyProvider;
+
 return [
     App\Domains\ArchivoMovimiento\Repositories\Providers\ArchivoMovimientoRepositoryProvider::class,
     App\Domains\Categoria\Repositories\Providers\CategoriaRepositoryProvider::class,
@@ -11,11 +13,10 @@ return [
     App\Domains\Presupuesto\Repositories\Providers\PresupuestoRepositoryProvider::class,
     App\Domains\Propietario\Repositories\Providers\PropietarioRepositoryProvider::class,
     App\Domains\Reporte\Repositories\Providers\ReporteProvider::class,
-    App\Domains\Reporte\Strategies\Providers::class,
-    App\Domains\Reporte\Strategies\Providers\ReporteStrategieProvider::class,
-    App\Domains\Reporte\Strategies\Providers\StrategieProvider::class,
+    App\Domains\Reporte\Strategies\Providers\Granularity\GranularityStrategieProvider::class,
     App\Domains\TipoCuenta\Repositories\Providers\TipoCuentaRepositoryProvider::class,
     App\Domains\TipoMovimiento\Repositories\Providers\TipoMovimientoRepositoryProvider::class,
     App\Domains\TipoPresupuesto\Repositories\Providers\TipoPresupuestoRepositoryProvider::class,
+    QueryIdRelationStrategyProvider::class,
     App\Providers\AppServiceProvider::class,
 ];

@@ -42,4 +42,4 @@ class EloquentMovimientoReadRepository extends EloquentReadRepository implements
     public function getEspontaneoRecordsCount(): int{
         return Movimiento::where('movimiento_pendiente_id', null)->where('fecha', Carbon::now()->format('Y-m-d'))->count();
     }
-}
+} /** @var class-string<Model> $model */

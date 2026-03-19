@@ -7,12 +7,18 @@ use Illuminate\Support\Collection;
 
 class FinancialPeriodBuilder{
     public static function fromQueryResults(Collection $queryResults){
-        return $queryResults->map(function($movimiento) use (&$ingresos, &$gastos){
+        return $queryResults->map(function($movimiento){
             return self::build($movimiento);
         })->values();
     }
 
     private static function build(\stdClass $movimeinto){
-        return new FinancialPeriodDTO($movimeinto->fecha, $movimeinto->ingresos, $movimeinto->gastos);
+        return new FinancialPeriodDTO(
+            $movimeinto->fecha,
+             $movimeinto->ingresos,
+             $movimeinto->gastos,
+             $movimeinto->count_ingresos, 
+            $movimeinto->count_gastos
+            );
     }
 }

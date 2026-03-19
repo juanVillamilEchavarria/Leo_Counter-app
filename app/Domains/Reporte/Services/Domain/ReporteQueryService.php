@@ -75,8 +75,10 @@ class ReporteQueryService {
         $data = $this->reporteRepository->getIngresosVsGastos($reporteQueryDTO);
         $collection = FinancialPeriodCollection::fromQueryResults($data);
         $promedioDTO = new PromedioDTO(
-            $collection->promedioIngresos(),
-            $collection->promedioGastos()
+            ingresos_por_periodo:$collection->ingresosPeriodAverage(),
+            gastos_por_periodo:$collection->gastosPeriodAverage(),
+            ingresos_por_movimiento:$collection->ingresosIndividualAverage(),
+            gastos_por_movimiento:$collection->gastosIndividualAverage()
         );
         return new IngresosVsGastosDTO(
             $collection,
@@ -84,8 +86,8 @@ class ReporteQueryService {
         );
     }
 
-    public function getDistributionByCategory(ReporteQueryDTO $reporteQueryDTO, int $tipo_movimiento_id): FullDistributionCategoryDTO{
-        $data = $this->reporteRepository->getDistributionByCategory($reporteQueryDTO, $tipo_movimiento_id);
+    public function getCategoryDistribution(ReporteQueryDTO $reporteQueryDTO, int $tipo_movimiento_id): FullDistributionCategoryDTO{
+        $data = $this->reporteRepository->getCategoryDistribution($reporteQueryDTO, $tipo_movimiento_id);
         $collection = DistributionCategoryCollection::fromQueryResults($data);
         return new FullDistributionCategoryDTO(
             $collection,

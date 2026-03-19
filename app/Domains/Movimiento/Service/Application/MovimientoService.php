@@ -24,8 +24,6 @@ use App\Models\Cuenta\Cuenta;
 // Exceptions
 use App\Domains\Cuenta\Exceptions\CannotFindCuentaException;
 use App\Domains\Movimiento\Exceptions\CannotDeleteMovimientoException;
-// Contracts
-use App\Domains\Movimiento\Repositories\Contracts\MovimientoWriteRepositoryContract;
 // Enums y types
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use App\Domains\Movimiento\Enums\MovimientoVariants;

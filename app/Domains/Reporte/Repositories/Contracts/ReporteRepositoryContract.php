@@ -17,7 +17,7 @@ interface ReporteRepositoryContract{
     /**
      * @return Collection<stdClass>
      */
-    public function getDistributionByCategory(ReporteQueryDTO $dto, int $tipo_movimiento_id): Collection;
+    public function getCategoryDistribution(ReporteQueryDTO $dto): Collection;
     /**
      * @return Collection<stdClass>
      */

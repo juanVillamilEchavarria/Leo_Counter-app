@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react"
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import Card from "@/app/shared/components/common/Card"
+import FilterOptions from "../Filters/FilterOptions"
 import { moneyFormat } from "@/app/shared/helpers"
 import {
   ChartContainer,
@@ -26,7 +27,6 @@ const chartConfig = {
 interface IngresoAndGastoChartProps {
   data: IngresoVsGastosChart
 }
-
 export default function IngresoAndGastoChart({ data: chartData }: IngresoAndGastoChartProps) {
   const [mode, setMode] = useState<ChartMode>("ambos")
 
@@ -36,7 +36,27 @@ export default function IngresoAndGastoChart({ data: chartData }: IngresoAndGast
     return "Ingresos vs Gastos"
   }, [mode])
 
-  // Filter data based on selected mode
+  const filterOptions=[
+    {
+      onClick: () => setMode("ambos"),
+      active: mode === "ambos",
+      output: "Ambos",
+    },
+    {
+      onClick: () => setMode("ingresos"),
+      active: mode === "ingresos",
+      output: "Ingresos",
+    },
+    {
+      onClick: () => setMode("gastos"),
+      active: mode === "gastos",
+      output: "Gastos",
+    },
+  ]
+
+  /**
+   * Filtra los datos para mostrar solo los ingresos o los gastos
+   */
   const filteredData = useMemo(() => {
     return chartData.data.map(item => ({
       mes: item.mes,
@@ -47,8 +67,10 @@ export default function IngresoAndGastoChart({ data: chartData }: IngresoAndGast
 
   const displayedPromedios = useMemo(() => {
     return {
-      ingresos: mode === "gastos" ? 0 : chartData.promedios.ingresos,
-      gastos: mode === "ingresos" ? 0 : chartData.promedios.gastos,
+      ingresos_por_periodo: mode === "gastos" ? 0 : chartData.promedios.ingresos_por_periodo,
+      gastos_por_periodo: mode === "ingresos" ? 0 : chartData.promedios.gastos_por_periodo,
+      ingresos_por_movimiento: mode === "gastos" ? 0 : chartData.promedios.ingresos_por_movimiento,
+      gastos_por_movimiento: mode === "ingresos" ? 0 : chartData.promedios.gastos_por_movimiento,
     }
   }, [mode, chartData.promedios])
 
@@ -62,54 +84,40 @@ export default function IngresoAndGastoChart({ data: chartData }: IngresoAndGast
             <h3 className="font-semibold text-lg">{title}</h3>
             <p className="text-sm text-gray-500">Comparativa mensual de los últimos 6 meses</p>
           </div>
-
-          <div className="inline-flex rounded-lg border border-gray-200 p-1 bg-gray-50">
-            <button
-              type="button"
-              onClick={() => setMode("ambos")}
-              className={`px-3 py-1.5 text-sm rounded-md transition-all ${
-                mode === "ambos" ? "bg-white text-gray-900 shadow-sm" : "text-gray-600 hover:bg-white/50"
-              }`}
-            >
-              Ambos
-            </button>
-            <button
-              type="button"
-              onClick={() => setMode("ingresos")}
-              className={`px-3 py-1.5 text-sm rounded-md transition-all ${
-                mode === "ingresos" ? "bg-white text-gray-900 shadow-sm" : "text-gray-600 hover:bg-white/50"
-              }`}
-            >
-              Ingresos
-            </button>
-            <button
-              type="button"
-              onClick={() => setMode("gastos")}
-              className={`px-3 py-1.5 text-sm rounded-md transition-all ${
-                mode === "gastos" ? "bg-white text-gray-900 shadow-sm" : "text-gray-600 hover:bg-white/50"
-              }`}
-            >
-              Gastos
-            </button>
-          </div>
+          <FilterOptions options={filterOptions} />
         </div>
-
         {hasData ? (
           <>
             <div className="flex flex-wrap gap-4 text-sm">
               {(mode === "ambos" || mode === "ingresos") && (
+                <>
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                  <span className="text-gray-600">Ingresos promedio:</span>
-                  <span className="font-semibold text-green-700">{moneyFormat(displayedPromedios.ingresos)}</span>
+                  <span className="text-gray-600">Ingresos promedio por periodo:</span>
+                  <span className="font-semibold text-green-700">{moneyFormat(displayedPromedios.ingresos_por_periodo)}</span>
                 </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                  <span className="text-gray-600">Ingresos promedio por movimientos:</span>
+                  <span className="font-semibold text-green-700">{moneyFormat(displayedPromedios.ingresos_por_movimiento)}</span>
+                </div>
+                </>
+                
               )}
               {(mode === "ambos" || mode === "gastos") && (
-                <div className="flex items-center gap-2">
+                <>
+                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                  <span className="text-gray-600">Gastos promedio:</span>
-                  <span className="font-semibold text-red-700">{moneyFormat(displayedPromedios.gastos)}</span>
+                  <span className="text-gray-600">Gastos promedio por periodo:</span>
+                  <span className="font-semibold text-red-700">{moneyFormat(displayedPromedios.gastos_por_periodo)}</span>
                 </div>
+                 <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                  <span className="text-gray-600">Gastos promedio por movimientos:</span>
+                  <span className="font-semibold text-red-700">{moneyFormat(displayedPromedios.gastos_por_movimiento)}</span>
+                </div>
+                </>
+               
               )}
             </div>
 

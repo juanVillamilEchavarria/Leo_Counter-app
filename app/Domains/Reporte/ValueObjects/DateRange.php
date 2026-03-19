@@ -22,7 +22,7 @@ final class DateRange {
     public static function fromArray(array $data){
         return new self(Carbon::parse($data['startDate']), Carbon::parse($data['endDate']));
     }
-    public function toArray(){
+    public function toArray() : array{
         return [
             'startDate' => $this->startDate,
             'endDate' => $this->endDate,

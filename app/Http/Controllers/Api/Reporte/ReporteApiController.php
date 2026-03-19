@@ -19,7 +19,7 @@ class ReporteApiController extends Controller
     }
 
     public function generate(GenerateReporteRequest $request){
-        dd($request->all());
+        return $this->reporteService->getFullReport($request->validated());
     }
 
     public function formOptions(){

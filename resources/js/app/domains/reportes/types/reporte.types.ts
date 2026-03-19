@@ -55,8 +55,10 @@ export interface Presupuesto{
 export interface IngresoVsGastosChart {
   data: IngresoVsGastoData[]
   promedios: {
-    ingresos: number
-    gastos: number
+    ingresos_por_periodo: number
+    gastos_por_periodo: number
+    ingresos_por_movimiento: number
+    gastos_por_movimiento: number
   }
 }
 

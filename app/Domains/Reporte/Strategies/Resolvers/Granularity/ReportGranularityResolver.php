@@ -1,5 +1,5 @@
 <?php
-namespace App\Domains\Reporte\Strategies\Resolvers;
+namespace App\Domains\Reporte\Strategies\Resolvers\Granularity;
 
 use App\Domains\Reporte\Strategies\Contracts\ReportGranularityStrategyContract;
 use App\Domains\Reporte\Exception\CannotResolveGranualityException;
@@ -21,7 +21,7 @@ class ReportGranularityResolver{
                     return $strategy;
                 }
             }
-            throw new CannotResolveGranualityException('No granularity strategy found');
+            throw new CannotResolveGranualityException('No se pudo resolver la granularidad del reporte');
     }
     
 }

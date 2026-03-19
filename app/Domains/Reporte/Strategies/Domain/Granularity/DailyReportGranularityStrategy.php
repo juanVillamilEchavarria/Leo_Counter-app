@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Reporte\Strategies\Domain;
+namespace App\Domains\Reporte\Strategies\Domain\Granularity;
 
 use App\Domains\Reporte\Strategies\Contracts\ReportGranularityStrategyContract;
 use App\Domains\Reporte\Strategies\Abstracts\ReportGranularityStrategy;

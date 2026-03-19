@@ -15,7 +15,7 @@ class StoreMovimientoDTO extends MovimientoDTO
    'comprobantes'
  ];
 
- public function toArray()
+ public function toArray() : array
  {
     return array_merge(parent::toArray(), [
         'fecha'=> Carbon::now()

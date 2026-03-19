@@ -87,7 +87,6 @@ class MovimientoEspontaneoController extends Controller
     public function update(UpdateMovimientoEspontaneoRequest $request, Movimiento $movimientoEspontaneo)
     {
 
-
         $this->movimientoService->update($movimientoEspontaneo, $request->validated());
         Inertia::flash('success','Movimiento actualizado con exito');
         return redirect()->route('movimientosEspontaneos.index');

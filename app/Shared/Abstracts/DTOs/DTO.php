@@ -3,23 +3,41 @@
 namespace App\Shared\Abstracts\DTOs;
 
 abstract class DTO{
-    protected array $only = []; // solo se devolveran estos campos
-    protected array $except = []; // no se devolveran estos campos
-    protected static array $convert = []; // se convertiran estos campos en el fromObject
-    public function toArray(){
-        $array = get_object_vars($this); //devuelve un array con las propiedades del objeto y sus valores
-
+    /**
+     * Propiedad para declarar los campos unicos que se devolveran
+     * Formato : ['campo1', 'campo2',...]
+     * @var array<string>
+     */
+    protected array $only = [];
+    /**
+     * Propiedad para declarar los campos que no se devolveran
+     * Formato : ['campo1', 'campo2',... ]
+     * @var array<string>
+     */ 
+    protected array $except = []; 
+    /**
+     * Propiedad para convertir los campos de otro objeto con otro nombre a los campos de este DTO
+     * Formato : ['campo_DTO' => ['campo_objeto', 'campo_objeto',...]]
+     * @var array
+     */
+    protected static array $convert = [];
+    public function toArray(): array{
+        $array = get_object_vars($this); 
+        /**
+         * Se filtra el array dependiendo si hay campos declarados en only o except
+         */
         if (!empty($this->only)) {
-            $array = array_intersect_key($array, array_flip($this->only)); // devuelve un array filtrado por solo los campos declarados en only
+            $array = array_intersect_key($array, array_flip($this->only)); 
         }
         if (!empty($this->except)) {
-            $array = array_diff_key($array, array_flip($this->except)); // devuelve un array filtrado por todos los campos menos los declarados en except
+            $array = array_diff_key($array, array_flip($this->except)); 
         }
         return $array;
     }
      public static function fromArray(array $data): static
     {
-        return new static(...$data); // crea una nueva instancia de la clase con los valores del array
+
+        return new static(...$data); 
     }
         public static function fromObject(object $object): static {
             $props = (new \ReflectionClass(static::class))->getProperties(\ReflectionProperty::IS_PUBLIC); // obtiene los parametros publicos del DTO
