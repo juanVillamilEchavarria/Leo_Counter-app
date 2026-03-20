@@ -2,12 +2,15 @@ import { useMemo } from "react"
 import { Pie, PieChart, Cell } from "recharts"
 import Card from "@/app/shared/components/common/Card"
 import { moneyFormat } from "@/app/shared/helpers"
+import EmptyDataMessage from "../common/EmptyDataMessage"
+import FilterOptions from "../Filters/FilterOptions"
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
 } from "@/app/shared/components/ui/chart"
+import useCategoriaPieChart from "../../hooks/Charts/useCategoriaPieChart"
 import type { DistribucionPorCategoria } from "../../types/reporte.types"
 
 const pieColors = [
@@ -30,15 +33,7 @@ interface CategoriaPieChartProps {
 }
 
 export default function CategoriaPieChart({ distribucion }: CategoriaPieChartProps) {
-  // Calculate percentages based on total
-  const dataWithPercentages = useMemo(() => {
-    const total = distribucion.data.reduce((acc, item) => acc + item.total, 0)
-    return distribucion.data.map(item => ({
-      ...item,
-      percentage: total > 0 ? (item.total / total) * 100 : 0
-    }))
-  }, [distribucion.data])
-
+  const {filteredData, filteredOptions} = useCategoriaPieChart({data: distribucion.data})
   const hasData = distribucion.data.length > 0
 
   return (
@@ -51,28 +46,29 @@ export default function CategoriaPieChart({ distribucion }: CategoriaPieChartPro
               {hasData ? `${distribucion.total_movimientos} movimientos distribuidos` : 'Análisis de gastos por categoría'}
             </p>
           </div>
+          <FilterOptions options={filteredOptions} />
         </div>
 
         {hasData ? (
           <>
-            <ChartContainer config={chartConfig} className="h-[280px]">
+            <ChartContainer config={chartConfig} className="h-70">
               <PieChart>
                 <ChartTooltip
                   content={<ChartTooltipContent hideLabel />}
                   formatter={(value: number, name: string) => [
-                    `${value.toFixed(1)}% • ${moneyFormat(dataWithPercentages.find(d => d.categoria === name)?.total || 0)}`,
+                    `${value.toFixed(1)}% • ${moneyFormat(filteredData.find(d => d.categoria === name)?.total || 0)}`,
                     name
                   ]}
                 />
                 <Pie
-                  data={dataWithPercentages}
+                  data={filteredData}
                   dataKey="percentage"
                   nameKey="categoria"
                   innerRadius={60}
                   outerRadius={100}
                   paddingAngle={2}
                 >
-                  {dataWithPercentages.map((entry, index) => (
+                  {filteredData.map((entry, index) => (
                     <Cell
                       key={`${entry.categoria}-${index}`}
                       fill={pieColors[index % pieColors.length]}
@@ -83,13 +79,13 @@ export default function CategoriaPieChart({ distribucion }: CategoriaPieChartPro
             </ChartContainer>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-              {dataWithPercentages
+              {filteredData
                 .sort((a, b) => b.percentage - a.percentage)
                 .map((entry, index) => (
                 <div key={entry.categoria} className="flex items-center justify-between p-2 rounded-lg bg-gray-50">
                   <div className="flex items-center gap-2">
                     <span
-                      className="inline-block h-3 w-3 rounded-full flex-shrink-0"
+                      className="inline-block h-3 w-3 rounded-full shrink-0"
                       style={{ backgroundColor: pieColors[index % pieColors.length] }}
                     />
                     <span className="text-gray-700 truncate">{entry.categoria}</span>
@@ -103,15 +99,9 @@ export default function CategoriaPieChart({ distribucion }: CategoriaPieChartPro
             </div>
           </>
         ) : (
-          <div className="flex flex-col items-center justify-center h-[280px] text-center space-y-3">
-            <div className="text-gray-400">
-              <i className="fa-solid fa-pie-chart text-3xl"></i>
-            </div>
-            <div>
-              <h4 className="font-semibold text-gray-900">No hay datos disponibles</h4>
-              <p className="text-sm text-gray-500">Registra movimientos para ver la distribución por categorías</p>
-            </div>
-          </div>
+          <EmptyDataMessage
+            paragraph="Registra movimientos para ver la distribución por categoría"
+          />
         )}
       </div>
     </Card>

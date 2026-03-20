@@ -3,10 +3,10 @@ import useMutationApiErrors from '@/app/shared/hooks/api/useMutationApiErrors';
 import { generateReporteApi } from '../../api/reporte.api';
 import { parseApiErrors } from '@/app/shared/helpers';
 import {type ApiErrorResponse } from '@/app/shared/types/api';
-import { type ReporteFormData } from '../../types/reporte.types';
+import { type ReporteFormData, type ReporteApiResponse } from '../../types/reporte.types';
 import { type AxiosError } from 'axios';
 export function useGenerateReportMutation(
-  onSuccess?: (data: any) => void,
+  onSuccess?: (data: ReporteApiResponse) => void,
   onError?: (errors: Record<string, string>) => void
 ) {
   const mutation = useMutation({
@@ -23,7 +23,7 @@ export function useGenerateReportMutation(
   return {
     mutate: async (data : any) => {
       try {
-        await mutation.mutateAsync(data);
+        return await mutation.mutateAsync(data);
       } catch {
       }
     },

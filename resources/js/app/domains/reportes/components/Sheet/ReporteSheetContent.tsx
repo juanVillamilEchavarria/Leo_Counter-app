@@ -3,21 +3,39 @@ import ReporteForm from "./ReporteForm"
 import useReporteFormOptionsApi from "../../hooks/api/useReporteFormOptionsApi"
 import { useReporteForm } from "../../hooks/useReporteForm"
 import { useGenerateReportMutation } from "../../hooks/api/useGenerateReportMutation"
-import { useCallback } from "react"
+import { useCallback, useEffect } from "react"
+import { type ReporteSheetProps } from "./ReporteSheet"
+import { formatActiveFilters } from "../../helpers/formatActiveFilters"
 
-export default function ReporteSheetContent() {
+export default function ReporteSheetContent({
+  setData,
+  setIsLoading,
+  setError,
+  setActiveReportFilters
+}: ReporteSheetProps) {
   const { data: options, isLoading: isLoadingOptions, error: errorOptions } = useReporteFormOptionsApi()
   const form = useReporteForm()
+
+  const updateActiveFilters = useCallback(() => {
+    const { periodo, categorias, cuentas } = formatActiveFilters(form.data)
+    setActiveReportFilters.setPeriodo(periodo)
+    setActiveReportFilters.setCategorias(categorias)
+    setActiveReportFilters.setCuentas(cuentas)
+  }, [form.data, setActiveReportFilters])
+
   const { mutate, isPending, validationErrors, reset } = useGenerateReportMutation(
-    // funcion de succes (exito)
     (data) => {
-      console.log('Reporte generado exitosamente:', data)
+      setData(data)
+      updateActiveFilters()
     },
-    // funcion de error
     (errors) => {
-      console.error('Errores de validación:', errors)
+      if (!errors.startDate || !errors.endDate) setError(errors)
     }
   )
+
+  useEffect(() => {
+    setIsLoading(isPending)
+  }, [isPending, setIsLoading])
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
@@ -28,7 +46,6 @@ export default function ReporteSheetContent() {
     [form, mutate]
   )
 
-  // Merge validationErrors from API with form errors
   const mergedErrors = { ...form.errors, ...validationErrors }
 
   if (errorOptions) {

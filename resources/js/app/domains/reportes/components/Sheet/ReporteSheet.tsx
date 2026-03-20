@@ -2,8 +2,22 @@ import { Sheet,SheetTrigger } from "@/app/shared/components/ui/sheet"
 import Button from "@/app/shared/components/common/Button"
 import ReporteSheetContent from "./ReporteSheetContent"
 import { useOpen } from "@/app/shared/hooks"
+import { type SetActiveReportFilters } from "../../hooks/Charts/useActiveReportFilters"
+import type { Dispatch, SetStateAction } from "react"
+import type { ReporteApiResponse } from "../../types/reporte.types"
 
-export default function ReporteSheet() {
+export interface ReporteSheetProps {
+  setData: Dispatch<SetStateAction<ReporteApiResponse>>
+  setIsLoading: Dispatch<SetStateAction<boolean>>,
+  setError: Dispatch<SetStateAction<any>>
+  setActiveReportFilters: SetActiveReportFilters
+}
+export default function ReporteSheet({
+  setData,
+  setIsLoading,
+  setError,
+  setActiveReportFilters
+}: ReporteSheetProps) {
 
   const {isOpen, setIsOpen}= useOpen(false)
   return (
@@ -11,7 +25,7 @@ export default function ReporteSheet() {
         <SheetTrigger>
          <Button type="button"  variant="successSecondary"><i className="fa-solid fa-chart-line"></i> Generar</Button>
         </SheetTrigger>
-        {isOpen && <ReporteSheetContent />}
+        {isOpen && <ReporteSheetContent setActiveReportFilters={setActiveReportFilters} setData={setData} setIsLoading={setIsLoading} setError={setError} />}
        
         
     </Sheet>

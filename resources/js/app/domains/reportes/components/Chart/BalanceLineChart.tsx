@@ -1,6 +1,6 @@
-import { LineChart, Line, YAxis, XAxis, CartesianGrid, Legend , Area, ComposedChart} from "recharts"
+import { Line, YAxis, XAxis, CartesianGrid, Legend , Area, ComposedChart} from "recharts"
 import Card from "@/app/shared/components/common/Card"
-import { moneyFormat } from "@/app/shared/helpers"
+import EmptyDataMessage from "../common/EmptyDataMessage"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/app/shared/components/ui/chart"
 import type { BalanceNetoData } from "../../types/reporte.types"
 
@@ -17,7 +17,9 @@ interface BalanceLineChartProps {
 }
 
 export default function BalanceLineChart({ data }: BalanceLineChartProps) {
-  // Transform data to number format for chart
+  /** 
+   *transforma los datos para que se puedan mostrar en el grafico de manera correcta
+  */ 
   const chartData = data.map(item => ({
     fecha: item.fecha,
     balance: parseFloat(item.balance)
@@ -79,15 +81,7 @@ export default function BalanceLineChart({ data }: BalanceLineChartProps) {
           </ComposedChart>
         </ChartContainer>
       ) : (
-        <div className="flex flex-col items-center justify-center h-[300px] text-center space-y-3">
-          <div className="text-gray-400">
-            <i className="fa-solid fa-chart-line text-3xl"></i>
-          </div>
-          <div>
-            <h4 className="font-semibold text-gray-900">No hay datos disponibles</h4>
-            <p className="text-sm text-gray-500">Registra movimientos para ver la evolución del balance</p>
-          </div>
-        </div>
+       <EmptyDataMessage paragraph="Registra movimientos para ver la evolución del balance neto" />
       )}
     </Card>
   )

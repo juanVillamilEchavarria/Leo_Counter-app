@@ -1,6 +1,7 @@
 import { RadialBarChart, RadialBar, PolarAngleAxis } from "recharts"
 import { ChartContainer } from "@/app/shared/components/ui/chart"
 import Card from "@/app/shared/components/common/Card"
+import EmptyDataMessage from "../common/EmptyDataMessage"
 import {type Presupuesto } from "../../types/reporte.types"
 import { moneyFormat } from "@/app/shared/helpers"
 
@@ -24,7 +25,6 @@ export default function PresupuestoPercentageChart({
         return "var(--chart-danger)"
 
     }
-
     const hasBudget = data.presupuestado > 0
 
   return (
@@ -100,15 +100,9 @@ export default function PresupuestoPercentageChart({
                     </ChartContainer>
                 </>
             ) : (
-                <div className="flex flex-col items-center justify-center h-[200px] text-center space-y-3">
-                    <div className="text-gray-400">
-                        <i className="fa-solid fa-wallet text-3xl"></i>
-                    </div>
-                    <div>
-                        <h4 className="font-semibold text-gray-900">Sin presupuesto configurado</h4>
-                        <p className="text-sm text-gray-500">Configura un presupuesto para monitorear tus gastos</p>
-                    </div>
-                </div>
+                <EmptyDataMessage
+                    paragraph="Agrega un presupuesto para visualizar el control presupuestario"
+                />
             )}
         </div>
     </Card>

@@ -51,15 +51,16 @@ export interface Presupuesto{
     porcentaje_usado: number
     disponible: number
 }
-
-export interface IngresoVsGastosChart {
-  data: IngresoVsGastoData[]
-  promedios: {
-    ingresos_por_periodo: number
+export interface IngresoVsGastoPromedios{
+  ingresos_por_periodo: number
     gastos_por_periodo: number
     ingresos_por_movimiento: number
     gastos_por_movimiento: number
-  }
+
+}
+export interface IngresoVsGastosChart {
+  data: IngresoVsGastoData[]
+  promedios: IngresoVsGastoPromedios
 }
 
 export interface BalanceNetoData {
@@ -75,14 +76,15 @@ export interface Tendencia {
 
 
 
-export interface CategoriasDistribucion {
+export interface CategoriasDistribution {
   categoria: string
   cantidad: number
+  tipo_movimiento_id: number
   total: number
 }
 
 export interface DistribucionPorCategoria {
-  data: CategoriasDistribucion[]
+  data: CategoriasDistribution[]
   total_movimientos: number
 }
 

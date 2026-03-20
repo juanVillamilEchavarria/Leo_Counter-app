@@ -186,13 +186,15 @@ class EloquentReporteRepository implements ReporteRepositoryContract
     private function queryDistributionByCategory(ReporteQueryDTO $dto){
         $query = $this->movimientos();
         $query->join('categorias', 'movimientos.categoria_id', '=', 'categorias.id')
+        ->join('tipo_movimientos', 'movimientos.tipo_movimiento_id', '=', 'tipo_movimientos.id')
                      ->selectRaw("categorias.nombre as categoria,
+                       tipo_movimientos.id as tipo_movimiento_id,
                       {$this->getSumQuery('movimientos.monto')} as total, 
                       {$this->getMovimientosCountQuery()} as cantidad");
         $query = $this->baseQuery($dto->dateRange->startDate, $dto->dateRange->endDate, $query);
         $query = $this->resolveRelationQuery($query, $dto);
         return $query
-        ->groupBy('categorias.id', 'categorias.nombre')
+        ->groupBy('categorias.id', 'categorias.nombre', 'tipo_movimientos.id')
         ->orderByDesc('total')
         ->get();
         

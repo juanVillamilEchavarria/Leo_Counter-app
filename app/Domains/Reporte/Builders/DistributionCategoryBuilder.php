@@ -12,6 +12,7 @@ class DistributionCategoryBuilder{
             return new DistributionCategoryDTO(
                 categoria: $item->categoria,
                 cantidad: (int) $item->cantidad,
+                tipo_movimiento_id: (int) $item->tipo_movimiento_id,
                 total:(float) $item->total
             );
         })->values();
