@@ -34,7 +34,7 @@ interface CategoriaPieChartProps {
 
 export default function CategoriaPieChart({ distribucion }: CategoriaPieChartProps) {
   const {filteredData, filteredOptions} = useCategoriaPieChart({data: distribucion.data})
-  const hasData = distribucion.data.length > 0
+  const hasData = filteredData.length > 0
 
   return (
     <Card>

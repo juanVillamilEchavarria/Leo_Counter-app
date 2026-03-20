@@ -12,8 +12,10 @@ class ReporteQueryDTO extends DTO
     public function __construct(
         public ReportGranularityStrategyContract $granularityStrategy,
          public DateRange $dateRange,
+        public bool $only_categorias_fijas = false,
          public ?IdsDTO $categorias = null,
-         public ?IdsDTO $cuentas = null
+         public ?IdsDTO $cuentas = null,
+  
     )
     {   
     }

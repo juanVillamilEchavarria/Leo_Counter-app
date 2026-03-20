@@ -6,7 +6,7 @@ import { useGenerateReportMutation } from "../../hooks/api/useGenerateReportMuta
 import { useCallback, useEffect } from "react"
 import { type ReporteSheetProps } from "./ReporteSheet"
 import { formatActiveFilters } from "../../helpers/formatActiveFilters"
-
+import { toastHelper } from "@/app/shared/helpers"
 export default function ReporteSheetContent({
   setData,
   setIsLoading,
@@ -27,9 +27,12 @@ export default function ReporteSheetContent({
     (data) => {
       setData(data)
       updateActiveFilters()
+      toastHelper.success('Reporte generado')
     },
     (errors) => {
-      if (!errors.startDate || !errors.endDate) setError(errors)
+      toastHelper.error('Error al generar reporte')
+      
+      
     }
   )
 

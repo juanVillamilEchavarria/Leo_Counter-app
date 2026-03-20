@@ -3,8 +3,9 @@
 namespace App\Domains\Reporte\Strategies\Abstracts;
 use Illuminate\Database\Query\Builder;
 use App\Domains\Reporte\DTOs\ReporteQueryDTO;
+use App\Domains\Reporte\Strategies\Contracts\QueryRelationStrategyContract;
 use App\Shared\DTOs\Querys\IdsDTO;
-abstract class QueryIdRelationStrategy {
+abstract class QueryIdRelationStrategy implements QueryRelationStrategyContract {
     /**
      * Tabla que contiene la relacion
      */
@@ -20,8 +21,8 @@ abstract class QueryIdRelationStrategy {
      * Ej: movimientos
      */
     protected string $dtoProperty; 
-    public function supports(ReporteQueryDTO $reporteQueryDTO, string $table) {
-        return !is_null($reporteQueryDTO->{$this->dtoProperty}) && $this->table === $table;
+    public function supports(ReporteQueryDTO $reporteQueryDTO, string $param) {
+        return !is_null($reporteQueryDTO->{$this->dtoProperty}) && $this->table === $param;
     }
 
     public function apply(Builder $query, ReporteQueryDTO $reporteQueryDTO) {

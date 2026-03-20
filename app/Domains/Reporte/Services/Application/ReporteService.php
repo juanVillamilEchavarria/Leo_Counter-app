@@ -67,6 +67,7 @@ class ReporteService{
         return new ReporteQueryDTO(
         dateRange: $dateRange,
         granularityStrategy: $granularity,
+        only_categorias_fijas: $data['only_categorias_fijas'] ?? false,
         categorias: $categorias,
         cuentas: $cuentas
         );

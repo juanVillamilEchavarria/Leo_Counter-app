@@ -29,6 +29,7 @@ export default function useActiveReportFilters() {
   const [periodo, setPeriodo] = useState(defaultFilters.periodo)
   const [categorias, setCategorias] = useState<string | string[]>(defaultFilters.categorias)
   const [cuentas, setCuentas] = useState<string | string[]>(defaultFilters.cuentas)
+  
 
   const reset = useCallback(() => {
     setPeriodo(defaultFilters.periodo)

@@ -19,6 +19,16 @@ class ConditionalAggregateBuilder{
      */
 
     /**
+     * Ejemplo de instanciacion:
+     * $builder = ConditionalAggregateBuilder::make()
+     * ->aggregate('SUM')
+     * ->column('movimientos.monto')
+     * ->conditionColumn('movimientos.tipo_movimiento_id')
+     * ->useCoalesce(true)
+     * ->build();
+     */
+
+    /**
      * @param string $aggregate
      * @param string $column
      * @param string $conditionColumn
@@ -42,6 +52,10 @@ class ConditionalAggregateBuilder{
     public static function make(){
         return new self();
     }
+
+    /**
+     * Metodos para configurar el objeto
+     */
 
     public function aggregate(string $aggregate){
         $this->aggregate = $aggregate;
@@ -68,6 +82,9 @@ class ConditionalAggregateBuilder{
         return $this;
     }
 
+    /**
+     * Construye la query completa con el COALESCE si es necesario
+     */
     public function build(){
         return $this->useCoalesce ?
                 "COALESCE({$this->buildQuery()}, {$this->defaultValue})":
@@ -77,6 +94,12 @@ class ConditionalAggregateBuilder{
     public function __toString(){
         return $this->build();
     }
+
+    /**
+     * Retorna la query para el aggregate
+     * Ej:
+     * SUM(CASE WHEN movimientos.tipo_movimiento_id = ? THEN monto END)
+     */
     private function buildQuery(){
         if($this->conditionColumn){
             $caseWhen= $this->buildWhenQuery();
