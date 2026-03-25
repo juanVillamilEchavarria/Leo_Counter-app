@@ -6,6 +6,7 @@ namespace App\Domains\Reporte\Repositories\Application\Eloquent;
 use App\Domains\Reporte\Repositories\Contracts\ReporteRepositoryContract;
 // Enums
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
+use App\Domains\Reporte\Strategies\Enums\QueryRelationParam;
 use Illuminate\Database\Query\Builder;
 //DTOs
 use App\Domains\Reporte\DTOs\ReporteQueryDTO;
@@ -33,7 +34,7 @@ class EloquentReporteRepository implements ReporteRepositoryContract
     public function getIngresos(ReporteQueryDTO $dto): Collection{
         $query = $this->movimientos()->where('tipo_movimiento_id', TipoMovimientoEnum::INGRESO->value);
         $query = $this->baseQuery($dto->dateRange->startDate, $dto->dateRange->endDate, $query);
-        $query = $this->resolveRelationQuery($query, $dto);
+        $query = $this->resolveRelationQuery($query, $dto, QueryRelationParam::MOVIMIENTOS_TABLE);
         $date = $dto->granularityStrategy->groupBy();
         return $query
                 ->selectRaw("{$date} as fecha, {$this->getSumQuery('monto')} as monto")
@@ -46,7 +47,7 @@ class EloquentReporteRepository implements ReporteRepositoryContract
     public function getGastos(ReporteQueryDTO $dto): Collection{
         $query = $this->movimientos()->where('tipo_movimiento_id', TipoMovimientoEnum::GASTO->value);
         $query = $this->baseQuery($dto->dateRange->startDate, $dto->dateRange->endDate, $query);
-        $query = $this->resolveRelationQuery($query, $dto);
+        $query = $this->resolveRelationQuery($query, $dto, QueryRelationParam::MOVIMIENTOS_TABLE);
         $date = $dto->granularityStrategy->groupBy();
         return $query
                 ->selectRaw("{$date} as fecha, {$this->getSumQuery('monto')} as monto")
@@ -82,7 +83,7 @@ class EloquentReporteRepository implements ReporteRepositoryContract
                  TipoMovimientoEnum::GASTO->value]);
 
         $query = $this->baseQuery($dto->dateRange->startDate, $dto->dateRange->endDate, $query);
-        $query = $this->resolveRelationQuery($query, $dto, 'movimientos');
+        $query = $this->resolveRelationQuery($query, $dto, QueryRelationParam::MOVIMIENTOS_TABLE);
         $query->groupByRaw($dto->granularityStrategy->groupBy());
         return $query->get();
     }
@@ -102,7 +103,7 @@ class EloquentReporteRepository implements ReporteRepositoryContract
     public function getTotalPresupuesto(ReporteQueryDTO $dto): float{
         $query = $this->presupuestos();
         $query = $this->baseQuery($dto->dateRange->startDate, $dto->dateRange->endDate, $query, 'presupuestos.created_at');
-        $query = $this->resolveRelationQuery($query, $dto, 'presupuestos');
+        $query = $this->resolveRelationQuery($query, $dto, QueryRelationParam::PRESUPUESTOS_TABLE);
         return $query->sum('monto');
     }
 
@@ -122,8 +123,8 @@ class EloquentReporteRepository implements ReporteRepositoryContract
     /**
      * obtiene la query derivada del strategy con la query de acuerdo con el tipo de relacion del reporte
      */
-    private function resolveRelationQuery(Builder $query, ReporteQueryDTO $reporteQueryDTO, ?string $table = 'movimientos'): Builder{
-        return $this->queryIdRelationResolver->resolve($query, $reporteQueryDTO, $table);
+    private function resolveRelationQuery(Builder $query, ReporteQueryDTO $reporteQueryDTO, QueryRelationParam $param = QueryRelationParam::MOVIMIENTOS_TABLE): Builder{
+        return $this->queryIdRelationResolver->resolve($query, $reporteQueryDTO, $param);
     }
 
     private function getConditionalSumQuery(): string {
@@ -191,8 +192,8 @@ class EloquentReporteRepository implements ReporteRepositoryContract
                       {$this->getMovimientosCountQuery()} as cantidad");
         $query = $this->baseQuery($dto->dateRange->startDate, $dto->dateRange->endDate, $query);
         $query = $this->resolveRelationQuery($query, $dto);
-        $query = $this->resolveRelationQuery($query, $dto, 'tipo_movimientos_join');
-        $query = $this->resolveRelationQuery($query, $dto, 'categorias_join');
+        $query = $this->resolveRelationQuery($query, $dto, QueryRelationParam::TIPO_MOVIMIENTOS_JOIN);
+        $query = $this->resolveRelationQuery($query, $dto, QueryRelationParam::CATEGORIAS_JOIN);
         return $query
         ->groupBy('categorias.id', 'categorias.nombre', 'tipo_movimientos.id')
         ->orderByDesc('total')

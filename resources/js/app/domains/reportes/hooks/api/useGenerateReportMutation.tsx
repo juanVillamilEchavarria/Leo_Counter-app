@@ -5,7 +5,6 @@ import { parseApiErrors } from '@/app/shared/helpers';
 import {type ApiErrorResponse } from '@/app/shared/types/api';
 import { type ReporteFormData, type ReporteApiResponse } from '../../types/reporte.types';
 import { type AxiosError } from 'axios';
-import type { R } from 'node_modules/framer-motion/dist/types.d-DagZKalS';
 export function useGenerateReportMutation(
   onSuccess?: (data: ReporteApiResponse) => void,
   onError?: (errors: Record<string, string> | AxiosError<any, any>) => void

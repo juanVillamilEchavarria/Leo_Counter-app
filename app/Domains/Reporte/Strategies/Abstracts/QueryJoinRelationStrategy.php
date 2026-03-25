@@ -3,6 +3,7 @@
 namespace App\Domains\Reporte\Strategies\Abstracts;
 use App\Domains\Reporte\DTOs\ReporteQueryDTO;
 use App\Domains\Reporte\Strategies\Contracts\QueryRelationStrategyContract;
+use App\Domains\Reporte\Strategies\Enums\QueryRelationParam;
 use App\Shared\DTOs\Querys\WhereFilterQueryDTO;
 use Illuminate\Database\Query\Builder;
 use App\Shared\Enums\ComparativeOperators;
@@ -42,18 +43,19 @@ abstract class QueryJoinRelationStrategy implements QueryRelationStrategyContrac
      * 
      */
     protected ?WhereFilterQueryDTO $where = null;
-
-    /**
-     * La propiedad del dto que contiene los datos de la relacion
-     */
-    protected string $dtoProperty;
     /**
      * El operador que se utilizara para realizar la comparacion
      */
     protected ComparativeOperators $joinOperator = ComparativeOperators::EQUALS;
 
-    public function supports(ReporteQueryDTO $reporteQueryDTO, string $param) {
-        return !is_null($reporteQueryDTO->{$this->dtoProperty}) && $this->table === $param;
+    /**
+     * 
+     * @param ReporteQueryDTO $reporteQueryDTO
+     * funcion para declarar la propiedad del dto que se utilizara para realizar el join y verificar si se debe realizar el join
+     */
+    abstract protected function dtoProperty(ReporteQueryDTO $reporteQueryDTO): mixed;
+    public function supports(ReporteQueryDTO $reporteQueryDTO, QueryRelationParam $param) {
+        return !is_null($this->dtoProperty($reporteQueryDTO)) && $this->table === $param->value;
     }
 
     public function apply(Builder $query, ReporteQueryDTO $reporteQueryDTO){

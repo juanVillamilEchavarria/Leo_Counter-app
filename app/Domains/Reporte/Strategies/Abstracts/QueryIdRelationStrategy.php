@@ -4,6 +4,7 @@ namespace App\Domains\Reporte\Strategies\Abstracts;
 use Illuminate\Database\Query\Builder;
 use App\Domains\Reporte\DTOs\ReporteQueryDTO;
 use App\Domains\Reporte\Strategies\Contracts\QueryRelationStrategyContract;
+use App\Domains\Reporte\Strategies\Enums\QueryRelationParam;
 use App\Shared\DTOs\Querys\IdsDTO;
 abstract class QueryIdRelationStrategy implements QueryRelationStrategyContract {
     /**
@@ -21,15 +22,18 @@ abstract class QueryIdRelationStrategy implements QueryRelationStrategyContract 
      * Ej: movimientos
      */
     protected string $dtoProperty; 
-    public function supports(ReporteQueryDTO $reporteQueryDTO, string $param) {
-        return !is_null($reporteQueryDTO->{$this->dtoProperty}) && $this->table === $param;
+    /**
+     * @return IdsDTO
+     * Funcion para declarar la propiedad del dto que se utilizara para realizar el filtrado de la consulta y verificar si se debe realizar el join
+     */
+    abstract protected function dtoProperty(ReporteQueryDTO $reporteQueryDTO): IdsDTO | null;
+    public function supports(ReporteQueryDTO $reporteQueryDTO, QueryRelationParam $param) {
+        return !is_null($this->dtoProperty($reporteQueryDTO)) && $this->table === $param->value;
     }
 
     public function apply(Builder $query, ReporteQueryDTO $reporteQueryDTO) {
-        /**
-         * @var IdsDTO $reporteQueryDTO{$this->dtoProperty}
-         */
-        return $query->whereIn($this->relationColumn, $reporteQueryDTO->{$this->dtoProperty}->toArray()['ids']);
+
+        return $query->whereIn($this->relationColumn, $this->dtoProperty($reporteQueryDTO)->toArray()['ids']);
     }
 
     public function setRelationColumn(string $relationColumn){

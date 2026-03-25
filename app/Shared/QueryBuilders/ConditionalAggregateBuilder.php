@@ -50,7 +50,7 @@ class ConditionalAggregateBuilder{
     private bool $useCoalesce = true;
     private int | float $defaultValue = 0;
     
-    public static function make(){
+    public static function make(): self{
         return new self();
     }
 
@@ -58,27 +58,27 @@ class ConditionalAggregateBuilder{
      * Metodos para configurar el objeto
      */
 
-    public function aggregate(string $aggregate){
+    public function aggregate(string $aggregate): self{
         $this->aggregate = $aggregate;
         return $this;
     }
 
-    public function column(string $column){
+    public function column(string $column): self{
         $this->column = $column;
         return $this;
     }
 
-    public function conditionColumn(string $conditionColumn){
+    public function conditionColumn(string $conditionColumn): self{
         $this->conditionColumn = $conditionColumn;
         return $this;
     }
 
-    public function useCoalesce(bool $useCoalesce){
+    public function useCoalesce(bool $useCoalesce): self{
         $this->useCoalesce = $useCoalesce;
         return $this;
     }
 
-    public function defaultValue(int | float $defaultValue){
+    public function defaultValue(int | float $defaultValue): self{
         $this->defaultValue = $defaultValue;
         return $this;
     }
@@ -86,13 +86,13 @@ class ConditionalAggregateBuilder{
     /**
      * Construye la query completa con el COALESCE si es necesario
      */
-    public function build(){
+    public function build(): string{
         return $this->useCoalesce ?
                 "COALESCE({$this->buildQuery()}, {$this->defaultValue})":
                 $this->buildQuery();
 
     }
-    public function __toString(){
+    public function __toString(): string{
         return $this->build();
     }
 
@@ -101,7 +101,7 @@ class ConditionalAggregateBuilder{
      * Ej:
      * SUM(CASE WHEN movimientos.tipo_movimiento_id = ? THEN monto END)
      */
-    private function buildQuery(){
+    private function buildQuery(): string{
         if($this->conditionColumn){
             $caseWhen= $this->buildWhenQuery();
             return "{$this->aggregate}({$caseWhen})";
@@ -109,7 +109,7 @@ class ConditionalAggregateBuilder{
         return "{$this->aggregate}({$this->column})";
     }
 
-    private function buildWhenQuery(){
+    private function buildWhenQuery(): string{
         return $this->aggregate === 'COUNT'?
             "CASE WHEN {$this->conditionColumn} = ? THEN 1 END" :
             "CASE WHEN {$this->conditionColumn} = ? THEN {$this->column} END";
