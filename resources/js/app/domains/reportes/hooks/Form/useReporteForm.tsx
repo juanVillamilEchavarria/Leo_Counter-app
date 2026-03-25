@@ -1,4 +1,4 @@
-import { type ReporteFormData } from '../types/reporte.types';
+import { type ReporteFormData } from '../../types/reporte.types';
 import { useForm } from '@inertiajs/react';
 export type FormErrors = Partial<Record<keyof ReporteFormData, string>>;
 

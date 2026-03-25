@@ -33,13 +33,12 @@ export default function BalanceLineChart({ data }: BalanceLineChartProps) {
         <div className="flex w-full justify-between">
           <div className="flex flex-col gap-2">
             <h3 className="font-bold text-lg">Evolución del Balance Neto</h3>
-            <p className="text-gray-500 text-sm">Tendencia mensual de los últimos 6 meses</p>
           </div>
         </div>
       </div>
 
       {hasData ? (
-        <ChartContainer config={chartConfig} className="h-[300px] w-full">
+        <ChartContainer config={chartConfig} className="h-75 w-full">
           <ComposedChart
             data={chartData}
             margin={{ top: 20, right: 30, left: 20, bottom: 5 }}

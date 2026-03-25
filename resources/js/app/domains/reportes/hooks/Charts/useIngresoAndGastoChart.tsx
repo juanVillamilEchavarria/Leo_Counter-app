@@ -23,7 +23,7 @@ export default function useIngresoAndGastoChart({
     */
    const filteredData = useMemo(() => {
      return data.map(item => ({
-       mes: item.mes,
+       period: item.period,
        ingresos: mode === ChartModesEnum.GASTO ? 0 : item.ingresos,
        gastos: mode === ChartModesEnum.INGRESO ? 0 : item.gastos,
      }))

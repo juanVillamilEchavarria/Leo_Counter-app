@@ -16,7 +16,6 @@ export function useGenerateReportMutation(
       if (onSuccess) onSuccess(data);
     },
     onError: (error: AxiosError<ApiErrorResponse>) => {
-      console.error('Error:', error.response?.data?.errors?.startDate);
       if(error.response?.data?.errors?.startDate || error.response?.data?.errors?.endDate) return
       if (onError) onError(error);
     },

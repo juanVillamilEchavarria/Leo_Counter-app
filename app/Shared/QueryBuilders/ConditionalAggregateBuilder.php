@@ -1,23 +1,24 @@
 <?php
 namespace App\Shared\QueryBuilders;
 
-class ConditionalAggregateBuilder{
-    /**
-     * construira una query para un aggregate con una condicion
-     * ejemplo de retornos :
-     * con COALESCE y conditionColumn : 
-     * COALESCE(SUM(CASE WHEN movimientos.tipo_movimiento_id = ? THEN monto END), 0)
-     * 
-     * con COALESCE y sin conditionColumn :
-     * COALESCE(SUM(monto), 0)
-     * 
-     * sin COALESCE y conditionColumn :
-     * SUM(CASE WHEN movimientos.tipo_movimiento_id = ? THEN monto END)
-     * 
-     * sin COALESCE y sin conditionColumn :
-     * SUM(monto)
-     */
+/**
+ * construira una query para un aggregate con una condicion
+ * ejemplo de retornos :
+ * con COALESCE y conditionColumn : 
+ * COALESCE(SUM(CASE WHEN movimientos.tipo_movimiento_id = ? THEN monto END), 0)
+ * 
+ * con COALESCE y sin conditionColumn :
+ * COALESCE(SUM(monto), 0)
+ * 
+ * sin COALESCE y conditionColumn :
+ * SUM(CASE WHEN movimientos.tipo_movimiento_id = ? THEN monto END)
+ * 
+ * sin COALESCE y sin conditionColumn :
+ * SUM(monto)
+ */
 
+class ConditionalAggregateBuilder{
+    
     /**
      * Ejemplo de instanciacion:
      * $builder = ConditionalAggregateBuilder::make()

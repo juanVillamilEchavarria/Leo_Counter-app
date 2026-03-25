@@ -5,7 +5,6 @@ use App\Domains\Reporte\Services\Application\ReporteService;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Reporte\GenerateReporteRequest;
-use Illuminate\Http\Request;
 class ReporteApiController extends Controller
 {
     public function __construct(

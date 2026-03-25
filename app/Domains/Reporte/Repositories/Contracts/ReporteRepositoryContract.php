@@ -3,7 +3,6 @@
 namespace App\Domains\Reporte\Repositories\Contracts;
 use Illuminate\Support\Collection;
 use App\Domains\Reporte\DTOs\ReporteQueryDTO;
-use Illuminate\Support\Carbon;
 interface ReporteRepositoryContract{
     /**
      * @return Collection<stdClass>

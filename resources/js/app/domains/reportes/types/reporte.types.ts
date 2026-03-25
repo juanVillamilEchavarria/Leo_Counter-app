@@ -43,7 +43,7 @@ export interface KPIs {
 export interface IngresoVsGastoData {
   ingresos: number
   gastos: number
-  mes: string
+  period: string
 }
 export interface Presupuesto{
     gastado : number

@@ -1,12 +1,11 @@
 <?php
 
-use App\Domains\Reporte\Strategies\Providers\Relations\QueryRelationStrategyProvider;
-
 return [
     App\Domains\ArchivoMovimiento\Repositories\Providers\ArchivoMovimientoRepositoryProvider::class,
     App\Domains\Categoria\Repositories\Providers\CategoriaRepositoryProvider::class,
     App\Domains\Cuenta\Repositories\Providers\CuentaRepositoryProvider::class,
     App\Domains\FrecuenciaMovimiento\Repositories\Providers\FrecuenciaMovimientoRepositoryProvider::class,
+    App\Domains\Home\Providers\HomeProvider::class,
     App\Domains\MovimientoFijo\Repositories\Providers\MovimientoFijoRepositoryProvider::class,
     App\Domains\MovimientoPendiente\Repositories\Providers\MovimientoPendienteRepositoryProvider::class,
     App\Domains\Movimiento\Repositories\Providers\MovimientoRepositoryProvider::class,
@@ -14,9 +13,9 @@ return [
     App\Domains\Propietario\Repositories\Providers\PropietarioRepositoryProvider::class,
     App\Domains\Reporte\Repositories\Providers\ReporteProvider::class,
     App\Domains\Reporte\Strategies\Providers\Granularity\GranularityStrategieProvider::class,
+    App\Domains\Reporte\Strategies\Providers\Relations\QueryRelationStrategyProvider::class,
     App\Domains\TipoCuenta\Repositories\Providers\TipoCuentaRepositoryProvider::class,
     App\Domains\TipoMovimiento\Repositories\Providers\TipoMovimientoRepositoryProvider::class,
     App\Domains\TipoPresupuesto\Repositories\Providers\TipoPresupuestoRepositoryProvider::class,
-    QueryRelationStrategyProvider::class,
     App\Providers\AppServiceProvider::class,
 ];

@@ -6,7 +6,7 @@
  */
 
 // Form state management
-export { useReporteForm, type FormErrors } from './useReporteForm';
+export { useReporteForm, type FormErrors } from './Form/useReporteForm';
 
 // API mutations
 export { useGenerateReportMutation } from './api/useGenerateReportMutation';

@@ -35,7 +35,6 @@ export default function Reporte() {
   })
 
 
-  console.error(error)
   if (isLoading) {
     return (
       <ReporteSection

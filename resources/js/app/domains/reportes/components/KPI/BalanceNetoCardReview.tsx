@@ -21,7 +21,7 @@ export default function BalanceNetoCardReview({ total, variacion }: BalanceNetoC
       percentage={Math.abs(percentage)}
       tipo_movimiento={tipoMovimiento}
       flow={flow}
-      total={Math.abs(total)}
+      total={total}
       tipo_total="dinero"
       icon="fa-scale-balanced"
     >

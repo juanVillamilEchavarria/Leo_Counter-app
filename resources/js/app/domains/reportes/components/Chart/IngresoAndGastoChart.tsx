@@ -39,14 +39,13 @@ export default function IngresoAndGastoChart({ data: chartData }: IngresoAndGast
         promedios: chartData.promedios
       })
   const hasData = chartData.data.length > 0
-
+console.log(filteredData)
   return (
     <Card>
       <div className="flex flex-col gap-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h3 className="font-semibold text-lg">{title}</h3>
-            <p className="text-sm text-gray-500">Comparativa mensual de los últimos 6 meses</p>
           </div>
           <FilterOptions options={filteredOptions} />
         </div>
@@ -72,7 +71,7 @@ export default function IngresoAndGastoChart({ data: chartData }: IngresoAndGast
               <BarChart data={filteredData} barCategoryGap={20}>
                 <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="#f0f0f0" />
                 <XAxis
-                  dataKey="mes"
+                  dataKey="period"
                   tickLine={false}
                   axisLine={false}
                   tick={{ fontSize: 12, fill: '#6b7280' }}

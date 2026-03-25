@@ -19,6 +19,10 @@ final class DateRange {
         return new self(Carbon::now()->subMonths(6), Carbon::now());
     }
 
+    public static function lastMonth(){
+        return new self(Carbon::now()->subMonth(), Carbon::now());
+    }
+
     public static function fromArray(array $data){
         return new self(Carbon::parse($data['startDate']), Carbon::parse($data['endDate']));
     }

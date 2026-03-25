@@ -11,6 +11,11 @@ export const enum ChartModesEnum{
     GASTO = TiposMovimientoEnum.GASTO,
     AMBOS = 3
 } 
+/**
+ * 
+ * Funcion que maneja el modo de las graficas, para intercalar entre ambos, ingresos o gastos 
+ * 
+ */
 
 export default function useChartMode() {
       const [mode, setMode] = useState<ChartMode>(ChartModesEnum.AMBOS)
