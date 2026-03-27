@@ -21,7 +21,7 @@ export default function ActiveReportFilters({
   const { isOpen: isOpenCuentas, setIsOpen: setIsOpenCuentas } = useOpen(false)
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-4 mb-6">
+    <div className="bg-background rounded-lg border border-gray-200 p-4 mb-6">
       <div className="flex items-center gap-4 mb-4">
         <h4 className="font-semibold text-gray-900">Filtros activos</h4>
         <div className="w-1/12">
@@ -40,7 +40,7 @@ export default function ActiveReportFilters({
       </div>
 
       <ul className="space-y-2">
-        <li className="flex items-center gap-2 text-gray-600">
+        <li className="flex items-center gap-2 text-muted-foreground">
           <i className="fa-solid fa-calendar text-blue-500"></i>
           <span>{periodo}</span>
         </li>
@@ -55,7 +55,7 @@ export default function ActiveReportFilters({
           ) : (
             <>
               <i className="fa-solid fa-tag text-orange-500"></i>
-              <span className="text-gray-600"> {categorias}</span>
+              <span className="text-muted-foreground"> {categorias}</span>
             </>
           )}
         </li>
@@ -70,7 +70,7 @@ export default function ActiveReportFilters({
           ) : (
             <>
               <i className="fa-solid fa-tag text-orange-500"></i>
-              <span className="text-gray-600"> {cuentas}</span>
+              <span className="text-muted-foreground"> {cuentas}</span>
             </>
           )}
         </li>

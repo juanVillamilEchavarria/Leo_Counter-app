@@ -35,7 +35,7 @@ export default function SimpleTable<T>({ //en el T se le pasa el tipo de Modelo 
                 <tbody className="table-tbody">
                     {paginatedData.length===0 &&(
                         <tr>  
-                            <td colSpan={columns.length} className="text-gray-500  text-xl text-center">
+                            <td colSpan={columns.length} className="text-muted-foreground  text-xl text-center">
                                 {emptyMessage}
                              </td>  
                         </tr>

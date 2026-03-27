@@ -24,7 +24,7 @@ export default function SelfUserCard({
            {/* muestra la imagen del usuario */}
             <div 
                 className="
-                bg-white/80
+                bg-background/80
                 p-2 
                 rounded-full
                 "
@@ -62,7 +62,7 @@ export default function SelfUserCard({
                 }>
                     <div className="border-l-2  border-gray-700/80">
                         <button
-                        className="cursor-pointer ml-2 hover:bg-white/20 rounded-xlpy-1 "
+                        className="cursor-pointer ml-2 hover:bg-background/20 rounded-xlpy-1 "
                         onClick={() => setIsOpenCard(prev => !prev)}
                         ref={buttonRef}
                         >

@@ -15,13 +15,13 @@ export default function SideBarToggle({
                         z-50
                         w-8 h-8
                         rounded-full
-                        bg-white
+                        bg-background
                         border-2 border-gray-200
                         flex items-center justify-center
                         shadow-lg
                         cursor-pointer
                         hover:bg-gray-100
-                        hover:border-gray-300
+                        hover:border-border
                         transition-all
                         ease-in-out
                         duration-500

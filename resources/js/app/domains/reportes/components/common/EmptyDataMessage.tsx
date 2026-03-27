@@ -13,7 +13,7 @@ export default function EmptyDataMessage({
           </div>
           <div>
             <h4 className="font-semibold text-gray-900">{title}</h4>
-            <p className="text-sm text-gray-500">{paragraph}</p>
+            <p className="text-sm text-muted-foreground">{paragraph}</p>
           </div>
         </div>
   )

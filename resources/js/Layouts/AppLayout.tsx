@@ -11,7 +11,7 @@ export default function AppLayout({
     const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex h-screen overflow-hidden bg-background">
 
         <ToastContainer className={`mt-20`}  />
         <FlashToastListener />

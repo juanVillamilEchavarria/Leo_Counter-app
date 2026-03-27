@@ -56,7 +56,7 @@ export default function TanStackTableServerSide<T extends Record<string, any>>({
             {isFetching && (
                 <div className="flex justify-center items-center p-4">
                     <i className="fas fa-spinner fa-spin text-blue-500 mr-2"></i>
-                    <span className="text-gray-600">Cargando...</span>
+                    <span className="text-muted-foreground">Cargando...</span>
                 </div>
             )}
 
@@ -118,7 +118,7 @@ export default function TanStackTableServerSide<T extends Record<string, any>>({
                             <tr>
                                 <td
                                     colSpan={columns.length}
-                                    className="text-gray-500 text-xl text-center"
+                                    className="text-muted-foreground text-xl text-center"
                                 >
                                     No hay registros
                                 </td>

@@ -47,7 +47,7 @@ export default function ToggleState({
                       after:absolute 
                       after:top-0 
                       after:start-0
-                    after:bg-white 
+                    after:bg-background 
                       after:rounded-full
                       after:h-5 
                       after:w-5 

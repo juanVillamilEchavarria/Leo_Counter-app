@@ -1,8 +1,8 @@
 const baseStyle = 'backdrop-blur-4xl shadow-[0_20px_50px_rgba(0,0,0,0.6)]'
 export const CardVariants=
 {
-    primary: ` bg-white/20 ${baseStyle} border border-gray-200/50 `, 
-    secondary: `bg-wite-200/20 ${baseStyle} border-l-10 border-gray-600/20 `,
+    primary: ` bg-background/20 ${baseStyle} border border-gray-200/50 `, 
+    secondary: `bg-wite-200/20 ${baseStyle} border-l-10 border-muted-foreground/20 `,
     success: `bg-green-200/20 ${baseStyle} border border-green-200/50 `,
     danger: `bg-red-200/20 ${baseStyle} border border-red-200/50 `,
     successSecondary: 'bg-green-100/20 ${baseStyle} border-l-10 border-green-600/20',

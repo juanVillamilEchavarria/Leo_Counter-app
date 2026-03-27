@@ -18,16 +18,16 @@ const ButtonTransitionBaseStyles = `
                     px-6
                     py-3
                     font-semibold
-                    text-white
+                    text-primary-foreground
                     cursor-pointer
                     `
 const TransitionCommonStyles= 'transition-all ease-in-out duration-400 '
-const ButtonBorderedBaseStyles = 'bg-white border hover:text-white '
+const ButtonBorderedBaseStyles = 'bg-background border hover:text-primary-foreground '
 export const ButtonVariants = {
     gray: `
                       bg-gray-300 
                       hover:bg-gray-400 
-                      text-black 
+                      text-foreground 
                       ${TransitionCommonStyles}
                       ${ButtonBaseStyles}
                       `,
@@ -35,13 +35,13 @@ export const ButtonVariants = {
   primary:      `
                       bg-azul 
                       hover:bg-azul-oscuro 
-                      text-white 
+                      text-primary-foreground 
                       ${TransitionCommonStyles}
                       ${ButtonBaseStyles}
                       `,
   success:       `
                       bg-green-800 
-                      text-white 
+                      text-primary-foreground 
                       hover:bg-green-700 
                       ${TransitionCommonStyles}
                       ${ButtonBaseStyles}
@@ -67,7 +67,7 @@ secondary:       `
 danger:       `
                       bg-rojo 
                       hover:bg-rojo-oscuro 
-                      text-white 
+                      text-primary-foreground 
                       ${TransitionCommonStyles}
                       ${ButtonBaseStyles}
                       `,
@@ -83,17 +83,17 @@ danger:       `
   dark:`
                       bg-slate-900
                       hover:bg-slate-800 
-                      text-white 
+                      text-primary-foreground 
                       ${TransitionCommonStyles}
                       ${ButtonBaseStyles}
                       `,
   primaryPagination: `
-                      bg-white/10 
+                      bg-background/10 
                       border-t-2 
                       border-transparent  
                       hover:border-gray-400 
                       text-gray-400
-                      hover:text-black
+                      hover:text-foreground
                       ${TransitionCommonStyles}
                       ${ButtonBaseStyles}
                       `,

@@ -25,7 +25,7 @@ export default function StatisticalSummaryText({
   return (
     <div className="flex items-center gap-2">
       <div className={`w-3 h-3 rounded-full ${color}`}></div>
-      <span className="text-gray-600">{text}</span>
+      <span className="text-muted-foreground">{text}</span>
       <span className={`font-semibold ${valueColor}`}>{valueFormated}</span>
     </div>
   )

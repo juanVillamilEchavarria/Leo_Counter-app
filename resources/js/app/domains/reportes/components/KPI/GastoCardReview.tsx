@@ -28,7 +28,7 @@ export default function GastoCardReview({ total, variacion }: GastoCardReviewPro
           </p>
           <i className={`fa-solid ${trendIcon} ${trendIconColor}`}></i>
         </div>
-        <small className="text-xs text-gray-500">
+        <small className="text-xs text-muted-foreground">
           {percentage >= 0 ? "¡Se recomienda revisar categorías principales!" : "Reducción de gastos positiva"}
         </small>
       </div>

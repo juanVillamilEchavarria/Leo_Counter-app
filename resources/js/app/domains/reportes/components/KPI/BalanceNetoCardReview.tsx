@@ -32,7 +32,7 @@ export default function BalanceNetoCardReview({ total, variacion }: BalanceNetoC
           </p>
           <i className={`fa-solid ${trendIcon} ${trendIconColor}`}></i>
         </div>
-        <small className="text-xs text-gray-500">
+        <small className="text-xs text-muted-foreground">
           {isPositive ? "Balance positivo en el período" : "Balance negativo, requiere atención"}
         </small>
       </div>

@@ -42,7 +42,7 @@
 }
 @layer components{
   .layout-background{
-    @apply bg-white text-gray-900 border border-gray-200 shadow-xl rounded-2xl
+    @apply bg-background text-foreground border border-border shadow-xl rounded-2xl
   }
   /* Table */
   .table-container{
@@ -58,7 +58,7 @@
     @apply text-left
   }
   .table-tbody tr{
-    @apply border-b border-gray-300/40 even:bg-gray-300/40
+    @apply border-b border-border/40 even:bg-gray-300/40
   }
   .table-tbody tr td{
     @apply px-4 py-2
@@ -75,7 +75,7 @@
     @apply flex w-full justify-center gap-2 items-center
   }
   .legend{
-    @apply text-gray-600 text-lg
+    @apply text-muted-foreground text-lg
   }
   .formulario-campo{
     @apply flex flex-col gap-2
@@ -87,10 +87,10 @@
     @apply flex w-full gap-4
   }
   .formulario-fillable{
-    @apply w-full border-2 border-gray-300 rounded-2xl p-3
+    @apply w-full border-2 border-border rounded-2xl p-3
   }
   .select{
-    @apply w-full border-2 border-gray-300 rounded-xl p-3
+    @apply w-full border-2 border-border rounded-xl p-3
   }
 
 }

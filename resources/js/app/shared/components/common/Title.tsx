@@ -9,6 +9,6 @@ export default function Title({
 }:TitleProps) {
     
   return (
-    <Tag className={`font-bold ${TextSize[size]} ${className}`}>{title}</Tag>
+    <Tag className={`text-foreground font-bold ${TextSize[size]} ${className}`}>{title}</Tag>
   )
 }

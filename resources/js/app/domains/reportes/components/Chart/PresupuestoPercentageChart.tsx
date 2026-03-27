@@ -33,7 +33,7 @@ export default function PresupuestoPercentageChart({
             <div className="flex w-full justify-between items-start">
                 <div className="flex flex-col gap-1">
                     <h3 className="font-bold text-lg">Control Presupuestario</h3>
-                    <p className="text-gray-500 text-sm">Estado del presupuesto mensual</p>
+                    <p className="text-muted-foreground text-sm">Estado del presupuesto mensual</p>
                 </div>
                 {hasBudget && (
                     <div className="text-right">
@@ -52,15 +52,15 @@ export default function PresupuestoPercentageChart({
                 <>
                     <div className="grid grid-cols-3 gap-4 text-sm">
                         <div className="text-center">
-                            <p className="text-gray-500">Presupuestado</p>
+                            <p className="text-muted-foreground">Presupuestado</p>
                             <p className="font-semibold text-gray-900">{moneyFormat(data.presupuestado)}</p>
                         </div>
                         <div className="text-center">
-                            <p className="text-gray-500">Gastado</p>
+                            <p className="text-muted-foreground">Gastado</p>
                             <p className="font-semibold text-red-600">{moneyFormat(data.gastado)}</p>
                         </div>
                         <div className="text-center">
-                            <p className="text-gray-500">Disponible</p>
+                            <p className="text-muted-foreground">Disponible</p>
                             <p className={`font-semibold ${data.disponible >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                                 {moneyFormat(Math.abs(data.disponible))}
                             </p>
@@ -92,7 +92,7 @@ export default function PresupuestoPercentageChart({
                                     <span className="text-2xl font-bold">
                                     {data.porcentaje_usado.toFixed(1)}%
                                     </span>
-                                    <span className="text-xs text-gray-500">
+                                    <span className="text-xs text-muted-foreground">
                                     usado
                                     </span>
                                 </div>

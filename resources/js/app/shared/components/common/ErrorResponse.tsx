@@ -13,10 +13,10 @@ export default function ErrorResponse({
           </div>
           <div className="text-center space-y-2">
             <h3 className="text-lg font-semibold text-gray-900">{text}</h3>
-            <p className="text-sm text-gray-500">{paragraph}</p>
+            <p className="text-sm text-muted-foreground">{paragraph}</p>
             <button
               onClick={() => window.location.reload()}
-              className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="mt-4 px-4 py-2 bg-blue-600 text-primary-foreground rounded-lg hover:bg-blue-700 transition-colors"
             >
               Intentar nuevamente
             </button>

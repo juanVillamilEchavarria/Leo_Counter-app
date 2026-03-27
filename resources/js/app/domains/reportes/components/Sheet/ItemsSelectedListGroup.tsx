@@ -19,17 +19,17 @@ export default function ItemsSelectedListGroup({
 }: ItemSelectedListGroupProps) {
   return (
     <div className="flex flex-col gap-2">
-        <p className="text-sm text-gray-500">Cuentas seleccionadas:</p>
+        <p className="text-sm text-muted-foreground">Cuentas seleccionadas:</p>
         <div className="">
          <ItemSelectedList iterable={cuentas} removeItem={removeCuenta} emptyMessage="No hay cuentas seleccionadas" />
         </div>
-        <p className="text-sm text-gray-500">Categorias seleccionadas:</p>
+        <p className="text-sm text-muted-foreground">Categorias seleccionadas:</p>
         <div className="">
          <ItemSelectedList iterable={categorias} removeItem={removeCategoria}>
           {only_categorias_fijas === true ? (
             <p className="text-sm text-blue-500 bg-blue-100 rounded-full px-3 py-1">Todas las categorias fijas seleccionadas</p>
           ):(
-            <p className="text-sm text-gray-500">No hay categorias seleccionadas</p>
+            <p className="text-sm text-muted-foreground">No hay categorias seleccionadas</p>
           )}
           </ItemSelectedList>
         </div>

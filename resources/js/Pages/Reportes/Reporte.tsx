@@ -53,7 +53,7 @@ export default function Reporte() {
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
           <div className="text-center space-y-2">
             <h3 className="text-lg font-semibold text-gray-900">Cargando reportes financieros</h3>
-            <p className="text-sm text-gray-500">Estamos procesando tus datos para generar los análisis más precisos</p>
+            <p className="text-sm text-muted-foreground">Estamos procesando tus datos para generar los análisis más precisos</p>
           </div>
         </div>
       </ReporteSection>
@@ -80,10 +80,10 @@ export default function Reporte() {
           </div>
           <div className="text-center space-y-2">
             <h3 className="text-lg font-semibold text-gray-900">Error al cargar los reportes</h3>
-            <p className="text-sm text-gray-500">No pudimos cargar tus datos financieros en este momento</p>
+            <p className="text-sm text-muted-foreground">No pudimos cargar tus datos financieros en este momento</p>
             <button
               onClick={() => window.location.reload()}
-              className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="mt-4 px-4 py-2 bg-blue-600 text-primary-foreground rounded-lg hover:bg-blue-700 transition-colors"
             >
               Intentar nuevamente
             </button>
@@ -113,7 +113,7 @@ export default function Reporte() {
           </div>
           <div className="text-center space-y-2">
             <h3 className="text-lg font-semibold text-gray-900">No hay datos disponibles</h3>
-            <p className="text-sm text-gray-500">Aún no tienes movimientos registrados para generar reportes</p>
+            <p className="text-sm text-muted-foreground">Aún no tienes movimientos registrados para generar reportes</p>
           </div>
         </div>
       </ReporteSection>

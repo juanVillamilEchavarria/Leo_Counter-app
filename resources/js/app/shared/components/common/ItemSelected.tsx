@@ -10,7 +10,7 @@ export default function ItemSelected({ name, onRemove }: ItemSelectedProps) {
       <button
         type="button"
         onClick={onRemove}
-        className="absolute right-1 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center  hover:text-white text-blue-600 rounded-full transition-colors"
+        className="absolute right-1 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center  hover:text-primary-foreground text-blue-600 rounded-full transition-colors"
         aria-label={`Remover ${name}`}
       >
         <i className="fa-solid fa-xmark text-xs"></i>

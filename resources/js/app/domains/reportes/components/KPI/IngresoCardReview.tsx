@@ -28,7 +28,7 @@ export default function IngresoCardReview({ total, variacion }: IngresoCardRevie
           </p>
           <i className={`fa-solid ${trendIcon} ${trendIconColor}`}></i>
         </div>
-        <small className="text-xs text-gray-500">
+        <small className="text-xs text-muted-foreground">
           {percentage >= 0 ? "Tendencia positiva en generación de ingresos" : "Se recomienda revisar la generación de ingresos"}
         </small>
       </div>

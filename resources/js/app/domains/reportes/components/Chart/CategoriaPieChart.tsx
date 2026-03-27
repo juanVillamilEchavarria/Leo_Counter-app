@@ -42,7 +42,7 @@ export default function CategoriaPieChart({ distribucion }: CategoriaPieChartPro
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h3 className="font-semibold text-lg">Distribución por Categorías</h3>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-muted-foreground">
               {hasData ? `${distribucion.total_movimientos} movimientos distribuidos` : 'Análisis de gastos por categoría'}
             </p>
           </div>
@@ -92,7 +92,7 @@ export default function CategoriaPieChart({ distribucion }: CategoriaPieChartPro
                   </div>
                   <div className="text-right">
                     <div className="font-semibold text-gray-900">{entry.percentage.toFixed(1)}%</div>
-                    <div className="text-xs text-gray-500">{moneyFormat(entry.total)}</div>
+                    <div className="text-xs text-muted-foreground">{moneyFormat(entry.total)}</div>
                   </div>
                 </div>
               ))}

@@ -6,7 +6,7 @@ export default function UploadedFileList({
     handleDeleteFile,
     active = true,
     preview_route,
-    className = 'text-white/80'
+    className = 'text-primary-foreground/80'
 }: UploadedFileListProps) {
   return (
     <TransitionMotion active={active} transition={{duration: .5}}>

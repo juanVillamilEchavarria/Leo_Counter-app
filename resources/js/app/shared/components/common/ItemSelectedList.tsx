@@ -21,7 +21,7 @@ export default function ItemSelectedList({
             
         )):(
             <div className="w-full text-center">
-            {!children ? <p className="text-sm text-gray-500"> {emptyMessage}</p> : children}
+            {!children ? <p className="text-sm text-muted-foreground"> {emptyMessage}</p> : children}
             </div>
         )}
     </ul>

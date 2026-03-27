@@ -52,9 +52,9 @@ export default function CardReview({
             <div className="w-full flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
                     <div className="p-2 rounded-lg bg-gray-50">
-                        <i className={`fa-solid ${getIcon()} text-gray-600`}></i>
+                        <i className={`fa-solid ${getIcon()} text-muted-foreground`}></i>
                     </div>
-                    <p className="text-sm font-medium text-gray-600">{label}</p>
+                    <p className="text-sm font-medium text-muted-foreground">{label}</p>
                 </div>
                 <div className="bg-gray-50 rounded-lg px-3 py-1">
                     <PercentageFlow className="text-sm font-semibold" tipo_movimiento={tipo_movimiento ?? 'Ingreso'} percentage={percentage} />

@@ -54,7 +54,7 @@ export default function MovimientoEspontaneoForm({
                     onChange={
                         (e: React.ChangeEvent<HTMLInputElement>) => setData('nombre', e.target.value)
                     }
-                    className={`border-2 p-3 border-gray-300 text-gray-800 ${errors.nombre && 'border-red-500! text-red-500!'} `}
+                    className={`border-2 p-3 border-border text-gray-800 ${errors.nombre && 'border-red-500! text-red-500!'} `}
                     icon={`fa-solid fa-file-signature fa-xl top-6 text-gray-400 ${errors.nombre && 'text-red-500!'} `}
                 />
                 <TransitionMotion
@@ -179,7 +179,7 @@ export default function MovimientoEspontaneoForm({
                                     console.log(data?.comprobantes_existing);
                                     removeExistingFile(index);
                                     setData('comprobantes_delete_ids', [...(data?.comprobantes_delete_ids ?? []), id ?? 0])
-                                }} className="text-black" />
+                                }} className="text-foreground" />
                                 </div>
                             )}
                             
@@ -189,7 +189,7 @@ export default function MovimientoEspontaneoForm({
                                 <>
                                     <UploadedFileList files={data.comprobantes} handleDeleteFile={(index : number)=>{
                                         removeFile(index);
-                                    }} className="text-black" />
+                                    }} className="text-foreground" />
                                 </>
 
                             ):(

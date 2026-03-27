@@ -4,7 +4,7 @@ import { useMessageRedirect } from "../../hooks"
 export default function Header() {
     const { props } = useMessageRedirect()
   return (
-    <div className="w-full h-20 flex lg:flex-row flex-col justify-between bg-white shadow-xl items-center ">
+    <div className="w-full h-20 flex lg:flex-row flex-col justify-between bg-background shadow-xl items-center border-b border-border ">
         <Head>
           <title>{props.title}</title>
        </Head>
@@ -12,8 +12,8 @@ export default function Header() {
                   props.NoRegistros ? (
                     <>
                       {props.title}
-                      <span className="mx-2 text-gray-400">&middot;</span>
-                      <span className="text-sm text-gray-500">
+                      <span className="mx-2 text-foreground ">&middot;</span>
+                      <span className="text-sm">
                         {props.NoRegistros} {props.NoRegistros === 1 ? 'registro' : 'registros'}
                       </span>
                     </>
@@ -22,9 +22,9 @@ export default function Header() {
                   )
               }    
               size="md" 
-              className=" text-gray-900 ml-10 font-principal whitespace-nowrap" 
+              className=" text-foreground ml-10 font-principal whitespace-nowrap" 
               />
-        <div className="flex gap-2 items-center mr-4">
+        <div className="flex gap-2 items-center mr-4 text-foreground">
           {/* enlace a github con el icono */}
             <i className="fa-brands fa-github text-2xl"></i>
             <a href={import.meta.env.VITE_GITHUB_REPOSITORY} target="_blank" rel="noopener noreferrer">Leo Counter</a>

@@ -23,13 +23,13 @@ export default function SelfOptionsCard() {
             <Link 
             href='#' 
             className="
-                text-white 
+                text-primary-foreground 
                 text-sm
                 mb-4 
                 flex 
                 items-center
                 gap-2
-                hover:bg-white/10 
+                hover:bg-background/10 
                 p-2 rounded-xl
                 "
             >

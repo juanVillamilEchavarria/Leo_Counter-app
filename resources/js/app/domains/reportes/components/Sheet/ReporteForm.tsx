@@ -126,7 +126,7 @@ export default function ReporteForm({
       </div>
 
       {/* Rango de Fechas */}
-      <fieldset className="border border-gray-300 rounded-lg p-4">
+      <fieldset className="border border-border rounded-lg p-4">
         <legend className="font-semibold text-gray-700 px-2">
           Rango de fechas <span className="text-red-500">*</span>
         </legend>

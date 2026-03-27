@@ -27,7 +27,7 @@ export default function MovimientosCardReview({ total, variacion }: MovimientosC
           </p>
           <i className={`fa-solid ${trendIcon} ${trendIconColor}`}></i>
         </div>
-        <small className="text-xs text-gray-500">
+        <small className="text-xs text-muted-foreground">
           {percentage >= 0 ? "Actividad financiera consistente" : "Actividad financiera en decremento"}
         </small>
       </div>

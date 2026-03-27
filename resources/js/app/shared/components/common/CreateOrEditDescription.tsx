@@ -35,7 +35,7 @@ export default function CreateOrEditDescription({
                 }
 
             </span>
-            <span className="text-gray-600 text-4xl"> {model}</span>
+            <span className="text-muted-foreground text-4xl"> {model}</span>
             </>
         )
     } />

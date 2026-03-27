@@ -69,7 +69,7 @@ export default function TanStackTable<T extends Record<string,any>>({
                     </tr>
                 )):(
                     <tr>
-                        <td colSpan={columns.length} className="text-gray-500  text-xl text-center">
+                        <td colSpan={columns.length} className="text-muted-foreground  text-xl text-center">
                             No hay registros
                         </td>
                     </tr>

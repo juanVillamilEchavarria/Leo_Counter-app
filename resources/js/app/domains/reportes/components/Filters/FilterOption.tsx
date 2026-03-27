@@ -16,7 +16,7 @@ export default function FilterOption({
       type="button"
       onClick={onClick}
       className={`px-3 py-1.5 text-sm rounded-md transition-all ${
-        active ? "bg-white text-gray-900 shadow-sm" : "text-gray-600 hover:bg-white/50"
+        active ? "bg-background text-gray-900 shadow-sm" : "text-muted-foreground hover:bg-background/50"
       }`}
     >
       {output}
