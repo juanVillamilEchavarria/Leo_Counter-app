@@ -39,7 +39,7 @@ export default function Home() {
     <HomeSection>
 
     <KPISection kpis={KPIs} />
-          <IngresoAndGastoLineChart data={tendencia.ingresos_vs_gastos.data} />
+          <IngresoAndGastoLineChart data={tendencia.ingresos_vs_gastos} />
      </HomeSection>
 
   )

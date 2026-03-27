@@ -66,5 +66,7 @@ Route::middleware('auth')->group( function () {
     Route::resource('pagos-pendientes',PagoPendienteController::class)->names('pagosPendientes');
     Route::get('/historial', [HistorialController::class, 'index'])->name('historial.index');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    // REPORTES
+    Route::post('reportes/download', [ReporteController::class, 'download'])->name('reportes.download');
 });
 

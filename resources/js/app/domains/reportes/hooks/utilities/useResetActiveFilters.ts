@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { type SetActiveReportFilters } from './Charts/useActiveReportFilters'
+import { type SetActiveReportFilters } from '../Charts/useActiveReportFilters'
 
 interface UseResetActiveFiltersProps {
   setData: (data: any) => void

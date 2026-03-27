@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Reporte;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
 
 class ReporteController extends Controller
 {
@@ -12,5 +12,9 @@ class ReporteController extends Controller
         return Inertia::render('Reportes/Reporte',[
             'title' => 'Reportes'
         ]);
+    }
+    public function download(Request $request){
+        dd($request->all());
+
     }
 }

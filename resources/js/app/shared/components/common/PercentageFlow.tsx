@@ -1,30 +1,44 @@
-
 import SuccessOrFailText from "./SuccessOrFailText"
+interface PercentageFlowProps{
+      as?: React.ElementType
+    className?: string
+    tipo_movimiento: string,
+    percentage: number
+}
+/**
+ * Funcion que muestra el porcentaje de aumento o disminucion de un valor dependiendo del tipo de movimiento
+ * @param {string} className 
+ * @param {string} flow 
+ * @param {number} percentage 
+ * @param {string} tipo_movimiento
+ * @param {string} as
+ * 
+ * @returns el porcentaje de aumento o disminucion
+ */
 export default function PercentageFlow({
     as: Tag = 'span',
     className = '',
     tipo_movimiento,
-    flow ='normal',
     percentage,
-}:{
-    as?: React.ElementType
-    className?: string
-    flow ? : 'normal' | 'reverse'
-    tipo_movimiento: string,
-    percentage: number
-}) {
-  
-  const signo = tipo_movimiento === 'Ingreso'  ? flow === 'normal' ? '+' : '-' : flow === 'normal' ? '-' : '+'
-  const icon = tipo_movimiento === 'Ingreso' ? flow === 'normal' ? 'fa-solid fa-arrow-trend-up' : 'fa-solid fa-arrow-trend-down': flow === 'normal' ? 'fa-solid fa-arrow-trend-down' : 'fa-solid fa-arrow-trend-up'
+}:PercentageFlowProps) {
+
+  const signo = tipo_movimiento === 'Ingreso' ? '+' : '-'
+  const icon = tipo_movimiento === 'Ingreso' ? 'fa-arrow-trend-up' : 'fa-arrow-trend-down'
     return (
     <div className="flex items-center">
-    <SuccessOrFailText as={Tag} className={className} output={
+    <SuccessOrFailText 
+    as={Tag} 
+    className={className} 
+    output={
       <div className="flex items-center gap-2">
-        <i className={`${icon} text-lg`}></i>
+        <i className={`fa-solid ${icon} text-lg`}></i>
         <p>{signo + percentage + '%'}</p>
 
       </div>
-    } attribute={tipo_movimiento} value={'Ingreso'}  />
+    } 
+    attribute={tipo_movimiento} 
+    value={'Ingreso'} 
+     />
     </div>
   )
 }

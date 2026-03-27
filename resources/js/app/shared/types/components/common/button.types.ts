@@ -122,7 +122,7 @@ export type ButtonVariant = keyof typeof ButtonVariants
 export type ButtonProps = {
     as? : React.ElementType
     href? : string
-    onClick? : () => void | undefined
+    onClick? : () => void | undefined | Promise<void>
      type? : ButtonTypes
     className? : string
     variant? : ButtonVariant

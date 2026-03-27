@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { type ReporteApiResponse } from "../types/reporte.types"
+import { type ReporteApiResponse } from "../../types/reporte.types"
 
 interface useReporteApiDataProps{
     initialData: ReporteApiResponse | undefined

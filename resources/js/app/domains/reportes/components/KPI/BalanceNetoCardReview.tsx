@@ -8,19 +8,17 @@ interface BalanceNetoCardReviewProps {
 export default function BalanceNetoCardReview({ total, variacion }: BalanceNetoCardReviewProps) {
   const percentage = variacion ?? 0
   const isPositive = total >= 0
-  const trendMessage = "Respecto al mes anterior"
+  const trendMessage = "Respecto al periodo anterior"
   const trendColor = percentage >= 0 ? "text-green-600" : "text-red-600"
   const trendIcon = percentage >= 0 ? "fa-arrow-trend-up" : "fa-arrow-trend-down"
   const trendIconColor = percentage >= 0 ? "text-green-500" : "text-red-500"
   const tipoMovimiento = isPositive ? "Ingreso" : "Gasto"
-  const flow = isPositive ? "normal" : "reverse"
 
   return (
     <CardReview
       label="Balance neto"
       percentage={Math.abs(percentage)}
       tipo_movimiento={tipoMovimiento}
-      flow={flow}
       total={total}
       tipo_total="dinero"
       icon="fa-scale-balanced"

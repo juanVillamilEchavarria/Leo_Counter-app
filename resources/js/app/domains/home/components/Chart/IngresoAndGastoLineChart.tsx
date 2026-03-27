@@ -1,8 +1,9 @@
 import { Line, YAxis, XAxis, CartesianGrid, Legend , Area, ComposedChart} from "recharts"
 import Card from "@/app/shared/components/common/Card"
+import StatisticalSummaryText from "@/app/domains/reportes/components/Summarys/StatisticalSummaryText"
 import EmptyDataMessage from "@/app/domains/reportes/components/common/EmptyDataMessage"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/app/shared/components/ui/chart"
-import { type IngresoVsGastoData } from "@/app/domains/reportes/types/reporte.types"
+import { type IngresoVsGastoChart } from "@/app/domains/reportes/types/reporte.types"
 
 const chartConfig = {
   ingresos: {
@@ -15,14 +16,16 @@ const chartConfig = {
   },
 }
 interface IngresoAndGastoLineChartProps {
-  data : IngresoVsGastoData[]
+  data : IngresoVsGastoChart
+
 }
 
 export default function IngresoAndGastoLineChart({ data }: IngresoAndGastoLineChartProps) {
    /** 
      *transforma los datos para que se puedan mostrar en el grafico de manera correcta
     */ 
-   const chartData = data.map(item => ({
+   const {data : statisticData, promedios} = data
+   const chartData = statisticData.map(item => ({
      fecha: item.period,
      ingresos: item.ingresos,
      gastos: item.gastos
@@ -30,7 +33,7 @@ export default function IngresoAndGastoLineChart({ data }: IngresoAndGastoLineCh
    console.log(data);
    console.log(chartData);
   
-    const hasData = data.length > 0
+    const hasData = statisticData.length > 0
   
     return (
       <Card>
@@ -40,10 +43,38 @@ export default function IngresoAndGastoLineChart({ data }: IngresoAndGastoLineCh
               <h3 className="font-bold text-lg">Ingresos y Gastos</h3>
             </div>
           </div>
+          <p>Promedios</p>
+          <div className="grid grid-cols-2 gap-2 self-start text-sm">
+            
+            <StatisticalSummaryText
+              text="Ingresos por movimiento"
+              color="bg-green-300"
+              valueColor="text-green-500"
+              value={promedios.ingresos_por_movimiento}
+            />
+            <StatisticalSummaryText
+              text="Ingresos por periodo"
+              color="bg-green-300"
+              valueColor="text-green-500"
+              value={promedios.ingresos_por_periodo}
+            />
+            <StatisticalSummaryText
+              text="Gastos por movimiento"
+              color="bg-red-300"
+              valueColor="text-red-500"
+              value={promedios.gastos_por_movimiento}
+            />
+            <StatisticalSummaryText
+              text="Gastos por periodo"
+              color="bg-red-300"
+              valueColor="text-red-500"
+              value={promedios.gastos_por_periodo}
+            />
+          </div>
         </div>
   
         {hasData ? (
-          <ChartContainer config={chartConfig} className="h-75 w-full">
+          <ChartContainer config={chartConfig} className="h-80 w-full">
             <ComposedChart
               data={chartData}
               margin={{ top: 20, right: 30, left: 20, bottom: 5 }}

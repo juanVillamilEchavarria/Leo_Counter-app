@@ -5,6 +5,11 @@ import { type Cuenta } from "../../cuenta"
 export const ReporteApiActions = {
   post: route('api.reportes.generate'),
 }
+export const ReporteActions ={
+  download : route('reportes.download')
+}
+
+export const ReporteDataSectionId = 'reporte-data-section'
 
 /**
  * Datos del formulario para generar reportes
@@ -58,7 +63,7 @@ export interface IngresoVsGastoPromedios{
     gastos_por_movimiento: number
 
 }
-export interface IngresoVsGastosChart {
+export interface IngresoVsGastoChart {
   data: IngresoVsGastoData[]
   promedios: IngresoVsGastoPromedios
 }
@@ -69,7 +74,7 @@ export interface BalanceNetoData {
 }
 
 export interface Tendencia {
-  ingresos_vs_gastos: IngresoVsGastosChart
+  ingresos_vs_gastos: IngresoVsGastoChart
   balance_neto_por_fecha: BalanceNetoData[]
   presupuesto: Presupuesto
 }

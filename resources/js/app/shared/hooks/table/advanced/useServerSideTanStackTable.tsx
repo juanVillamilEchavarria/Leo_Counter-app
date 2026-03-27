@@ -17,6 +17,7 @@ export default function useServerSideTanStackTable<T extends Record<string, any>
     pageIndex: 0,
     pageSize: initialPageSize,
   });
+ 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState('');
 
@@ -37,7 +38,7 @@ export default function useServerSideTanStackTable<T extends Record<string, any>
   const table = useReactTable<T>({
         data,
         columns : columns,
-        pageCount, // ← Total de páginas desde el servidor
+        pageCount,
         state: {
             pagination,
             sorting,

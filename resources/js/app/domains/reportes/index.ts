@@ -7,11 +7,10 @@ import CategoriaPieChart from "./components/Chart/CategoriaPieChart";
 import BalanceNetoCardReview from "./components/KPI/BalanceNetoCardReview";
 import BalanceLineChart from "./components/Chart/BalanceLineChart";
 import PresupuestoPercentageChart from "./components/Chart/PresupuestoPercentageChart";
-import TopCategoriasReview from "./components/KPI/TopCategoriasReview";
 import KPISection from "./components/KPI/KPISection";
 import MovimientosCardReview from "./components/KPI/MovimientosCardReview";
 import ChartSection from "./components/Chart/ChartSection";
-import { type ReporteApiResponse, type ReporteFormOptionsApiReponse, type ReporteFormData, ReporteApiActions } from "./types/reporte.types";
+import { type ReporteApiResponse, type ReporteFormOptionsApiReponse, type ReporteFormData, ReporteApiActions, ReporteDataSectionId } from "./types/reporte.types";
 import { reporteApi } from "./api/reporte.api";
 import useReporteApi from "./hooks/api/useReporteApi";
 export {
@@ -24,13 +23,13 @@ export {
     BalanceNetoCardReview,
     BalanceLineChart,
     PresupuestoPercentageChart,
-    TopCategoriasReview,
     KPISection,
     MovimientosCardReview,
     ChartSection,
     useReporteApi,
         reporteApi,
     ReporteApiActions,
+    ReporteDataSectionId,
     type ReporteApiResponse,
     type ReporteFormOptionsApiReponse,
     type ReporteFormData

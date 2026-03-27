@@ -1,11 +1,11 @@
 import ReporteSection from "@/app/domains/reportes/components/common/ReporteSection"
 import ActiveReportFilters from "@/app/domains/reportes/components/Filters/ActiveReportFilters"
-import { useReporteApi, KPISection, ChartSection } from "@/app/domains/reportes"
-import useReporteApiData from "@/app/domains/reportes/hooks/useReporteApiData"
+import DownloadReportButton from "@/app/domains/reportes/components/common/DownloadReportButton"
+import { useReporteApi, KPISection, ChartSection, ReporteDataSectionId } from "@/app/domains/reportes"
+import useReporteApiData from "@/app/domains/reportes/hooks/utilities/useReporteApiData"
 import { useEffect } from "react"
 import useActiveReportFilters from "@/app/domains/reportes/hooks/Charts/useActiveReportFilters"
-import { useResetActiveFilters } from "@/app/domains/reportes/hooks/useResetActiveFilters"
-
+import { useResetActiveFilters } from "@/app/domains/reportes/hooks/utilities/useResetActiveFilters"
 export default function Reporte() {
   const { data: initialData, isLoading: initialIsLoading, error: initialError } = useReporteApi()
   const { data, setData, isLoading, setIsLoading, error, setError } = useReporteApiData({
@@ -142,10 +142,11 @@ export default function Reporte() {
         onReset={resetFilters}
         isResetting={isResetting}
       />
-
-      <KPISection kpis={KPIs} />
-
-      <ChartSection tendencia={tendencia} distribuciones={distribuiciones} />
+      <DownloadReportButton/>
+      <div className="" id={ReporteDataSectionId}>
+        <KPISection kpis={KPIs} />
+        <ChartSection tendencia={tendencia} distribuciones={distribuiciones} />
+      </div>
     </ReporteSection>
   )
 }

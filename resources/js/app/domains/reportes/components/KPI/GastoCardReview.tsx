@@ -7,7 +7,7 @@ interface GastoCardReviewProps {
 
 export default function GastoCardReview({ total, variacion }: GastoCardReviewProps) {
   const percentage = variacion ?? 0
-  const trendMessage = percentage >= 0 ? "de Incremento en este mes" : "de Decremento en este mes"
+  const trendMessage = percentage >= 0 ? "de Incremento en este periodo" : "de Decremento en este periodo"
   const trendColor = percentage >= 0 ? "text-red-600" : "text-green-600"
   const trendIcon = percentage >= 0 ? "fa-arrow-trend-up" : "fa-arrow-trend-down"
   const trendIconColor = percentage >= 0 ? "text-red-500" : "text-green-500"
@@ -16,7 +16,6 @@ export default function GastoCardReview({ total, variacion }: GastoCardReviewPro
     <CardReview
       label="Total de gastos"
       percentage={Math.abs(percentage)}
-      flow="reverse"
       tipo_movimiento="Gasto"
       total={total}
       tipo_total="dinero"

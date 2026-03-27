@@ -2,27 +2,42 @@ import Card from "@/app/shared/components/common/Card"
 import PercentageFlow from "@/app/shared/components/common/PercentageFlow"
 import { moneyFormat } from "@/app/shared/helpers"
 import type React from "react"
+interface CardRevirewProps {
+     label: string | React.ReactNode,
+    percentage: number,
+    tipo_movimiento?: string,
+    total: number,
+    tipo_total? : 'dinero' | 'numero'
+    children? : React.ReactNode
+    icon?: string
+}
+/**
+ * Componente de que muestra las estadisticas de los KPI del reporte
+ * @param {string | React.ReactNode} label 
+ * @param {number} percentage 
+ * @param {string} tipo_movimiento 
+ * @param {number} total 
+ * @param {'dinero' | 'numero'} tipo_total
+ *  @param {React.ReactNode} children
+ * @param {string | null} icon
+ * 
+ * @returns {JSX.Element}
+ */
 
 export default function CardReview({
     label,
     percentage,
     tipo_movimiento,
     total,
-    flow = 'normal',
     tipo_total = 'dinero',
     children,
     icon
-}:{
-    label: string | React.ReactNode,
-    percentage: number,
-    tipo_movimiento?: string,
-    total: number,
-    flow? : 'normal' | 'reverse'
-    tipo_total? : 'dinero' | 'numero'
-    children? : React.ReactNode
-    icon?: string
-}) {
-    const variant = tipo_movimiento !== undefined ? tipo_movimiento === 'Ingreso' ? 'successSecondary' : 'dangerSecondary' : 'secondary'
+}:CardRevirewProps) {
+    const variant = tipo_movimiento !== undefined 
+    ? (tipo_movimiento === 'Ingreso' 
+        ? 'successSecondary' :
+         'dangerSecondary') 
+    : 'secondary'
 
     const getIcon = () => {
         if (icon) return icon
@@ -42,7 +57,7 @@ export default function CardReview({
                     <p className="text-sm font-medium text-gray-600">{label}</p>
                 </div>
                 <div className="bg-gray-50 rounded-lg px-3 py-1">
-                    <PercentageFlow flow={flow} className="text-sm font-semibold" tipo_movimiento={tipo_movimiento ?? 'Ingreso'} percentage={percentage} />
+                    <PercentageFlow className="text-sm font-semibold" tipo_movimiento={tipo_movimiento ?? 'Ingreso'} percentage={percentage} />
                 </div>
             </div>
             <div className="flex justify-start items-center mb-3">

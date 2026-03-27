@@ -21,6 +21,7 @@ export default function TanStackTableServerSide<T extends Record<string, any>>({
 }: TanStackTableServerSideProps<T>) {
     
     const {entries, setEntries} = useEntries({value:pageSize});
+    console.log('entries',entries);
     const {
         table,
         isLoading,
@@ -37,7 +38,6 @@ export default function TanStackTableServerSide<T extends Record<string, any>>({
         initialPageSize: entries,
     });
 
-    console.log(table.getRowModel().rows);
     const controller = useTanStackPagination(table);
 
     if (isError) {
@@ -131,7 +131,11 @@ export default function TanStackTableServerSide<T extends Record<string, any>>({
             {/* Pagination */}
             <div className="w-full flex justify-between mt-5">
                 <TablePagination controller={controller} />
-                <TableEntries entries={entries} setEntries={setEntries} />
+                <TableEntries entries={entries} setEntries={(value) => {
+                    setEntries(value);
+                    table.setPageSize(value);  
+                    table.setPageIndex(0);   
+                }} />
             </div>
         </div>
     );

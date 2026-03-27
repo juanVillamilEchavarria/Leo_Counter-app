@@ -10,7 +10,7 @@ import {
   type ChartConfig,
 } from "@/app/shared/components/ui/chart"
 import useIngresoAndGastoChart from "../../hooks/Charts/useIngresoAndGastoChart"
-import type { IngresoVsGastosChart } from "../../types/reporte.types"
+import type { IngresoVsGastoChart } from "../../types/reporte.types"
 import { ChartModesEnum } from "../../hooks/Charts/Filters/useChartMode"
 
 const chartConfig = {
@@ -25,7 +25,7 @@ const chartConfig = {
 } satisfies ChartConfig
 
 interface IngresoAndGastoChartProps {
-  data: IngresoVsGastosChart
+  data: IngresoVsGastoChart
 }
 export default function IngresoAndGastoChart({ data: chartData }: IngresoAndGastoChartProps) {
   const {
