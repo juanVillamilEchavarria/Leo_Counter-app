@@ -14,7 +14,7 @@ export default function InputFillable({
     required = false,
 }:InputFillableProps) {
   return icon ? (
-    <div className="flex relative">
+    <div className="flex relative text-foreground">
         <i className={`absolute top-3 left-2 ${icon}`}></i>
         <input min={min} max={max} type={type} name={name} id={id} placeholder={placeholder} value={value} onChange={onChange} className={`pl-10  formulario-fillable ${className}`} disabled={disabled} required={required} />
 

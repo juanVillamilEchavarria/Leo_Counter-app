@@ -9,7 +9,7 @@ export default function FilterOptions({
     className = ''
 }: FilterOptionsProps) {
   return (
-     <div className={`inline-flex rounded-lg border border-gray-200 p-1 bg-gray-50 ${className}`}>
+     <div className={`inline-flex rounded-lg border border-border p-1 bg-muted ${className}`}>
             {options.map((option, index) => (
               <FilterOption key={index} {...option} />
             ))}

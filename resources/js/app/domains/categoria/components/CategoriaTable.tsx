@@ -1,7 +1,7 @@
 import SimpleTable from "@/app/shared/components/table/simple/SimpleTable"
 import { useSimpleTable } from "@/app/shared/hooks"
 import { CategoriaColumns } from "./columns/categoria.columns"
-import { type Categoria } from "../types/categoria.types"
+import { type CategoriaTableData } from "../types/categoria.types"
 import { useMemo } from "react"
 
 export default function CategoriaTable({
@@ -9,13 +9,13 @@ export default function CategoriaTable({
   pageSize = 10,
   onSelect
 }: {
-  data: Categoria[],
+  data: CategoriaTableData[],
   pageSize?: number,
-  onSelect: (item: Categoria, modalType: string) => void
+  onSelect: (item: CategoriaTableData, modalType: string) => void
 }) {
   const columns = useMemo(()=>{
     return CategoriaColumns({
-      onSelect: (row: Categoria) => {
+      onSelect: (row: CategoriaTableData) => {
         onSelect(row, 'delete')
       }
     })

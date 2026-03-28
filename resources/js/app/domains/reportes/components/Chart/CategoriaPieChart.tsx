@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import Title from "@/app/shared/components/common/Title"
 import { Pie, PieChart, Cell } from "recharts"
 import Card from "@/app/shared/components/common/Card"
 import { moneyFormat } from "@/app/shared/helpers"
@@ -41,7 +41,7 @@ export default function CategoriaPieChart({ distribucion }: CategoriaPieChartPro
       <div className="flex flex-col gap-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h3 className="font-semibold text-lg">Distribución por Categorías</h3>
+            <Title className="font-bold text-lg " title= "Distribución por Categorías" as={'h3'} />
             <p className="text-sm text-muted-foreground">
               {hasData ? `${distribucion.total_movimientos} movimientos distribuidos` : 'Análisis de gastos por categoría'}
             </p>
@@ -82,16 +82,16 @@ export default function CategoriaPieChart({ distribucion }: CategoriaPieChartPro
               {filteredData
                 .sort((a, b) => b.percentage - a.percentage)
                 .map((entry, index) => (
-                <div key={entry.categoria} className="flex items-center justify-between p-2 rounded-lg bg-gray-50">
+                <div key={entry.categoria} className="flex items-center justify-between p-2 rounded-lg bg-muted">
                   <div className="flex items-center gap-2">
                     <span
                       className="inline-block h-3 w-3 rounded-full shrink-0"
                       style={{ backgroundColor: pieColors[index % pieColors.length] }}
                     />
-                    <span className="text-gray-700 truncate">{entry.categoria}</span>
+                    <span className="text-muted-foreground truncate">{entry.categoria}</span>
                   </div>
                   <div className="text-right">
-                    <div className="font-semibold text-gray-900">{entry.percentage.toFixed(1)}%</div>
+                    <div className="font-semibold text-foreground">{entry.percentage.toFixed(1)}%</div>
                     <div className="text-xs text-muted-foreground">{moneyFormat(entry.total)}</div>
                   </div>
                 </div>

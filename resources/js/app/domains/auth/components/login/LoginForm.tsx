@@ -62,6 +62,7 @@ export default function LoginForm() {
                      <Button 
                         type="submit"
                         variant="transition-blue"
+                        className="text-white!"
                      >
                         Login
 

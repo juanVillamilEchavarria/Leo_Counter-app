@@ -1,5 +1,6 @@
 import InputFillable from "@/app/shared/components/form/InputFillable"
 import SelectModel from "@/app/shared/components/form/SelectModel"
+import { Checkbox } from "@/app/shared/components/ui/checkbox"
 import Button from "@/app/shared/components/common/Button"
 import TransitionMotion from "@/app/shared/components/transitions/TransitionMotion"
 import AlertMessage from "@/app/shared/components/common/AlertMessage"
@@ -56,17 +57,15 @@ export default function ReporteForm({
     if (cuenta) addCuenta(cuenta)
   }
 
-  const isFormValid = true
   return (
     <form className="formulario-general h-full flex flex-col gap-4" onSubmit={onSubmit}>
       {/* Solo Categorías Fijas */}
       <div className="flex items-center gap-3">
-        <input
-          type="checkbox"
+        <Checkbox
           name="only_categorias_fijas"
           id="only_categorias_fijas"
           checked={data.only_categorias_fijas}
-          onChange={(e) => setData('only_categorias_fijas', e.target.checked)}
+          onCheckedChange={(e) => setData('only_categorias_fijas', e)}
           className="cursor-pointer w-4 h-4"
         />
         <label className="font-semibold cursor-pointer" htmlFor="only_categorias_fijas">
@@ -127,7 +126,7 @@ export default function ReporteForm({
 
       {/* Rango de Fechas */}
       <fieldset className="border border-border rounded-lg p-4">
-        <legend className="font-semibold text-gray-700 px-2">
+        <legend className="font-semibold text-muted-foreground px-2">
           Rango de fechas <span className="text-red-500">*</span>
         </legend>
         <div className="flex flex-col w-full gap-1 mt-3">
@@ -139,7 +138,7 @@ export default function ReporteForm({
               name="fecha_inicio"
               id="fecha_inicio"
               value={data.startDate}
-              className={errors.startDate && 'border-red-500! text-red-500!'}
+              className={` text-foreground ${errors.startDate && 'border-red-500! text-red-500!'}`}
             />
             <TransitionMotion active={!!errors.startDate}>
               <AlertMessage message={errors.startDate} />
@@ -155,7 +154,7 @@ export default function ReporteForm({
               id="fecha_fin"
               value={data.endDate}
               min={data.startDate}
-              className={errors.endDate && 'border-red-500! text-red-500!'}
+              className={`text-foreground ${errors.startDate && 'border-red-500! text-red-500!'}`}
             />
             <TransitionMotion active={!!errors.endDate}>
               <AlertMessage message={errors.endDate} />
@@ -175,7 +174,7 @@ export default function ReporteForm({
 
       {/* Submit Button */}
       <div className="mt-auto">
-        <Button type="submit" variant="primary" disabled={!isFormValid || isLoading}>
+        <Button type="submit" variant="primary" disabled={ isLoading}>
           {isLoading ? 'Generando...' : 'Generar Reporte'}
         </Button>
       </div>

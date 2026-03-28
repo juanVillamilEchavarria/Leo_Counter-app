@@ -30,7 +30,7 @@ export default function SideBarApp() {
                     <div className={`flex  flex-col my-5 overflow-y-scroll scrollbar-modern ${TrasitionStyle}`}>
                         <NavBar isOpen={isOpen} />
                     </div>
-                     <div className="my-2 p-2 border-t border-gray-200/20 ">
+                     <div className="my-2 p-2 border-t border-border/20 ">
                         
                             <SelfUserCard user={{name: user?.name, role: user?.role}} isOpen={isOpen} />
                             <div className="mt-5 h-5">

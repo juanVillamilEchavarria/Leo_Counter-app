@@ -10,6 +10,9 @@ export type Categoria={
     es_fijo: boolean,
     is_system: boolean
 }
+export type CategoriaTableData = Omit<Categoria, 'tipo_movimiento_id'> & {
+    tipo: string
+}
 
 export const CategoriaActions = {
     post : route('categorias.store'),

@@ -85,7 +85,7 @@ export const MovimientoPendienteColumns=(({
     { key : 'movimiento_fijo',
       label : 'Movimiento Fijo',
       render : (row: MovimientoPendienteShowData) => {
-        return row.movimiento_fijo ? <Link href={MovimientoFijoRoutes.index()}>{row.movimiento_fijo}</Link> : <span className="text-gray-400 uppercase">No Aplica</span>
+        return row.movimiento_fijo ? <Link href={MovimientoFijoRoutes.index()}>{row.movimiento_fijo}</Link> : <span className="text-muted-foreground uppercase">No Aplica</span>
       }
          },
     { key : 'monto', label : 'Monto', render: (row: MovimientoPendienteShowData) => moneyFormat(Number(row.monto)) },

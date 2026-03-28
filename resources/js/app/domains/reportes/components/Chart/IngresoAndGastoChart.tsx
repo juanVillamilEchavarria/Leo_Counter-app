@@ -3,6 +3,7 @@ import Card from "@/app/shared/components/common/Card"
 import FilterOptions from "../Filters/FilterOptions"
 import StatisticalSummaryText from "../Summarys/StatisticalSummaryText"
 import EmptyDataMessage from "../common/EmptyDataMessage"
+import Title from "@/app/shared/components/common/Title"
 import {
   ChartContainer,
   ChartTooltip,
@@ -45,7 +46,7 @@ console.log(filteredData)
       <div className="flex flex-col gap-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h3 className="font-semibold text-lg">{title}</h3>
+            <Title as={'h3'} className="font-semibold text-lg" title={title}/>
           </div>
           <FilterOptions options={filteredOptions} />
         </div>
@@ -69,7 +70,7 @@ console.log(filteredData)
 
             <ChartContainer config={chartConfig} className="h-[300px]">
               <BarChart data={filteredData} barCategoryGap={20}>
-                <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="#f0f0f0" />
+                <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="var(--border)" />
                 <XAxis
                   dataKey="period"
                   tickLine={false}

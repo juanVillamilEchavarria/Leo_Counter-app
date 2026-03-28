@@ -34,6 +34,6 @@ export type TextAreaProps=Omit<InputFillableProps,'type' | 'onChange'> &{
 }
 export type SelectModelProps <T extends Record<string, any>> =  Omit<FormFillableItem, 'onChange'> & {
     onChange : ( e : React.ChangeEvent<HTMLSelectElement>)=>void | undefined | void,
-    iterable : T[],
+    iterable : T[] ,
     iterableOutput ?: string
 }

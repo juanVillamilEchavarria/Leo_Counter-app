@@ -30,8 +30,8 @@ export default function CategoriaForm({
                 onChange={
                   (e: React.ChangeEvent<HTMLInputElement>) => setData('nombre', e.target.value)
                 }
-                className={`border-2 p-3 border-border text-gray-800 ${errors.nombre && 'border-red-500! text-red-500!'} `}
-                icon={`fa-solid fa-file-signature fa-xl top-6 text-gray-400 ${errors.nombre && 'text-red-500!'} `}
+                className={`border-2 p-3 border-border text-foreground ${errors.nombre && 'border-red-500! text-red-500!'} `}
+                icon={`fa-solid fa-file-signature fa-xl top-6 text-muted-foreground ${errors.nombre && 'text-red-500!'} `}
               />
               <TransitionMotion
               active={errors?.nombre}
@@ -77,7 +77,7 @@ export default function CategoriaForm({
             onChange={
               (e: React.ChangeEvent<HTMLTextAreaElement>) => setData('descripcion', e.target.value)
             }
-            className={`border-2 p-3 border-border text-gray-800 h-60 ${errors.descripcion && 'border-red-500! text-red-500!'} `}
+            className={`border-2 p-3 border-border text-foreground h-60 ${errors.descripcion && 'border-red-500! text-red-500!'} `}
           />
           <TransitionMotion
            active={errors?.descripcion}

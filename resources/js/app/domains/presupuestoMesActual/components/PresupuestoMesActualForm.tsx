@@ -47,7 +47,7 @@ export default function PresupuestoMesActualForm({
                 (e: React.ChangeEvent<HTMLInputElement>) => setData('monto', Number(e.target.value))
               }
               className={`  ${errors.monto && 'border-red-500! text-red-500!'} `}
-              icon={`fa-solid fa-file-signature fa-xl top-6 text-gray-400 ${errors.monto && 'text-red-500!'} `}
+              icon={`fa-solid fa-file-signature fa-xl top-6 text-muted-foreground ${errors.monto && 'text-red-500!'} `}
             />
             <TransitionMotion
             active={errors?.monto}>
@@ -65,7 +65,7 @@ export default function PresupuestoMesActualForm({
                 (e: React.ChangeEvent<HTMLTextAreaElement>) => setData('descripcion', e.target.value)
               }
               className={` h-50  ${errors.descripcion && 'border-red-500! text-red-500!'} `}
-              icon={`fa-solid fa-file-signature fa-xl top-6 text-gray-400 ${errors.descripcion && 'text-red-500!'} `}
+              icon={`fa-solid fa-file-signature fa-xl top-6 text-muted-foreground ${errors.descripcion && 'text-red-500!'} `}
             />
             <TransitionMotion
             active={errors?.descripcion}>

@@ -25,7 +25,7 @@ export default function BalanceNetoCardReview({ total, variacion }: BalanceNetoC
     >
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-2">
-          <p className="text-sm font-medium text-gray-700">
+          <p className="text-sm font-medium text-muted-foreground">
             <span className={trendColor}>
               {isPositive ? "+" : "-"} {Math.abs(percentage).toFixed(2)}%
             </span> {trendMessage}

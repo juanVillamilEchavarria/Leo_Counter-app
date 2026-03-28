@@ -1,6 +1,21 @@
 // ajustar tamaño y espacio en el elemento padre del toggle
 // after es la bolita que se mueve
 // este es el switch para hacer patch a un estado de algun modelo desde la tabla
+interface ToggleStateProps{
+   active?:boolean,
+    setActive:()=>void | undefined | void,
+    message?:{
+        active?:string,
+        inactive?:string
+    }
+}
+/**
+ * Componente de switch, su tamaño y espacio se ajusta en el elemento padre
+ * @param {boolean} active 
+ * @param {() => void | undefined | void} setActive 
+ * @param {{ active?: string; inactive?: string; }} message
+ * @returns 
+ */
 export default function ToggleState({
     active = false,
     setActive,
@@ -8,21 +23,14 @@ export default function ToggleState({
         active: 'Activo',
         inactive: 'Inactivo'
     }
-}:{
-    active?:boolean,
-    setActive:()=>void | undefined | void,
-    message?:{
-        active?:string,
-        inactive?:string
-    }
-}) {
+}:ToggleStateProps) {
   return (
     <label className="inline-flex items-center cursor-pointer">
                     <input 
                         type="checkbox" 
                         value="" 
                         checked={active} 
-                        className="sr-only peer" 
+                        className="sr-only peer text-foreground" 
                         onChange={setActive} 
                     />
                     
@@ -48,6 +56,7 @@ export default function ToggleState({
                       after:top-0 
                       after:start-0
                     after:bg-background 
+                    dark:after:bg-muted
                       after:rounded-full
                       after:h-5 
                       after:w-5 
@@ -63,9 +72,9 @@ export default function ToggleState({
                         w-6 
                         ml-2 
                         ${active ? 
-                        'text-green-600/40' 
+                        'text-green-600/40 dark:text-green-200' 
                         : 
-                        'text-red-600/40'}
+                        'text-red-600/40 dark:text-red-200'}
                         `
                         }>{active ? message.active : message.inactive}</span>
                   </label>

@@ -54,8 +54,8 @@ export default function MovimientoEspontaneoForm({
                     onChange={
                         (e: React.ChangeEvent<HTMLInputElement>) => setData('nombre', e.target.value)
                     }
-                    className={`border-2 p-3 border-border text-gray-800 ${errors.nombre && 'border-red-500! text-red-500!'} `}
-                    icon={`fa-solid fa-file-signature fa-xl top-6 text-gray-400 ${errors.nombre && 'text-red-500!'} `}
+                    className={`border-2 p-3 border-border text-foreground ${errors.nombre && 'border-red-500! text-red-500!'} `}
+                    icon={`fa-solid fa-file-signature fa-xl top-6 text-muted-foreground ${errors.nombre && 'text-red-500!'} `}
                 />
                 <TransitionMotion
                 active={errors?.nombre}
@@ -152,7 +152,7 @@ export default function MovimientoEspontaneoForm({
                     id="descripcion"
                     value={data?.descripcion}
                     placeholder="Ej: Movimiento fijo del pago de la empleada, cada 15 dias, sale del bolsillo de mamá"
-                    icon={`fa-solid fa-note-sticky fa-xl top-6 text-gray-400 ${errors.descripcion && 'text-red-500!'} `}
+                    icon={`fa-solid fa-note-sticky fa-xl top-6 text-muted-foreground ${errors.descripcion && 'text-red-500!'} `}
                     onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setData('descripcion', e.target.value)}
                     className={` h-60 ${errors.descripcion && 'border-red-500! text-red-500!'} `}
                 />
@@ -161,11 +161,11 @@ export default function MovimientoEspontaneoForm({
                 </TransitionMotion>
             </div>
             <div className="w-full flex flex-col">
-                <p className="text-gray-400 font-bold">Archivos Adjuntos <small>({data?.comprobantes?.length ?? 0} de {maxFiles} permitidos)</small>:</p>
+                <p className="text-muted-foreground font-bold">Archivos Adjuntos <small>({data?.comprobantes?.length ?? 0} de {maxFiles} permitidos)</small>:</p>
                 {maxFiles > 0 ? (
                     <DropZone onDrop={onDrop} onDropRejected={onDropRejected} rejectedFiles={rejectedFiles} maxFiles={maxFiles}/>
                 ) : (
-                    <p className="text-gray-400 italic">Has alcanzado el límite máximo de archivos adjuntos. Elimina algunos archivos existentes para agregar nuevos.</p>
+                    <p className="text-muted-foreground italic">Has alcanzado el límite máximo de archivos adjuntos. Elimina algunos archivos existentes para agregar nuevos.</p>
                 )}
                 
                     <ErrorList rejectedFiles={rejectedFiles}/>
@@ -174,7 +174,7 @@ export default function MovimientoEspontaneoForm({
                             { data?.comprobantes_existing && data?.comprobantes_existing?.length>0  &&(
                                 
                                  <div className="flex flex-col">
-                                    <p className="text-gray-400 font-bold">Archivos Guardados:</p>
+                                    <p className="text-muted-foreground font-bold">Archivos Guardados:</p>
                                 <UploadedFileList preview_route={ArchivoMovimientoRoutes.movimientosArchivosShow}  files={data.comprobantes_existing} handleDeleteFile={(index : number, id?: number)=>{
                                     console.log(data?.comprobantes_existing);
                                     removeExistingFile(index);
@@ -184,7 +184,7 @@ export default function MovimientoEspontaneoForm({
                             )}
                             
                         <div className="flex flex-col">
-                            <p className="text-gray-400 font-bold">Archivos Nuevos:</p>
+                            <p className="text-muted-foreground font-bold">Archivos Nuevos:</p>
                             {data?.comprobantes && data?.comprobantes?.length > 0 ? (
                                 <>
                                     <UploadedFileList files={data.comprobantes} handleDeleteFile={(index : number)=>{
@@ -193,7 +193,7 @@ export default function MovimientoEspontaneoForm({
                                 </>
 
                             ):(
-                                <p className="text-gray-400 font-bold">No hay archivos nuevos</p>
+                                <p className="text-muted-foreground font-bold">No hay archivos nuevos</p>
                             )}
                             </div>
                     </div>

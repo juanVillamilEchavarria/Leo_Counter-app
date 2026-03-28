@@ -23,7 +23,7 @@ export default function SelfOptionsCard() {
             <Link 
             href='#' 
             className="
-                text-primary-foreground 
+                text-foreground 
                 text-sm
                 mb-4 
                 flex 

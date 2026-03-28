@@ -46,19 +46,19 @@
   }
   /* Table */
   .table-container{
-    @apply border border-gray-400/40 rounded-2xl shadow-2xl w-full font-principal overflow-hidden
+    @apply border border-border/40 rounded-2xl shadow-2xl w-full font-principal overflow-hidden
   }
   .table-general{
     @apply table p-3 h-full w-full 
   }
   .table-thead{
-    @apply bg-gray-50 text-gray-700 text-left rounded-2xl
+    @apply bg-muted text-muted-foreground text-left rounded-2xl
   }
   .table-tbody{
     @apply text-left
   }
   .table-tbody tr{
-    @apply border-b border-border/40 even:bg-gray-300/40
+    @apply border-b border-border/40 even:bg-muted/40
   }
   .table-tbody tr td{
     @apply px-4 py-2
@@ -78,7 +78,7 @@
     @apply text-muted-foreground text-lg
   }
   .formulario-campo{
-    @apply flex flex-col gap-2
+    @apply flex flex-col gap-2 text-foreground
   }
   .formulario-campo label{
     @apply font-bold
@@ -96,6 +96,19 @@
 }
 
 @layer utilities{
+  /**
+   *  input de tipo fecha, para cambiar el color del icono para que sea correspondiente al modo de la pagina
+   */
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0.6;
+    cursor: pointer;
+    filter: invert(0); /* modo claro — ícono oscuro */
+}
+
+.dark input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1); /* modo oscuro — ícono blanco */
+}
+
   /* Firefox */
 .scrollbar-modern {
   scrollbar-width: thin;
@@ -210,8 +223,11 @@
      --chart-4: oklch(0.828 0.189 84.429);
      --chart-5: oklch(80.878% 0.13026 165.349);
      --chart-income: oklch(92.619% 0.12389 152.883);
+       --chart-expense: oklch(83.804% 0.09028 13.982);
+     --chart-income-area: oklch(92.619% 0.12389 152.883);
+       --chart-expense-area: oklch(83.804% 0.09028 13.982);
      --chart-default: oklch(73.809% 0.14538 243.264);
-  --chart-expense: oklch(83.804% 0.09028 13.982);
+
   --chart-warning: oklch(77.241% 0.14931 99.697);
   --chart-danger : oklch(57.796% 0.19872 23.745);
      --sidebar: oklch(0.985 0.002 247.839);
@@ -224,6 +240,7 @@
      --sidebar-ring: oklch(0.707 0.022 261.325);
      --brand-dark: oklch(18.334% 0.06836 264.606);
      --brand-dark-foreground: oklch(0.21 0.034 264.665);
+     
 }
 
 .dark {
@@ -250,6 +267,11 @@
      --chart-3: oklch(0.769 0.188 70.08);
      --chart-4: oklch(0.627 0.265 303.9);
      --chart-5: oklch(0.645 0.246 16.439);
+     --chart-income: rgba(1, 76, 21, 0.5);
+  --chart-expense: rgba(115, 11, 11, 0.5);
+     --chart-income-area: oklch(92.619% 0.12389 152.883);
+       --chart-expense-area: oklch(83.804% 0.09028 13.982);
+
      --sidebar: oklch(0.21 0.034 264.665);
      --sidebar-foreground: oklch(0.985 0.002 247.839);
      --sidebar-primary: oklch(0.488 0.243 264.376);

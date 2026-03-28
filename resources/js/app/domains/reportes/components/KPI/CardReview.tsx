@@ -51,22 +51,22 @@ export default function CardReview({
         <div className="flex flex-col p-6">
             <div className="w-full flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-gray-50">
+                    <div className="p-2 rounded-lg bg-muted">
                         <i className={`fa-solid ${getIcon()} text-muted-foreground`}></i>
                     </div>
                     <p className="text-sm font-medium text-muted-foreground">{label}</p>
                 </div>
-                <div className="bg-gray-50 rounded-lg px-3 py-1">
+                <div className="bg-muted rounded-lg px-3 py-1">
                     <PercentageFlow className="text-sm font-semibold" tipo_movimiento={tipo_movimiento ?? 'Ingreso'} percentage={percentage} />
                 </div>
             </div>
             <div className="flex justify-start items-center mb-3">
-                <h1 className="text-3xl font-bold text-gray-900">
+                <h1 className="text-3xl font-bold text-foreground">
                     {tipo_total === 'dinero' ? moneyFormat(total) : total.toLocaleString()}
                 </h1>
             </div>
             {children && (
-                <div className="border-t border-gray-100 pt-3">
+                <div className="border-t border-border pt-3">
                     {children}
                 </div>
             )}

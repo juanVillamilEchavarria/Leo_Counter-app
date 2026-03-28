@@ -60,9 +60,9 @@ export default function ReporteSheetContent({
   }
 
   return (
-    <SheetContent className="layout-background flex flex-col overflow-y-auto">
+    <SheetContent className="layout-background flex flex-col overflow-y-auto scrollbar-modern">
       <SheetHeader>
-        <SheetTitle className="text-gray-900">Generar Reporte</SheetTitle>
+        <SheetTitle className="text-foreground">Generar Reporte</SheetTitle>
         <SheetDescription>
           Realiza los filtros para generar un reporte detallado de tu actividad financiera
         </SheetDescription>
@@ -85,11 +85,11 @@ export default function ReporteSheetContent({
         )}
       </div>
 
-      <SheetFooter className="border-t pt-4">
+      <SheetFooter className="border-t border-border pt-4">
         <SheetClose asChild>
           <button
             type="button"
-            className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded"
+            className="px-4 py-2 text-muted-foreground hover:bg-accent rounded"
             onClick={() => {
               reset()
             }}

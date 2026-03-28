@@ -4,7 +4,7 @@ import CrudButton from "@/app/shared/components/common/CrudButton"
 import SectionTransition from "@/app/shared/components/common/SectionTransition"
 import { CategoriaTable } from "@/app/domains/categoria"
 import { Link } from "@inertiajs/react"
-import { type Categoria, CategoriaRoutes } from "@/app/domains/categoria"
+import { type CategoriaTableData, CategoriaRoutes } from "@/app/domains/categoria"
 import DeleteModal from "@/app/shared/components/modal/DeleteModal"
 import { useModalItem } from "@/app/shared/hooks"
 import useCategoria from "@/app/domains/categoria/hooks/useCategoria"
@@ -12,9 +12,9 @@ import useCategoria from "@/app/domains/categoria/hooks/useCategoria"
 export default function Index({
   categorias
 }:{
-  categorias: {data :Categoria[]}
+  categorias: {data :CategoriaTableData[]}
 }) {
-  const {item, modal, open, close}= useModalItem<Categoria>()
+  const {item, modal, open, close}= useModalItem<CategoriaTableData>()
   const {handleSubmit}= useCategoria({method: 'delete', id: item?.id})
 
   return (

@@ -5,8 +5,8 @@ export const CardVariants=
     secondary: `bg-wite-200/20 ${baseStyle} border-l-10 border-muted-foreground/20 `,
     success: `bg-green-200/20 ${baseStyle} border border-green-200/50 `,
     danger: `bg-red-200/20 ${baseStyle} border border-red-200/50 `,
-    successSecondary: 'bg-green-100/20 ${baseStyle} border-l-10 border-green-600/20',
-    dangerSecondary: 'bg-red-100/20 ${baseStyle} border-l-10 border-red-600/20'
+    successSecondary: `bg-green-100/10 ${baseStyle} border-l-10 border-green-600/20 dark:bg-green-700/10`,
+    dangerSecondary: `bg-red-100/20 ${baseStyle} border-l-10 border-red-600/20 dark:bg-red-700/10`,
 } as const
 export type CardProps = {
     children : React.ReactNode

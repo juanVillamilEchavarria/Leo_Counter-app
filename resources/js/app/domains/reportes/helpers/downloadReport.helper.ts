@@ -9,7 +9,15 @@ import { today } from "@/app/shared/helpers";
 export const downloadReport= async ()=>{
     const reportElement = document.getElementById(ReporteDataSectionId);
     if (!reportElement) throw new Error('No se pudo encontrar el elemento del reporte');
-    const imgData = await toPng(reportElement, { pixelRatio: 2 , skipFonts: true });
+    const isDark = document.documentElement.classList.contains('dark');
+    const imgData = await toPng(
+        reportElement,
+         {
+             pixelRatio: 2 ,
+              skipFonts: true,
+              backgroundColor: isDark ? '#1f2937' : '#fff'
+             }
+        );
     const pdf = new jsPDF('p', 'mm', 'a4');
     const pageWidth = pdf.internal.pageSize.getWidth();
     const img = new Image();

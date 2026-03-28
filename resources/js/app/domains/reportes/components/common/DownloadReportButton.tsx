@@ -7,7 +7,7 @@ export default function DownloadReportButton() {
      <div className="w-full flex justify-end">
             <Button
             variant="clean" 
-            className="hover:text-blue-500 transition-all  hover:underline cursor-pointer"
+            className="hover:text-blue-500 transition-all text-foreground  hover:underline cursor-pointer"
             onClick={download}
             disabled={loading}
             >

@@ -12,7 +12,7 @@ export default function ErrorResponse({
             <i className="fa-solid fa-exclamation-triangle text-4xl"></i>
           </div>
           <div className="text-center space-y-2">
-            <h3 className="text-lg font-semibold text-gray-900">{text}</h3>
+            <h3 className="text-lg font-semibold text-foreground">{text}</h3>
             <p className="text-sm text-muted-foreground">{paragraph}</p>
             <button
               onClick={() => window.location.reload()}

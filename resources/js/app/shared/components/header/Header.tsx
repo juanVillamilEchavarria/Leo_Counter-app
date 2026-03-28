@@ -1,5 +1,7 @@
 import Title from "../common/Title"
 import { Head } from "@inertiajs/react"
+import PageModeSelect from "../mode/PageModeSelect"
+import GithubLink from "./GithubLink"
 import { useMessageRedirect } from "../../hooks"
 export default function Header() {
     const { props } = useMessageRedirect()
@@ -24,11 +26,11 @@ export default function Header() {
               size="md" 
               className=" text-foreground ml-10 font-principal whitespace-nowrap" 
               />
-        <div className="flex gap-2 items-center mr-4 text-foreground">
-          {/* enlace a github con el icono */}
-            <i className="fa-brands fa-github text-2xl"></i>
-            <a href={import.meta.env.VITE_GITHUB_REPOSITORY} target="_blank" rel="noopener noreferrer">Leo Counter</a>
-        </div>
+              <div className="flex gap-4 items-center">
+                  <PageModeSelect />
+                  <GithubLink />
+              </div>
+        
 
     </div>
   )

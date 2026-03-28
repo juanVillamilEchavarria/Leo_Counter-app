@@ -52,7 +52,7 @@ export default function Reporte() {
         <div className="flex flex-col items-center justify-center min-h-100 space-y-4">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
           <div className="text-center space-y-2">
-            <h3 className="text-lg font-semibold text-gray-900">Cargando reportes financieros</h3>
+            <h3 className="text-lg font-semibold text-foreground">Cargando reportes financieros</h3>
             <p className="text-sm text-muted-foreground">Estamos procesando tus datos para generar los análisis más precisos</p>
           </div>
         </div>
@@ -79,7 +79,7 @@ export default function Reporte() {
             <i className="fa-solid fa-exclamation-triangle text-4xl"></i>
           </div>
           <div className="text-center space-y-2">
-            <h3 className="text-lg font-semibold text-gray-900">Error al cargar los reportes</h3>
+            <h3 className="text-lg font-semibold text-foreground">Error al cargar los reportes</h3>
             <p className="text-sm text-muted-foreground">No pudimos cargar tus datos financieros en este momento</p>
             <button
               onClick={() => window.location.reload()}
@@ -108,11 +108,11 @@ export default function Reporte() {
         
       >
         <div className="flex flex-col items-center justify-center min-h-100 space-y-4">
-          <div className="text-gray-400">
+          <div className="text-muted-foreground">
             <i className="fa-solid fa-chart-line text-4xl"></i>
           </div>
           <div className="text-center space-y-2">
-            <h3 className="text-lg font-semibold text-gray-900">No hay datos disponibles</h3>
+            <h3 className="text-lg font-semibold text-foreground">No hay datos disponibles</h3>
             <p className="text-sm text-muted-foreground">Aún no tienes movimientos registrados para generar reportes</p>
           </div>
         </div>

@@ -11,7 +11,7 @@ export default function SectionDescription({
   return (
    <div className={`flex flex-col justify-center items-center ${className}`}> 
         <Title title={title} size="4xl" className={` font-principal `} />
-        <p className="text-foreground text-lg font-principal mt-2 ">{paragraph}</p>
+        <p className="text-foreground text-lg font-principal mt-2 bg- ">{paragraph}</p>
    </div>
   )
 }

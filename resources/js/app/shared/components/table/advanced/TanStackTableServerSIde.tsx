@@ -99,7 +99,7 @@ export default function TanStackTableServerSide<T extends Record<string, any>>({
                             </tr>
                         ) : table.getRowModel().rows.length > 0 ? (
                             table.getRowModel().rows.map((row) => (
-                                <tr key={row.id}>
+                                <tr key={row.id} className='text-foreground'>
                                     {row.getVisibleCells().map((cell) => (
                                         <td key={cell.id}>
                                             {cell.getValue() !== null ? (
@@ -108,7 +108,7 @@ export default function TanStackTableServerSide<T extends Record<string, any>>({
                                                     cell.getContext()
                                                 )
                                             ) : (
-                                                <span className="text-gray-400">CAMPO VACÍO</span>
+                                                <span className="text-muted-foreground">CAMPO VACÍO</span>
                                             )}
                                         </td>
                                     ))}

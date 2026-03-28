@@ -42,14 +42,14 @@ export default function SimpleTable<T>({ //en el T se le pasa el tipo de Modelo 
                     )}
                     {paginatedData.map((row, i)=>
                        (
-                            <tr key={i}>  
+                            <tr key={i} className="text-foreground">  
                             {columns.map(col=>{
                                 return(
                                     <td key={String(col.key)} className={col.className}>
                                         {col.render // si hay un render de algun componente, lo mostramos en la tabla 
                                          ? col.render(row) 
                                          // si no hay render, mostramos el string del registro en su posicion de la columna
-                                         : row[col.key as keyof T] !== null ? String(row[col.key as keyof T]): <span className="text-gray-400 uppercase">Campo Vacio</span> // sino mostramos el string del registro en su posicion de la columna
+                                         : row[col.key as keyof T] !== null ? String(row[col.key as keyof T]): <span className="text-muted-foreground uppercase">Campo Vacio</span> // sino mostramos el string del registro en su posicion de la columna
                                          }
                                     </td>
 

@@ -65,14 +65,14 @@ export default function MarkAsDoneModal({
             <ErrorList rejectedFiles={rejectedFiles} />
 
                 <div className="w-full flex flex-col">
-                    <p className="text-gray-400 font-bold">Archivos subidos:</p>
+                    <p className="text-muted-foreground font-bold">Archivos subidos:</p>
                     {formFiles.comprobantes && formFiles.comprobantes?.length> 0 ?
                     <UploadedFileList
                     files={formFiles.comprobantes}
                     handleDeleteFile={DeleteFile}
                     />
                     :
-                    <p className="text-gray-400">No se han subido archivos</p>
+                    <p className="text-muted-foreground">No se han subido archivos</p>
                     }
                 </div>
             </div>

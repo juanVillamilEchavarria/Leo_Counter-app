@@ -1,5 +1,6 @@
 import IngresoAndGastoChart from "./IngresoAndGastoChart"
 import CategoriaPieChart from "./CategoriaPieChart"
+import Title from "@/app/shared/components/common/Title"
 import BalanceLineChart from "./BalanceLineChart"
 import PresupuestoPercentageChart from "./PresupuestoPercentageChart"
 import type { Tendencia, Distribuciones } from "../../types/reporte.types"
@@ -16,7 +17,7 @@ export default function ChartSection({ tendencia, distribuciones }: ChartSection
       <div>
         <div className="flex items-center gap-2 mb-6">
           <i className="fa-solid fa-chart-line text-green-600"></i>
-          <h2 className="text-xl font-bold text-gray-900">Tendencias y Evolución</h2>
+           <Title className="font-bold text-lg " title= "Tendencias y Evolución" as={'h2'} />
         </div>
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
           <IngresoAndGastoChart data={tendencia.ingresos_vs_gastos} />
@@ -28,7 +29,7 @@ export default function ChartSection({ tendencia, distribuciones }: ChartSection
       <div>
         <div className="flex items-center gap-2 mb-6">
           <i className="fa-solid fa-pie-chart text-purple-600"></i>
-          <h2 className="text-xl font-bold text-gray-900">Distribución y Control Presupuestario</h2>
+          <Title className="font-bold text-lg " title= "Distribución y Control Presupuestario" as={'h2'} />
         </div>
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
           <CategoriaPieChart distribucion={distribuciones.por_categoria} />

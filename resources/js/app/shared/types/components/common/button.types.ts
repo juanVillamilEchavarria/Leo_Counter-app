@@ -18,11 +18,11 @@ const ButtonTransitionBaseStyles = `
                     px-6
                     py-3
                     font-semibold
-                    text-primary-foreground
                     cursor-pointer
+                    hover:text-foreground!
                     `
 const TransitionCommonStyles= 'transition-all ease-in-out duration-400 '
-const ButtonBorderedBaseStyles = 'bg-background border hover:text-primary-foreground '
+const ButtonBorderedBaseStyles = 'bg-background border hover:text-foreground! '
 export const ButtonVariants = {
     gray: `
                       bg-gray-300 
@@ -35,39 +35,39 @@ export const ButtonVariants = {
   primary:      `
                       bg-azul 
                       hover:bg-azul-oscuro 
-                      text-primary-foreground 
+                      dark:bg-azul-claro
+                      dark:hover:bg-cyan-400
                       ${TransitionCommonStyles}
                       ${ButtonBaseStyles}
                       `,
   success:       `
                       bg-green-800 
-                      text-primary-foreground 
                       hover:bg-green-700 
                       ${TransitionCommonStyles}
                       ${ButtonBaseStyles}
                       `,
   successSecondary: `
                       ${ButtonBorderedBaseStyles}
-                      ${ButtonBaseStyles}
-                      border-green-800 
+                      border-green-600 
                       hover:bg-green-800 
-                      text-green-800 
+                      darK:text-green-400 
+                      text-green-600
                       ${TransitionCommonStyles}
                       ${ButtonBaseStyles}
                       `,
 secondary:       `
                       ${ButtonBorderedBaseStyles} 
                       ${ButtonBaseStyles}
-                      border-azul 
-                      hover:bg-azul-oscuro 
-                      text-azul
+                      border-azul-claro 
+
+                      hover:bg-cyan-700 
+                      text-azul-claro
                       ${TransitionCommonStyles}
                       ${ButtonBaseStyles}
                           `,
 danger:       `
                       bg-rojo 
                       hover:bg-rojo-oscuro 
-                      text-primary-foreground 
                       ${TransitionCommonStyles}
                       ${ButtonBaseStyles}
                       `,

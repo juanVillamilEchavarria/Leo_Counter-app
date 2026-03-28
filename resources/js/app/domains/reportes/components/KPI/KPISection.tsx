@@ -13,7 +13,7 @@ export default function KPISection({ kpis }: KPISectionProps) {
     <div className="mb-8">
       <div className="flex items-center gap-2 mb-6">
         <i className="fa-solid fa-chart-bar text-blue-600"></i>
-        <h2 className="text-xl font-bold text-gray-900">Indicadores Clave de Rendimiento</h2>
+        <h2 className="text-xl font-bold text-foreground">Indicadores Clave de Rendimiento</h2>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <IngresoCardReview

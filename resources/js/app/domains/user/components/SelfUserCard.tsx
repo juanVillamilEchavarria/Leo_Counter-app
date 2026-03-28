@@ -60,7 +60,7 @@ export default function SelfUserCard({
                     opacity:0, x: -70
                     }
                 }>
-                    <div className="border-l-2  border-gray-700/80">
+                    <div className="border-l-2  border-border">
                         <button
                         className="cursor-pointer ml-2 hover:bg-background/20 rounded-xlpy-1 "
                         onClick={() => setIsOpenCard(prev => !prev)}

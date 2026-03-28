@@ -16,7 +16,7 @@ export default function Search({
             id="search"
             value={value}
             placeholder="Busqueda"
-            className="border border-gray-200 rounded-2xl transition-all "
+            className="border border-border rounded-2xl transition-all "
             onChange={(e: ChangeEvent<HTMLInputElement>)=> setValue(e.target.value)}
         />
     </div>

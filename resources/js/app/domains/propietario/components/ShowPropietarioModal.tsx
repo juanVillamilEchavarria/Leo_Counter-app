@@ -41,7 +41,7 @@ export default function ShowPropietarioModal({
                     </li>
                   ))
                 ):(
-                  <p className="text-gray-400 uppercase my-3">Sin cuentas</p>
+                  <p className="text-muted-foreground uppercase my-3">Sin cuentas</p>
                 )}
               </ul>
             </ShowModal>

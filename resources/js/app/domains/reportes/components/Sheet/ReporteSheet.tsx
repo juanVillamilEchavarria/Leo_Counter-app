@@ -21,7 +21,7 @@ export default function ReporteSheet({
 
   const {isOpen, setIsOpen}= useOpen(false)
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen} >
+    <Sheet open={isOpen} onOpenChange={setIsOpen}  >
         <SheetTrigger>
          <Button type="button"  variant="successSecondary"><i className="fa-solid fa-chart-line"></i> Generar</Button>
         </SheetTrigger>

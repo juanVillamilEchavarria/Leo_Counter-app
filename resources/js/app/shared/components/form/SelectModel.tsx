@@ -19,7 +19,7 @@ export default function SelectModel<T extends Record<string, any>>({
         disabled={disabled}
         value={value}
     >
-        <option value=''>{placeholder ? `--- ${placeholder} --- ` : '-- Seleccione --'}
+        <option  value=''>{placeholder ? `--- ${placeholder} --- ` : '-- Seleccione --'}
 
         </option>
         {

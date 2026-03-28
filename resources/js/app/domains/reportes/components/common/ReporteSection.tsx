@@ -21,7 +21,7 @@ export default function ReporteSection({
       <div className="flex w-full justify-between mb-5">
         <div className="flex flex-col gap-2">
           <Title title="Reportes" size="3xl" />
-          <p>Genera y analiza tus reportes financieros</p>
+          <p className="text-foreground">Genera y analiza tus reportes financieros</p>
         </div>
         <ReporteSheet setActiveReportFilters={setActiveReportFilters} setData={setData} setError={setError} setIsLoading={setIsLoading} />
       </div>

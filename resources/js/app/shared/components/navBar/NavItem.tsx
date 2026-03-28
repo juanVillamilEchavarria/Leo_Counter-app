@@ -29,7 +29,7 @@ export default function NavItem({
         `}>
         {/* se le pasa un icon de fontawesome */}
                 <i 
-                className={`${icon} ml-2 text-2xl ${NavItemTransitionStyle}`}>
+                className={`${icon} ml-2 text-foreground text-2xl ${NavItemTransitionStyle}`}>
                 </i>
                 <TransitionMotion   initial={{opacity: 0, x: -40}} active={isOpen}>
                     <Title size="md" title={title} className="whitespace-nowrap" />

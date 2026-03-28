@@ -9,7 +9,7 @@ export default function TablePagination({
     maxVisible=5
 }:TablePaginationProps){
     if(!controller) return null
-    const notAllowedStyles = `cursor-not-allowed! text-gray-300!`
+    const notAllowedStyles = `cursor-not-allowed! text-muted-foreground/50!`
       const Pagination= useMemo(()=>{ //se usa useMemo para optimizar el renderizado de la paginacion 
         return getVisiblePages(controller.page, controller.totalPages, maxVisible) // se llama al helper para obtener la paginacion visible
     }, [controller.totalPages, controller.page, maxVisible]) // se actualiza cuando la pagina cambia, o el total de paginas cambia

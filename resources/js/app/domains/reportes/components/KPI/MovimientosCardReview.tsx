@@ -22,7 +22,7 @@ export default function MovimientosCardReview({ total, variacion }: MovimientosC
     >
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-2">
-          <p className="text-sm font-medium text-gray-700">
+          <p className="text-sm font-medium text-muted-foreground">
             Volumen de movimientos <span className={trendColor}>{Math.abs(percentage).toFixed(2)}%</span> {trendMessage}
           </p>
           <i className={`fa-solid ${trendIcon} ${trendIconColor}`}></i>

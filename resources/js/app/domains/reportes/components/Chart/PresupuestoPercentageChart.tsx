@@ -2,6 +2,7 @@ import { RadialBarChart, RadialBar, PolarAngleAxis } from "recharts"
 import { ChartContainer } from "@/app/shared/components/ui/chart"
 import Card from "@/app/shared/components/common/Card"
 import EmptyDataMessage from "../common/EmptyDataMessage"
+import Title from "@/app/shared/components/common/Title"
 import {type Presupuesto } from "../../types/reporte.types"
 import { moneyFormat } from "@/app/shared/helpers"
 
@@ -32,12 +33,12 @@ export default function PresupuestoPercentageChart({
         <div className="flex w-full flex-col gap-3 my-3">
             <div className="flex w-full justify-between items-start">
                 <div className="flex flex-col gap-1">
-                    <h3 className="font-bold text-lg">Control Presupuestario</h3>
-                    <p className="text-muted-foreground text-sm">Estado del presupuesto mensual</p>
+                     <Title className="font-bold text-lg " title= "Control Presupuestario" as={'h3'} />
+                    <p className=" text-sm text-foreground">Estado del presupuesto mensual</p>
                 </div>
                 {hasBudget && (
                     <div className="text-right">
-                        <span className={`text-sm font-semibold px-2 py-1 rounded-full ${
+                        <span className={`text-sm font-semibold text-foreground px-2 py-1 rounded-full ${
                             data.porcentaje_usado < 80 ? 'bg-green-100 text-green-800' :
                             data.porcentaje_usado <= 90 ? 'bg-yellow-100 text-yellow-800' :
                             'bg-red-100 text-red-800'
@@ -53,7 +54,7 @@ export default function PresupuestoPercentageChart({
                     <div className="grid grid-cols-3 gap-4 text-sm">
                         <div className="text-center">
                             <p className="text-muted-foreground">Presupuestado</p>
-                            <p className="font-semibold text-gray-900">{moneyFormat(data.presupuestado)}</p>
+                            <p className="font-semibold text-foreground">{moneyFormat(data.presupuestado)}</p>
                         </div>
                         <div className="text-center">
                             <p className="text-muted-foreground">Gastado</p>
@@ -89,7 +90,7 @@ export default function PresupuestoPercentageChart({
 
                         </RadialBarChart>
                          <div className="absolute flex flex-col items-center justify-center">
-                                    <span className="text-2xl font-bold">
+                                    <span className="text-2xl font-bold text-foreground">
                                     {data.porcentaje_usado.toFixed(1)}%
                                     </span>
                                     <span className="text-xs text-muted-foreground">

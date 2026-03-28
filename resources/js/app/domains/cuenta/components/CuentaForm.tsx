@@ -33,8 +33,8 @@ export default function CuentaForm({
                     onChange={
                         (e: React.ChangeEvent<HTMLInputElement>) => setData('nombre', e.target.value)
                     }
-                    className={`border-2 p-3 border-border text-gray-800 ${errors.nombre && 'border-red-500! text-red-500!'} `}
-                    icon={`fa-solid fa-file-signature fa-xl top-6 text-gray-400 ${errors.nombre && 'text-red-500!'} `}
+                    className={`border-2 p-3 border-border text-foreground ${errors.nombre && 'border-red-500! text-red-500!'} `}
+                    icon={`fa-solid fa-file-signature fa-xl top-6 text-muted-foreground ${errors.nombre && 'text-red-500!'} `}
                 />
                 <TransitionMotion
                  active={errors?.nombre}
@@ -55,11 +55,11 @@ export default function CuentaForm({
                     value={data?.saldo_inicial}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('saldo_inicial', Number(e.target.value))}
                     className={`
-                            border-2 p-3 border-border text-gray-800
+                            border-2 p-3 border-border text-foreground
                             ${errors.saldo_inicial && 'border-red-500! text-red-500!'} 
-                            ${can_update_saldo === false && 'bg-gray-200 cursor-not-allowed'} 
+                            ${can_update_saldo === false && 'bg-muted cursor-not-allowed'} 
                          `}
-                    icon={`fa-solid fa-coins fa-xl top-6 text-gray-400 ${errors.saldo_inicial && 'text-red-500!'} `}
+                    icon={`fa-solid fa-coins fa-xl top-6 text-muted-foreground ${errors.saldo_inicial && 'text-red-500!'} `}
                 />
                 <TransitionMotion
                  active={errors?.saldo_inicial}
@@ -121,9 +121,9 @@ export default function CuentaForm({
                 id="notas"
                 value={data?.notas}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setData('notas', e.target.value)}
-                className={`border-2 p-3 border-border text-gray-800 h-60 ${errors.notas && 'border-red-500! text-red-500!'} `}
+                className={`border-2 p-3 border-border text-foreground h-60 ${errors.notas && 'border-red-500! text-red-500!'} `}
                 placeholder="Ej: Esta es la cuenta donde mamá paga"
-                icon={`fa-solid fa-file-signature fa-xl top-6 text-gray-400 ${errors.notas && 'text-red-500!'} `}
+                icon={`fa-solid fa-file-signature fa-xl top-6 text-muted-foreground ${errors.notas && 'text-red-500!'} `}
                />
             </div>
 

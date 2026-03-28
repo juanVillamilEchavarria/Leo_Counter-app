@@ -2,6 +2,7 @@ import { Line, YAxis, XAxis, CartesianGrid, Legend , Area, ComposedChart} from "
 import Card from "@/app/shared/components/common/Card"
 import StatisticalSummaryText from "@/app/domains/reportes/components/Summarys/StatisticalSummaryText"
 import EmptyDataMessage from "@/app/domains/reportes/components/common/EmptyDataMessage"
+import Title from "@/app/shared/components/common/Title"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/app/shared/components/ui/chart"
 import { type IngresoVsGastoChart } from "@/app/domains/reportes/types/reporte.types"
 
@@ -40,10 +41,10 @@ export default function IngresoAndGastoLineChart({ data }: IngresoAndGastoLineCh
         <div className="flex w-full flex-col gap-2 my-3">
           <div className="flex w-full justify-between">
             <div className="flex flex-col gap-2">
-              <h3 className="font-bold text-lg">Ingresos y Gastos</h3>
+               <Title as={'h3'} className="font-semibold text-lg" title="Ingresos y Gastos"/>
             </div>
           </div>
-          <p>Promedios</p>
+          <p className="text-foreground">Promedios</p>
           <div className="grid grid-cols-2 gap-2 self-start text-sm">
             
             <StatisticalSummaryText
@@ -79,7 +80,7 @@ export default function IngresoAndGastoLineChart({ data }: IngresoAndGastoLineCh
               data={chartData}
               margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
             >
-              <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="#f0f0f0" />
+              <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="var(--border)" />
               <XAxis
                 tickLine={false}
                 axisLine={false}
@@ -93,7 +94,7 @@ export default function IngresoAndGastoLineChart({ data }: IngresoAndGastoLineCh
                 tickFormatter={(value) => `$${value.toLocaleString()}`}
               />
               <ChartTooltip
-                content={<ChartTooltipContent />}
+                content={<ChartTooltipContent labelClassName="font-foreground" />}
                 labelFormatter={(label) => `fecha: ${label}`}
               />
               <Legend />
@@ -102,14 +103,14 @@ export default function IngresoAndGastoLineChart({ data }: IngresoAndGastoLineCh
                 dataKey="ingresos"
                 stroke="var(--color-verde)"
                 strokeWidth={3}
-                activeDot={{ r: 6, strokeWidth: 0, fill: 'var(--chart-income)' }}
-                dot={{ r: 4, strokeWidth: 2, fill: 'white', stroke: 'var(--chart-income)' }}
+                activeDot={{ r: 6, strokeWidth: 0, fill: 'var(--chart-income-area)' }}
+                dot={{ r: 4, strokeWidth: 2, fill: 'white', stroke: 'var(--chart-income-area)' }}
               />
               <Area
                 type="monotone"
                 dataKey="ingresos"
-                stroke="var(--chart-income)"
-                fill="var(--chart-income)"
+                stroke="var(--chart-income-area)"
+                fill="var(--chart-income-area)"
                 fillOpacity={0.1}
                 strokeWidth={2}
               />
@@ -119,14 +120,14 @@ export default function IngresoAndGastoLineChart({ data }: IngresoAndGastoLineCh
                 dataKey="gastos"
                 stroke="var(--color-rojo)"
                 strokeWidth={3}
-                activeDot={{ r: 6, strokeWidth: 0, fill: 'var(--chart-expense)' }}
-                dot={{ r: 4, strokeWidth: 2, fill: 'white', stroke: 'var(--chart-expense)' }}
+                activeDot={{ r: 6, strokeWidth: 0, fill: 'var(--chart-expense-area)' }}
+                dot={{ r: 4, strokeWidth: 2, fill: 'white', stroke: 'var(--chart-expense-area)' }}
               />
               <Area
                 type="monotone"
                 dataKey="gastos"
-                stroke="var(--chart-expense)"
-                fill="var(--chart-expense)"
+                stroke="var(--chart-expense-area)"
+                fill="var(--chart-expense-area)"
                 fillOpacity={0.1}
                 strokeWidth={2}
               />

@@ -3,8 +3,11 @@ import "../css/app.css"
 import AppLayout from "./Layouts/AppLayout";
 import { createInertiaApp } from '@inertiajs/react'
 import { createRoot } from 'react-dom/client'
+import { restorePageMode } from "./app/shared/helpers/pageMode/pageMode.helpers";
 
+restorePageMode()
 createInertiaApp({
+
     title: title => title ? `${title} - ${import.meta.env.VITE_APP_NAME}`: import.meta.env.VITE_APP_NAME,
     resolve: name => {
         const pages = import.meta.glob('./Pages/**/*.tsx', { eager: true })

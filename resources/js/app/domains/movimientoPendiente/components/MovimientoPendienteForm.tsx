@@ -48,7 +48,7 @@ export default function MovimientoPendienteForm({
                     (e: React.ChangeEvent<HTMLInputElement>) => setData('nombre', e.target.value)
                 }
                 className={` ${errors.nombre && 'border-red-500! text-red-500!'} `}
-                icon={`fa-solid fa-file-signature fa-xl top-6 text-gray-400 ${errors.nombre && 'text-red-500!'} `}
+                icon={`fa-solid fa-file-signature fa-xl top-6 text-muted-foreground ${errors.nombre && 'text-red-500!'} `}
             />
             <TransitionMotion active={errors?.nombre}>
                 <AlertMessage message={errors?.nombre} />
@@ -146,7 +146,7 @@ export default function MovimientoPendienteForm({
         </div>
         <div className="formulario-campo">
             <label htmlFor="dias_aviso">Dias de aviso</label>
-            <small className="text-gray-400">Ingresa la cantidad de dias en los que quieres ser notificado antes de la fecha programada, este campo es opcional</small>
+            <small className="text-muted-foreground">Ingresa la cantidad de dias en los que quieres ser notificado antes de la fecha programada, este campo es opcional</small>
             <InputFillable
                 type="number"
                 name="dias_aviso"
@@ -167,7 +167,7 @@ export default function MovimientoPendienteForm({
                 id="descripcion"
                 value={data?.descripcion}
                 placeholder="Ej: Pago pendiente de servicios, debe pagarse antes del 15"
-                icon={`fa-solid fa-note-sticky fa-xl top-6 text-gray-400 ${errors.descripcion && 'text-red-500!'} `}
+                icon={`fa-solid fa-note-sticky fa-xl top-6 text-muted-foreground ${errors.descripcion && 'text-red-500!'} `}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setData('descripcion', e.target.value)}
                 className={` h-60 ${errors.descripcion && 'border-red-500! text-red-500!'} `}
             />

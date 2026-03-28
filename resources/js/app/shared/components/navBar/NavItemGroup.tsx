@@ -34,14 +34,14 @@ export default function NavItemGroup({
                > 
                   {/* este es el icono que se le pasa del padre, el correspondiente al grupo */}
                     <i 
-                    className={`${icon} ml-2 text-2xl ${TransitionStyle}`}>
+                    className={`${icon} ml-2 text-2xl text-foreground ${TransitionStyle}`}>
                     </i>
                     <TransitionMotion initial={{opacity: 0, x: -40}} active={isOpen} className="w-full">
                         <div className="flex items-center w-full">
                             <Title size="md" title={title} className="whitespace-nowrap" />
                         
                         {/* este es el icono de la flecha */}
-                        <i className={`fa-solid fa-chevron-down ml-auto mr-2 text-2xl ${isOpenChild ? 'rotate-180' : ''} ${TransitionStyle}`}></i>
+                        <i className={`fa-solid fa-chevron-down ml-auto text-foreground mr-2 text-2xl ${isOpenChild ? 'rotate-180' : ''} ${TransitionStyle}`}></i>
                          
     
                         </div>

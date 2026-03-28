@@ -63,7 +63,7 @@ export default function TanStackTable<T extends Record<string,any>>({
                     >
                         {row.getVisibleCells().map((cell) => (
                             <td key={cell.id}>
-                                {cell.getValue()!== null ?flexRender(cell.column.columnDef.cell, cell.getContext()): <span className="text-gray-400">CAMPO VACIO</span>}
+                                {cell.getValue()!== null ?flexRender(cell.column.columnDef.cell, cell.getContext()): <span className="text-muted-foreground">CAMPO VACIO</span>}
                             </td>
                         ))}
                     </tr>

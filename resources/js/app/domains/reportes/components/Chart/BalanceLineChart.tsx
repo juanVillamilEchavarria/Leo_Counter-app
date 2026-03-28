@@ -1,5 +1,6 @@
 import { Line, YAxis, XAxis, CartesianGrid, Legend , Area, ComposedChart} from "recharts"
 import Card from "@/app/shared/components/common/Card"
+import Title from "@/app/shared/components/common/Title"
 import EmptyDataMessage from "../common/EmptyDataMessage"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/app/shared/components/ui/chart"
 import type { BalanceNetoData } from "../../types/reporte.types"
@@ -32,7 +33,7 @@ export default function BalanceLineChart({ data }: BalanceLineChartProps) {
       <div className="flex w-full flex-col gap-2 my-3">
         <div className="flex w-full justify-between">
           <div className="flex flex-col gap-2">
-            <h3 className="font-bold text-lg">Evolución del Balance Neto</h3>
+            <Title className="font-bold text-lg " title= "Evolución del Balance Neto" as={'h3'} />
           </div>
         </div>
       </div>
@@ -43,7 +44,7 @@ export default function BalanceLineChart({ data }: BalanceLineChartProps) {
             data={chartData}
             margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
           >
-            <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="#f0f0f0" />
+            <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="var(--border)" />
             <XAxis
               tickLine={false}
               axisLine={false}

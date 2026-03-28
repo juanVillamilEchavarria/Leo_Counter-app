@@ -59,7 +59,7 @@ export default function ShowMovimientoModal({
                                 
                             </li>
                             ))): (
-                                <p className="text-gray-400 uppercase">No hay comprobantes</p>
+                                <p className="text-muted-foreground uppercase">No hay comprobantes</p>
                             )}
                         </ul>
                     

@@ -29,8 +29,8 @@ export default function PropietarioForm({
                             onChange={
                                 (e: React.ChangeEvent<HTMLInputElement>) => setData('nombre', e.target.value)
                             }
-                            className={`border-2 p-3 border-border text-gray-800 ${errors.nombre && 'border-red-500! text-red-500!'} `}
-                            icon={`fa-solid fa-file-signature fa-xl top-6 text-gray-400 ${errors.nombre && 'text-red-500!'} `}
+                            className={`border-2 p-3 border-border text-foreground ${errors.nombre && 'border-red-500! text-red-500!'} `}
+                            icon={`fa-solid fa-file-signature fa-xl top-6 text-muted-foreground ${errors.nombre && 'text-red-500!'} `}
                         />
                         <TransitionMotion    active={errors?.nombre}>
                                 <AlertMessage message={errors?.nombre} />
@@ -48,8 +48,8 @@ export default function PropietarioForm({
                             onChange={
                                 (e: React.ChangeEvent<HTMLInputElement>) => setData('apellido', e.target.value)
                             }
-                            className={`border-2 p-3 border-border text-gray-800 ${errors.apellido && 'border-red-500! text-red-500!'} `}
-                            icon={`fa-solid fa-file-signature fa-xl top-6 text-gray-400 ${errors.apellido && 'text-red-500!'} `}
+                            className={`border-2 p-3 border-border text-foreground ${errors.apellido && 'border-red-500! text-red-500!'} `}
+                            icon={`fa-solid fa-file-signature fa-xl top-6 text-muted-foreground ${errors.apellido && 'text-red-500!'} `}
                         />
                         <TransitionMotion   active={errors?.apellido}>
                                 <AlertMessage message={errors?.apellido} />
@@ -69,8 +69,8 @@ export default function PropietarioForm({
                     onChange={
                         (e: React.ChangeEvent<HTMLInputElement>) => setData('email', e.target.value)
                     }
-                    className={`border-2 p-3 border-border text-gray-800 ${errors.email && 'border-red-500! text-red-500!'} `}
-                    icon={`fa-solid fa-envelope fa-xl top-6 text-gray-400 ${errors.email && 'text-red-500!'} `}
+                    className={`border-2 p-3 border-border text-foreground ${errors.email && 'border-red-500! text-red-500!'} `}
+                    icon={`fa-solid fa-envelope fa-xl top-6 text-muted-foreground ${errors.email && 'text-red-500!'} `}
                 />
                     
                     <TransitionMotion   active={errors?.email}>
@@ -88,8 +88,8 @@ export default function PropietarioForm({
                     onChange={
                         (e: React.ChangeEvent<HTMLInputElement>) => setData('telefono', e.target.value)
                     }
-                    className={`border-2 p-3 border-border text-gray-800 ${errors.telefono && 'border-red-500! text-red-500!'} `}
-                    icon={`fa-solid fa-phone fa-xl top-6 text-gray-400 ${errors.telefono && 'text-red-500!'} `}
+                    className={`border-2 p-3 border-border text-foreground ${errors.telefono && 'border-red-500! text-red-500!'} `}
+                    icon={`fa-solid fa-phone fa-xl top-6 text-muted-foreground ${errors.telefono && 'text-red-500!'} `}
                 />
                 <TransitionMotion    active={errors?.telefono}>
                                 <AlertMessage message={errors?.telefono} />
