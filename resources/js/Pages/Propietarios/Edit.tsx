@@ -10,7 +10,6 @@ export default function Edit({
     data: Propietario
 }) {
     const {form, handleSubmit}= usePropietario({method: 'put', id: data?.id, data})
-    console.log(data);
   return (
     <div className="section">
         <CreateOrEditDescription type="edit" model="Propietario" />

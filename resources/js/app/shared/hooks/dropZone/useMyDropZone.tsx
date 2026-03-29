@@ -19,7 +19,6 @@ export default function useMyDropZone<T extends string>({
   }, [onFilesChange])
 
   const onDropRejected = useCallback((fileRejections: FileRejection[]) => {
-    console.log(fileRejections)
     setRejectedFiles(fileRejections) // cuando se rechazan archivos se setean
   }, [])
 

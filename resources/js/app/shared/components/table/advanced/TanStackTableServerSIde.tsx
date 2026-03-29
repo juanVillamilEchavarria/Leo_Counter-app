@@ -21,7 +21,7 @@ export default function TanStackTableServerSide<T extends Record<string, any>>({
 }: TanStackTableServerSideProps<T>) {
     
     const {entries, setEntries} = useEntries({value:pageSize});
-    console.log('entries',entries);
+
     const {
         table,
         isLoading,

@@ -5,9 +5,6 @@ import { type Cuenta } from "../../cuenta"
 export const ReporteApiActions = {
   post: route('api.reportes.generate'),
 }
-export const ReporteActions ={
-  download : route('reportes.download')
-}
 
 export const ReporteDataSectionId = 'reporte-data-section'
 

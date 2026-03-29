@@ -21,7 +21,6 @@ export default function ShowMovimientoPendienteModal({
       preserveScroll: true
     })
   }, [onClose])
-  console.log(movimiento)
 
   const modalData = useMemo(() => {
   if (!movimiento) return null

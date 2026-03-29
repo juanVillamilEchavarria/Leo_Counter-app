@@ -36,7 +36,7 @@ export const ButtonVariants = {
                       bg-azul 
                       hover:bg-azul-oscuro 
                       dark:bg-azul-claro
-                      dark:hover:bg-cyan-400
+                      dark:hover:bg-cyan-100
                       ${TransitionCommonStyles}
                       ${ButtonBaseStyles}
                       `,
@@ -60,7 +60,9 @@ secondary:       `
                       ${ButtonBaseStyles}
                       border-azul-claro 
 
-                      hover:bg-cyan-700 
+                      dark:hover:bg-cyan-900
+                      hover:bg-azul-claro
+                      hover:text-white! 
                       text-azul-claro
                       ${TransitionCommonStyles}
                       ${ButtonBaseStyles}

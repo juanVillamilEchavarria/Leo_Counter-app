@@ -13,7 +13,6 @@ export default function CategoriaForm({
     options,
     processing,
 }: CategoriaFormProps) {
-  console.log(submit)
   return (
     <Card>
     <form onSubmit={submit} className="formulario-general">

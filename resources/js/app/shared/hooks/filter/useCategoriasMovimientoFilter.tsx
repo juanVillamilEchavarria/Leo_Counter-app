@@ -18,7 +18,7 @@ export default function useCategoriasMovimientoFilter< TOptions extends Record<s
 
              useEffect(()=>{
                     const valid = categoriasFiltered.find(categoria => categoria.id === data?.categoria_id)
-                    console.log(valid);
+             
                     if(valid === undefined){
                         onCategoriaInvalid();
                     }

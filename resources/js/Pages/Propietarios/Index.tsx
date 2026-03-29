@@ -25,7 +25,6 @@ export default function Index({
       setItem(data.data)
     }
   },[data])
-  console.log(data);
   const {item, modal, open, close, setItem}= useModalItem<PropietarioShowData>()
   const {handleSubmit}= usePropietario({method: 'delete', id: item?.id})
 

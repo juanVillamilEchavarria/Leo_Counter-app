@@ -40,7 +40,6 @@ export default function IngresoAndGastoChart({ data: chartData }: IngresoAndGast
         promedios: chartData.promedios
       })
   const hasData = chartData.data.length > 0
-console.log(filteredData)
   return (
     <Card>
       <div className="flex flex-col gap-4">

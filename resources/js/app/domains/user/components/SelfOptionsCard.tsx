@@ -1,16 +1,16 @@
 import { Link } from "@inertiajs/react"
 import { useLogout } from "../../auth"
-
+import { ProfileRoutes } from "../../profile"
 export default function SelfOptionsCard() {
     const {form, handleSubmit} = useLogout()
   return (
      <div className="
         flex
         flex-col
-        bg-zinc-950/90 
+        bg-background
         backdrop-blur-2xl
         border
-        border-white/20  
+        border-border
         shadow-[0_20px_50px_rgba(0,0,0,0.6)]
         rounded-2xl 
         gap-2
@@ -19,17 +19,17 @@ export default function SelfOptionsCard() {
         origin-bottom-left
         "
     >
-        <div className="border-b border-white/80">
+        <div className="border-b border-border">
             <Link 
-            href='#' 
+            href={ProfileRoutes.index} 
             className="
-                text-foreground 
+                text-foreground
                 text-sm
                 mb-4 
                 flex 
                 items-center
                 gap-2
-                hover:bg-background/10 
+                hover:bg-foreground/10 
                 p-2 rounded-xl
                 "
             >

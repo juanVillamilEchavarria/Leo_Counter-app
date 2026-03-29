@@ -22,7 +22,6 @@ export default function Index({
         close()
          setData('password', '')
     }
-    console.log(data);
   return (
         <SectionTransition>
             <SectionDescription title="Movimientos Espontaneos" paragraph={(

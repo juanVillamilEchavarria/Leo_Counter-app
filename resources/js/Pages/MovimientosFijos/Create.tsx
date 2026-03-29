@@ -11,8 +11,6 @@ export default function Create({
 }) {
 
     const {form, handleSubmit}= useMovimientoFijo({})
-
-    console.log(options);
   return (
     <div className="section">
         <CreateOrEditDescription type="create" model="Movimiento Fijo" />

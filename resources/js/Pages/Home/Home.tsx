@@ -5,7 +5,6 @@ import EmptyDataMessage from "@/app/domains/reportes/components/common/EmptyData
 import { useHome, HomeSection, IngresoAndGastoLineChart } from "@/app/domains/home"
 export default function Home() {
   const {data, isLoading, error}= useHome()
-  console.log(data?.data.KPIs);
 
   if(isLoading){
     return (
@@ -32,8 +31,6 @@ export default function Home() {
    
   }
   const {KPIs, tendencia} = data.data
-  console.log(KPIs);
-  console.log(tendencia);
   return (
   
     <HomeSection>

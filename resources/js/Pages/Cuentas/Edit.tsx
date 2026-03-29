@@ -11,7 +11,6 @@ export default function Edit({
     can_update_saldo
 }:CuentaEditViewProps) {
    const {form, handleSubmit}= useCuenta({method: 'put', id: data?.id, data})
-   console.log(can_update_saldo);
    
     return (
       <div className="section">

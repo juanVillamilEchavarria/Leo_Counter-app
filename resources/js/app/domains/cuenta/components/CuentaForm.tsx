@@ -14,7 +14,6 @@ export default function CuentaForm({
     processing,
     can_update_saldo
 }: CuentaFormProps) {
-    console.log(errors)
   return (
     <Card
     className="shadow-2xl! rounded-2xl!"

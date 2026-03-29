@@ -176,7 +176,6 @@ export default function MovimientoEspontaneoForm({
                                  <div className="flex flex-col">
                                     <p className="text-muted-foreground font-bold">Archivos Guardados:</p>
                                 <UploadedFileList preview_route={ArchivoMovimientoRoutes.movimientosArchivosShow}  files={data.comprobantes_existing} handleDeleteFile={(index : number, id?: number)=>{
-                                    console.log(data?.comprobantes_existing);
                                     removeExistingFile(index);
                                     setData('comprobantes_delete_ids', [...(data?.comprobantes_delete_ids ?? []), id ?? 0])
                                 }} className="text-foreground" />

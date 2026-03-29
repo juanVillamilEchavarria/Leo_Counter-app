@@ -39,7 +39,7 @@ export default function ShowModal({
             <span className="pointer-events-none absolute top-4 bottom-4 left-1/2  w-px bg-blue-200/10" />
             {item &&
                 Object.entries(item).map(([key, value]) => { 
-                console.log(value)
+            
                 const icon = icons[key] ?? 'fa-solid fa-circle-question' 
                 return (
                 <li key={key} className="ml-2 text-lg flex gap-2 items-center ">

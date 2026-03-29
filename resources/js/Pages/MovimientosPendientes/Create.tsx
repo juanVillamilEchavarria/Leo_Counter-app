@@ -11,7 +11,6 @@ export default function Create({
     options: MovimientoPendienteFormOptions
 }) {
     const {form, handleSubmit}= useMovimientoPendiente({})
-    console.log(form);
 
   return (
     <div className="section">

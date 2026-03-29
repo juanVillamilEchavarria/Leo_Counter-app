@@ -11,7 +11,6 @@ export default function Create({
 }:CreateAndEditViewWithOptionsProps<Cuenta, CuentaFormOptions> 
 ) {
     const {form, handleSubmit}= useCuenta({})
-    console.log(handleSubmit);
   return (
     <div className="section">
         <CreateOrEditDescription type="create" model="Cuenta" />

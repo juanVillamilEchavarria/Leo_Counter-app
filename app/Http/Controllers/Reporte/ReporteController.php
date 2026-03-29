@@ -13,8 +13,4 @@ class ReporteController extends Controller
             'title' => 'Reportes'
         ]);
     }
-    public function download(Request $request){
-        dd($request->all());
-
-    }
 }

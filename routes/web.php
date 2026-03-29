@@ -14,9 +14,10 @@ use App\Http\Controllers\Categoria\CategoriaController;
 use App\Http\Controllers\Reporte\ReporteController;
 use App\Http\Controllers\Presupuesto\PresupuestoHistoricoController;
 use App\Http\Controllers\Presupuesto\PresupuestoMesActualController;
-
 use App\Http\Controllers\PagoPendiente\PagoPendienteController;
 use App\Http\Controllers\Historial\HistorialController;
+use App\Http\Controllers\Profile\ProfileController;
+use App\Http\Controllers\Profile\ProfilePasswordController;
 Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.store');
 Route::get('/register', function (){
@@ -24,7 +25,7 @@ Route::get('/register', function (){
 })->name('register');
 Route::middleware('auth')->group( function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-    // CUENTA
+    // CUENTAS
     Route::resource('cuentas',CuentaController::class)->names('cuentas')->except('patch');
     Route::patch('cuentas/{cuenta}/toggle-active', [CuentaController::class, 'toggleActive'])->name('cuentas.toggle-active');
     Route::resource('propietarios',PropietarioController::class)->names('propietarios');
@@ -66,7 +67,8 @@ Route::middleware('auth')->group( function () {
     Route::resource('pagos-pendientes',PagoPendienteController::class)->names('pagosPendientes');
     Route::get('/historial', [HistorialController::class, 'index'])->name('historial.index');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-    // REPORTES
-    Route::post('reportes/download', [ReporteController::class, 'download'])->name('reportes.download');
+    // PERFIL
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/password', [ProfilePasswordController::class, 'index'])->name('profile.password.index');
 });
 

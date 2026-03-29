@@ -31,8 +31,7 @@ export default function IngresoAndGastoLineChart({ data }: IngresoAndGastoLineCh
      ingresos: item.ingresos,
      gastos: item.gastos
    }))
-   console.log(data);
-   console.log(chartData);
+
   
     const hasData = statisticData.length > 0
   
