@@ -1,4 +1,4 @@
-import {type Categoria,type CategoriaTableData ,CategoriaActions, CategoriaRoutes } from "../../types/categoria.types";
+import {type Categoria,type CategoriaTableData ,CategoriaActions, CategoriaRoutes, CategoriaToggleTypes } from "../../types/categoria.types";
 import ModelToggle from "@/app/shared/components/table/actions/ModelToggle";
 import EditAndDeleteActions from "@/app/shared/components/table/actions/EditAndDeleteActions";
 import SuccessOrFailText from "@/app/shared/components/common/SuccessOrFailText";
@@ -27,7 +27,7 @@ export const CategoriaColumns=(({
           render: (row : CategoriaTableData)=>(
             <ModelToggle 
             active={row.es_fijo}
-            route={CategoriaActions.patch(row.id)}
+            route={CategoriaActions.toggle(row.id, CategoriaToggleTypes.es_fijo)}
             labels={{
              active: 'Fijo',
              inactive: 'No Fijo'

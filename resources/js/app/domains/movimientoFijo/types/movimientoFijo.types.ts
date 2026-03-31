@@ -32,9 +32,12 @@ export const MovimientoFijoActions = {
     put : (id: number) => route('movimientosFijos.update', {id}),
     delete : (id: number) => route('movimientosFijos.destroy', {movimientoFijo:id}),
     patch : (id: number) => route('movimientosFijos.update', {id}),
-    toggleActive : (id: number) => route('movimientosFijos.toggle-active', {movimientoFijo:id}),
-    toggleRegistrarAutomaticamente : (id: number) => route('movimientosFijos.toggle-registrar-automaticamente', {movimientoFijo:id})
+    toggle : (id: number, attribute: keyof typeof MovimientoFijoToggleTypes) => route('movimientosFijos.toggle', {movimientoFijo:id, attribute}),
 }as const
+export const MovimientoFijoToggleTypes = {
+    active: 'active',
+    registrar_automatico: 'registrar_automatico'
+} as const
 
 export const MovimientoFijoRoutes = {
     index : () => route('movimientosFijos.index'),

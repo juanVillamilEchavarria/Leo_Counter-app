@@ -2,6 +2,7 @@
 namespace App\Shared\QueryBuilders;
 
 /**
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  * construira una query para un aggregate con una condicion
  * ejemplo de retornos :
  * con COALESCE y conditionColumn : 
@@ -15,19 +16,18 @@ namespace App\Shared\QueryBuilders;
  * 
  * sin COALESCE y sin conditionColumn :
  * SUM(monto)
+ * @example
+ * $builder = ConditionalAggregateBuilder::make()
+ * ->aggregate('SUM')
+ * ->column('movimientos.monto')
+ * ->conditionColumn('movimientos.tipo_movimiento_id')
+ * ->useCoalesce(true)
+ * ->build();
+ * 
  */
 
 class ConditionalAggregateBuilder{
     
-    /**
-     * Ejemplo de instanciacion:
-     * $builder = ConditionalAggregateBuilder::make()
-     * ->aggregate('SUM')
-     * ->column('movimientos.monto')
-     * ->conditionColumn('movimientos.tipo_movimiento_id')
-     * ->useCoalesce(true)
-     * ->build();
-     */
 
     /**
      * @param string $aggregate
@@ -46,38 +46,72 @@ class ConditionalAggregateBuilder{
      * el campo a operar
      */
     private string $column = 'monto';
+    /**
+     * el campo de la condicion
+     */
     private ?string $conditionColumn = null; 
+    /**
+     * si se va a usar COALESCE
+     */
     private bool $useCoalesce = true;
+    /**
+     * el valor por defecto en caso de usar COALESCE, por defecto es 0, pero se puede configurar con el metodo defaultValue
+     */
     private int | float $defaultValue = 0;
     
+    /**
+     * @return self
+     */
     public static function make(): self{
         return new self();
     }
 
-    /**
-     * Metodos para configurar el objeto
-     */
+    
 
+    /**
+     * Setea el tipo de operacion a realizar
+     * @param string $aggregate
+     * @return self
+     */
     public function aggregate(string $aggregate): self{
         $this->aggregate = $aggregate;
         return $this;
     }
 
+    /**
+     * Setea el campo a operar
+     * @param string $column
+     * @return self
+     */
     public function column(string $column): self{
         $this->column = $column;
         return $this;
     }
 
+    /**
+     * Setea el campo de la condicion
+     * @param string $conditionColumn
+     * @return self
+     */
     public function conditionColumn(string $conditionColumn): self{
         $this->conditionColumn = $conditionColumn;
         return $this;
     }
 
+    /**
+     * Setea si se va a usar COALESCE
+     * @param bool $useCoalesce     * @return self
+     */
     public function useCoalesce(bool $useCoalesce): self{
         $this->useCoalesce = $useCoalesce;
         return $this;
     }
 
+    /**
+     * Setea el valor por defecto en caso de usar COALESCE, por defecto es 0, pero se puede configurar con este metodo
+     * @param int | float $defaultValue
+     * @return self
+     */
     public function defaultValue(int | float $defaultValue): self{
         $this->defaultValue = $defaultValue;
         return $this;
@@ -85,6 +119,7 @@ class ConditionalAggregateBuilder{
 
     /**
      * Construye la query completa con el COALESCE si es necesario
+     * @return string
      */
     public function build(): string{
         return $this->useCoalesce ?
@@ -92,6 +127,9 @@ class ConditionalAggregateBuilder{
                 $this->buildQuery();
 
     }
+    /**
+     * @return string
+     */
     public function __toString(): string{
         return $this->build();
     }
@@ -100,6 +138,7 @@ class ConditionalAggregateBuilder{
      * Retorna la query para el aggregate
      * Ej:
      * SUM(CASE WHEN movimientos.tipo_movimiento_id = ? THEN monto END)
+     * @return string
      */
     private function buildQuery(): string{
         if($this->conditionColumn){
@@ -109,6 +148,10 @@ class ConditionalAggregateBuilder{
         return "{$this->aggregate}({$this->column})";
     }
 
+    /**
+     * Retorna la query para el CASE WHEN
+     * @return string
+     */
     private function buildWhenQuery(): string{
         return $this->aggregate === 'COUNT'?
             "CASE WHEN {$this->conditionColumn} = ? THEN 1 END" :

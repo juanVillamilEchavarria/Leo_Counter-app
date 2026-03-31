@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Cuenta\StoreAndUpdateCuentaRequest;
 use Inertia\Inertia;
 use App\Models\Cuenta\Cuenta;
-use App\Domains\Cuenta\Services\CuentaService;
+use App\Domains\Cuenta\Services\Application\CuentaService;
 class CuentaController extends Controller
 {
     public function __construct(
@@ -99,7 +99,8 @@ class CuentaController extends Controller
         Inertia::flash('success', 'Cuenta Archivada correctamente');
         return redirect()->route('cuentas.index');
     }
-    public function toggleActive(Cuenta $cuenta){
+    public function toggleActive(Cuenta $cuenta, string $attribute)
+    {
         $this->cuentaService->toggleActive($cuenta);
         Inertia::flash('success', 'Cuenta actualizada correctamente');
         return redirect()->route('cuentas.index');

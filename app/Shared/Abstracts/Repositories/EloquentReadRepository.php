@@ -9,22 +9,40 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Shared\DTOs\Querys\TableQueryDTO;
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * Repositorio base para operaciones de lectura usando Eloquent.
+ *
+ * Este repositorio abstrae las consultas comunes:
+ * - paginación
+ * - ordenamiento
+ * - búsqueda por columnas
+ * - carga de relaciones
+ *
+ * No gestiona operaciones de escritura; para eso existe EloquentWriteRepository.
+ *
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @package App\Shared\Abstracts\Repositories
+ * @since 1.0.0
+ */
 
 abstract class EloquentReadRepository{ 
     /**
      * Configuracion de $relations
+     * Relaciones que se pueden cargar con los registros de la tabla, estas relaciones se cargaran en las consultas que lo requieran, como getWithDetails, getAllWithDetails, etc
      * Formato : ['relationName']
      * @var array<string>
      */
     protected array $relations = [];
     /**
-     * Configuracion de $searchColumns
-     * 
-     * Formato: [
-    *   'column_name' => 'column_name',
-    *    'relation_name' => ['relation.column']
-     *  ]
-     * @var array<string|array<string>> 
+     * Columnas de búsqueda permitidas.
+     *
+     * Formato:
+     * [
+     *   'column' => 'column',
+     *   'relation' => ['relation.column']
+     * ]
+     *
+     * @var array<string, string|array<int, string>>
      */
     protected array $searchColumns = [];
 
@@ -59,6 +77,7 @@ abstract class EloquentReadRepository{
     }
     /**
      * Devuelve los datos necesarios del modelo para mostrarlo como una opcion en un formulario o en un select
+     * @return Collection<Model>
      */
 
     public function getForOptions(): Collection{
@@ -67,6 +86,9 @@ abstract class EloquentReadRepository{
 
     /**
      * Funcion que se encarga de hacer la filtracion entera de la tabla (busqueda, ordenamiento y paginacion)
+     * @param TableQueryDTO $dto
+     * @param WhereQueryFilterDTO[] $initialWheres
+     * @return LengthAwarePaginator
      */
 
     public function paginate(TableQueryDTO $dto, array $initialWheres = []): LengthAwarePaginator{
@@ -79,12 +101,17 @@ abstract class EloquentReadRepository{
     }
 
    
+    /**
+     * Obtiene todos los registros de la tabla sin relaciones ni filtros
+     * @return Collection<Model>
+     */
     public function getAll(): Collection{
         return $this->model::all();
     }
 
     /**
      * Obtiene todos los registros con las relaciones declaradas 
+     * @return Collection<Model>
      */
     public function getAllWithDetails(): Collection{
         return $this->queryWithRelations()->get();
@@ -92,7 +119,8 @@ abstract class EloquentReadRepository{
 
     /**
      * Obtiene todos los registros con las relaciones declaradas y las filtra con un array de wheres
-     * @param WhereQueryFilterDTO[] $wheres
+     * @param array<int | WhereQueryFilterDTO> $wheres
+     * @return Collection<Model>
      */
     public function getAllWithDetailsWhere(array $wheres): Collection{
         $data =$this->queryWithRelations()->orderBy('id', 'asc');
@@ -100,6 +128,8 @@ abstract class EloquentReadRepository{
     }
     /**
      * Obtiene un registro con las relaciones declaradas, el modelo debe ser instanciado
+     * @param Model $model
+     * @return Model
      */
     public function getWithDetails(Model $model): Model{
         return $model->load($this->getDetailsRelations());
@@ -108,6 +138,7 @@ abstract class EloquentReadRepository{
     /**
      * Aplica un array de wheres
      * @param WhereQueryFilterDTO[] $wheres
+     * @return Builder<Model>
      */
     public function where(array $wheres): Builder{
         $data = $this->model::query();
@@ -115,31 +146,60 @@ abstract class EloquentReadRepository{
     }
     /**
      * Aplica un where
+     * @return Builder<Model>
      */
-
     public function whereAttr(string $attribute, $value): Builder{
         return $this->model::query()->where($attribute, $value);
     }
 
+    /**
+     * Obtiene el primer registro que coincida con el array de wheres, si no encuentra ninguno lanza una excepcion
+      * @param WhereQueryFilterDTO[] $wheres
+     * @return Model
+     * @throws ModelNotFoundException
+     */
     public function firstOrFail(array $wheres): Model{
         return $this->where($wheres)->firstOrFail();
     }
+    /**
+     * Obtiene un registro por ID.
+     *
+     * IMPORTANTE:
+     * - Retorna null si no existe.
+     * - Para lanzar excepción, usar firstOrFail().
+     *
+     * @param int $id
+     * @return Model|null
+     */
     public function find(int $id){
         return $this->model::find($id);
     }
+    /**
+     * Obtiene la cantidad de registros de la tabla, sin importar los filtros, ni las relaciones, ni nada, simplemente el conteo total de registros de la tabla
+     * @return int
+     */
     public function getRecordsCount(): int{
         return $this->model::count();
     }
     /**
      * Aplica la consulta con las relaciones
+     * @return Builder<Model>
      */
     protected function queryWithRelations(): Builder{
         return $this->model::query()->with($this->getDetailsRelations());
     }
     // funciones para sobreescribir en caso de que se necesite cargar relaciones adicionales
+    /**
+     * Retorna las relaciones que se pueden cargar con los registros del modelo, es decir, las relaciones que se declaran en la propiedad $relations, estas relaciones se cargaran en las consultas que lo requieran, como getWithDetails, getAllWithDetails, etc
+      * @return array<string>
+     */
     protected function getDetailsRelations(): array{
         return $this->relations;
     }
+    /**
+     * Retorna las columnas que se pueden buscar en la tabla, estas columnas se declaran en la propiedad $searchColumns, estas columnas se utilizan para aplicar la busqueda de strings en la tabla
+      * @return array<string|array<string>>
+     */
 
     protected function getSearchColumns(): array{
         return $this->searchColumns;
@@ -147,6 +207,7 @@ abstract class EloquentReadRepository{
 
     /**
      * Retorna las relaciones que se pueden ordenar
+     * @return array<string>
      */
     protected function getSortableRelations(): array{
         return $this->sortableRelations;
@@ -155,6 +216,10 @@ abstract class EloquentReadRepository{
 
     /**
      * Funcion que aplica la busqueda de strings en la tabla, verifica si en las columnas que debe buscar, hay un array (relaciones), si es asi, aplica la busqueda en la relacion, sino aplica la busqueda en la columna
+     * @param Builder $query
+     * @param array<string|array<string>> $searchColumns
+     * @param string $search
+     * @return Builder<Model>
      */
     protected function applySearch(Builder $query, array $searchColumns, string $search): Builder{
         $query->where(function ($query) use ($searchColumns, $search) {
@@ -172,6 +237,11 @@ abstract class EloquentReadRepository{
 
     /**
      * Funcion que aplica la consulta de busqueda en los campos normales de la tabla
+     * @param Builder $query
+     * @param string $column
+     * @param string $search
+     * @param bool $isFirst
+     * @return Builder<Model>
      */
     private function applyColumnSearch(Builder $query, string $column, string $search, bool $isFirst): Builder{
         return $isFirst ? 
@@ -179,7 +249,13 @@ abstract class EloquentReadRepository{
         $query->orWhere($column, 'like', "%$search%");
     }
     /**
-     * Funcion que aplica la consulta de busqueda en las relaciones de la tabla
+     * Funcion que aplica la consulta de busqueda en las relaciones de la tabla 
+     * @param Builder $query
+     * @param string $relation
+     * @param array<string> $columns
+     * @param string $search
+     * @param bool $isFirst
+     * @return Builder<Model>
      */
     private function applyRelationSearch(Builder $query, string $relation, array $columns, string $search, bool $isFirst): Builder{
         $method = $isFirst ? 'whereHas' : 'orWhereHas';
@@ -201,7 +277,10 @@ abstract class EloquentReadRepository{
 
 
     /**
-     * Funcion que aplica el filtrado, orquesta todo el filtrado de la tabla, verifica si hay busqueda, si hay busqueda aplica la busqueda, si hay ordenamiento aplica el ordenamiento
+     * Funcion que se encarga de hacer la filtracion entera de la tabla (busqueda, ordenamiento y paginacion), esta funcion se utiliza en el metodo paginate, se encarga de aplicar la busqueda, el ordenamiento y la paginacion
+     * @param TableQueryDTO $dto
+      * @param Builder|null $query
+     * @return LengthAwarePaginator
      */
     protected function applyPaginate ( TableQueryDTO $dto, ?Builder $query = null): LengthAwarePaginator{
         $query === null && $query = $this->queryWithRelations();
@@ -217,6 +296,9 @@ abstract class EloquentReadRepository{
 
     /**
      * Funcion que ordena las consultas, verifica si la relacion esta declarada en las propiedades del objeto, y si es asi, aplica el ordenamiento de las relaciones, si no, aplica un ordenamiento normal
+     * @param TableQueryDTO $dto
+      * @param Builder $query
+      * @return Builder<Model>
      */
     protected function applySort(TableQueryDTO $dto, Builder $query){
         if(array_key_exists($dto->sortBy, $this->getSortableRelations())){
@@ -224,6 +306,12 @@ abstract class EloquentReadRepository{
         }
         return $query->orderBy($dto->sortBy, $dto->sortOrder);
     }
+    /**
+     * Funcion que aplica un array de wheres a una consulta, esta funcion se utiliza para aplicar los filtros de busqueda en la tabla, recibe un array de WhereFilterQueryDTO, y aplica cada uno de los filtros a la consulta, devuelve la consulta con los filtros aplicados
+     * @param Builder $query
+     * @param WhereFilterQueryDTO[] $wheres
+     * @return Builder<Model>
+     */
      protected function applyWheres(Builder $query, array $wheres): Builder{
         /** @var WhereFilterQueryDTO[] $wheres */
         foreach($wheres as $where){
@@ -232,7 +320,10 @@ abstract class EloquentReadRepository{
         return $query;
     }
     /**
-     * Funcion que ordena las consultas con relaciones, es decir, las filtra por las columnas de las relaciones
+     * Funcion que aplica el ordenamiento de las relaciones de la tabla y aplica la busqueda en las relaciones
+     * @param TableQueryDTO $dto
+     * @param Builder $query
+     * @return Builder<Model>
      */
     private function executeOrderQueryWithRelations (TableQueryDTO $dto, Builder $query): Builder{
         /**

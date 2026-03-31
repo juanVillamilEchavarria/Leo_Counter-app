@@ -17,9 +17,13 @@ export type CategoriaTableData = Omit<Categoria, 'tipo_movimiento_id'> & {
 export const CategoriaActions = {
     post : route('categorias.store'),
     put : (id: number) => route('categorias.update', {id}),
-    patch : (id: number) => route('categorias.es-fijo', {id}),
-    delete : (id: number) => route('categorias.destroy', {categoria:id})
+    patch : (id: number) => route('categorias.update', {id}),
+    delete : (id: number) => route('categorias.destroy', {categoria:id}),
+    toggle : (id: number, attribute: keyof typeof CategoriaToggleTypes) => route('categorias.toggle', {categoria:id, attribute}),
 }as const
+export const CategoriaToggleTypes = {
+    es_fijo: 'es_fijo'
+} as const
 
 
 export const CategoriaRoutes = {

@@ -27,7 +27,7 @@ Route::middleware('auth')->group( function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     // CUENTAS
     Route::resource('cuentas',CuentaController::class)->names('cuentas')->except('patch');
-    Route::patch('cuentas/{cuenta}/toggle-active', [CuentaController::class, 'toggleActive'])->name('cuentas.toggle-active');
+    Route::patch('cuentas/{cuenta}/{attribute}/toggle', [CuentaController::class, 'toggleActive'])->name('cuentas.toggle');
     Route::resource('propietarios',PropietarioController::class)->names('propietarios');
     // MOVIMIENTOS
     Route::get('/movimientos/historicos', [MovimientoController::class, 'index'])->name('movimientos.index');
@@ -49,11 +49,10 @@ Route::middleware('auth')->group( function () {
     Route::get('movimientos/archivos/{archivoMovimiento}', [ArchivoMovimientoController::class, 'show'])->name('movimientos.archivos.show');
     Route::get('movimientos/archivos/{archivoMovimiento}/download', [ArchivoMovimientoController::class, 'download'])->name('movimientos.archivos.download');
 
-    Route::patch('movimientos-fijos/{movimientoFijo}/toggle-active', [MovimientoFijoController::class, 'toggleActive'])->name('movimientosFijos.toggle-active');
-    Route::patch('movimientos-fijos/{movimientoFijo}/toggle-registrar-automaticamente', [MovimientoFijoController::class, 'toggleRegistrarAutomaticamente'])->name('movimientosFijos.toggle-registrar-automaticamente');
+    Route::patch('movimientos-fijos/{movimientoFijo}/{attribute}/toggle', [MovimientoFijoController::class, 'toggle'])->name('movimientosFijos.toggle');
     // CATEGORIAS
     Route::resource('categorias',CategoriaController::class)->names('categorias')->except('patch');
-    Route::patch('categorias/{categoria}/es-fijo', [CategoriaController::class, 'toggleEsFijo'])->name('categorias.es-fijo');
+    Route::patch('categorias/{categoria}/{attribute}/toggle', [CategoriaController::class, 'toggleEsFijo'])->name('categorias.toggle');
     
     Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
     // PRESUPUESTOS
@@ -69,6 +68,8 @@ Route::middleware('auth')->group( function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     // PERFIL
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/profile/password', [ProfilePasswordController::class, 'index'])->name('profile.password.index');
+    Route::put('/profile/password', [ProfilePasswordController::class, 'update'])->name('profile.password.update');
 });
 

@@ -1,5 +1,5 @@
 
-import { CuentaActions, type Cuenta, CuentaRoutes } from "../../types/cuenta.types"
+import { CuentaActions, type Cuenta, CuentaRoutes, CuentaToggleTypes } from "../../types/cuenta.types"
 import EditAndDeleteActions from "@/app/shared/components/table/actions/EditAndDeleteActions"
 import ModelToggle from "@/app/shared/components/table/actions/ModelToggle"
 import { moneyFormat } from "@/app/shared/helpers"
@@ -24,7 +24,7 @@ export const CuentaColumns=({ // la hacemos de esta manera para poder pasarle la
       render: (row : Cuenta)=>(
         <ModelToggle
           active={row.active}
-          route={CuentaActions.patch(row.id)}
+          route={CuentaActions.toggle(row.id, CuentaToggleTypes.active)}
         />
       )
     },

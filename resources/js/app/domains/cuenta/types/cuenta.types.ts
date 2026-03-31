@@ -13,9 +13,13 @@ export const CuentaRoutes = {
 export const CuentaActions = {
   post : route('cuentas.store'),
   put : (id: number) => route('cuentas.update', {id}),
-  patch : (id: number) => route('cuentas.toggle-active', {id}),
-  delete : (id: number) => route('cuentas.destroy', {cuenta:id})
+  patch : (id: number) => route('cuentas.update', {id}),
+  delete : (id: number) => route('cuentas.destroy', {cuenta:id}),
+  toggle : (id: number, attribute: keyof typeof CuentaToggleTypes) => route('cuentas.toggle', {cuenta:id, attribute}),
 }as const
+export const CuentaToggleTypes = {
+  active: 'active'
+} as const
 export type Cuenta = {
   id: number
   nombre: string

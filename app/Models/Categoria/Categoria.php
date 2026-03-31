@@ -10,6 +10,9 @@ class Categoria extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'es_fijo'=>'boolean'
+    ];
     protected $fillable = [
         'nombre',
         'tipo_movimiento_id',

@@ -14,9 +14,9 @@ class MovimientoFijo extends Model
 {
     use HasFactory;
 
-    protected $toggeable=[
-        'registrar_automatico',
-        'active'
+    protected $casts = [
+        'active'=>'boolean',
+        'registrar_automatico' =>'boolean'
     ];
 
     protected $fillable = [
@@ -35,9 +35,6 @@ class MovimientoFijo extends Model
 
     ];
 
-    public function isToggable(string $field){
-        return in_array($field, $this->toggeable, true);
-    }
 
     public function cuenta()
     {

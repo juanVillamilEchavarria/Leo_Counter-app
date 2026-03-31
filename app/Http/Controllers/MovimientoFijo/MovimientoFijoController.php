@@ -5,7 +5,6 @@ namespace App\Http\Controllers\MovimientoFijo;
 use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 use App\Domains\MovimientoFijo\Services\MovimientoFijoService;
-
 use App\Http\Requests\MovimientoFijo\StoreAndUpdateMovimientoFijoRequest;
 use App\Models\MovimientoFijo\MovimientoFijo;
 
@@ -95,18 +94,8 @@ class MovimientoFijoController extends Controller
         return redirect()->route('movimientosFijos.index');
     }
 
-    public function toggleActive(MovimientoFijo $movimientoFijo)
-    {
-
-        $this->movimientoFijoService->toggleActive($movimientoFijo);
-        Inertia::flash('success', 'Movimiento Fijo actualizado correctamente');
-        return redirect()->route('movimientosFijos.index');
-    }
-
-    public function toggleRegistrarAutomaticamente(MovimientoFijo $movimientoFijo)
-    {
-
-        $this->movimientoFijoService->toggleRegistrarAutomatico($movimientoFijo);
+    public function toggle( MovimientoFijo $movimientoFijo, string $attribute){
+        $this->movimientoFijoService->toggle($movimientoFijo, $attribute);
         Inertia::flash('success', 'Movimiento Fijo actualizado correctamente');
         return redirect()->route('movimientosFijos.index');
     }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Movimiento;
 
 use App\Models\Movimiento\Movimiento;
 use App\Http\Controllers\Controller;
-use App\Domains\Movimiento\Service\Application\MovimientoService;
+use App\Domains\Movimiento\Services\Application\MovimientoService;
 use App\Http\Requests\MovimientoEspontaneo\StoreMovimientoEspontaneoRequest;
 use App\Http\Requests\MovimientoEspontaneo\UpdateMovimientoEspontaneoRequest;
 use App\Domains\Movimiento\Enums\MovimientoVariants;

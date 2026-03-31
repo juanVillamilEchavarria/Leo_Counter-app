@@ -10,6 +10,10 @@ use App\Models\Movimiento\Movimiento;
 class Cuenta extends Model
 {
   use HasFactory;
+
+  protected $casts = [
+    'active'=>'boolean'
+  ];
   protected $fillable = [
     'nombre',
     'saldo_inicial',

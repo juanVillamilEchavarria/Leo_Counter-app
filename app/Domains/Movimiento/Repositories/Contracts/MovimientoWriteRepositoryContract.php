@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Domains\Movimiento\Repositories\Contracts;
-use App\Shared\Abstracts\DTOs\DTO;
+use App\Shared\Contracts\DTOs\DTOContract;
 use Illuminate\Database\Eloquent\Model;
 
 interface MovimientoWriteRepositoryContract
 {
-    public function store(DTO $dto);
-    public function update(Model $movimiento, DTO $dto);
+    public function store(DTOContract $dto);
+    public function update(Model $movimiento, DTOContract $dto);
     public function destroy(Model $movimiento): bool;
 }

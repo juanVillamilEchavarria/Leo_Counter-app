@@ -13,7 +13,7 @@ use App\Domains\Categoria\Repositories\Contracts\CategoriaReadRepositoryContract
 use App\Domains\TipoMovimiento\Repositories\Contracts\TipoMovimientoReadRepositoryContract;
 //Services 
 use App\Domains\ArchivoMovimiento\Services\ArchivoMovimientoService;
-use App\Domains\Movimiento\Service\Application\MovimientoService;
+use App\Domains\Movimiento\Services\Application\MovimientoService;
 use App\Shared\Services\Financial\BalanceCheckerService;
 //DTOs
 use App\Domains\MovimientoPendiente\DTOs\MovimientoPendienteFormOptionsDTO;

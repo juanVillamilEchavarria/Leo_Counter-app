@@ -11,7 +11,6 @@ export default function SideBarApp() {
         const {isOpen, setIsOpen} = useOpen(true)
         const {props}= useMessageRedirect()
         const user = props?.auth?.user
-
         const TrasitionStyle = 'transition-all  duration-400'
   return (
     <SideBar className={`${isOpen ? 'w-80 min-w-80 ' : 'w-20 min-w-15'} h-full scrollbar-none relative ${TrasitionStyle} grid grid-rows-[1fr_auto]`}>

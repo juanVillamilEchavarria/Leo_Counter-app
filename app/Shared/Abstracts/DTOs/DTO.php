@@ -1,8 +1,15 @@
 <?php
 
 namespace App\Shared\Abstracts\DTOs;
-
-abstract class DTO{
+use App\Shared\Contracts\DTOs\DTOContract;
+/**
+ * Data transfer object abstracto que implementa la interfaz DTOContract, proporcionando una implementación base para la conversión de objetos a arrays y la creación de objetos a partir de arrays u otros objetos. Incluye funcionalidades para filtrar campos específicos al convertir a array y para mapear campos de otros objetos a los campos del DTO.
+ * @method static fromArray(array $data): static Crea una instancia del DTO a partir de un array de datos.
+ * @method array toArray(): array Convierte la instancia del DTO a un array, aplicando los filtros de campos definidos en las propiedades $only y $except.
+ * @method static fromObject(object $object): static Crea una instancia del DTO a partir de otro objeto, mapeando los campos del objeto a los campos del DTO según la configuración definida en la propiedad estática $convert.
+ * @method self setExcept(array $except): self Permite agregar campos a la lista de campos a excluir al convertir el DTO a un array, devolviendo la instancia del DTO para permitir la encadenación de métodos.
+ */
+abstract class DTO implements DTOContract {
     /**
      * Propiedad para declarar los campos unicos que se devolveran
      * Formato : ['campo1', 'campo2',...]

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Movimiento;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Shared\TableQueryRequest;
-use App\Domains\Movimiento\Service\Application\MovimientoService;
+use App\Domains\Movimiento\Services\Application\MovimientoService;
 use App\Domains\Movimiento\Enums\MovimientoVariants;
 
 class MovimientoApiController extends Controller

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Movimiento;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Domains\Movimiento\Service\Application\MovimientoService;
+use App\Domains\Movimiento\Services\Application\MovimientoService;
 use App\Models\Movimiento\Movimiento;
 
 class MovimientoController extends Controller

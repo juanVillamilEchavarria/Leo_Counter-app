@@ -1,7 +1,7 @@
 import ModelToggle from "@/app/shared/components/table/actions/ModelToggle"
 import EditAndDeleteActions from "@/app/shared/components/table/actions/EditAndDeleteActions"
 import SuccessOrFailText from "@/app/shared/components/common/SuccessOrFailText"
-import { MovimientoFijoActions, MovimientoFijoRoutes } from "../../types/movimientoFijo.types"
+import { MovimientoFijoActions, MovimientoFijoRoutes,  MovimientoFijoToggleTypes } from "../../types/movimientoFijo.types"
 import { dateFormat } from "@/app/shared/helpers"
 import { moneyFormat } from "@/app/shared/helpers"
 import { type MovimientoFijoTableData } from "../../types/movimientoFijo.types"
@@ -33,7 +33,7 @@ export const MovimientoFijoColumns = (({
              render: (row : MovimientoFijoTableData)=>(
                <ModelToggle 
                active={row.active}
-               route={MovimientoFijoActions.toggleActive(row.id)}
+               route={MovimientoFijoActions.toggle(row.id, MovimientoFijoToggleTypes.active  )}
                />
              )
            },
@@ -43,7 +43,7 @@ export const MovimientoFijoColumns = (({
              render: (row : MovimientoFijoTableData)=>(
                 <ModelToggle 
                 active={row.registrar_automatico}
-                route={MovimientoFijoActions.toggleRegistrarAutomaticamente(row.id)}
+                route={MovimientoFijoActions.toggle(row.id, MovimientoFijoToggleTypes.registrar_automatico )}
                 labels={{
                     active: 'Automatico',
                     inactive: 'No Automatico'

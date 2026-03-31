@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Categoria;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Domains\Categoria\Services\CategoriaService;
+use App\Domains\Categoria\Services\Application\CategoriaService;
 use App\Http\Requests\Categoria\StoreAndUpdateCategoriaRequest;
 use App\Models\Categoria\Categoria;
 use Inertia\Inertia;
@@ -98,7 +98,7 @@ class CategoriaController extends Controller
         return redirect()->route('categorias.index');
     }
 
-    public function toggleEsFijo(Categoria $categoria)
+    public function toggleEsFijo(Categoria $categoria, string $attribute)
     {
         $this->categoriaService->toggleEsFijo($categoria);
         Inertia::flash('success','Categoria actualizada con exito');

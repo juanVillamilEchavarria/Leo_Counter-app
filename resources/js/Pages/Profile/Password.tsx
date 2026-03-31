@@ -1,8 +1,6 @@
 import ProfileNavigationGroup from "@/app/domains/profile/components/ProfileNavigationGroup"
 import Title from "@/app/shared/components/common/Title"
-import Card from "@/app/shared/components/common/Card"
-import InputFillable from "@/app/shared/components/form/InputFillable"
-import Button from "@/app/shared/components/common/Button"
+import PasswordForm from "@/app/domains/profile/components/PasswordForm"
 import SectionTransition from "@/app/shared/components/common/SectionTransition"
 export default function Password() {
   return (
@@ -24,25 +22,8 @@ export default function Password() {
             </div>
             
             <div className="mt-10">
-                <Card>
-                    <form action="" className="formulario-general">
-                        <div className="formulario-campo">
-                            <label htmlFor="">Contraseña actual</label>
-                            <InputFillable type="text" name="name" id="name" placeholder="Mi Nombre" value={'Juan Villamil'} onChange={()=>{}}/>
-                        </div>
-                        <div className="formulario-campo">
-                            <label htmlFor="">Contraseña Nueva</label>
-                            <InputFillable type="text" name="name" id="name" placeholder="Mi Nombre" value={'Juan Villamil'} onChange={()=>{}}/>
-                        </div>
-                        <div className="formulario-campo">
-                            <label htmlFor="">Repetir Contraseña</label>
-                            <InputFillable type="text" name="name" id="name" placeholder="Mi Nombre" value={'Juan Villamil'} onChange={()=>{}}/>
-                        </div>
-                        <div className="w-[20%] mt-5 mx-auto">
-                            <Button variant="secondary" type="submit">Guardar</Button>
-                            </div>
-                    </form>
-                </Card>
+                <PasswordForm />
+               
             </div>
         </div>
      </SectionTransition>
