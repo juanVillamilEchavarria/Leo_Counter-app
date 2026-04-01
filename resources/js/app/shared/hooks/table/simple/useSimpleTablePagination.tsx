@@ -1,25 +1,42 @@
 import { useState, useCallback, useMemo } from "react"
 
-// toca hacer bastante logica aqui porque es para la paginacion para una tabla normal
+/**
+ * hook para manejar el filtrado por paginacion de las tablas client side
+ * @param {number} totalRows 
+ * @param {number} pageSize 
+ * @returns {page: number, totalPages: number, canNext: boolean, canPrev: boolean, next: () => void, prev: () => void, goTo: (p: number) => void} 
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @version 1.0.0
+ * @since 1.0.0
+ */
 export default function useSimplePagination(totalRows: number, pageSize = 10) {
   const [page, setPage] = useState(0) //estado para manejar la pagina actual
   const totalPages = Math.ceil(totalRows / pageSize) // calcula el total de paginas, redondea hacia arriba
   const canNext= page < totalPages-1
   const canPrev = page>0
-  //usecallback para guardar la funcion y evitar renders innecesarios
+  /**
+   * funcion para ir a la siguiente pagina
+   */
   const next = useCallback(() => {
     setPage(p => Math.min(p + 1, totalPages - 1))
   }, [totalPages])
 
+  /**
+   * funcion para ir a la pagina anterior
+   */
   const prev = useCallback(() => {
     setPage(p => Math.max(p - 1, 0))
   }, [])
 
+  /**
+   * funcion para ir a una pagina especifica
+   */
   const goTo = useCallback((p: number) => {
     setPage(Math.max(0, Math.min(p, totalPages - 1)))
   }, [totalPages])
-
-  //useMemo para guardar el valor del controller y evitar renders innecesarios
+  /**
+   * Controlador de la paginacion
+   */
   const controller = useMemo(() => ({
     page,
     totalPages,

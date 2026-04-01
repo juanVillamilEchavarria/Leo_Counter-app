@@ -22,7 +22,6 @@ export default function NavItemGroup({
             }, [isOpen])
   return (
      <li className={`flex flex-col w-full`}>
-            <div className={``}>
                 {/* ya no es un link sino un button que despliega los children */}
                <button 
                 className={`
@@ -48,7 +47,6 @@ export default function NavItemGroup({
                         
                     </TransitionMotion>
                 </button>
-            </div> 
             {/* aca se muestran los children */}
               
            

@@ -4,6 +4,10 @@ import Button from "@/app/shared/components/common/Button"
 import TransitionMotion from "@/app/shared/components/transitions/TransitionMotion"
 import AlertMessage from "@/app/shared/components/common/AlertMessage"
 import useProfile from "../hooks/useProfile"
+/**
+ * Formulario para actualizar la contraseña del usuario logueado, con campos de contraseña actual, nueva contraseña y confirmacion de nueva contraseña
+ * @returns 
+ */
 export default function PasswordForm() {
   const { form, handleSubmit } = useProfile({
     data : {

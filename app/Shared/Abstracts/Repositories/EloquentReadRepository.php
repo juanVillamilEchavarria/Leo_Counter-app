@@ -108,6 +108,13 @@ abstract class EloquentReadRepository{
     public function getAll(): Collection{
         return $this->model::all();
     }
+    /**
+     * Obtiene todos los registros de la tabla sin relaciones ni filtros
+     * @return Collection<Model>
+     */
+    public function getAllDeleted(): Collection{
+        return $this->model::onlyTrashed()->get();
+    }
 
     /**
      * Obtiene todos los registros con las relaciones declaradas 

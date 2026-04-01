@@ -23,6 +23,9 @@ export const NavItemHoverStyles = `
         dark:hover:bg-cyan-900/20
     `
 export const NavItemTransitionStyle = 'transition-all duration-300 ease-in-out'
+/**
+ * Contrato fijo de un item de navegacion, con las propiedades necesarias para su instanciacion y uso en los componentes de la app
+ */
 export type NavItemConfig = {
     key: string,
     icon: string,
@@ -32,7 +35,9 @@ export type NavItemConfig = {
     roles?: string[],
     childrenNav?: NavItemConfig[]
 }
-
+/**
+ * Items de navegacion principales de la app
+ */
 export const NavItems: NavItemConfig[] = [
     {
         key: 'home',
@@ -149,15 +154,17 @@ export const NavItems: NavItemConfig[] = [
         title: 'Configuracion',
         icon: 'fa-solid fa-gear fa-lg',
         routeName: 'configuracion.index',
-        href: '#',
+        href: route('configuracion.index'),
     }
 
 ]
-
+/**
+ * Props de los componentes que generan items de navegacion
+ */
 export type NavItemProps = {
     icon: string,
     routeName?: string | string[]
-    isOpen: boolean
+    isOpen?: boolean
     CurrentStyles?: string
     ItemStyles?: string
     ItemHoverStyles?: string

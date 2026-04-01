@@ -3,8 +3,20 @@ import TableEntries from "../pagination/TableEntries"
 import { type SimpleTableProps } from "../../../types/components"
 import { useEntries } from "@/app/shared/hooks"
 import {useSimpleTable }from "@/app/shared/hooks"
-
-export default function SimpleTable<T>({ //en el T se le pasa el tipo de Modelo para tiparlo correctamente
+/**
+ * Componente de tabla client side, con paginacion
+ * @param {SimpleTableColumn[]} columns - Columnas de la tabla
+ * @param {T[]} data - Datos de la tabla
+ * @param {string} emptyMessage - Mensaje de vacio
+ * @param {boolean} pagination - Mostrar paginacion
+ * @param {number} pageSize - Tamaño de la paginacion
+ * @returns  {JSX.Element}
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @since 1.0.0
+ * @version 1.0.0
+ * @package shared/components/table
+ */
+export default function SimpleTable<T>({
     columns,
     data,
     emptyMessage= "No hay registros",

@@ -72,6 +72,15 @@ abstract class EloquentWriteRepository {
     public function destroy(Model $model): bool{
         return $model->delete();
     }
+    /**
+     * Funcion para restaurar un registro eliminado de la base de datos
+     * @param Model $model
+     * @return bool
+     */
+
+    public function restore(Model $model) : bool{
+        return $model->restore();
+    }
 
     /**
      * Funcion que se encarga de eliminar un registro de forma permanente en la base de datos, recibe el modelo a eliminar, devuelve un booleano indicando si la eliminacion fue exitosa o no

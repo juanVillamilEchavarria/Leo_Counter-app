@@ -1,15 +1,18 @@
-
 import { CuentaActions, type Cuenta, CuentaRoutes, CuentaToggleTypes } from "../../types/cuenta.types"
 import EditAndDeleteActions from "@/app/shared/components/table/actions/EditAndDeleteActions"
 import ModelToggle from "@/app/shared/components/table/actions/ModelToggle"
 import { moneyFormat } from "@/app/shared/helpers"
-
-
-export const CuentaColumns=({ // la hacemos de esta manera para poder pasarle la funcion onSelect que se encargara de abrir el modal
+import type { SimpleTableColumn } from "@/app/shared/types/components"
+/**
+ * Retorna las columnas de la tabla de cuentas
+ * @param {Function} onSelect 
+ * @returns {Array}
+ */
+export const CuentaColumns=({ 
   onSelect,
 }:{
   onSelect: (cuenta : Cuenta) => void
-})=>[
+}) : SimpleTableColumn<Cuenta>[]=>[
     { key: "id", label: "ID" },
     { key: "nombre", label: "Nombre" },
     { key: "saldo_inicial", label: "Saldo Inicial", render: (row: Cuenta) => moneyFormat(Number(row.saldo_inicial)) },

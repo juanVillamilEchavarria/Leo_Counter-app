@@ -5,6 +5,10 @@ import TransitionMotion from "@/app/shared/components/transitions/TransitionMoti
 import AlertMessage from "@/app/shared/components/common/AlertMessage"
 import { useMessageRedirect } from "@/app/shared/hooks"
 import useProfile from "../hooks/useProfile"
+/**
+ * Formulario para actualizar los datos de nombre e email del usuario logueado
+ * @returns 
+ */
 export default function ProfileForm() {
       const { props } = useMessageRedirect()
       const { form,handleSubmit}= useProfile({

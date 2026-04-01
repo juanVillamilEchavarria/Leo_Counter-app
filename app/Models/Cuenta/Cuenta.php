@@ -3,6 +3,7 @@
 namespace App\Models\Cuenta;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\TipoCuenta\TipoCuenta;
 use App\Models\Propietario\Propietario;
@@ -10,6 +11,7 @@ use App\Models\Movimiento\Movimiento;
 class Cuenta extends Model
 {
   use HasFactory;
+  use SoftDeletes;
 
   protected $casts = [
     'active'=>'boolean'

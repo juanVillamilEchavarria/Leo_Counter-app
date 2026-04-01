@@ -1,7 +1,15 @@
 import { useMemo } from "react"
 import useSimplePagination from "./useSimpleTablePagination"
-import useEntries from "../pagination/useEntries"
 
+/**
+ * hook para manejar la cantidad de datos a mostrar de la tabla
+ * @param {TData[]} data 
+ * @param {number} pageSize 
+ * @returns {data: TData[], pagination: SimpleTablePagination}
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @version 1.0.0
+ * @since 1.0.0
+ */
 export default function useSimpleTable<TData>({
   data = [],
   pageSize = 10,

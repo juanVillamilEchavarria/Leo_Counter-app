@@ -7,13 +7,14 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
+use App\Shared\Contracts\Repositories\SoftDeleteReadRepositoryContract;
 /**
  * Contrato de implementación de repositorio de lectura para el modelo Categoria
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  * @package App\Domains\Categoria\Repositories\Contracts
  * @since 1.0.0
  */
-interface CategoriaReadRepositoryContract {
+interface CategoriaReadRepositoryContract extends SoftDeleteReadRepositoryContract {
        /**
      * Retorna un listado paginado según los filtros establecidos.
      */

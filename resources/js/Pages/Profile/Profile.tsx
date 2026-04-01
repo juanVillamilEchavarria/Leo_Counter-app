@@ -1,11 +1,11 @@
 import Title from "@/app/shared/components/common/Title"
-import ProfileNavigationGroup from "@/app/domains/profile/components/ProfileNavigationGroup"
+import ProfileNavBar from "@/app/domains/profile/components/ProfileNavBar"
 import SectionTransition from "@/app/shared/components/common/SectionTransition"
 import { ProfileForm } from "@/app/domains/profile"
 export default function Profile() {
   return (
     <SectionTransition>
-        <ProfileNavigationGroup />
+        <ProfileNavBar />
         <div className="w-[50%] mx-auto mt-10 flex flex-col justify-center">
             <div className="flex flex-col text-foreground gap-5">
                 <Title 

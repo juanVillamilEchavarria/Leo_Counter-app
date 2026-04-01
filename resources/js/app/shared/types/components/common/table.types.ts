@@ -16,7 +16,7 @@ export type useTanStackTableProps<T = Record<string,any>>= TanStackTableProps<T>
 
 
 export type SimpleTableColumn <T>={
-        key: keyof T | string
+        key:  string
         label: string
         className?: string
         render?: (row : T)=> React.ReactNode //se le pasa un posible componente, como botones, switches, etc

@@ -18,6 +18,8 @@ use App\Http\Controllers\PagoPendiente\PagoPendienteController;
 use App\Http\Controllers\Historial\HistorialController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\Profile\ProfilePasswordController;
+use App\Http\Controllers\Configuracion\ConfiguracionController;
+use App\Http\Controllers\Configuracion\SoftDeleteRecordsController;
 Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.store');
 Route::get('/register', function (){
@@ -71,5 +73,8 @@ Route::middleware('auth')->group( function () {
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/profile/password', [ProfilePasswordController::class, 'index'])->name('profile.password.index');
     Route::put('/profile/password', [ProfilePasswordController::class, 'update'])->name('profile.password.update');
+    //CONFIGURACION
+    Route::get('/configuracion', [ConfiguracionController::class, 'index'])->name('configuracion.index');
+    Route::get('/configuracion/deleted/{domain}', [SoftDeleteRecordsController::class, 'index'])->name('configuracion.deleted.index');
 });
 
