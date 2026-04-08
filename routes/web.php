@@ -20,11 +20,10 @@ use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\Profile\ProfilePasswordController;
 use App\Http\Controllers\Configuracion\ConfiguracionController;
 use App\Http\Controllers\Configuracion\SoftDeleteRecordsController;
+// GUEST ROUTES
 Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.store');
-Route::get('/register', function (){
-    return view('auth.register');
-})->name('register');
+// AUTH ROUTES
 Route::middleware('auth')->group( function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     // CUENTAS
@@ -76,5 +75,7 @@ Route::middleware('auth')->group( function () {
     //CONFIGURACION
     Route::get('/configuracion', [ConfiguracionController::class, 'index'])->name('configuracion.index');
     Route::get('/configuracion/deleted/{domain}', [SoftDeleteRecordsController::class, 'index'])->name('configuracion.deleted.index');
+    Route::put('/configuracion/deleted/{domain}/restore/{id}', [SoftDeleteRecordsController::class, 'restore'])->name('configuracion.deleted.restore');
+    Route::delete('/configuracion/deleted/{domain}/hard-delete/{id}', [SoftDeleteRecordsController::class, 'hardDelete'])->name('configuracion.deleted.hardDelete');
 });
 

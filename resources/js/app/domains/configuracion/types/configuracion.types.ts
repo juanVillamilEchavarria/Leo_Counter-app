@@ -1,6 +1,24 @@
 import { type NavItemConfig } from "@/app/shared/types/components";
 import { myRoute } from "@/app/shared/utilities/utilities";
-type SoftDeletedDomainsNames= 'cuentas'| 'categorias'
+/**
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+/**
+ * Nombres permitidos de los dominios de soft delete en configuracion
+ */
+export type SoftDeletedDomainsNames= 'cuentas'| 'categorias' | 'movimientosPendientes' | 'presupuestos'
+/**
+ * Acciones permitidas en la seccion de configuracion
+ */
+export const ConfiguracionActions ={
+    restore : (domain : SoftDeletedDomainsNames,id : number) => myRoute('configuracion.deleted.restore',{domain, id}),
+    hardDelete : (domain : SoftDeletedDomainsNames,id : number) => myRoute('configuracion.deleted.hardDelete',{domain, id})
+}
+/**
+ * Rutas permitidas en la seccion de configuracion
+ */
 export const ConfiguracionRoutes={
     index: myRoute('configuracion.index'),
     deleted :(domain : SoftDeletedDomainsNames)=>myRoute('configuracion.deleted.index',{domain})
@@ -33,22 +51,22 @@ export const ConfiguracionNavItems: NavItemConfig[] = [
                 key:'movimientosPendientes',
                 title: 'Movimientos Pendientes',
                 icon: 'fa-solid fa-money-bill-transfer fa-lg',
-                routeName: '',
-                href: '#',
+                routeName: 'archivados.movimientosPendientes.*',
+                href: ConfiguracionRoutes.deleted('movimientosPendientes'),
             },
             {
                 key: 'Categorias',
-                title: 'Categorias',
+                title: 'Categorías',
                 icon: 'fa-solid fa-diagram-project fa-lg',
-                routeName: '',
-                href: '#',
+                routeName: 'archivados.categorias.*',
+                href: ConfiguracionRoutes.deleted('categorias'),
             },
             {
                 key: 'Presupuestos',
                 title: 'Presupuestos',
                 icon: 'fa-solid fa-chart-pie fa-lg',
-                routeName: '',
-                href: '#',
+                routeName: 'archivados.presupuestos.*',
+                href: ConfiguracionRoutes.deleted('presupuestos'),
             },
         ]
             

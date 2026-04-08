@@ -12,6 +12,14 @@ use Illuminate\Database\Eloquent\Model;
  */
 interface SoftDeleteWriteRepositoryContract
 {
-    public function restore(Model $model);
-    public function hardDelete(Model $model);
+    /**
+     * Recupera un registro eliminado
+     * @param Model $model
+     */
+    public function restore(Model $model): bool;
+    /**
+     * Elimina un registro de forma permanente
+     * @param Model $model
+     */
+    public function hardDelete(Model $model): bool;
 }

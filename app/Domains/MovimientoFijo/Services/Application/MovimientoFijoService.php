@@ -7,7 +7,6 @@ use App\Models\MovimientoFijo\MovimientoFijo;
 // Domain Services
 use App\Domains\MovimientoFijo\Services\Domain\MovimientoFijoQueryService;
 // Contracts
-use App\Domains\MovimientoFijo\Repositories\Contracts\MovimientoFijoReadRepositoryContract;
 use App\Domains\MovimientoFijo\Repositories\Contracts\MovimientoFijoWriteRepositoryContract;
 use App\Domains\Categoria\Repositories\Contracts\CategoriaReadRepositoryContract;
 use App\Domains\TipoMovimiento\Repositories\Contracts\TipoMovimientoReadRepositoryContract;

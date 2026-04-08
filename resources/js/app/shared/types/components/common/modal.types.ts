@@ -10,7 +10,7 @@ export const ModalVariants={
     secondary: 'bg-background border border-border shadow-sm backdrop-blur-sm text-foreground'
 }    
 export type ModalProps={
-    children : React.ReactNode,
+    children ?: React.ReactNode,
     title : string | React.ReactNode,
     open : boolean,
     variant?: keyof typeof ModalVariants

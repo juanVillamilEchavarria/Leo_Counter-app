@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Configuracion;
 
 use App\Domains\Configuracion\Services\Application\ConfiguracionService;
-use App\Http\Controllers\Controller;
-use Illuminate\Database\Eloquent\Model;
 use Inertia\Inertia;
 
 class SoftDeleteRecordsController{
@@ -14,20 +12,24 @@ class SoftDeleteRecordsController{
     {
     }
     public function index(string $domain){
-        $domainFormated = ucfirst($domain);
-        return Inertia::render("Configuracion/Deleted/{$domainFormated}",[
-            'title' => "{$domainFormated} Eliminados",
+        $type = $this->configuracionService->resolveSoftDeleteManagerType($domain);
+        return Inertia::render($type->view(),[
+            'title' => "{$type->label()} Eliminados",
             'data' => $this->configuracionService->getAllDeleted($domain)
 
         ]
         );
     }
 
-    public function restore(Model $model, string $domain){
-        return $this->configuracionService->restore($model, $domain);
+    public function restore( string $domain, int $id){
+         $this->configuracionService->restore($id, $domain);
+         Inertia::flash('success', 'Restaurado con exito');
+         return back();
     }
 
-    public function hardDelete(Model $model, string $domain){
-        return $this->configuracionService->hardDelete($model, $domain);
+    public function hardDelete( string $domain, int $id){
+         $this->configuracionService->hardDelete($id, $domain);
+         Inertia::flash('success', 'Eliminado con exito');
+         return back();
     }
 }

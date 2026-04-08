@@ -76,6 +76,29 @@ abstract class EloquentReadRepository{
     {
     }
     /**
+     * Devuelve el modelo asociado al repositorio
+     */
+    public function getModel(): string{
+        return $this->model;
+    }
+
+    /**
+     * Verifica si el modelo tiene registros en las tablas relacionadas
+     * @return bool
+     */
+    public function hasRelationsRecords(Model $model): bool{
+        foreach($this->relations as $relation){
+            
+            if(!method_exists($model, $relation)){
+                continue;
+            }
+           if($model->$relation()->exists()){
+               return true;
+           }
+        }
+        return false;
+    }
+    /**
      * Devuelve los datos necesarios del modelo para mostrarlo como una opcion en un formulario o en un select
      * @return Collection<Model>
      */
@@ -178,8 +201,19 @@ abstract class EloquentReadRepository{
      * @param int $id
      * @return Model|null
      */
-    public function find(int $id){
+    public function find(int $id): ?Model{
         return $this->model::find($id);
+    }
+
+    /**
+     * Obtiene un registro por ID incluyendo los registros eliminados.
+     * 
+     * IMPORTANTE:
+     * - Retorna null si no existe.
+     * - Para lanzar excepción, usar findOrFail().
+     */
+    public function findWithTrashed(int $id): ?Model{
+        return $this->model::withTrashed()->find($id);
     }
     /**
      * Obtiene la cantidad de registros de la tabla, sin importar los filtros, ni las relaciones, ni nada, simplemente el conteo total de registros de la tabla

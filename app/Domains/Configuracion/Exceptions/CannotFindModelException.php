@@ -1,0 +1,14 @@
+<?php
+
+namespace App\Domains\Configuracion\Exceptions;
+
+use App\Shared\Abstracts\Exceptions\DomainException;
+use Throwable;
+
+class CannotFindModelException extends DomainException
+{
+    public function __construct(string $message = "No se pudo encontrar el registro", int $code = 0, Throwable|null $previous = null)
+    {
+        return parent::__construct($message, $code, $previous);
+    }
+}

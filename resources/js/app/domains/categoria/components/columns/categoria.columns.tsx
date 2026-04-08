@@ -2,6 +2,19 @@ import {type Categoria,type CategoriaTableData ,CategoriaActions, CategoriaRoute
 import ModelToggle from "@/app/shared/components/table/actions/ModelToggle";
 import EditAndDeleteActions from "@/app/shared/components/table/actions/EditAndDeleteActions";
 import SuccessOrFailText from "@/app/shared/components/common/SuccessOrFailText";
+import type { SimpleTableColumn } from "@/app/shared/types/components"
+
+export const CategoriaStaticColumns: SimpleTableColumn<CategoriaTableData>[] = [
+    { key: "id", label: "ID" },
+    { key: "nombre", label: "Nombre de la categoria", className: 'w-60' },
+    { 
+      key: "tipo",
+       label: "Tipo",
+       render: (row : CategoriaTableData)=>(
+        <SuccessOrFailText attribute={row.tipo} value={'Ingreso'}  />
+       )},
+    { key: "descripcion", label: "Descripcion"},
+]
 
 export const CategoriaColumns=(({
     onSelect
@@ -11,15 +24,7 @@ export const CategoriaColumns=(({
     
 )=>{
     return [
-        { key: "id", label: "ID" },
-        { key: "nombre", label: "Nombre de la categoria", className: 'w-60' },
-        { 
-          key: "tipo",
-           label: "Tipo",
-           render: (row : CategoriaTableData)=>(
-            <SuccessOrFailText attribute={row.tipo} value={'Ingreso'}  />
-           )},
-        { key: "descripcion", label: "Descripcion"},
+        ...CategoriaStaticColumns,
         {
           key: 'es_fijo',
           label: 'Su frecuencia es fija',

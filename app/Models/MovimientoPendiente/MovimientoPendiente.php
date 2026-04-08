@@ -8,10 +8,11 @@ use App\Models\Cuenta\Cuenta;
 use App\Models\Categoria\Categoria;
 use App\Models\TipoMovimiento\TipoMovimiento;
 use App\Models\MovimientoFijo\MovimientoFijo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MovimientoPendiente extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable =[
         'nombre',

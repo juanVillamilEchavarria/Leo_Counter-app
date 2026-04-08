@@ -27,7 +27,7 @@ export const ButtonVariants = {
     gray: `
                       bg-gray-300 
                       hover:bg-gray-400 
-                      text-foreground 
+                      text-black
                       ${TransitionCommonStyles}
                       ${ButtonBaseStyles}
                       `,

@@ -3,6 +3,15 @@ import EditAndDeleteActions from "@/app/shared/components/table/actions/EditAndD
 import ModelToggle from "@/app/shared/components/table/actions/ModelToggle"
 import { moneyFormat } from "@/app/shared/helpers"
 import type { SimpleTableColumn } from "@/app/shared/types/components"
+export const CuentaStaticColumns =[
+ { key: "id", label: "ID" },
+    { key: "nombre", label: "Nombre" },
+    { key: "saldo_inicial", label: "Saldo Inicial", render: (row: Cuenta) => moneyFormat(Number(row.saldo_inicial)) },
+    { key: "saldo_actual", label: "Saldo Actual", render: (row: Cuenta) => moneyFormat(Number(row.saldo_actual)) },
+    {key: "propietario", label: "Propietario"},
+    { key: "tipo_cuenta", label: "Tipo de cuenta" },
+    { key: "notas", label: "Notas" }
+]
 /**
  * Retorna las columnas de la tabla de cuentas
  * @param {Function} onSelect 
@@ -13,13 +22,7 @@ export const CuentaColumns=({
 }:{
   onSelect: (cuenta : Cuenta) => void
 }) : SimpleTableColumn<Cuenta>[]=>[
-    { key: "id", label: "ID" },
-    { key: "nombre", label: "Nombre" },
-    { key: "saldo_inicial", label: "Saldo Inicial", render: (row: Cuenta) => moneyFormat(Number(row.saldo_inicial)) },
-    { key: "saldo_actual", label: "Saldo Actual", render: (row: Cuenta) => moneyFormat(Number(row.saldo_actual)) },
-    {key: "propietario", label: "Propietario"},
-    { key: "tipo_cuenta", label: "Tipo de cuenta" },
-    { key: "notas", label: "Notas" },
+  ...CuentaStaticColumns,
     {
       key: 'active',
       label: 'Active',

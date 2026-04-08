@@ -3,8 +3,8 @@
 namespace App\Domains\Configuracion\Strategies\Resolvers;
 
 use App\Domains\Configuracion\Strategies\Contracts\SoftDeleteManagerContract;
-use App\Domains\Configuracion\Exceptions\CannotFindDomainHandlerException;
-use App\Domains\Configuracion\Enums\DomainHandlerTypes;
+use App\Domains\Configuracion\Exceptions\CannotFindSoftDeleteManagerException;
+use App\Domains\Configuracion\Enums\SoftDeleteManagerTypes;
 
 class SoftDeleteManagerResolver{
     public function __construct(
@@ -16,12 +16,12 @@ class SoftDeleteManagerResolver{
     {
     }
 
-    public function resolve(DomainHandlerTypes $repositoryType) : SoftDeleteManagerContract{
+    public function resolve(SoftDeleteManagerTypes $repositoryType) : SoftDeleteManagerContract{
         foreach ($this->strategies as $strategy) {
             if ($strategy->supports($repositoryType)) {
                 return $strategy;
             }
         }
-        throw new CannotFindDomainHandlerException('No se pudo resolver la estrategia de manejo de registros eliminados');
+        throw new CannotFindSoftDeleteManagerException('No se pudo resolver la estrategia de manejo de registros eliminados');
     }
 }

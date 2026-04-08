@@ -2,12 +2,15 @@
 
 namespace App\Domains\Categoria\Repositories\Contracts;
 
+use App\Models\Categoria\Categoria;
 use App\Shared\DTOs\Querys\TableQueryDTO;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 use App\Shared\Contracts\Repositories\SoftDeleteReadRepositoryContract;
+use Illuminate\Database\Eloquent\Model;
+
 /**
  * Contrato de implementación de repositorio de lectura para el modelo Categoria
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
@@ -20,11 +23,6 @@ interface CategoriaReadRepositoryContract extends SoftDeleteReadRepositoryContra
      */
     public function paginate(TableQueryDTO $dto, array $initialWheres = []): LengthAwarePaginator;
 
-    /**
-     * Busca una categoría por su ID.
-     * @return Categoria|null
-     */
-    public function find(int $id);
 
     /**
      * Aplica múltiples condiciones a la consulta.
@@ -55,6 +53,12 @@ interface CategoriaReadRepositoryContract extends SoftDeleteReadRepositoryContra
      * @return Collection<Categoria>
      */
     public function getAll(): Collection;
+
+    /**
+     * Obtiene una categoría por su id.
+     * @return ?Categoria
+     */
+    public function find(int $id): ?Model;
 
     /**
      * Obtiene todas las categorías por tipo de movimiento.

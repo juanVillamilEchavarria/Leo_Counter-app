@@ -19,6 +19,7 @@ import { type InertiaProps } from "./intertia/props";
 import { type DropZoneProps,  type UploadedFileListProps } from "./dropZone";
 import { BaseIcons, IconAliases } from "./icons/icons.types";
 import { type ApiParams, ApiMethods, type SaldoValidateCuentaData, type SaldoValidateResponse } from "./api";
+import { type TimeStampModel,type  TimeStampModelWithSoftDelete, type SoftDeleteModel } from "./models/models.types";
 export {
     type FormDataNormalProps,
     type CreateAndEditViewWithOptionsProps,
@@ -46,5 +47,8 @@ export {
     type DropZoneProps,
     type UploadedFileListProps,
     BaseIcons,
-    IconAliases
+    IconAliases,
+    type TimeStampModel,
+    type TimeStampModelWithSoftDelete,
+    type SoftDeleteModel
 }

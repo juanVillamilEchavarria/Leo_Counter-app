@@ -2,8 +2,8 @@
 
 namespace App\Domains\Configuracion\Services\Domain;
 use App\Domains\Configuracion\Strategies\Resolvers\SoftDeleteManagerResolver;
-use App\Domains\Configuracion\Enums\DomainHandlerTypes;
-use Illuminate\Database\Eloquent\Model;
+use App\Domains\Configuracion\Enums\SoftDeleteManagerTypes;
+use App\Domains\Configuracion\Exceptions\CannotFindModelException;
 
 class ConfiguracionDeletedDomainService {
     public function __construct(
@@ -11,16 +11,27 @@ class ConfiguracionDeletedDomainService {
     )
     {
     }
-
-    public function getAllDeleted(DomainHandlerTypes $repositoryType){
-        return $this->deletedDomainHandlerResolver->resolve($repositoryType)->getAllDeleted();
+    public function getAllDeleted(SoftDeleteManagerTypes $softDeleteManager){
+        return $this->deletedDomainHandlerResolver->resolve($softDeleteManager)->getAllDeleted();
     }
 
-    public function restore(Model $model, DomainHandlerTypes $repositoryType) : bool{
-        return $this->deletedDomainHandlerResolver->resolve($repositoryType)->restore($model);
+    public function restore(int $id, SoftDeleteManagerTypes $softDeleteManager) : bool{
+        try {
+             $manager = $this->deletedDomainHandlerResolver->resolve($softDeleteManager);
+            return $manager->restore($manager->findWithTrashed($id));
+        } catch (\Throwable $th) {
+            throw new CannotFindModelException("No se pudo encontrar el registro : ".$th->getMessage());
+        }
+       
     }
 
-    public function hardDelete(Model $model, DomainHandlerTypes $repositoryType) : bool{
-        return $this->deletedDomainHandlerResolver->resolve($repositoryType)->hardDelete($model);
+    public function hardDelete(int $id, SoftDeleteManagerTypes $softDeleteManager) : bool{
+        try {
+             $manager = $this->deletedDomainHandlerResolver->resolve($softDeleteManager);
+            return $manager->hardDelete($manager->findWithTrashed($id));
+        } catch (\Throwable $th) {
+            throw new CannotFindModelException("No se pudo encontrar el registro : ".$th->getMessage());
+        }
+       
     }
 }

@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Collection;
 
 class EloquentCuentaReadRepository extends EloquentReadRepository implements CuentaReadRepositoryContract{
 
+    protected array$relations = ['movimientos'];
+
     protected array $forOptionsColumns = [
         'id',
         'nombre'

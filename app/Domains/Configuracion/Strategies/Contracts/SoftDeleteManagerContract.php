@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Domains\Configuracion\Strategies\Contracts;
-use App\Domains\Configuracion\Enums\DomainHandlerTypes;
+use App\Domains\Configuracion\Enums\SoftDeleteManagerTypes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Collection;
 
 /**
@@ -17,12 +18,12 @@ Interface SoftDeleteManagerContract{
      * Determina si esta estrategia es aplicable
      * @return bool
      */
-    public function supports( DomainHandlerTypes $repositoryType) : bool;
+    public function supports( SoftDeleteManagerTypes $repositoryType) : bool;
     /**
      * Obtiene todos los registros eliminados
      * @return Collection<Model>
      */
-    public function getAllDeleted(): Collection;
+    public function getAllDeleted(): Collection | AnonymousResourceCollection;
     /**
      * Recupera un registro eliminado
      * @param Model $model
@@ -35,4 +36,16 @@ Interface SoftDeleteManagerContract{
      * @return bool
      */
     public function hardDelete(Model $model): bool;
+
+    /**
+     * Obtiene el registro eliminado por ID
+     * @return Model
+     */
+    public function findWithTrashed(int $id) : ?Model;
+
+    /**
+     * Determina si se puede eliminar el registro
+     * @return bool
+     */
+    public function canDelete(Model $model): bool;
 }

@@ -2,6 +2,7 @@ import { type ColumnDef } from "@tanstack/react-table"
 import { type InertiaProps } from "@/app/shared/types/intertia/props"
 import { moneyFormat, dateFormat, normalizePeriod } from "@/app/shared/helpers"
 import { router } from "@inertiajs/react"
+import { type SoftDeleteModel } from "@/app/shared/types"
 
 export const PresupuestoHistoricoRoutes = {
     index: () => '/'
@@ -11,13 +12,15 @@ export const PresupuestoHistoricoApiActions = {
     paginatedData: '/presupuestos/historicos'
 }
 
-export type PresupuestoHistoricoTableData = {
-    id: number,
-    user: string,
-    categoria: string,
-    monto: number,
+export interface Presupuesto extends SoftDeleteModel {
+    id: number
+    user: string
+    categoria: string
+    monto: number
     periodo: string | Date
 }
+
+export interface PresupuestoHistoricoTableData extends Presupuesto {}
 
 export const ColumnsTablePresupuestoHistorico: ColumnDef<PresupuestoHistoricoTableData>[] = [
     {

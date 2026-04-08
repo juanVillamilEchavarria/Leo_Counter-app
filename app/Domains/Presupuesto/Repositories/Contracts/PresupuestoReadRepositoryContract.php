@@ -2,13 +2,14 @@
 
 namespace App\Domains\Presupuesto\Repositories\Contracts;
 
+use App\Shared\Contracts\Repositories\SoftDeleteReadRepositoryContract;
 use App\Models\Presupuesto\Presupuesto;
 use App\Shared\DTOs\Querys\TableQueryDTO;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
-interface PresupuestoReadRepositoryContract {
+interface PresupuestoReadRepositoryContract extends SoftDeleteReadRepositoryContract {
     public function paginate(TableQueryDTO $dto, array $initialWheres = []): LengthAwarePaginator;
     public function find(int $id);
     public function where(array $wheres): Builder;

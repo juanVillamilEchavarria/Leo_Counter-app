@@ -6,6 +6,7 @@ import { type Categoria } from "../../categoria"
 import { type Cuenta } from "../../cuenta"
 import { type MovimientoFijo } from "../../movimientoFijo"
 import { type FileWithPreview } from "@/app/shared/types"
+import { type SoftDeleteModel } from "@/app/shared/types"
 
 const route= useRoute()
 
@@ -26,7 +27,7 @@ export const MovimientoPendienteActions= {
 
 export type MovimientoPendienteEstados= 'pendiente' | 'realizado' | 'vencido'
 
-export type MovimientoPendiente = {
+export interface MovimientoPendiente extends SoftDeleteModel {
     id: number
     nombre : string
     cuenta_id : number
@@ -44,7 +45,7 @@ export type MarkAsDonePayload = {
     comprobantes :FileWithPreview[] |null 
 }
 
-export type MovimientoPendienteTableData = Omit< MovimientoPendiente, 'cuenta_id' | 'tipo_movimiento_id' | 'categoria_id' | 'movimiento_fijo_id'> & {
+export interface MovimientoPendienteTableData extends Omit< MovimientoPendiente, 'cuenta_id' | 'tipo_movimiento_id' | 'categoria_id' | 'movimiento_fijo_id'> {
     cuenta : string
     tipo_movimiento : string
     categoria : string

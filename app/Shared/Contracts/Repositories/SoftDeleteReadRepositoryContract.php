@@ -16,4 +16,16 @@ interface SoftDeleteReadRepositoryContract {
      * @return Collection<Model>
      */
     public function getAllDeleted() : Collection;
+    /**
+     * Obtiene un registro por ID incluyendo los registros eliminados.
+     * @param int $id
+     * @return ?Model
+     */
+    public function findWithTrashed(int $id): ?Model;
+    /**
+     * Determina si el modelo tiene registros en relaciones 
+     * @param Model $model
+     * @return bool
+     */
+    public function hasRelationsRecords(Model $model): bool;
 }

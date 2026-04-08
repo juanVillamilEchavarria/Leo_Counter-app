@@ -1,8 +1,9 @@
 import {type TipoMovimiento } from "../../tipoMovimiento"
 import { type FormCommonProps } from "@/app/shared/types/components"
 import { useRoute } from "ziggy-js"
+import { type SoftDeleteModel } from "@/app/shared/types"
 const route= useRoute()
-export type Categoria={
+export interface Categoria extends SoftDeleteModel {
     id: number,
     nombre: string,
     tipo_movimiento_id: number,

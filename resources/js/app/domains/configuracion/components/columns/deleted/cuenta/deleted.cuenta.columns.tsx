@@ -1,5 +1,5 @@
-import { newColumns, type DeletedDomainColumnsProps, onSelectDefault } from "../utils/configuracion.deleted.columns.utils"
-import { CuentaColumns, type Cuenta } from "@/app/domains/cuenta"
+import { newColumns, type DeletedDomainColumnsProps } from "../utils/configuracion.deleted.columns.utils"
+import { CuentaStaticColumns, type Cuenta } from "@/app/domains/cuenta"
 /**
  * Instancia los parametros de las columnas de cuentas para el apartado de eliminados/archivados en configuracion
  * @param {Pick<newColumnsProps<Cuenta>, 'onSelect'>} {onSelect} 
@@ -13,10 +13,8 @@ export const deletedCuentaColumns =({
 }:DeletedDomainColumnsProps<Cuenta>) =>{
     return newColumns<Cuenta>({
         onSelect:onSelect,
-        columns: CuentaColumns({
-            onSelect: onSelectDefault<Cuenta>
-        }),
-        columnsToRemove: ['active', 'actions']
+        columns: CuentaStaticColumns,
+        columnsToRemove: ['active', 'actions', 'propietario', 'tipo_cuenta'],
     })
     
 }

@@ -2,6 +2,7 @@ import { useRoute } from "ziggy-js"
 import { type Propietario } from "../../propietario"
 import { type FormCommonProps } from "@/app/shared/types/components"
 import { type CreateAndEditViewWithOptionsProps } from "@/app/shared/types"
+import { type SoftDeleteModel } from "@/app/shared/types"
 const route= useRoute()
 
 export const CuentaRoutes = {
@@ -20,7 +21,7 @@ export const CuentaActions = {
 export const CuentaToggleTypes = {
   active: 'active'
 } as const
-export type Cuenta = {
+export interface Cuenta extends SoftDeleteModel {
   id: number
   nombre: string
   saldo_inicial: number

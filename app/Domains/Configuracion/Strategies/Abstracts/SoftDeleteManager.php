@@ -3,11 +3,12 @@
 namespace App\Domains\Configuracion\Strategies\Abstracts;
 
 use App\Domains\Configuracion\Strategies\Contracts\SoftDeleteManagerContract;
-use App\Domains\Configuracion\Enums\HandlerTypes;
-use App\Domains\Configuracion\Enums\DomainHandlerTypes;
+use App\Domains\Configuracion\Enums\SoftDeleteManagerTypes;
 use App\Shared\Contracts\Repositories\SoftDeleteReadRepositoryContract;
 use App\Shared\Contracts\Repositories\SoftDeleteWriteRepositoryContract;
 use Illuminate\Database\Eloquent\Model;
+use App\Domains\Configuracion\Exceptions\CannotHardDeleteModel;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Collection;
 /**
  * Clase padre para las estrategias de manejo de registros eliminados
@@ -19,9 +20,16 @@ use Illuminate\Support\Collection;
 abstract class SoftDeleteManager implements SoftDeleteManagerContract{
     /**
      * Tipo de dominio, variable con la cual va a ser comparada en el metodo supports
-     * @var DomainHandlerTypes
+     * @var SoftDeleteManagerTypes
      */
-    protected DomainHandlerTypes $domainType;
+    protected SoftDeleteManagerTypes $domainType;
+
+    /**
+     * Recurso para devolver los registros eliminados en una coleccion, debe ser un recurso de App\Domains\Configuracion\Resources\Abstracts\SoftDeleteResource
+     * @var ?string
+     */
+    protected ?string $resource = null;
+
 
     public function __construct(
         /**
@@ -38,13 +46,18 @@ abstract class SoftDeleteManager implements SoftDeleteManagerContract{
     {
     }
 
-    public function supports(DomainHandlerTypes $domainType): bool
+    public function supports(SoftDeleteManagerTypes $domainType): bool
     {
         return $this->domainType === $domainType;
     }
-    public function getAllDeleted() : Collection
+    public function getAllDeleted() : Collection | AnonymousResourceCollection
     {
-        return $this->readRepository->getAllDeleted();
+        if($this->resource !== null){
+            $collection = $this->resource::collection($this->readRepository->getAllDeleted());
+            $collection->each->setManager($this);
+            return $collection;
+        }
+        return  $this->readRepository->getAllDeleted();
     }
     public function restore(Model $model) : bool
     {
@@ -52,6 +65,18 @@ abstract class SoftDeleteManager implements SoftDeleteManagerContract{
     }
     public function hardDelete(Model $model): bool
     {
+        if(!$this->canDelete($model)){
+            throw new CannotHardDeleteModel('no se puede eliminar el registro, tiene registros relacionados');
+        }
         return $this->writeRepository->hardDelete($model);
+    }
+
+    public function findWithTrashed(int $id) : ?Model
+    {
+        return $this->readRepository->findWithTrashed($id);
+    }
+
+    public function canDelete(Model $model): bool{
+        return !$this->readRepository->hasRelationsRecords($model);
     }
 }

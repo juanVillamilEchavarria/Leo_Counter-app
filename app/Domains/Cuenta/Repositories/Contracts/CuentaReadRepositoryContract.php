@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use App\Shared\Contracts\Repositories\SoftDeleteReadRepositoryContract;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Contrato de implementación de repositorio de lectura para el modelo Cuenta
@@ -19,8 +20,8 @@ use App\Shared\Contracts\Repositories\SoftDeleteReadRepositoryContract;
 interface CuentaReadRepositoryContract extends SoftDeleteReadRepositoryContract {
     public function paginate(TableQueryDTO $dto, array $initialWheres = []): LengthAwarePaginator;
     public function getAllDeleted(): Collection;
-    public function find(int $id);
     public function where(array $wheres): Builder;
+    public function find(int $id): ?Model;
     public function whereAttr(string $attribute, $value): Builder;
     public function getForOptions(): Collection;
     public function getRecordsCount(): int;
