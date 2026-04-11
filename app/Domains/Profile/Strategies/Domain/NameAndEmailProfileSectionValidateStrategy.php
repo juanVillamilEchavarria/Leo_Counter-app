@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Domains\Profile\Strategies\Domain;
-use App\Domains\Profile\Strategies\Contracts\UpdateProfileSectionValidateStrategyContract;
+use App\Domains\Profile\Contracts\Strategies\UpdateProfileSectionValidateStrategyContract;
 use App\Domains\Profile\DTO\UpdateProfileDTO;
 use App\Domains\Profile\DTO\Contracts\ProfileDTOContract;
 use App\Models\User;

@@ -1,0 +1,69 @@
+<?php
+
+namespace App\Infrastructure\QueryHandlers\Reporte\Movimiento\Eloquent;
+
+use App\Infrastructure\QueryHandlers\Reporte\Abstracts\EloquentMovimientoTableQueryHandler;
+use App\Infrastructure\QueryHandlers\Reporte\Contracts\ReporteQueryHandlerContract;
+use App\Infrastructure\Persistence\Builders\Reporte\EloquentFinancialPeriodBuilder;
+use App\Domains\Reporte\Enums\MovimientoReporteQueryType;
+use App\Domains\Reporte\Enums\MovimientoQueryRelationParam;
+use App\Infrastructure\QueryHandlers\Reporte\Movimiento\Resolvers\MovimientoQueryRelationResolver;
+use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
+use App\Domains\Reporte\Collections\FinancialPeriodCollection;
+use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
+use App\Shared\Domain\QueryBuilders\DomainQueryBuilder;
+use App\Shared\Domain\Contracts\Reporte\ReporteQueryTypeContract;
+
+/**
+ * Ingresos vs Gastos handler: returns per-period sums and counts for both
+ * ingresos and gastos, enabling comparison charts.
+ *
+ * SQL equivalent:
+ *   SELECT
+ *     COALESCE(SUM(CASE WHEN tipo_movimiento_id = ? THEN monto END), 0) AS ingresos,
+ *     COALESCE(SUM(CASE WHEN tipo_movimiento_id = ? THEN monto END), 0) AS gastos,
+ *     COALESCE(COUNT(CASE WHEN tipo_movimiento_id = ? THEN 1 END), 0) AS count_ingresos,
+ *     COALESCE(COUNT(CASE WHEN tipo_movimiento_id = ? THEN 1 END), 0) AS count_gastos,
+ *     {granularity} as fecha
+ *   FROM movimientos
+ *   WHERE fecha BETWEEN ? AND ?
+ *   GROUP BY {granularity}
+ *   ORDER BY fecha
+ */
+final class EloquentIngresosVsGastosQueryHandler extends EloquentMovimientoTableQueryHandler implements ReporteQueryHandlerContract
+{
+    public function __construct(
+        private readonly MovimientoQueryRelationResolver $relationResolver
+    ) {}
+
+    public function supports(ReporteQueryTypeContract $type): bool
+    {
+        return $type instanceof MovimientoReporteQueryType && $type === MovimientoReporteQueryType::INGRESOS_VS_GASTOS;
+    }
+
+    public function handle(ReporteQueryDTO $dto): FinancialPeriodCollection
+    {
+        $date = $dto->granularityStrategy->groupBy();
+
+        $query = new DomainQueryBuilder($this->movimientos())
+            ->selectRaw(
+                "{$this->getConditionalSumQuery()} AS ingresos,
+                 {$this->getConditionalSumQuery()} AS gastos,
+                 {$this->getConditionalCountQuery()} AS count_ingresos,
+                 {$this->getConditionalCountQuery()} AS count_gastos,
+                 {$date} as fecha",
+                [
+                    TipoMovimientoEnum::INGRESO->value,
+                    TipoMovimientoEnum::GASTO->value,
+                    TipoMovimientoEnum::INGRESO->value,
+                    TipoMovimientoEnum::GASTO->value,
+                ]
+            );
+
+        $query = $this->baseQuery($dto->dateRange->startDate, $dto->dateRange->endDate, $query);
+        $query = $this->relationResolver->resolve($query, $dto, MovimientoQueryRelationParam::TABLE);
+        $query->groupByRaw($date)->orderBy('fecha');
+
+        return EloquentFinancialPeriodBuilder::buildCollection($query->get());
+    }
+}

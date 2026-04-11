@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Presupuesto;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Domains\Presupuesto\Services\Application\PresupuestoService;
+use App\Application\Presupuesto\Services\PresupuestoService;
 use App\Domains\Presupuesto\Enums\PresupuestoVariants;
 
 class PresupuestoHistoricoController extends Controller

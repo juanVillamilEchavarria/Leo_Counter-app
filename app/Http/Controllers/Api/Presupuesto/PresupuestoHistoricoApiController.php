@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Presupuesto;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Shared\TableQueryRequest;
-use App\Domains\Presupuesto\Services\Application\PresupuestoService;
+use App\Application\Presupuesto\Services\PresupuestoService;
 use App\Domains\Presupuesto\Enums\PresupuestoVariants;
 
 class PresupuestoHistoricoApiController extends Controller

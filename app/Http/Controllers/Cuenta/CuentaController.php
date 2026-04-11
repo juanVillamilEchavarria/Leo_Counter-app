@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Cuenta\StoreAndUpdateCuentaRequest;
 use Inertia\Inertia;
 use App\Models\Cuenta\Cuenta;
-use App\Domains\Cuenta\Services\Application\CuentaService;
+use App\Application\Cuenta\Services\CuentaService;
 class CuentaController extends Controller
 {
     public function __construct(

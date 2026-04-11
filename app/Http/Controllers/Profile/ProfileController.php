@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Profile\UpdateProfileRequest;
-use App\Domains\Profile\Services\Application\ProfileService;
+use App\Application\Profile\Services\ProfileService;
 use Inertia\Inertia;
 class ProfileController extends Controller
 {

@@ -2,10 +2,10 @@
 
 namespace App\Domains\Profile\Strategies\Domain;
 
-use App\Domains\Auth\Services\Application\AuthService;
+use App\Application\Auth\Services\AuthService;
 use App\Domains\Profile\DTO\Contracts\ProfileDTOContract;
 use App\Domains\Profile\DTO\UpdatePasswordProfileDTO;
-use App\Domains\Profile\Strategies\Contracts\UpdateProfileSectionValidateStrategyContract;
+use App\Domains\Profile\Contracts\Strategies\UpdateProfileSectionValidateStrategyContract;
 use App\Models\User;
 use App\Domains\Profile\Exceptions\WrongPasswordException;
 

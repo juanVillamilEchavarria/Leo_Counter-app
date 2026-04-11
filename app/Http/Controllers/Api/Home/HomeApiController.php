@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Home;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Domains\Home\Services\Application\HomeService;
+use App\Application\Home\Services\HomeService;
 class HomeApiController extends Controller
 {
     public function __construct(

@@ -2,7 +2,7 @@
 
 namespace App\Domains\Reporte\Strategies\Domain\Granularity;
 
-use App\Domains\Reporte\Strategies\Contracts\ReportGranularityStrategyContract;
+use App\Domains\Reporte\Contracts\Strategies\ReportGranularityStrategyContract;
 use App\Domains\Reporte\Strategies\Abstracts\ReportGranularityStrategy;
 
 class MonthlyReportGranularityStrategy extends ReportGranularityStrategy implements ReportGranularityStrategyContract{

@@ -2,8 +2,8 @@
 
 namespace App\Domains\Movimiento\Strategies\Domain;
 
-use App\Domains\Cuenta\Repositories\Contracts\CuentaReadRepositoryContract;
-use App\Domains\Movimiento\Strategies\Contracts\CuentaResolveStrategyContract;
+use App\Domains\Cuenta\Contracts\Repositories\CuentaReadRepositoryContract;
+use App\Domains\Movimiento\Contracts\Strategies\CuentaResolveStrategyContract;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 use App\Domains\Cuenta\Exceptions\CannotFindCuentaException;
 use App\Models\Cuenta\Cuenta;

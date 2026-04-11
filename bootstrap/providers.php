@@ -1,25 +1,35 @@
 <?php
 
+
+
 return [
-    App\Domains\ArchivoMovimiento\Repositories\Providers\ArchivoMovimientoRepositoryProvider::class,
-    App\Domains\Categoria\Repositories\Providers\CategoriaRepositoryProvider::class,
-    App\Domains\Configuracion\Strategies\Providers\SoftDeleteManagerProvider::class,
-    App\Domains\Cuenta\Repositories\Providers\CuentaRepositoryProvider::class,
-    App\Domains\FrecuenciaMovimiento\Repositories\Providers\FrecuenciaMovimientoRepositoryProvider::class,
-    App\Domains\Home\Providers\HomeProvider::class,
-    App\Domains\MovimientoFijo\Repositories\Providers\MovimientoFijoRepositoryProvider::class,
-    App\Domains\MovimientoPendiente\Repositories\Providers\MovimientoPendienteRepositoryProvider::class,
-    App\Domains\Movimiento\Repositories\Providers\MovimientoRepositoryProvider::class,
-    App\Domains\Presupuesto\Repositories\Providers\PresupuestoRepositoryProvider::class,
-    App\Domains\Profile\Repositories\Providers\ProfileRepositoryProvider::class,
-    App\Domains\Profile\Specifications\Providers\ProfileSpecificationProvider::class,
-    App\Domains\Profile\Strategies\Providers\ProfileStrategyProvider::class,
-    App\Domains\Propietario\Repositories\Providers\PropietarioRepositoryProvider::class,
-    App\Domains\Reporte\Repositories\Providers\ReporteProvider::class,
-    App\Domains\Reporte\Strategies\Providers\Granularity\GranularityStrategieProvider::class,
-    App\Domains\Reporte\Strategies\Providers\Relations\QueryRelationStrategyProvider::class,
-    App\Domains\TipoCuenta\Repositories\Providers\TipoCuentaRepositoryProvider::class,
-    App\Domains\TipoMovimiento\Repositories\Providers\TipoMovimientoRepositoryProvider::class,
-    App\Domains\TipoPresupuesto\Repositories\Providers\TipoPresupuestoRepositoryProvider::class,
     App\Providers\AppServiceProvider::class,
+   App\Application\ArchivoMovimiento\Providers\Repositories\ArchivoMovimientoRepositoryProvider::class,
+ App\Application\Categoria\Providers\Repositories\CategoriaRepositoryProvider::class,
+ App\Application\Configuracion\Providers\Strategies\SoftDeleteManagerProvider::class,
+ App\Application\Cuenta\Providers\Repositories\CuentaRepositoryProvider::class,
+ App\Application\FrecuenciaMovimiento\Providers\Repositories\FrecuenciaMovimientoRepositoryProvider::class,
+ App\Application\Movimiento\Providers\Repositories\MovimientoRepositoryProvider::class,
+ App\Application\MovimientoFijo\Providers\Repositories\MovimientoFijoRepositoryProvider::class,
+ App\Application\MovimientoPendiente\Providers\Repositories\MovimientoPendienteRepositoryProvider::class,
+ App\Application\Presupuesto\Providers\Repositories\PresupuestoRepositoryProvider::class,
+ App\Application\Profile\Providers\Repositories\ProfileRepositoryProvider::class,
+ App\Application\Profile\Providers\Specifications\ProfileSpecificationProvider::class,
+ App\Application\Profile\Providers\Strategies\ProfileStrategyProvider::class,
+ App\Application\Propietario\Providers\Repositories\PropietarioRepositoryProvider::class,
+ App\Application\Reporte\Providers\Strategies\Granularity\GranularityStrategieProvider::class,
+ App\Application\TipoCuenta\Providers\Repositories\TipoCuentaRepositoryProvider::class,
+ App\Application\TipoMovimiento\Providers\Repositories\TipoMovimientoRepositoryProvider::class,
+ App\Application\TipoPresupuesto\Providers\Repositories\TipoPresupuestoRepositoryProvider::class,
+
+    // Reporte — Infrastructure (must register before domain resolver)
+    App\Providers\Infrastructure\Reporte\MovimientoQueryHandlerServiceProvider::class,
+    App\Providers\Infrastructure\Reporte\MovimientoQueryRelationServiceProvider::class,
+    App\Providers\Infrastructure\Reporte\PresupuestoQueryHandlerServiceProvider::class,
+    App\Providers\Infrastructure\Reporte\PresupuestoQueryRelationServiceProvider::class,
+    App\Providers\Infrastructure\Reporte\ReporteRepositoryServiceProvider::class,
+
+    // Reporte — Domain (depends on 'reporte.repositories' tag from infrastructure)
+    App\Providers\Domain\ReporteRepositoryResolverServiceProvider::class,
+
 ];

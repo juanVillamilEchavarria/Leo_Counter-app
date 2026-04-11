@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Configuracion;
 
-use App\Domains\Configuracion\Services\Application\ConfiguracionService;
+use App\Application\Configuracion\Services\ConfiguracionService;
 use Inertia\Inertia;
 
 class SoftDeleteRecordsController{

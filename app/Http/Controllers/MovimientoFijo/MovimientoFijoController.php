@@ -4,7 +4,7 @@ namespace App\Http\Controllers\MovimientoFijo;
 
 use App\Http\Controllers\Controller;
 use Inertia\Inertia;
-use App\Domains\MovimientoFijo\Services\MovimientoFijoService;
+use App\Application\MovimientoFijo\Services\MovimientoFijoService;
 use App\Http\Requests\MovimientoFijo\StoreAndUpdateMovimientoFijoRequest;
 use App\Models\MovimientoFijo\MovimientoFijo;
 

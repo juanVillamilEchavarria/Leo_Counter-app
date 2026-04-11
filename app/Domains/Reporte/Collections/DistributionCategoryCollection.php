@@ -1,16 +1,14 @@
 <?php
+
 namespace App\Domains\Reporte\Collections;
 
-use App\Domains\Reporte\Builders\DistributionCategoryBuilder;
-use App\Domains\Reporte\DTOs\Category\DistributionCategoryDTO;
-use Illuminate\Support\Collection;
+use App\Domains\Reporte\ValueObjects\Category\DistributionCategoryVO;
+use App\Shared\Domain\Collections\DomainCollection;
 
-class DistributionCategoryCollection extends Collection{
-
-    public static function fromQueryResults(Collection $queryResults) {
-        return new self(DistributionCategoryBuilder::fromQueryResults($queryResults));
-    }
-    public function totalMovimientos(){
-        return $this->sum(fn(DistributionCategoryDTO $mes) => $mes->cantidad);
+class DistributionCategoryCollection extends DomainCollection
+{
+    public function totalMovimientos(): int
+    {
+        return $this->sum(fn(DistributionCategoryVO $mes) => $mes->cantidad);
     }
 }

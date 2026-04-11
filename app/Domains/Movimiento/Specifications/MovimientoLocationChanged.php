@@ -2,7 +2,7 @@
 
 namespace App\Domains\Movimiento\Specifications;
 use App\Models\Movimiento\Movimiento;
-use App\Domains\Movimiento\DTOs\UpdateMovimientoDTO;
+use App\Application\Movimiento\DTOs\UpdateMovimientoDTO;
 
 final class MovimientoLocationChanged {
     public function isSatisfiedBy(Movimiento $movimiento, UpdateMovimientoDTO $dto): bool {

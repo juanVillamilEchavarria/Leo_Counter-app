@@ -127,7 +127,7 @@ export const newColumns = <TData extends  SoftDeletedDomainTypes[SoftDeleteDomai
         {
             key: 'deleted_at',
             label: 'Eliminado',
-            render: (row: TData) => dateFormat(row.deleted_at)
+            render: (row: TData) => dateFormat(row.deleted_at),
             
 
         },

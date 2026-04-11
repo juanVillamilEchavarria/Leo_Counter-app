@@ -4,7 +4,7 @@ namespace App\Http\Controllers\MovimientoPendiente;
 
 use App\Http\Controllers\Controller;
 use Inertia\Inertia;
-use App\Domains\MovimientoPendiente\Services\MovimientoPendienteService;
+use App\Application\MovimientoPendiente\Services\MovimientoPendienteService;
 use App\Http\Requests\MovimientoPendiente\StoreAndUpdateMovimientoPendienteRequest;
 use App\Models\MovimientoPendiente\MovimientoPendiente;
 use App\Http\Requests\MovimientoPendiente\MarkAsDoneRequest;

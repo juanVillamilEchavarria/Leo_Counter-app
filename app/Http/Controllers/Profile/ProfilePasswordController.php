@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Profile;
 use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 use App\Http\Requests\Profile\UpdatePasswordProfileRequest;
-use App\Domains\Profile\Services\Application\ProfileService;
+use App\Application\Profile\Services\ProfileService;
 
 class ProfilePasswordController extends Controller
 {

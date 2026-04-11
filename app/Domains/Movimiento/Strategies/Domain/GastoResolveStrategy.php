@@ -5,7 +5,7 @@ namespace App\Domains\Movimiento\Strategies\Domain;
 use App\Shared\Services\Financial\BalanceCheckerService;
 use App\Shared\Exceptions\InsufficientBalanceException;
 use App\Domains\Movimiento\Exceptions\CannotStoreMovimientoException;
-use App\Domains\Movimiento\Strategies\Contracts\CuentaResolveStrategyContract;
+use App\Domains\Movimiento\Contracts\Strategies\CuentaResolveStrategyContract;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 use App\Models\Cuenta\Cuenta;
 

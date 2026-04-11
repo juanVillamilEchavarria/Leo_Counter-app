@@ -2,15 +2,18 @@
 
 namespace App\Domains\Reporte\Strategies\Domain\Relations\Presupuestos;
 
-use App\Domains\Reporte\DTOs\ReporteQueryDTO;
+use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
 use App\Domains\Reporte\Strategies\Abstracts\QueryIdRelationStrategy;
-use App\Domains\Reporte\Strategies\Contracts\QueryRelationStrategyContract;
-use App\Domains\Reporte\Strategies\Enums\QueryRelationParam;
+use App\Domains\Reporte\Contracts\Strategies\QueryRelationStrategyContract;
+use App\Domains\Reporte\Enums\PresupuestoQueryRelationParam;
 use App\Shared\DTOs\Querys\IdsDTO;
 
 class PresupuestoCategoriaQueryIdRelationStrategy extends QueryIdRelationStrategy implements QueryRelationStrategyContract {
-    protected string $table = QueryRelationParam::PRESUPUESTOS_TABLE->value;
-    protected string $relationColumn = 'presupuestos.categoria_id';
+    public function __construct() {
+        $this->table = PresupuestoQueryRelationParam::TABLE->value;
+        $this->relationColumn = 'presupuestos.categoria_id';
+    }
+
     protected function dtoProperty(ReporteQueryDTO $reporteQueryDTO): IdsDTO | null
     {
         return $reporteQueryDTO->categorias;

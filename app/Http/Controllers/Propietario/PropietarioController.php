@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Propietario;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Domains\Propietario\Services\PropietarioService;
+use App\Application\Propietario\Services\PropietarioService;
 use App\Http\Requests\Propietario\StoreAndUpdatePropietarioRequest;
 use App\Models\Propietario\Propietario;
 use Inertia\Inertia;

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Categoria;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Domains\Categoria\Services\Application\CategoriaService;
+use App\Application\Categoria\Services\CategoriaService;
 use App\Http\Requests\Categoria\StoreAndUpdateCategoriaRequest;
 use App\Models\Categoria\Categoria;
 use Inertia\Inertia;

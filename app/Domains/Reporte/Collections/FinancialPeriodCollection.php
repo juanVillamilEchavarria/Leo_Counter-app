@@ -2,60 +2,70 @@
 
 namespace App\Domains\Reporte\Collections;
 
+use App\Domains\Reporte\ValueObjects\Financial\FinancialPeriodVO;
+use App\Shared\Domain\Collections\DomainCollection;
+use App\Shared\Domain\Services\Financial\AverageService;
 use Illuminate\Support\Collection;
-use App\Domains\Reporte\DTOs\Financial\FinancialPeriodDTO;
-use App\Domains\Reporte\Builders\FinancialPeriodBuilder;
 
-class FinancialPeriodCollection extends Collection {
-    public static function fromQueryResults(Collection $queryResults){
-        return new self(FinancialPeriodBuilder::fromQueryResults($queryResults));
+class FinancialPeriodCollection extends DomainCollection
+{
+
+    public function __construct(array|Collection $collection = [])
+    {
+        return parent::__construct($collection);
     }
-
    /**
     * Promedio de ingresos por periodo, es decir monto de ingresos / Numero de periodos
     */
-    public function ingresosPeriodAverage(){
-        return $this->avg(fn(FinancialPeriodDTO $mes) => $mes->ingresos);
+    public function ingresosPeriodAverage(): float
+    {
+        return $this->avg(fn(FinancialPeriodVO $mes) => $mes->ingresos);
     }
     /**
      * Promedio de gastos por periodo, es decir monto de gastos / Numero de periodos
      */
 
-    public function gastosPeriodAverage(){
-        return $this->avg(fn(FinancialPeriodDTO $mes) => $mes->gastos);
+    public function gastosPeriodAverage(): float
+    {
+        return $this->avg(fn(FinancialPeriodVO $mes) => $mes->gastos);
     }
 
     /**
      * Promedio total de ingresos, es decir Monto de ingresos / Numero de movimientos tipo ingreso
      */
-    public function ingresosIndividualAverage(){
+    public function ingresosIndividualAverage(): float{
 
         $totalIngresos = $this->totalIngresos();
         $totalIngresosCount = $this->totalIngresosCount();
-        return $totalIngresosCount > 0 ? $totalIngresos / $totalIngresosCount : 0;
+        return AverageService::average($totalIngresos, $totalIngresosCount);
     }
     /**
      * Promedio total de gastos, es decir Monto de gastos / Numero de movimientos tipo gasto
      */
 
-    public function gastosIndividualAverage(){
+    public function gastosIndividualAverage(): float{
         $totalGastos = $this->totalGastos();
         $totalGastosCount = $this->totalGastosCount();
-        return $totalGastosCount > 0 ? $totalGastos / $totalGastosCount : 0;
+        return AverageService::average($totalGastos, $totalGastosCount);
     }
-        private function totalIngresos(){
-        return $this->sum(fn(FinancialPeriodDTO $mes) => $mes->ingresos);
-    }
-    private function totalGastos(){
-        return $this->sum(fn(FinancialPeriodDTO $mes) => $mes->gastos);
+        private function totalIngresos(): float
+    {
+        return $this->sum(fn(FinancialPeriodVO $mes) => $mes->ingresos);
     }
 
-    private function totalIngresosCount(){
-        return $this->sum(fn(FinancialPeriodDTO $mes) => $mes->count_ingresos);
+    private function totalGastos(): float
+    {
+        return $this->sum(fn(FinancialPeriodVO $mes) => $mes->gastos);
     }
 
-    private function totalGastosCount(){
-        return $this->sum(fn(FinancialPeriodDTO $mes) => $mes->count_gastos);
+    private function totalIngresosCount(): int
+    {
+        return $this->sum(fn(FinancialPeriodVO $mes) => $mes->count_ingresos);
+    }
+
+    private function totalGastosCount(): int
+    {
+        return $this->sum(fn(FinancialPeriodVO $mes) => $mes->count_gastos);
     }
     
 

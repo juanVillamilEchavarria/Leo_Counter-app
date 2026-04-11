@@ -1,12 +1,19 @@
 <?php
 
 namespace App\Domains\Reporte\Strategies\Abstracts;
-use App\Domains\Reporte\DTOs\ReporteQueryDTO;
-use App\Domains\Reporte\Strategies\Contracts\QueryRelationStrategyContract;
-use App\Domains\Reporte\Strategies\Enums\QueryRelationParam;
+use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
+use App\Domains\Reporte\Contracts\Strategies\QueryRelationStrategyContract;
+use App\Shared\Domain\Contracts\Reporte\QueryRelationParamContract;
 use App\Shared\DTOs\Querys\WhereFilterQueryDTO;
-use Illuminate\Database\Query\Builder;
+use App\Shared\Domain\QueryBuilders\DomainQueryBuilder;
 use App\Shared\Enums\ComparativeOperators;
+/**
+ * Clase para realizar un join complejo en la consulta, filtrando por parametros dinamicos de la relacion y where, Aplica unicamente la logica de comparacion para obtener los registros y opcionalmente el where, los atributos a seleccionar deben ser declarados antes de implementar la funcionalidad de esta clase
+ * @example SELECT categorias.nombre as categoria, movimientos.monto as monto FROM movimientos INNER JOIN categorias ON movimientos.categoria_id = categorias.id WHERE movimientos.monto > 1000
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 abstract class QueryJoinRelationStrategy implements QueryRelationStrategyContract{
 
     /**
@@ -54,12 +61,14 @@ abstract class QueryJoinRelationStrategy implements QueryRelationStrategyContrac
      * funcion para declarar la propiedad del dto que se utilizara para realizar el join y verificar si se debe realizar el join
      */
     abstract protected function dtoProperty(ReporteQueryDTO $reporteQueryDTO): mixed;
-    public function supports(ReporteQueryDTO $reporteQueryDTO, QueryRelationParam $param) {
+    public function supports(ReporteQueryDTO $reporteQueryDTO, QueryRelationParamContract $param) {
         return !is_null($this->dtoProperty($reporteQueryDTO)) && $this->table === $param->value;
     }
 
-    public function apply(Builder $query, ReporteQueryDTO $reporteQueryDTO){
-        !$this->hasJoin($query, $this->relationTable) && $query = $query->join($this->relationTable, $this->relationColumn, $this->joinOperator->value, $this->comparativeColumn);
+    public function apply(DomainQueryBuilder $query, ReporteQueryDTO $reporteQueryDTO){
+        if(!$query->hasJoin($this->relationTable)){
+            $query = $query->join($this->relationTable, $this->relationColumn, $this->joinOperator->value, $this->comparativeColumn);
+        }
         $wheres = $this->wheres();
         if(!is_null($wheres)){
             /**
@@ -79,20 +88,4 @@ abstract class QueryJoinRelationStrategy implements QueryRelationStrategyContrac
      protected function wheres(): ?array{
         return null;
      }
-
-     /**
-      * verifica si la query tiene un join a la tabla especificada
-      */
-     private function hasJoin(Builder $query, string $table): bool {
-        if (!$query->joins) {
-            return false;
-        }
-        return collect($query->joins)
-            ->pluck('table')
-            ->contains(function ($joinTable) use ($table) {
-                // Normalizar nombres (eliminar alias, espacios, case)
-                $normalized = strtolower(trim(explode(' as ', $joinTable)[0]));
-                return $normalized === strtolower(trim($table));
-            });
-    }
 }

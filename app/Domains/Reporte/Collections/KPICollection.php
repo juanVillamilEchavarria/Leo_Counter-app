@@ -1,29 +1,29 @@
 <?php
 
 namespace App\Domains\Reporte\Collections;
-use Illuminate\Support\Collection;
-use App\Domains\Reporte\Builders\KPIBuilder;
-use App\Domains\Reporte\DTOs\KPI\KPIDTO;
 
-class KPICollection extends Collection{
-    public static function fromQueryResults(Collection $queryResults){
-        return new self(KPIBuilder::fromQueryResults($queryResults));
-    }
-     public function totalIngresos(){
-        return $this->sum(fn(KPIDTO $mes) => $mes->ingresos);
-    }
+use App\Domains\Reporte\ValueObjects\KPI\KPIVO;
+use App\Shared\Domain\Collections\DomainCollection;
 
-    public function totalGastos(){
-        return $this->sum(fn(KPIDTO $mes) => $mes->gastos);
+class KPICollection extends DomainCollection
+{
+    public function totalIngresos(): float
+    {
+        return $this->sum(fn(KPIVO $mes) => $mes->ingresos);
     }
 
-
-    public function totalBalance(){
-        return $this->sum(fn(KPIDTO $mes) => $mes->getBalance());
+    public function totalGastos(): float
+    {
+        return $this->sum(fn(KPIVO $mes) => $mes->gastos);
     }
 
-    public function totalMovimientos(){
-        return $this->sum(fn(KPIDTO $mes) => $mes->total_movimientos);
+    public function totalBalance(): float
+    {
+        return $this->sum(fn(KPIVO $mes) => $mes->getBalance());
     }
 
+    public function totalMovimientos(): int
+    {
+        return $this->sum(fn(KPIVO $mes) => $mes->total_movimientos);
+    }
 }
