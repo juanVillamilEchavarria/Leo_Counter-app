@@ -2,7 +2,6 @@
 
 namespace App\Shared\Domain\Collections;
 
-use Illuminate\Support\Collection as LaravelCollection;
 use ArrayIterator;
 use IteratorAggregate;
 use Countable;
@@ -18,28 +17,33 @@ class DomainCollection implements  IteratorAggregate, Countable{
 
      /**
       * Implementacion real de la coleccion
-      * @var LaravelCollection
+      * @var array<int, mixed>
       */
-    private LaravelCollection $items;
+    private array $items;
 
-    public function __construct(array | LaravelCollection $collection = [])
+    /**
+     * @param iterable<mixed> $collection
+     */
+    public function __construct(iterable $collection = [])
     {
-        $this->items = $collection instanceof LaravelCollection ? $collection : new LaravelCollection($collection);
+        $this->items = is_array($collection)
+            ? array_values($collection)
+            : array_values(iterator_to_array($collection));
     }
 
     /**
      * Crea una nueva instancia de la coleccion
-     * @param array|LaravelCollection $collection
+     * @param iterable<mixed> $collection
      * @return static
      */
-    public static function make(array | LaravelCollection $collection = []): static {
+    public static function make(iterable $collection = []): static {
          return new static($collection);
     }
     /**
      * Devuelve los items de la coleccion
-     * @return LaravelCollection
+     * @return array<int, mixed>
      */
-    public function getItems(): LaravelCollection {
+    public function getItems(): array {
          return $this->items;
     }
 
@@ -48,21 +52,21 @@ class DomainCollection implements  IteratorAggregate, Countable{
      * @return ArrayIterator
      */
     public function getIterator(): ArrayIterator {
-         return new ArrayIterator($this->items->all()); 
+         return new ArrayIterator($this->items);
         }
         /**
          * Devuelve la cantidad de items de la coleccion
          * @return int
          */
     public function count(): int {
-         return $this->items->count(); 
+         return count($this->items);
     }
     /**
      * Devuelve los items de la coleccion en un array
      * @return array
      */
     public function toArray(): array {
-         return $this->items->all(); 
+         return $this->items;
     }
     /**
      * Mapea los items de la coleccion
@@ -70,21 +74,31 @@ class DomainCollection implements  IteratorAggregate, Countable{
      * @return static
      */
     public function map(callable $callback): static { 
-        return new static($this->items->map($callback)); 
+        return new static(array_map($callback, $this->items));
     }
     /**
      * Filtro los items de la coleccion
      * @param callable $callback
      */
     public function filter(callable $callback): static {
-         return new static($this->items->filter($callback));
+         return new static(array_values(array_filter($this->items, $callback)));
      }
      /**
       * Suma los items de la coleccion
       * @param callable $callback
       */
     protected function sum(?callable $callback = null): float {
-         return $this->items->sum($callback); 
+         if ($callback === null) {
+             return (float) array_sum($this->items);
+         }
+
+         $sum = 0.0;
+
+         foreach ($this->items as $item) {
+             $sum += (float) $callback($item);
+         }
+
+         return $sum;
     }
     /**
      * Calcula el promedio de los items de la coleccion
@@ -93,7 +107,11 @@ class DomainCollection implements  IteratorAggregate, Countable{
      */
 
     protected function avg(?callable $callback = null): float {
-         return $this->items->avg($callback); 
+         if ($this->items === []) {
+             return 0.0;
+         }
+
+         return $this->sum($callback) / count($this->items);
     }
 
 }

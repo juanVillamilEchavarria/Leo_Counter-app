@@ -1,7 +1,7 @@
 <?php
 namespace App\Domains\Home\Services;
 
-use App\Domains\Reporte\Contracts\Repositories\ReporteRepositoryContract;
+use App\Domains\Reporte\Contracts\Ports\ReporteRepositoryContract;
 use App\Application\Reporte\DTOs\ReporteQueryDTO;
 use App\Domains\Reporte\QueryHandlers\KPIQueryHandler;
 use App\Domains\Reporte\QueryHandlers\IngresoVsGastosQueryHandler;

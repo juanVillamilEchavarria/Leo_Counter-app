@@ -7,7 +7,7 @@ class VariationsKPIDTO extends DTO{
         public ?float $ingresos,
         public ?float $gastos,
         public ?float $balance_neto,
-        public ?int $movimientos
+        public ?float $movimientos
     )
     {
     }

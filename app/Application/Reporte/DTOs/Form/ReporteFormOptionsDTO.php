@@ -8,7 +8,7 @@ use App\Application\Categoria\DTOs\IngresoAndGastoCategoriaDTO;
 class ReporteFormOptionsDTO extends DTO{
     public function __construct(
         public readonly IngresoAndGastoCategoriaDTO $categorias,
-        public readonly Collection $cuentas
+        public readonly iterable $cuentas
     )
     {
     }

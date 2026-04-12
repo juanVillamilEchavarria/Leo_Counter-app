@@ -1,0 +1,64 @@
+<?php
+
+namespace App\Infrastructure\Reporte\Queries\Handlers\Movimientos\Eloquent;
+
+use App\Infrastructure\Reporte\Queries\Handlers\Movimientos\Eloquent\Abstracts\EloquentMovimientoTableQueryHandler;
+use App\Infrastructure\Reporte\Contracts\Queries\ReporteQueryHandlerContract;
+use App\Infrastructure\Reporte\Builders\Eloquent\EloquentBalanceNetoBuilder;
+use App\Domains\Reporte\Enums\Statistic\MovimientoReportStatisticType;
+use App\Infrastructure\Reporte\Enums\Queries\Builders\MovimientoQueryRelationParam;
+use App\Infrastructure\Reporte\Resolvers\Queries\Handlers\MovimientoQueryRelationResolver;
+use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
+use App\Domains\Reporte\Collections\BalanceNetoCollection;
+use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
+use App\Shared\Infrastructure\QueryBuilders\DomainQueryBuilder;
+use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
+
+/**
+ * Balance Neto handler: calcula (ingresos - gastos) dependiendo la granularidad del periodo.
+ *
+ * Equivalente SQL:
+ *   SELECT
+ *     (COALESCE(SUM(CASE WHEN tipo_movimiento_id = ? THEN monto END), 0)
+ *      - COALESCE(SUM(CASE WHEN tipo_movimiento_id = ? THEN monto END), 0)) AS balance,
+ *     {granularity} as fecha
+ *   FROM movimientos
+ *   WHERE fecha BETWEEN ? AND ?
+ *   GROUP BY {granularity}
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @since 1.0.0
+ * @version 1.0.0
+ * @package App\Infrastructure\Reporte\Queries\Handlers\Movimientos\Eloquent
+ */
+final class EloquentBalanceNetoQueryHandler extends EloquentMovimientoTableQueryHandler implements ReporteQueryHandlerContract
+{
+    public function __construct(
+        private readonly MovimientoQueryRelationResolver $relationResolver
+    ) {}
+
+    public function supports(ReportStatisticTypeContract $type): bool
+    {
+        return $type instanceof MovimientoReportStatisticType && $type === MovimientoReportStatisticType::BALANCE_NETO;
+    }
+
+    public function handle(ReporteQueryDTO $dto): BalanceNetoCollection
+    {
+        $date = $dto->granularityStrategy->groupBy();
+
+        $query = new DomainQueryBuilder($this->movimientos())
+            ->selectRaw(
+                "({$this->getConditionalSumQuery()} - {$this->getConditionalSumQuery()}) AS balance,
+                 {$date} as fecha",
+                [
+                    TipoMovimientoEnum::INGRESO->value,
+                    TipoMovimientoEnum::GASTO->value,
+                ]
+            );
+
+        $query = $this->baseQuery($dto->dateRange->startDate, $dto->dateRange->endDate, $query);
+        $query = $this->relationResolver->resolve($query, $dto, MovimientoQueryRelationParam::TABLE);
+        $query->groupByRaw($date);
+
+        return EloquentBalanceNetoBuilder::buildCollection($query->get());
+    }
+}

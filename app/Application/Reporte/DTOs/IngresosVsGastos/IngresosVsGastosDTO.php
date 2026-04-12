@@ -1,14 +1,17 @@
 <?php
 namespace App\Application\Reporte\DTOs\IngresosVsGastos;
 
+use App\Application\Reporte\DTOs\Financial\FinancialPeriodDTO;
 use App\Shared\Abstracts\DTOs\DTO;
-use Illuminate\Support\Collection;
 use App\Application\Reporte\DTOs\Promedio\PromedioDTO;
 
-class IngresosVsGastosDTO extends DTO{
+final class IngresosVsGastosDTO extends DTO{
+    /**
+     * @param array<int, FinancialPeriodDTO> $data
+     */
     public function __construct(
-        public Collection $data,
-        public PromedioDTO $promedios
+        public readonly array $data,
+        public readonly PromedioDTO $promedios
     )
     {
     }

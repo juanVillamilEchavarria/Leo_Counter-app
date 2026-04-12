@@ -1,35 +1,30 @@
 <?php
 
-
-
 return [
+    App\Application\ArchivoMovimiento\Providers\Repositories\ArchivoMovimientoRepositoryProvider::class,
+    App\Application\Categoria\Providers\Repositories\CategoriaRepositoryProvider::class,
+    App\Application\Configuracion\Providers\Strategies\SoftDeleteManagerProvider::class,
+    App\Application\Cuenta\Providers\Repositories\CuentaRepositoryProvider::class,
+    App\Application\FrecuenciaMovimiento\Providers\Repositories\FrecuenciaMovimientoRepositoryProvider::class,
+    App\Application\MovimientoFijo\Providers\Repositories\MovimientoFijoRepositoryProvider::class,
+    App\Application\MovimientoPendiente\Providers\Repositories\MovimientoPendienteRepositoryProvider::class,
+    App\Application\Movimiento\Providers\Repositories\MovimientoRepositoryProvider::class,
+    App\Application\Presupuesto\Providers\Repositories\PresupuestoRepositoryProvider::class,
+    App\Application\Profile\Providers\Repositories\ProfileRepositoryProvider::class,
+    App\Application\Profile\Providers\Specifications\ProfileSpecificationProvider::class,
+    App\Application\Profile\Providers\Strategies\ProfileStrategyProvider::class,
+    App\Application\Propietario\Providers\Repositories\PropietarioRepositoryProvider::class,
+    App\Application\Reporte\Providers\Strategies\Granularity\GranularityStrategieProvider::class,
+    App\Application\TipoCuenta\Providers\Repositories\TipoCuentaRepositoryProvider::class,
+    App\Application\TipoMovimiento\Providers\Repositories\TipoMovimientoRepositoryProvider::class,
+    App\Application\TipoPresupuesto\Providers\Repositories\TipoPresupuestoRepositoryProvider::class,
     App\Providers\AppServiceProvider::class,
-   App\Application\ArchivoMovimiento\Providers\Repositories\ArchivoMovimientoRepositoryProvider::class,
- App\Application\Categoria\Providers\Repositories\CategoriaRepositoryProvider::class,
- App\Application\Configuracion\Providers\Strategies\SoftDeleteManagerProvider::class,
- App\Application\Cuenta\Providers\Repositories\CuentaRepositoryProvider::class,
- App\Application\FrecuenciaMovimiento\Providers\Repositories\FrecuenciaMovimientoRepositoryProvider::class,
- App\Application\Movimiento\Providers\Repositories\MovimientoRepositoryProvider::class,
- App\Application\MovimientoFijo\Providers\Repositories\MovimientoFijoRepositoryProvider::class,
- App\Application\MovimientoPendiente\Providers\Repositories\MovimientoPendienteRepositoryProvider::class,
- App\Application\Presupuesto\Providers\Repositories\PresupuestoRepositoryProvider::class,
- App\Application\Profile\Providers\Repositories\ProfileRepositoryProvider::class,
- App\Application\Profile\Providers\Specifications\ProfileSpecificationProvider::class,
- App\Application\Profile\Providers\Strategies\ProfileStrategyProvider::class,
- App\Application\Propietario\Providers\Repositories\PropietarioRepositoryProvider::class,
- App\Application\Reporte\Providers\Strategies\Granularity\GranularityStrategieProvider::class,
- App\Application\TipoCuenta\Providers\Repositories\TipoCuentaRepositoryProvider::class,
- App\Application\TipoMovimiento\Providers\Repositories\TipoMovimientoRepositoryProvider::class,
- App\Application\TipoPresupuesto\Providers\Repositories\TipoPresupuestoRepositoryProvider::class,
-
-    // Reporte — Infrastructure (must register before domain resolver)
+    App\Providers\Domain\ReporteQueryPortResolverServiceProvider::class,
+    App\Providers\HolaProvider::class,
     App\Providers\Infrastructure\Reporte\MovimientoQueryHandlerServiceProvider::class,
     App\Providers\Infrastructure\Reporte\MovimientoQueryRelationServiceProvider::class,
     App\Providers\Infrastructure\Reporte\PresupuestoQueryHandlerServiceProvider::class,
     App\Providers\Infrastructure\Reporte\PresupuestoQueryRelationServiceProvider::class,
     App\Providers\Infrastructure\Reporte\ReporteRepositoryServiceProvider::class,
-
-    // Reporte — Domain (depends on 'reporte.repositories' tag from infrastructure)
-    App\Providers\Domain\ReporteRepositoryResolverServiceProvider::class,
-
+    App\Providers\Application\Reporte\ReporteHandlerServiceProvider::class,
 ];
