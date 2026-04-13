@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Reporte\Queries\Handlers\Presupuestos\Eloquent;
 
 use App\Infrastructure\Reporte\Queries\Handlers\Presupuestos\Eloquent\Abstracts\EloquentPresupuestoTableQueryHandler;
-use App\Infrastructure\Reporte\Contracts\Queries\ReporteQueryHandlerContract;
+use App\Application\Reporte\Contracts\Queries\ReporteQueryHandlerContract;
 use App\Domains\Reporte\Enums\Statistic\PresupuestoReportStatisticType;
 use App\Infrastructure\Reporte\Enums\Queries\Builders\PresupuestoQueryRelationParam;
 use App\Infrastructure\Reporte\Resolvers\Queries\Handlers\PresupuestoQueryRelationResolver;

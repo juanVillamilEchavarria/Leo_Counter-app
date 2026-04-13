@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Infrastructure\Reporte\Strategies\Relations\Movimientos;
+namespace App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Movimientos;
 
 use App\Infrastructure\Reporte\Enums\Queries\Builders\MovimientoQueryRelationParam;
 use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
-use App\Infrastructure\Reporte\Strategies\Relations\Abstracts\QueryIdRelationStrategy;
+use App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Abstracts\QueryIdRelationStrategy;
 use App\Shared\DTOs\Querys\IdsDTO;
 
 final class MovimientoCategoriaQueryIdRelationStrategy extends QueryIdRelationStrategy

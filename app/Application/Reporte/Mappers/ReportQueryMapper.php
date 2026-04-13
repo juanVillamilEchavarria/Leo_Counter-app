@@ -4,11 +4,11 @@ namespace App\Application\Reporte\Mappers;
 
 use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
 use App\Application\Reporte\DTOs\ReportGenerationDTO;
-use App\Domains\Reporte\Specifications\DefaultDateRangeSpecification;
+use App\Application\Reporte\Specifications\DefaultDateRangeSpecification;
 use App\Domains\Reporte\ValueObjects\DateRange;
-use App\Domains\Reporte\Strategies\Resolvers\Granularity\ReportGranularityResolver;
+use App\Application\Reporte\Resolvers\Granularity\ReportGranularityResolver;
 use App\Shared\DTOs\Querys\IdsDTO;
-use App\Domains\Reporte\Specifications\IdsSpecification;
+use App\Application\Reporte\Specifications\IdsSpecification;
 use DateTimeImmutable;
 
 /**

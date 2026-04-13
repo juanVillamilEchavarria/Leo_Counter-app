@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Reporte\Queries\Handlers\Movimientos\Eloquent;
 
 use App\Infrastructure\Reporte\Queries\Handlers\Movimientos\Eloquent\Abstracts\EloquentMovimientoTableQueryHandler;
-use App\Infrastructure\Reporte\Contracts\Queries\ReporteQueryHandlerContract;
+use App\Application\Reporte\Contracts\Queries\ReporteQueryHandlerContract;
 use App\Infrastructure\Reporte\Builders\Eloquent\EloquentKPIBuilder;
 use App\Domains\Reporte\Enums\Statistic\MovimientoReportStatisticType;
 use App\Infrastructure\Reporte\Enums\Queries\Builders\MovimientoQueryRelationParam;

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Infrastructure\Reporte\Strategies\Relations\Presupuestos;
+namespace App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Presupuestos;
 
 use App\Infrastructure\Reporte\Enums\Queries\Builders\PresupuestoQueryRelationParam;
 use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
-use App\Infrastructure\Reporte\Strategies\Relations\Abstracts\QueryJoinRelationStrategy;
+use App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Abstracts\QueryJoinRelationStrategy;
 use App\Infrastructure\Reporte\Contracts\Enums\QueryRelationParamContract;
 use App\Shared\DTOs\Querys\WhereFilterQueryDTO;
 use App\Shared\Enums\ComparativeOperators;

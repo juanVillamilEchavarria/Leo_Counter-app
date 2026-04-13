@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Reporte\Providers;
+namespace App\Providers\Reporte\Application;
 
 use Illuminate\Support\ServiceProvider;
 use App\Application\Reporte\Resolvers\AssemblerResolver;

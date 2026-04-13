@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Reporte\Strategies\Relations\Abstracts;
+namespace App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Abstracts;
 
 use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
 use App\Infrastructure\Reporte\Contracts\Queries\ReporteQueryRelationStrategyContract;

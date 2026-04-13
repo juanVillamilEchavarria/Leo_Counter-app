@@ -7,7 +7,7 @@ use App\Domains\Reporte\Enums\Domains\DomainReportQueryType;
 use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
 use App\Domains\Reporte\ValueObjects\ReporteQueryResult;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
-use App\Infrastructure\Reporte\Contracts\Queries\ReporteQueryHandlerContract;
+use App\Application\Reporte\Contracts\Queries\ReporteQueryHandlerContract;
 
 final class PresupuestoReportQueryOrchestrator implements DomainReportQueryOrchestrator
 {

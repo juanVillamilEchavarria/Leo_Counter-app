@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Reporte\Specifications;
+namespace App\Application\Reporte\Specifications;
 class IdsSpecification{
     public function isSatisfiedBy(iterable $ids){
         return !empty($ids);

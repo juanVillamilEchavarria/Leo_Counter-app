@@ -4,11 +4,11 @@ namespace App\Providers\Reporte;
 
 use Illuminate\Support\ServiceProvider;
 use App\Infrastructure\Reporte\Resolvers\Queries\Handlers\MovimientoQueryRelationResolver;
-use App\Infrastructure\Reporte\Strategies\Relations\Movimientos\MovimientoCuentaQueryIdRelationStrategy;
-use App\Infrastructure\Reporte\Strategies\Relations\Movimientos\MovimientoCategoriaQueryIdRelationStrategy;
-use App\Infrastructure\Reporte\Strategies\Relations\Movimientos\MovimientoOnlyFixedCategoriesQueryJoinRelationStrategy;
-use App\Infrastructure\Reporte\Strategies\Relations\Movimientos\MovimientoTipoMovimientoQueryJoinRelationStrategy;
-use App\Infrastructure\Reporte\Strategies\Relations\Movimientos\MovimientoCategoriaQueryJoinRelationStrategy;
+use App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Movimientos\MovimientoCuentaQueryIdRelationStrategy;
+use App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Movimientos\MovimientoCategoriaQueryIdRelationStrategy;
+use App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Movimientos\MovimientoOnlyFixedCategoriesQueryJoinRelationStrategy;
+use App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Movimientos\MovimientoTipoMovimientoQueryJoinRelationStrategy;
+use App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Movimientos\MovimientoCategoriaQueryJoinRelationStrategy;
 
 final class MovimientoQueryRelationServiceProvider extends ServiceProvider
 {

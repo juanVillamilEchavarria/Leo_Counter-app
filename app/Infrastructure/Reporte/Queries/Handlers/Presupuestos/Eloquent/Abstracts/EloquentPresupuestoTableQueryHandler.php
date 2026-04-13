@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Reporte\Queries\Handlers\Presupuestos\Eloquent\Abstracts;
 
-use App\Infrastructure\Reporte\Contracts\Queries\ReporteQueryHandlerContract;
+use App\Application\Reporte\Contracts\Queries\ReporteQueryHandlerContract;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
 use App\Shared\QueryBuilders\ConditionalAggregateBuilder;

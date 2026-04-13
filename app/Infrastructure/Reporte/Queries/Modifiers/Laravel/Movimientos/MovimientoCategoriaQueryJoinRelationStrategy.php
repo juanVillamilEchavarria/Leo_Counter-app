@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Infrastructure\Reporte\Strategies\Relations\Movimientos;
+namespace App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Movimientos;
 
 use App\Infrastructure\Reporte\Enums\Queries\Builders\MovimientoQueryRelationParam;
 use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
-use App\Infrastructure\Reporte\Strategies\Relations\Abstracts\QueryJoinRelationStrategy;
+use App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Abstracts\QueryJoinRelationStrategy;
 use App\Infrastructure\Reporte\Contracts\Enums\QueryRelationParamContract;
-use App\Shared\DTOs\Querys\WhereFilterQueryDTO;
 use App\Shared\Enums\ComparativeOperators;
 
-final class MovimientoOnlyFixedCategoriesQueryJoinRelationStrategy extends QueryJoinRelationStrategy
+final class MovimientoCategoriaQueryJoinRelationStrategy extends QueryJoinRelationStrategy
 {
     public function __construct()
     {
@@ -22,19 +21,11 @@ final class MovimientoOnlyFixedCategoriesQueryJoinRelationStrategy extends Query
 
     protected function dtoProperty(ReporteQueryDTO $reporteQueryDTO): mixed
     {
-        return $reporteQueryDTO->only_categorias_fijas;
+        return null;
     }
 
     public function supports(ReporteQueryDTO $reporteQueryDTO, QueryRelationParamContract $param): bool
     {
-        return $this->dtoProperty($reporteQueryDTO) === true
-            && $param->value === MovimientoQueryRelationParam::ONLY_FIXED_JOIN->value;
-    }
-
-    protected function wheres(): ?array
-    {
-        return [
-            new WhereFilterQueryDTO('categorias.es_fijo', ComparativeOperators::EQUALS, true),
-        ];
+        return $param->value === MovimientoQueryRelationParam::CATEGORIAS_JOIN->value;
     }
 }

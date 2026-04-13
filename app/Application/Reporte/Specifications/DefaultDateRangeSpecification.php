@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Reporte\Specifications;
+namespace App\Application\Reporte\Specifications;
 
 class DefaultDateRangeSpecification{
     public function isSatisfiedBy(?string $startDate , ?string $endDate): bool{

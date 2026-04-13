@@ -4,8 +4,8 @@ namespace App\Providers\Reporte;
 
 use Illuminate\Support\ServiceProvider;
 use App\Infrastructure\Reporte\Resolvers\Queries\Handlers\PresupuestoQueryRelationResolver;
-use App\Infrastructure\Reporte\Strategies\Relations\Presupuestos\PresupuestoCategoriaQueryIdRelationStrategy;
-use App\Infrastructure\Reporte\Strategies\Relations\Presupuestos\PresupuestoOnlyFixedCategoriesQueryRelationStrategy;
+use App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Presupuestos\PresupuestoCategoriaQueryIdRelationStrategy;
+use App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Presupuestos\PresupuestoOnlyFixedCategoriesQueryRelationStrategy;
 
 final class PresupuestoQueryRelationServiceProvider extends ServiceProvider
 {

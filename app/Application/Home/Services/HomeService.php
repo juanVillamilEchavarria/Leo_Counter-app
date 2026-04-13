@@ -5,7 +5,7 @@ use App\Application\Reporte\DTOs\ReporteQueryDTO;
 use App\Domains\Home\DTO\HomeReportDTO;
 use App\Http\Resources\Home\HomeResource;
 use App\Domains\Home\Services\HomeQueryService;
-use App\Domains\Reporte\Strategies\Resolvers\Granularity\ReportGranularityResolver;
+use App\Application\Reporte\Resolvers\Granularity\ReportGranularityResolver;
 use App\Domains\Reporte\ValueObjects\DateRange;
 
 class HomeService{

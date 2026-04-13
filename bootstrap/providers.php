@@ -18,7 +18,7 @@ return [
     App\Providers\TipoCuenta\TipoCuentaRepositoryProvider::class,
     App\Providers\TipoMovimiento\TipoMovimientoRepositoryProvider::class,
     App\Providers\TipoPresupuesto\TipoPresupuestoRepositoryProvider::class,
-    App\Application\Reporte\Providers\AssemblerServiceProvider::class,
+    App\Providers\Reporte\Application\AssemblerServiceProvider::class,
     App\Providers\AppServiceProvider::class,
     App\Providers\Application\Reporte\ReporteHandlerServiceProvider::class,
     App\Providers\Reporte\PresupuestoQueryRelationServiceProvider::class,
@@ -27,3 +27,4 @@ return [
     App\Providers\Reporte\MovimientoQueryHandlerServiceProvider::class,
     App\Providers\Shared\Infrastructure\Collections\SharedCollectionServiceProvider::class,
     App\Providers\Reporte\Infrastructure\Collections\ReporteCollectionServiceProvider::class,
+];

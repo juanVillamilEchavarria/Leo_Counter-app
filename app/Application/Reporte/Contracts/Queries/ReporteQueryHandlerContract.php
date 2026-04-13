@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Reporte\Contracts\Queries;
+namespace App\Application\Reporte\Contracts\Queries;
 
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;

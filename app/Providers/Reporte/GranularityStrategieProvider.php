@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Infrastructure\Reporte\Queries\Aggregators\Granularity\DailyReportGranularityStrategy;
 use App\Infrastructure\Reporte\Queries\Aggregators\Granularity\MonthlyReportGranularityStrategy;
 use App\Infrastructure\Reporte\Queries\Aggregators\Granularity\YearlyReportGranularityStrategy;
-use App\Domains\Reporte\Strategies\Resolvers\Granularity\ReportGranularityResolver;
+use App\Application\Reporte\Resolvers\Granularity\ReportGranularityResolver;
 
 final class GranularityStrategieProvider extends ServiceProvider
 {

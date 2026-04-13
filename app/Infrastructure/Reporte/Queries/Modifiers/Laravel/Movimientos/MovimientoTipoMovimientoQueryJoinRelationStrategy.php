@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Infrastructure\Reporte\Strategies\Relations\Movimientos;
+namespace App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Movimientos;
 
 use App\Infrastructure\Reporte\Enums\Queries\Builders\MovimientoQueryRelationParam;
 use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
-use App\Infrastructure\Reporte\Strategies\Relations\Abstracts\QueryJoinRelationStrategy;
+use App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Abstracts\QueryJoinRelationStrategy;
 use App\Infrastructure\Reporte\Contracts\Enums\QueryRelationParamContract;
 use App\Shared\Enums\ComparativeOperators;
 
-final class MovimientoCategoriaQueryJoinRelationStrategy extends QueryJoinRelationStrategy
+final class MovimientoTipoMovimientoQueryJoinRelationStrategy extends QueryJoinRelationStrategy
 {
     public function __construct()
     {
         $this->table = MovimientoQueryRelationParam::TABLE->value;
-        $this->relationTable = 'categorias';
-        $this->relationColumn = 'movimientos.categoria_id';
-        $this->comparativeColumn = 'categorias.id';
+        $this->relationTable = 'tipo_movimientos';
+        $this->relationColumn = 'movimientos.tipo_movimiento_id';
+        $this->comparativeColumn = 'tipo_movimientos.id';
         $this->joinOperator = ComparativeOperators::EQUALS;
     }
 
@@ -26,6 +26,6 @@ final class MovimientoCategoriaQueryJoinRelationStrategy extends QueryJoinRelati
 
     public function supports(ReporteQueryDTO $reporteQueryDTO, QueryRelationParamContract $param): bool
     {
-        return $param->value === MovimientoQueryRelationParam::CATEGORIAS_JOIN->value;
+        return $param->value === MovimientoQueryRelationParam::TIPO_MOVIMIENTOS_JOIN->value;
     }
 }
