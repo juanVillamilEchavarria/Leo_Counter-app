@@ -9,8 +9,9 @@ use App\Domains\Cuenta\Contracts\Repositories\CuentaReadRepositoryContract;
 use App\Shared\Domain\Collections\DomainCollection;
 use App\Domains\Reporte\ValueObjects\Form\IngresoAndGastoCategoriaVO;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
-
+use App\Shared\Domain\Contracts\CollectionContract;
 /**
+ * por ahora pendiente de refactor, para crear el handler de getFOrmOptions (use case) cuando se refactorice de usar read repositories a uses cases por application
  * Servicio de apoyo para la obtención de opciones de filtros para el reporte.
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  * @package App\Application\Reporte\Support
@@ -31,8 +32,8 @@ final class ReporteFilterOptionsService
     public function getValidCategories(): IngresoAndGastoCategoriaVO
     {
         return new IngresoAndGastoCategoriaVO(
-            ingresos: new DomainCollection($this->categoriaRepository->getForOptionsByTipoMovimiento(TipoMovimientoEnum::INGRESO)),
-            gastos:   new DomainCollection($this->categoriaRepository->getForOptionsByTipoMovimiento(TipoMovimientoEnum::GASTO))
+            ingresos: CollectionCOntract::make($this->categoriaRepository->getForOptionsByTipoMovimiento(TipoMovimientoEnum::INGRESO)),
+            gastos:   CollectionContract::make($this->categoriaRepository->getForOptionsByTipoMovimiento(TipoMovimientoEnum::GASTO))
         );
     }
 

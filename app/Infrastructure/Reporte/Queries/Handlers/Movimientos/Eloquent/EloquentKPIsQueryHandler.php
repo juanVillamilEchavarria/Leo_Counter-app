@@ -9,9 +9,9 @@ use App\Domains\Reporte\Enums\Statistic\MovimientoReportStatisticType;
 use App\Infrastructure\Reporte\Enums\Queries\Builders\MovimientoQueryRelationParam;
 use App\Infrastructure\Reporte\Resolvers\Queries\Handlers\MovimientoQueryRelationResolver;
 use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
-use App\Domains\Reporte\Collections\KPICollection;
+use App\Infrastructure\Reporte\Collections\Laravel\Movimientos\LaravelKPICollection;
+use App\Domains\Reporte\Contracts\Collections\Movimientos\KPICollectionContract;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
-use App\Shared\Infrastructure\QueryBuilders\DomainQueryBuilder;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 
 /**
@@ -39,11 +39,11 @@ final class EloquentKPIsQueryHandler extends EloquentMovimientoTableQueryHandler
         return $type instanceof MovimientoReportStatisticType && $type === MovimientoReportStatisticType::KPIS;
     }
 
-    public function handle(ReporteQueryDTO $dto): KPICollection
+    public function handle(ReporteQueryDTO $dto): LaravelKPICollection
     {
         $date = $dto->granularityStrategy->groupBy();
 
-        $query = new DomainQueryBuilder($this->movimientos())
+        $query = $this->movimientos()
             ->selectRaw(
                 "{$this->getConditionalSumQuery()} AS total_ingresos,
                  {$this->getConditionalSumQuery()} AS total_gastos,

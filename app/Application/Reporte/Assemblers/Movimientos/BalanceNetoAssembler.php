@@ -2,8 +2,11 @@
 
 namespace App\Application\Reporte\Assemblers\Movimientos;
 
+use App\Application\Reporte\Contracts\AssemblerContract;
+use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 use App\Domains\Reporte\Enums\Statistic\MovimientoReportStatisticType;
 use App\Domains\Reporte\ValueObjects\ReporteQueryResult;
+use App\Application\Reporte\Assemblers\Abstracts\ReportAssembler;
 
 /**
  * Ensamblador encargado de transformar ReporteQueryResult al formato de balance para la capa de presentación.
@@ -12,14 +15,15 @@ use App\Domains\Reporte\ValueObjects\ReporteQueryResult;
  * @since 1.0.0
  * @version 1.0.0
  */
-final class BalanceNetoAssembler
+final class BalanceNetoAssembler extends ReportAssembler implements AssemblerContract
 {
-    public function assemble(ReporteQueryResult $results): mixed 
+    protected ReportStatisticTypeContract $statisticType = MovimientoReportStatisticType::BALANCE_NETO;
+    protected function instanceof(ReportStatisticTypeContract $type): bool
     {
-        if(!$results->has(MovimientoReportStatisticType::BALANCE_NETO)){
-            return null;
-        }
+        return $type instanceof MovimientoReportStatisticType;
+    }
+     protected function buildAssemble(ReporteQueryResult $results): mixed
+    {
         return $results->get(MovimientoReportStatisticType::BALANCE_NETO);
     }
-
 }

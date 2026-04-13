@@ -7,7 +7,6 @@ use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
 use App\Shared\Domain\Collections\DomainCollection;
 use App\Shared\QueryBuilders\ConditionalAggregateBuilder;
-use App\Shared\Infrastructure\QueryBuilders\DomainQueryBuilder;
 use DateTimeImmutable;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
@@ -24,7 +23,7 @@ use Illuminate\Support\Facades\DB;
 abstract class EloquentMovimientoTableQueryHandler implements ReporteQueryHandlerContract
 {
     abstract public function supports(ReportStatisticTypeContract $type): bool;
-    abstract public function handle(ReporteQueryDTO $dto): DomainCollection;
+    abstract public function handle(ReporteQueryDTO $dto): mixed;
 
     /**
      * Consulta base de movimientos
@@ -40,9 +39,9 @@ abstract class EloquentMovimientoTableQueryHandler implements ReporteQueryHandle
     protected function baseQuery(
         DateTimeImmutable $startDate,
         DateTimeImmutable $endDate,
-        DomainQueryBuilder $query,
+        Builder $query,
         string $column = 'movimientos.fecha'
-    ): DomainQueryBuilder {
+    ): Builder {
         return $query->whereBetween($column, [$startDate, $endDate]);
     }
 

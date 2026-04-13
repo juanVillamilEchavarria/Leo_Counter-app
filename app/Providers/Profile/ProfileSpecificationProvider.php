@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers$domain\Specifications;
+namespace App\Providers\Profile;
 
 use Illuminate\Support\ServiceProvider;
 use App\Domains\Profile\Factories\ProfileDTOFactory;

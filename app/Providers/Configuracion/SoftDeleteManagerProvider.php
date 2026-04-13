@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers$domain\Strategies;
+namespace App\Providers\Configuracion;
 use App\Infrastructure\Persistence\Resolvers\SoftDeleteManagerResolver;
 use App\Infrastructure\Persistence\Strategies\SoftDeleteManagers\Categoria\SoftDeleteCategoriaManager;
 use App\Infrastructure\Persistence\Strategies\SoftDeleteManagers\Cuenta\SoftDeleteCuentaManager;

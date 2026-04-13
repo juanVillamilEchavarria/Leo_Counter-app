@@ -2,13 +2,13 @@
 
 namespace App\Infrastructure\Reporte\Builders\Eloquent;
 
-use App\Domains\Reporte\Collections\KPICollection;
+use App\Infrastructure\Reporte\Collections\Laravel\Movimientos\LaravelKPICollection;
 use App\Domains\Reporte\ValueObjects\KPI\KPIVO;
 use Illuminate\Support\Collection as LaravelCollection;
 
 final class EloquentKPIBuilder
 {
-    public static function buildCollection(LaravelCollection $rows): KPICollection
+    public static function buildCollection(LaravelCollection $rows): LaravelKPICollection
     {
         $items = $rows->map(static function ($row) {
             return new KPIVO(
@@ -18,6 +18,6 @@ final class EloquentKPIBuilder
             );
         });
 
-        return KPICollection::make($items);
+        return LaravelKPICollection::make($items);
     }
 }

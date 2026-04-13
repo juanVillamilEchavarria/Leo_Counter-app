@@ -8,12 +8,16 @@ use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
  * Value Object inmutable que encapsula los resultados de una consulta de reportes.
  * Almacena tanto los resultados principales como, opcionalmente, los resultados
  * del periodo anterior para métricas comparativas.
+ * 
+ * Responsabilidades:
+ * - Almacena los resultados de una consulta de reportes
+ * - Permite acceder a los resultados de una consulta de reportes
  *
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  * @package App\Domains\Reporte\ValueObjects
  * @since 1.0.0
  */
-final class ReporteQueryResult
+final  class ReporteQueryResult
 {
     /** @var array<string, mixed> */
     private array $results = [];

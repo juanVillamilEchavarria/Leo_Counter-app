@@ -7,7 +7,8 @@ use App\Infrastructure\Reporte\Contracts\Queries\ReporteQueryRelationStrategyCon
 use App\Infrastructure\Reporte\Contracts\Enums\QueryRelationParamContract;
 use App\Shared\DTOs\Querys\WhereFilterQueryDTO;
 use App\Shared\Enums\ComparativeOperators;
-use App\Shared\Infrastructure\QueryBuilders\DomainQueryBuilder;
+use App\Shared\Infrastructure\Services\Eloquent\EloquentQueryService;
+use Illuminate\Database\Query\Builder;
 
 /**
  * Estrategia base de infraestructura para aplicar joins y filtros relacionados
@@ -19,6 +20,11 @@ use App\Shared\Infrastructure\QueryBuilders\DomainQueryBuilder;
  */
 abstract class QueryJoinRelationStrategy implements ReporteQueryRelationStrategyContract
 {
+    public function __construct(
+        private EloquentQueryService $queryService
+    )
+    {
+    }
     protected string $table;
     protected string $relationTable;
     protected string $relationColumn;
@@ -32,9 +38,9 @@ abstract class QueryJoinRelationStrategy implements ReporteQueryRelationStrategy
         return $this->dtoProperty($reporteQueryDTO) !== null && $this->table === $param->value;
     }
 
-    public function apply(DomainQueryBuilder $query, ReporteQueryDTO $reporteQueryDTO): DomainQueryBuilder
+    public function apply(Builder $query, ReporteQueryDTO $reporteQueryDTO): Builder
     {
-        if (!$query->hasJoin($this->relationTable)) {
+        if (!$this->queryService->hasJoin($query,$this->relationTable)) {
             $query = $query->join(
                 $this->relationTable,
                 $this->relationColumn,

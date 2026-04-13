@@ -2,16 +2,17 @@
 
 namespace App\Infrastructure\Reporte\Builders\Eloquent;
 
-use App\Domains\Reporte\Collections\FinancialPeriodCollection;
-use App\Domains\Reporte\ValueObjects\Financial\FinancialPeriodVO;
+use App\Infrastructure\Reporte\Collections\Laravel\Movimientos\LaravelIncomeExpenseCollection;
+use App\Domains\Reporte\Contracts\Collections\Movimientos\IncomeExpenseCollectionContract;
+use App\Domains\Reporte\ValueObjects\Financial\IncomeExpensePeriodVO;
 use Illuminate\Support\Collection as LaravelCollection;
 
 final class EloquentFinancialPeriodBuilder
 {
-    public static function buildCollection(LaravelCollection $rows): FinancialPeriodCollection
+    public static function buildCollection(LaravelCollection $rows): LaravelIncomeExpenseCollection
     {
         $items = $rows->map(static function ($row) {
-            return new FinancialPeriodVO(
+            return new IncomeExpensePeriodVO(
                 (string) $row->fecha,
                 (float) $row->ingresos,
                 (float) $row->gastos,
@@ -20,6 +21,6 @@ final class EloquentFinancialPeriodBuilder
             );
         });
 
-        return FinancialPeriodCollection::make($items);
+        return LaravelIncomeExpenseCollection::make($items);
     }
 }

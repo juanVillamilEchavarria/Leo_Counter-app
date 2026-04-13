@@ -4,7 +4,7 @@ namespace App\Infrastructure\Reporte\Resolvers\Queries\Handlers;
 
 use App\Infrastructure\Reporte\Contracts\Enums\QueryRelationParamContract;
 use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
-use App\Shared\Infrastructure\QueryBuilders\DomainQueryBuilder;
+use Illuminate\Database\Query\Builder;
 
 /**
  * Resolver de las relaciones de consultas de reportes acerca de presupuesto
@@ -21,10 +21,10 @@ final class PresupuestoQueryRelationResolver
     ) {}
 
     public function resolve(
-        DomainQueryBuilder $query,
+        Builder $query,
         ReporteQueryDTO $dto,
         QueryRelationParamContract $param
-    ): DomainQueryBuilder {
+    ): Builder {
         foreach ($this->strategies as $strategy) {
             if ($strategy->supports($dto, $param)) {
                 $query = $strategy->apply($query, $dto);

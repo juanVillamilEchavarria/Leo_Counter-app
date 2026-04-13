@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers$domain\Repositories;
+namespace App\Providers\FrecuenciaMovimiento;
 
 use Illuminate\Support\ServiceProvider;
 use App\Domains\FrecuenciaMovimiento\Contracts\Repositories\FrecuenciaMovimientoReadRepositoryContract;

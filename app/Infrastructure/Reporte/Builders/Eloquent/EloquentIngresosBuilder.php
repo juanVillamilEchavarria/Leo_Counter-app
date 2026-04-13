@@ -2,21 +2,22 @@
 
 namespace App\Infrastructure\Reporte\Builders\Eloquent;
 
-use App\Domains\Reporte\Collections\IngresosCollection;
-use App\Domains\Reporte\ValueObjects\Ingresos\IngresoVO;
+use App\Infrastructure\Reporte\Collections\Laravel\Movimientos\LaravelMetricPointCollection;
+use App\Domains\Reporte\Contracts\Collections\Movimientos\MetricPointCollectionContract;
+use App\Domains\Reporte\ValueObjects\Common\MetricPointVO;
 use Illuminate\Support\Collection as LaravelCollection;
 
 final class EloquentIngresosBuilder
 {
-    public static function buildCollection(LaravelCollection $rows): IngresosCollection
+    public static function buildCollection(LaravelCollection $rows): LaravelMetricPointCollection
     {
         $items = $rows->map(static function ($row) {
-            return new IngresoVO(
+            return new MetricPointVO(
                 (string) $row->fecha,
                 (float) $row->monto
             );
         });
 
-        return IngresosCollection::make($items);
+        return LaravelMetricPointCollection::make($items);
     }
 }

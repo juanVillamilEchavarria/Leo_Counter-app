@@ -9,8 +9,9 @@ use App\Domains\Reporte\Enums\Statistic\MovimientoReportStatisticType;
 use App\Infrastructure\Reporte\Enums\Queries\Builders\MovimientoQueryRelationParam;
 use App\Infrastructure\Reporte\Resolvers\Queries\Handlers\MovimientoQueryRelationResolver;
 use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
+use App\Infrastructure\Reporte\Collections\Laravel\Movimientos\LaravelCategoryDistributionCollection;
 use App\Domains\Reporte\Collections\DistributionCategoryCollection;
-use App\Shared\Infrastructure\QueryBuilders\DomainQueryBuilder;
+use App\Domains\Reporte\Contracts\Collections\Movimientos\CategoryDistributionCollectionContract;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 
 /**
@@ -41,9 +42,9 @@ final class EloquentCategoryDistributionQueryHandler extends EloquentMovimientoT
         return $type instanceof MovimientoReportStatisticType && $type === MovimientoReportStatisticType::CATEGORY_DISTRIBUTION;
     }
 
-    public function handle(ReporteQueryDTO $dto): DistributionCategoryCollection
+    public function handle(ReporteQueryDTO $dto): LaravelCategoryDistributionCollection
     {
-        $query = new DomainQueryBuilder($this->movimientos())
+        $query = $this->movimientos()
             ->selectRaw(
                 "categorias.nombre as categoria,
                  tipo_movimientos.id as tipo_movimiento_id,

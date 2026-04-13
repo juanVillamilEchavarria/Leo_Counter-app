@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers$domain\Repositories;
+namespace App\Providers\Propietario;
 
 use Illuminate\Support\ServiceProvider;
 use App\Domains\Propietario\Contracts\Repositories\PropietarioReadRepositoryContract;

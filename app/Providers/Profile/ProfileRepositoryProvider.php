@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers$domain\Repositories;
+namespace App\Providers\Profile;
 
 use Illuminate\Support\ServiceProvider;
 use App\Infrastructure\Profile\Persistence\Repositories\Eloquent\EloquentProfileRepository;

@@ -2,21 +2,22 @@
 
 namespace App\Infrastructure\Reporte\Builders\Eloquent;
 
-use App\Domains\Reporte\Collections\GastosCollection;
-use App\Domains\Reporte\ValueObjects\Gastos\GastoVO;
+use App\Infrastructure\Reporte\Collections\Laravel\Movimientos\LaravelMetricPointCollection;
+use App\Domains\Reporte\Contracts\Collections\Movimientos\MetricPointCollectionContract;
+use App\Domains\Reporte\ValueObjects\Common\MetricPointVO;
 use Illuminate\Support\Collection as LaravelCollection;
 
 final class EloquentGastosBuilder
 {
-    public static function buildCollection(LaravelCollection $rows): GastosCollection
+    public static function buildCollection(LaravelCollection $rows): LaravelMetricPointCollection
     {
         $items = $rows->map(static function ($row) {
-            return new GastoVO(
+            return new MetricPointVO(
                 (string) $row->fecha,
                 (float) $row->monto
             );
         });
 
-        return GastosCollection::make($items);
+        return LaravelMetricPointCollection::make($items);
     }
 }

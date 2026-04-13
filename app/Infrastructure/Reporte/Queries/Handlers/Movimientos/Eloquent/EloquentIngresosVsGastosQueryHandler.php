@@ -9,9 +9,10 @@ use App\Domains\Reporte\Enums\Statistic\MovimientoReportStatisticType;
 use App\Infrastructure\Reporte\Enums\Queries\Builders\MovimientoQueryRelationParam;
 use App\Infrastructure\Reporte\Resolvers\Queries\Handlers\MovimientoQueryRelationResolver;
 use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
-use App\Domains\Reporte\Collections\FinancialPeriodCollection;
+use App\Infrastructure\Reporte\Collections\Laravel\Movimientos\LaravelIncomeExpenseCollection;
+use App\Domains\Reporte\Collections\IncomeExpensePeriodCollection;
+use App\Domains\Reporte\Contracts\Collections\Movimientos\IncomeExpenseCollectionContract;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
-use App\Shared\Infrastructure\QueryBuilders\DomainQueryBuilder;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 
 /**
@@ -41,11 +42,11 @@ final class EloquentIngresosVsGastosQueryHandler extends EloquentMovimientoTable
         return $type instanceof MovimientoReportStatisticType && $type === MovimientoReportStatisticType::INGRESOS_VS_GASTOS;
     }
 
-    public function handle(ReporteQueryDTO $dto): FinancialPeriodCollection
+    public function handle(ReporteQueryDTO $dto): LaravelIncomeExpenseCollection
     {
         $date = $dto->granularityStrategy->groupBy();
 
-        $query = new DomainQueryBuilder($this->movimientos())
+        $query = $this->movimientos()
             ->selectRaw(
                 "{$this->getConditionalSumQuery()} AS ingresos,
                  {$this->getConditionalSumQuery()} AS gastos,

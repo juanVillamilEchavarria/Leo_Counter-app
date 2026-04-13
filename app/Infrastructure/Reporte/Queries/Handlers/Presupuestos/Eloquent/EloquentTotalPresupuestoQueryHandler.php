@@ -8,7 +8,6 @@ use App\Domains\Reporte\Enums\Statistic\PresupuestoReportStatisticType;
 use App\Infrastructure\Reporte\Enums\Queries\Builders\PresupuestoQueryRelationParam;
 use App\Infrastructure\Reporte\Resolvers\Queries\Handlers\PresupuestoQueryRelationResolver;
 use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
-use App\Shared\Infrastructure\QueryBuilders\DomainQueryBuilder;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 
 final class EloquentTotalPresupuestoQueryHandler extends EloquentPresupuestoTableQueryHandler implements ReporteQueryHandlerContract
@@ -24,7 +23,7 @@ final class EloquentTotalPresupuestoQueryHandler extends EloquentPresupuestoTabl
 
     public function handle(ReporteQueryDTO $dto): float
     {
-        $query = new DomainQueryBuilder($this->presupuestos());
+        $query = $this->presupuestos();
         $query = $this->baseQuery($dto->dateRange->startDate, $dto->dateRange->endDate, $query);
         $query = $this->relationResolver->resolve($query, $dto, PresupuestoQueryRelationParam::TABLE);
 

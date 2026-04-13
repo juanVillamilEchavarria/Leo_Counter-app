@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers$domain\Strategies;
+namespace App\Providers\Profile;
 
 use Illuminate\Support\ServiceProvider;
 use App\Domains\Profile\Strategies\Resolvers\UpdateProfileSectionValidateResolver;

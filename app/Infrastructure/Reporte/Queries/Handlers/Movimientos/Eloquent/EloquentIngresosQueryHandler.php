@@ -9,9 +9,9 @@ use App\Domains\Reporte\Enums\Statistic\MovimientoReportStatisticType;
 use App\Infrastructure\Reporte\Enums\Queries\Builders\MovimientoQueryRelationParam;
 use App\Infrastructure\Reporte\Resolvers\Queries\Handlers\MovimientoQueryRelationResolver;
 use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
-use App\Domains\Reporte\Collections\IngresosCollection;
+use App\Infrastructure\Reporte\Collections\Laravel\Movimientos\LaravelMetricPointCollection;
+use App\Domains\Reporte\Contracts\Collections\Movimientos\MetricPointCollectionContract;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
-use App\Shared\Infrastructure\QueryBuilders\DomainQueryBuilder;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 
 final class EloquentIngresosQueryHandler extends EloquentMovimientoTableQueryHandler implements ReporteQueryHandlerContract
@@ -25,9 +25,9 @@ final class EloquentIngresosQueryHandler extends EloquentMovimientoTableQueryHan
         return $type instanceof MovimientoReportStatisticType && $type === MovimientoReportStatisticType::INGRESOS;
     }
 
-    public function handle(ReporteQueryDTO $dto): IngresosCollection
+    public function handle(ReporteQueryDTO $dto): LaravelMetricPointCollection
     {
-        $query = new DomainQueryBuilder($this->movimientos())
+        $query = $this->movimientos()
             ->selectRaw("{$dto->granularityStrategy->groupBy()} as fecha, {$this->getSumQuery('monto')} as monto");
 
         $query = $this->baseQuery($dto->dateRange->startDate, $dto->dateRange->endDate, $query);

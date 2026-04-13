@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers$domain\Repositories;
+namespace App\Providers\MovimientoFijo;
 
 use Illuminate\Support\ServiceProvider;
 use App\Domains\MovimientoFijo\Contracts\Repositories\MovimientoFijoReadRepositoryContract;

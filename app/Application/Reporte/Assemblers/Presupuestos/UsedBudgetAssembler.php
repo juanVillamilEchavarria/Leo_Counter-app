@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Application\Reporte\Assemblers\Presupuestos;
-use App\Domains\Reporte\Enums\Statistic\MovimientoReportStatisticType;
-use App\Domains\Reporte\Enums\Statistic\PresupuestoReportStatisticType;
-use App\Domains\Reporte\ValueObjects\ReporteQueryResult;
+
+use App\Application\Reporte\Contracts\AssemblerContract;
 use App\Application\Reporte\DTOs\Budget\UsedBudgetDTO;
-use App\Domains\Reporte\Services\BudgetService;
+use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
+use App\Domains\Reporte\Enums\Statistic\PresupuestoReportStatisticType;
+use App\Domains\Reporte\ValueObjects\Budget\UsedBudgetVO;
+use App\Domains\Reporte\ValueObjects\ReporteQueryResult;
 use App\Shared\Domain\Services\Financial\PercentageService;
+use App\Application\Reporte\Assemblers\Abstracts\ReportAssembler;
 
 /**
  * Ensamblador encargado de transformar ReporteQueryResult a UsedBudgetDTO para la capa de presentación.
@@ -15,29 +18,31 @@ use App\Shared\Domain\Services\Financial\PercentageService;
  * @since 1.0.0
  * @version 1.0.0
  */
-final class UsedBudgetAssembler
+final class UsedBudgetAssembler extends ReportAssembler implements AssemblerContract
 {
+    protected ReportStatisticTypeContract $statisticType = PresupuestoReportStatisticType::USED_BUDGET; 
     public function __construct(
-        private BudgetService $budgetService,
-        private PercentageService $percentageService
-    )
-    {
-    }
-    public function assemble(ReporteQueryResult $results): UsedBudgetDTO | null
-    {
-        if(!$results->has(MovimientoReportStatisticType::GASTOS) || !$results->has(PresupuestoReportStatisticType::TOTAL_PRESUPUESTO)){
-            return null;
-        }
-       $total_presupuesto = $results->get(PresupuestoReportStatisticType::TOTAL_PRESUPUESTO);
-       $gastos = $results->get(MovimientoReportStatisticType::GASTOS);
-       $disponible = $this->budgetService->calculateAvailable($gastos, $total_presupuesto);
-       $porcentaje = $this->percentageService->calculatePercentage($gastos, $total_presupuesto);
-       return new UsedBudgetDTO(
-           gastado: $gastos,
-           presupuestado: $total_presupuesto,
-           disponible: $disponible,
-           porcentaje_usado: $porcentaje);
+        private readonly PercentageService $percentageService
+    ) {}
 
+    protected function instanceof(ReportStatisticTypeContract $type): bool
+    {
+        return $type instanceof PresupuestoReportStatisticType ;
     }
 
+    protected function buildAssemble(ReporteQueryResult $results): ?UsedBudgetDTO
+    {
+        /** @var UsedBudgetVO $vo */
+        $vo = $results->get(PresupuestoReportStatisticType::USED_BUDGET);
+
+        return new UsedBudgetDTO(
+            gastado: $vo->total_gastos,
+            presupuestado: $vo->total_presupuesto,
+            disponible: $vo->disponible,
+            porcentaje_usado: $this->percentageService->calculatePercentage(
+                $vo->total_gastos,
+                $vo->total_presupuesto
+            )
+        );
+    }
 }

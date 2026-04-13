@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers$domain\Repositories;
+namespace App\Providers\Categoria;
 
 use Illuminate\Support\ServiceProvider;
 use App\Domains\Categoria\Contracts\Repositories\CategoriaReadRepositoryContract;

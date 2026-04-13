@@ -9,9 +9,9 @@ use App\Domains\Reporte\Enums\Statistic\MovimientoReportStatisticType;
 use App\Infrastructure\Reporte\Enums\Queries\Builders\MovimientoQueryRelationParam;
 use App\Infrastructure\Reporte\Resolvers\Queries\Handlers\MovimientoQueryRelationResolver;
 use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
-use App\Domains\Reporte\Collections\BalanceNetoCollection;
+use App\Infrastructure\Reporte\Collections\Laravel\Movimientos\LaravelBalanceNetoCollection;
+use App\Domains\Reporte\Contracts\Collections\Movimientos\BalanceNetoCollectionContract;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
-use App\Shared\Infrastructure\QueryBuilders\DomainQueryBuilder;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 
 /**
@@ -41,11 +41,11 @@ final class EloquentBalanceNetoQueryHandler extends EloquentMovimientoTableQuery
         return $type instanceof MovimientoReportStatisticType && $type === MovimientoReportStatisticType::BALANCE_NETO;
     }
 
-    public function handle(ReporteQueryDTO $dto): BalanceNetoCollection
+    public function handle(ReporteQueryDTO $dto): LaravelBalanceNetoCollection
     {
         $date = $dto->granularityStrategy->groupBy();
 
-        $query = new DomainQueryBuilder($this->movimientos())
+        $query = $this->movimientos()
             ->selectRaw(
                 "({$this->getConditionalSumQuery()} - {$this->getConditionalSumQuery()}) AS balance,
                  {$date} as fecha",

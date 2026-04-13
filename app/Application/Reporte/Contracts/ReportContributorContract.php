@@ -7,7 +7,7 @@ use App\Domains\Reporte\ValueObjects\ReporteQueryResult;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 
 /**
- * Contrato que deben implementar los casos de uso que contribuyen datos al reporte financiero.
+ * Contrato que deben implementar los casos de uso de dominios que contribuyen datos al reporte financiero.
  * Define la orquestación de consultas parciales y completas por dominio
  * sin acoplar la aplicación a detalles de infraestructura.
  *

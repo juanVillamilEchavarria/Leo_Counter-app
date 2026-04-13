@@ -6,7 +6,6 @@ use App\Infrastructure\Reporte\Contracts\Queries\ReporteQueryHandlerContract;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
 use App\Shared\QueryBuilders\ConditionalAggregateBuilder;
-use App\Shared\Infrastructure\QueryBuilders\DomainQueryBuilder;
 use DateTimeImmutable;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
@@ -39,9 +38,9 @@ abstract class EloquentPresupuestoTableQueryHandler implements ReporteQueryHandl
     protected function baseQuery(
         DateTimeImmutable $startDate,
         DateTimeImmutable $endDate,
-        DomainQueryBuilder $query,
+        Builder $query,
         string $column = 'presupuestos.periodo'
-    ): DomainQueryBuilder {
+    ): Builder {
         return $query->whereBetween($column, [$startDate, $endDate]);
     }
 
@@ -62,9 +61,13 @@ abstract class EloquentPresupuestoTableQueryHandler implements ReporteQueryHandl
     /**
      * SUM(monto)
      */
-    protected function getSumQuery(string $column = 'monto'): string
+     protected function getSumQuery(string $column = 'monto'): string
     {
-        return "SUM({$column})";
+        return ConditionalAggregateBuilder::make()
+            ->aggregate('SUM')
+            ->column($column)
+            ->useCoalesce(true)
+            ->build();
     }
 
     /**
@@ -72,14 +75,11 @@ abstract class EloquentPresupuestoTableQueryHandler implements ReporteQueryHandl
      */
     protected function getCountQuery(): string
     {
-        return 'COUNT(*)';
+        return ConditionalAggregateBuilder::make()
+            ->aggregate('COUNT')
+            ->column('presupuestos.id')
+            ->useCoalesce(false)
+            ->build();
     }
 
-    /**
-     * COUNT(DISTINCT movimientos.id)
-     */
-    protected function getMovimientosCountQuery(): string
-    {
-        return 'COUNT(DISTINCT movimientos.id)';
-    }
 }

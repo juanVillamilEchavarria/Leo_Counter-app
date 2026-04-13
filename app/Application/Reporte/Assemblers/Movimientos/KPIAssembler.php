@@ -2,12 +2,15 @@
 
 namespace App\Application\Reporte\Assemblers\Movimientos;
 
+use App\Application\Reporte\Contracts\AssemblerContract;
 use App\Application\Reporte\DTOs\KPI\PeriodKPIDTO;
 use App\Application\Reporte\DTOs\KPI\TotalsKPIDTO;
 use App\Application\Reporte\DTOs\KPI\VariationsKPIDTO;
+use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 use App\Domains\Reporte\Enums\Statistic\MovimientoReportStatisticType;
 use App\Domains\Reporte\ValueObjects\ReporteQueryResult;
 use App\Shared\Domain\Services\Financial\PercentageService;
+use App\Application\Reporte\Assemblers\Abstracts\ReportAssembler;
 
 /**
  * Ensamblador encargado de transformar ReporteQueryResult a PeriodKPIDTO para la capa de presentación.
@@ -16,19 +19,22 @@ use App\Shared\Domain\Services\Financial\PercentageService;
  * @since 1.0.0
  * @version 1.0.0
  */
-final class KPIAssembler
+final class KPIAssembler extends ReportAssembler implements AssemblerContract
 {
+    protected ReportStatisticTypeContract $statisticType = MovimientoReportStatisticType::KPIS;
 
     public function __construct(
         private readonly PercentageService $percentageService
     ) {
     }
 
-    public function assemble(ReporteQueryResult $results): PeriodKPIDTO | null
+    protected function instanceof(ReportStatisticTypeContract $type): bool
     {
-        if(!$results->has(MovimientoReportStatisticType::KPIS)){
-            return null;
-        }
+        return $type instanceof MovimientoReportStatisticType ;
+    }
+
+    protected function buildAssemble(ReporteQueryResult $results): PeriodKPIDTO
+    {
         $currentResults = $results->get(MovimientoReportStatisticType::KPIS);
         $previousResults = $results->getPrevious(MovimientoReportStatisticType::KPIS);
         return new PeriodKPIDTO(

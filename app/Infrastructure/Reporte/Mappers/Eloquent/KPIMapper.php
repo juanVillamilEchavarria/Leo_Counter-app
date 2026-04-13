@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Reporte\Mappers\Eloquent;
 
-use App\Domains\Reporte\Collections\KPICollection;
+use App\Infrastructure\Reporte\Collections\Laravel\Movimientos\LaravelKPICollection;
 use App\Domains\Reporte\ValueObjects\KPI\KPIVO;
 use Illuminate\Support\Collection;
 
@@ -18,6 +18,6 @@ final class KPIMapper
             );
         });
 
-        return KPICollection::make($mapped);
+        return LaravelKPICollection::make($mapped);
     }
 }

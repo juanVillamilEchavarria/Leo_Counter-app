@@ -2,16 +2,18 @@
 
 namespace App\Providers\Application\Reporte;
 
-use App\Application\Reporte\Handlers\GenerateFullFinancialReportHandler;
-use App\Application\Reporte\Handlers\GenerateMovimientoReportHandler;
-use App\Application\Reporte\Handlers\GeneratePresupuestoReportHandler;
+use App\Application\Reporte\Contributors\MovimientoReportGenerationContributor;
+use App\Application\Reporte\Contributors\PresupuestoReportGenerationContributor;
+use App\Application\Reporte\Handlers\GenerateReportHandler;
 use App\Application\Reporte\Mappers\ReportQueryMapper;
+
+use App\Application\Reporte\Orchestrators\MovimientoReportQueryOrchestrator;
+use App\Application\Reporte\Orchestrators\PresupuestoReportQueryOrchestrator;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Proveedor de servicios para los handlers del módulo de Reportes.
- * Registra los contribuidores mediante tagged dependencies para que el
- * handler compuesto los reciba automáticamente desde el contenedor.
+ * Proveedor de servicios para el módulo de reportes.
+ * Registra los orchestrators, contribuidores y el handler compuesto.
  *
  * @author Juan Villamil
  * @since 1.0.0
@@ -19,20 +21,34 @@ use Illuminate\Support\ServiceProvider;
 final class ReporteHandlerServiceProvider extends ServiceProvider
 {
     /**
-     * Registra los handlers y contribuidores del módulo de reportes.
+     * Registra los orchestrators y contribuidores del módulo de reportes.
      *
      * @return void
      */
     public function register(): void
     {
         $this->app->tag([
-            GenerateMovimientoReportHandler::class,
-            GeneratePresupuestoReportHandler::class,
+            MovimientoReportGenerationContributor::class,
+            PresupuestoReportGenerationContributor::class,
         ], 'reporte.contributors');
 
         $this->app->bind(
-            GenerateFullFinancialReportHandler::class,
-            static fn($app): GenerateFullFinancialReportHandler => new GenerateFullFinancialReportHandler(
+            MovimientoReportQueryOrchestrator::class,
+            static fn($app): MovimientoReportQueryOrchestrator => new MovimientoReportQueryOrchestrator(
+                handlers: $app->tagged('reporte.movimiento.query.handlers'),
+            )
+        );
+
+        $this->app->bind(
+            PresupuestoReportQueryOrchestrator::class,
+            static fn($app): PresupuestoReportQueryOrchestrator => new PresupuestoReportQueryOrchestrator(
+                handlers: $app->tagged('reporte.presupuesto.query.handlers'),
+            )
+        );
+
+        $this->app->bind(
+            GenerateReportHandler::class,
+            static fn($app): GenerateReportHandler => new GenerateReportHandler(
                 mapper: $app->make(ReportQueryMapper::class),
                 contributors: $app->tagged('reporte.contributors'),
             )

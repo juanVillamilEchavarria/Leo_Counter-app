@@ -3,11 +3,13 @@
 namespace App\Domains\Reporte\ValueObjects\Form;
 
 use App\Shared\Domain\Collections\DomainCollection;
+use App\Shared\Domain\Contracts\CollectionContract;
+
 final class IngresoAndGastoCategoriaVO
 {
     public function __construct(
-        public DomainCollection $ingresos,
-        public DomainCollection $gastos
+        public CollectionContract $ingresos,
+        public CollectionContract $gastos
     ) {
     }
 }

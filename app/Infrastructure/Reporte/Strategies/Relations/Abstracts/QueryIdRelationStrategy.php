@@ -6,7 +6,7 @@ use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
 use App\Infrastructure\Reporte\Contracts\Queries\ReporteQueryRelationStrategyContract;
 use App\Infrastructure\Reporte\Contracts\Enums\QueryRelationParamContract;
 use App\Shared\DTOs\Querys\IdsDTO;
-use App\Shared\Infrastructure\QueryBuilders\DomainQueryBuilder;
+use Illuminate\Database\Query\Builder;
 
 /**
  * Estrategia base de infraestructura para aplicar filtros `whereIn`
@@ -28,7 +28,7 @@ abstract class QueryIdRelationStrategy implements ReporteQueryRelationStrategyCo
         return $this->dtoProperty($reporteQueryDTO) !== null && $this->table === $param->value;
     }
 
-    public function apply(DomainQueryBuilder $query, ReporteQueryDTO $reporteQueryDTO): DomainQueryBuilder
+    public function apply(Builder $query, ReporteQueryDTO $reporteQueryDTO): Builder
     {
         $ids = $this->dtoProperty($reporteQueryDTO);
 

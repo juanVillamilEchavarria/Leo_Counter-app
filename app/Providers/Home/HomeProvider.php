@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers$domain;
+namespace App\Providers\Home;
 use App\Domains\Home\Services\HomeQueryService;
 use App\Domains\Reporte\Contracts\Ports\ReporteRepositoryContract;
 use App\Domains\Reporte\Repositories\Application\Cache\CacheReporteRepository;

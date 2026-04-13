@@ -3,8 +3,8 @@
 namespace App\Providers\Reporte;
 
 use Illuminate\Support\ServiceProvider;
-use App\Infrastructure\Reporte\Resolvers\Queries\Handlers\PresupuestoQueryHandlerResolver;
 use App\Infrastructure\Reporte\Queries\Handlers\Presupuestos\Eloquent\EloquentTotalPresupuestoQueryHandler;
+use App\Infrastructure\Reporte\Queries\Handlers\Presupuestos\Eloquent\EloquentUsedBudgetQueryHandler;
 
 final class PresupuestoQueryHandlerServiceProvider extends ServiceProvider
 {
@@ -12,13 +12,7 @@ final class PresupuestoQueryHandlerServiceProvider extends ServiceProvider
     {
         $this->app->tag([
             EloquentTotalPresupuestoQueryHandler::class,
+            EloquentUsedBudgetQueryHandler::class,
         ], 'reporte.presupuesto.query.handlers');
-
-        $this->app->bind(
-            PresupuestoQueryHandlerResolver::class,
-            fn($app) => new PresupuestoQueryHandlerResolver(
-                $app->tagged('reporte.presupuesto.query.handlers')
-            )
-        );
     }
 }

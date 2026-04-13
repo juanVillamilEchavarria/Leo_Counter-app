@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Api\Reporte;
 
 use App\Application\Reporte\DTOs\ReportGenerationDTO;
-use App\Application\Reporte\Handlers\GenerateFullFinancialReportHandler;
-use App\Application\Reporte\Handlers\GenerateMovimientoReportHandler;
+use App\Application\Reporte\Handlers\GenerateReportHandler;
+use App\Application\Reporte\Contributors\GenerateMovimientoReportHandler;
 use App\Application\Reporte\Mappers\ReportQueryMapper;
 use App\Application\Reporte\Support\ReporteFilterOptionsService;
-use App\Domains\Reporte\Enums\Statistic\MovimientoReportStatisticType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Reporte\GenerateReporteRequest;
-use App\Http\Resources\Reporte\FullReporteResource;
+use App\Http\Resources\Reporte\ReporteResource;
 use App\Http\Resources\Reporte\ReporteFilterOptionsResource;
 use Illuminate\Http\JsonResponse;
 
@@ -25,16 +24,14 @@ use Illuminate\Http\JsonResponse;
 final class ReporteApiController extends Controller
 {
     /**
-     * @param GenerateFullFinancialReportHandler $fullReportHandler Handler del reporte financiero completo.
+     * @param GenerateFullFinancialReportHandler $reportHandler Handler del reporte financiero completo.
      * @param GenerateMovimientoReportHandler $movimientoHandler Handler especializado en movimientos.
      * @param ReporteFilterOptionsService $filterOptionsService Servicio de opciones de filtro.
      * @param ReportQueryMapper $mapper Mapper de DTOs de entrada.
      */
     public function __construct(
-        private readonly GenerateFullFinancialReportHandler $fullReportHandler,
-        private readonly GenerateMovimientoReportHandler $movimientoHandler,
+        private readonly GenerateReportHandler $reportHandler,
         private readonly ReporteFilterOptionsService $filterOptionsService,
-        private readonly ReportQueryMapper $mapper,
     ) {
     }
 
@@ -45,9 +42,9 @@ final class ReporteApiController extends Controller
      */
     public function index(): JsonResponse
     {
-        $result = $this->fullReportHandler->handle(new ReportGenerationDTO());
+        $result = $this->reportHandler->fullReport(new ReportGenerationDTO());
 
-        return FullReporteResource::make($result)->response();
+        return ReporteResource::make($result, app(\App\Application\Reporte\Resolvers\AssemblerResolver::class))->response();
     }
 
     /**
@@ -59,38 +56,33 @@ final class ReporteApiController extends Controller
     public function generate(GenerateReporteRequest $request): JsonResponse
     {
         $dto = ReportGenerationDTO::fromArray($request->validated());
-        $result = $this->fullReportHandler->handle($dto);
+        $result = $this->reportHandler->fullReport($dto);
 
-        return FullReporteResource::make($result)->response();
+        return ReporteResource::make($result, app(\App\Application\Reporte\Resolvers\AssemblerResolver::class))->response();
     }
 
     /**
-     * Retorna únicamente los KPIs del periodo solicitado.
-     *
-     * @param GenerateReporteRequest $request
+     * Aqui podrias implementar un enpoint para generar reportes dinamicos, con estadisticas variadas, colocas los parametros en el request, deberia contener un arreglo de estadisticas solicitadas (que luego se deben mappear/convertir en su respectivo enum) y los datos de filtrado de reporte.
      * @return JsonResponse
      */
-    public function kpis(GenerateReporteRequest $request): JsonResponse
-    {
-        $generationDTO = ReportGenerationDTO::fromArray($request->validated());
-        $queryDTO = $this->mapper->map($generationDTO);
-        $result = $this->movimientoHandler->handle(
-            $queryDTO,
-            [MovimientoReportStatisticType::KPIS]
-        );
+    // public function report(Request $request){
+        // $types = [mappeo de tipos de estadisticas a enums, debe retornar un array de enums]
+        // $dto = ReportGenerationDTO::fromArray($request->validated());
+        // $result= $this->reportHandler->handle($types, $dto);
+        // return  ReporteResource::make($result, app(\App\Application\Reporte\Resolvers\AssemblerResolver::class))->response();
+        // puedes retornar el ReporteResource normal o uno generico
+    // }
 
-        return FullReporteResource::make($result)->response();
-    }
-
-    /**
-     * Retorna las opciones disponibles para los filtros del formulario.
-     *
-     * @return JsonResponse
-     */
-    public function formOptions(): JsonResponse
-    {
-        return ReporteFilterOptionsResource::make(
-            $this->filterOptionsService->getOptions()
-        )->response();
-    }
+    // pendiente de implementarse luego de que se refactorice los dominios relacionados a las opciones de reporte
+    // /**
+    //  * Retorna las opciones disponibles para los filtros del formulario.
+    //  *
+    //  * @return JsonResponse
+    //  */
+    // public function formOptions(): JsonResponse
+    // {
+    //     return ReporteFilterOptionsResource::make(
+    //         $this->filterOptionsService->getOptions()
+    //     )->response();
+    // }
 }

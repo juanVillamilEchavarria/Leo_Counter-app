@@ -18,10 +18,17 @@ enum MovimientoReportStatisticType: string implements ReportStatisticTypeContrac
     case INGRESOS              = 'ingresos';
     case GASTOS                = 'gastos';
 
-    /** Types shown in the full report page */
+    /** Obtiene todos los tipos de estadística disponibles */
     public static function fullReport(): array
     {
-        return [self::KPIS, self::INGRESOS_VS_GASTOS, self::CATEGORY_DISTRIBUTION, self::BALANCE_NETO];
+        return [
+        self::KPIS,
+        self::INGRESOS_VS_GASTOS,
+        self::CATEGORY_DISTRIBUTION, 
+        self::BALANCE_NETO,
+        self::INGRESOS,
+        self::GASTOS
+    ];
     }
 
     /** Types shown in the home dashboard */

@@ -2,16 +2,16 @@
 
 namespace App\Infrastructure\Reporte\Mappers\Eloquent;
 
-use App\Domains\Reporte\Collections\FinancialPeriodCollection;
-use App\Domains\Reporte\ValueObjects\Financial\FinancialPeriodVO;
+use App\Domains\Reporte\Collections\IncomeExpensePeriodCollection;
+use App\Domains\Reporte\ValueObjects\Financial\IncomeExpensePeriodVO;
 use Illuminate\Support\Collection;
 
 final class FinancialPeriodMapper
 {
-    public function map(Collection $rows): FinancialPeriodCollection
+    public function map(Collection $rows): IncomeExpensePeriodCollection
     {
         $mapped = $rows->map(static function ($row) {
-            return new FinancialPeriodVO(
+            return new IncomeExpensePeriodVO(
                 (string) $row->fecha,
                 (float) $row->ingresos,
                 (float) $row->gastos,
@@ -20,6 +20,6 @@ final class FinancialPeriodMapper
             );
         });
 
-        return FinancialPeriodCollection::make($mapped);
+        return IncomeExpensePeriodCollection::make($mapped);
     }
 }

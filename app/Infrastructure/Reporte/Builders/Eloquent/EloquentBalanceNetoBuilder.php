@@ -2,13 +2,14 @@
 
 namespace App\Infrastructure\Reporte\Builders\Eloquent;
 
-use App\Domains\Reporte\Collections\BalanceNetoCollection;
+use App\Infrastructure\Reporte\Collections\Laravel\Movimientos\LaravelBalanceNetoCollection;
+use App\Domains\Reporte\Contracts\Collections\Movimientos\BalanceNetoCollectionContract;
 use App\Domains\Reporte\ValueObjects\BalanceNeto\BalanceNetoVO;
 use Illuminate\Support\Collection as LaravelCollection;
 
 final class EloquentBalanceNetoBuilder
 {
-    public static function buildCollection(LaravelCollection $rows): BalanceNetoCollection
+    public static function buildCollection(LaravelCollection $rows): LaravelBalanceNetoCollection
     {
         $items = $rows->map(static function ($row) {
             return new BalanceNetoVO(
@@ -17,6 +18,6 @@ final class EloquentBalanceNetoBuilder
             );
         });
 
-        return BalanceNetoCollection::make($items);
+        return LaravelBalanceNetoCollection::make($items);
     }
 }

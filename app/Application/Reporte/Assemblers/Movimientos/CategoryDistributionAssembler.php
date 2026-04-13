@@ -2,9 +2,12 @@
 
 namespace App\Application\Reporte\Assemblers\Movimientos;
 
+use App\Application\Reporte\Contracts\AssemblerContract;
 use App\Application\Reporte\DTOs\Category\FullDistributionCategoryDTO;
+use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 use App\Domains\Reporte\Enums\Statistic\MovimientoReportStatisticType;
 use App\Domains\Reporte\ValueObjects\ReporteQueryResult;
+use App\Application\Reporte\Assemblers\Abstracts\ReportAssembler;
 
 /**
  * Ensamblador encargado de transformar ReporteQueryResult a FullDistributionCategoryDTO para la capa de presentación.
@@ -13,18 +16,21 @@ use App\Domains\Reporte\ValueObjects\ReporteQueryResult;
  * @since 1.0.0
  * @version 1.0.0
  */
-final class CategoryDistributionAssembler
+final class CategoryDistributionAssembler extends ReportAssembler implements AssemblerContract
 {
-    public function assemble(ReporteQueryResult $results): FullDistributionCategoryDTO | null
+    protected ReportStatisticTypeContract $statisticType = MovimientoReportStatisticType::CATEGORY_DISTRIBUTION;
+    protected function instanceof(ReportStatisticTypeContract $type): bool
     {
-        if(!$results->has(MovimientoReportStatisticType::CATEGORY_DISTRIBUTION)){
-            return null;
-        }
+        return $type instanceof MovimientoReportStatisticType ;
+         
+    }
+    protected function buildAssemble(ReporteQueryResult $results): FullDistributionCategoryDTO | null
+    {
+        /** @var DistributionCategoryCollection*/
        $categoryCollection = $results->get(MovimientoReportStatisticType::CATEGORY_DISTRIBUTION);
             return new FullDistributionCategoryDTO(
-                $categoryCollection,
+                $categoryCollection->toArray(),
                 $categoryCollection->totalMovimientos()
             );
     }
-
 }
