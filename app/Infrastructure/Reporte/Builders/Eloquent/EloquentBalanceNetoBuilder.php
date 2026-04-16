@@ -3,7 +3,6 @@
 namespace App\Infrastructure\Reporte\Builders\Eloquent;
 
 use App\Infrastructure\Reporte\Collections\Laravel\Movimientos\LaravelBalanceNetoCollection;
-use App\Domains\Reporte\Contracts\Collections\Movimientos\BalanceNetoCollectionContract;
 use App\Domains\Reporte\ValueObjects\BalanceNeto\BalanceNetoVO;
 use Illuminate\Support\Collection as LaravelCollection;
 

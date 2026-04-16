@@ -3,7 +3,7 @@
 namespace App\Application\Reporte\Assemblers\Presupuestos;
 
 use App\Application\Reporte\Contracts\AssemblerContract;
-use App\Application\Reporte\DTOs\Budget\UsedBudgetDTO;
+use App\Application\Reporte\DTOs\Presupuestos\Used\UsedBudgetDTO;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 use App\Domains\Reporte\Enums\Statistic\PresupuestoReportStatisticType;
 use App\Domains\Reporte\ValueObjects\Budget\UsedBudgetVO;
@@ -39,10 +39,7 @@ final class UsedBudgetAssembler extends ReportAssembler implements AssemblerCont
             gastado: $vo->total_gastos,
             presupuestado: $vo->total_presupuesto,
             disponible: $vo->disponible,
-            porcentaje_usado: $this->percentageService->calculatePercentage(
-                $vo->total_gastos,
-                $vo->total_presupuesto
-            )
+            porcentaje_usado: $vo->percentageUsed()
         );
     }
 }

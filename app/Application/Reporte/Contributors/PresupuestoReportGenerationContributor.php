@@ -5,7 +5,7 @@ namespace App\Application\Reporte\Contributors;
 use App\Application\Reporte\Contracts\ReportContributorContract;
 use App\Domains\Reporte\Enums\Statistic\PresupuestoReportStatisticType;
 use App\Application\Reporte\Orchestrators\PresupuestoReportQueryOrchestrator;
-use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
+use App\Domains\Reporte\ValueObjects\ReporteQuery;
 use App\Domains\Reporte\ValueObjects\ReporteQueryResult;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 
@@ -34,11 +34,11 @@ final class PresupuestoReportGenerationContributor implements ReportContributorC
     /**
      * Genera estadísticas de presupuestos para los tipos especificados.
      *
-     * @param ReporteQueryDTO $dto Parámetros de la consulta.
+     * @param ReporteQuery $dto Parámetros de la consulta.
      * @param array<int, ReportStatisticTypeContract> $types Tipos de métricas a calcular.
      * @return ReporteQueryResult
      */
-    public function handle(ReporteQueryDTO $dto, array $types): ReporteQueryResult
+    public function handle(ReporteQuery $dto, array $types): ReporteQueryResult
     {
         return $this->queryOrchestrator->getMultiple($types, $dto);
     }
@@ -46,10 +46,10 @@ final class PresupuestoReportGenerationContributor implements ReportContributorC
     /**
      * Contribuye con el conjunto completo de estadísticas de presupuestos.
      *
-     * @param ReporteQueryDTO $dto Parámetros de la consulta.
+     * @param ReporteQuery $dto Parámetros de la consulta.
      * @return ReporteQueryResult
      */
-    public function contribute(ReporteQueryDTO $dto): ReporteQueryResult
+    public function contribute(ReporteQuery $dto): ReporteQueryResult
     {
         /** @var array<int, ReportStatisticTypeContract> $types */
         $types = array_values(PresupuestoReportStatisticType::cases());

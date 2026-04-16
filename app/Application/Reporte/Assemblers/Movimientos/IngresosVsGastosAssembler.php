@@ -3,8 +3,8 @@
 namespace App\Application\Reporte\Assemblers\Movimientos;
 
 use App\Application\Reporte\Contracts\AssemblerContract;
-use App\Application\Reporte\DTOs\IngresosVsGastos\IngresosVsGastosDTO;
-use App\Application\Reporte\DTOs\Promedio\PromedioDTO;
+use App\Application\Reporte\DTOs\Movimientos\Comparatives\IngresosVsGastosDTO;
+use App\Application\Reporte\DTOs\Movimientos\Averages\PromedioDTO;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 use App\Domains\Reporte\Enums\Statistic\MovimientoReportStatisticType;
 use App\Domains\Reporte\ValueObjects\ReporteQueryResult;

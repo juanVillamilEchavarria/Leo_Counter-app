@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Domains\Home\DTO;
-use App\Application\Reporte\DTOs\KPI\PeriodKPIDTO;
+use App\Application\Reporte\DTOs\Movimientos\KPI\PeriodKPIDTO;
 use Illuminate\Support\Collection;
 use App\Application\Reporte\DTOs\IngresosVsGastos\IngresosVsGastosDTO;
 use App\Shared\Abstracts\DTOs\DTO;

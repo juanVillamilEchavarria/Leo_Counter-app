@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Reporte\Resolvers\Queries\Handlers;
 
 use App\Infrastructure\Reporte\Contracts\Enums\QueryRelationParamContract;
-use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
+use App\Domains\Reporte\ValueObjects\ReporteQuery;
 use Illuminate\Database\Query\Builder;
 
 /**
@@ -22,7 +22,7 @@ final class PresupuestoQueryRelationResolver
 
     public function resolve(
         Builder $query,
-        ReporteQueryDTO $dto,
+        ReporteQuery $dto,
         QueryRelationParamContract $param
     ): Builder {
         foreach ($this->strategies as $strategy) {

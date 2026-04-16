@@ -3,7 +3,7 @@
 namespace App\Application\Reporte\Contracts\Queries;
 
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
-use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
+use App\Domains\Reporte\ValueObjects\ReporteQuery;
 
 /**
  * Contrato que representa un query handler (una generacion de reporte estadistico) por dominio
@@ -26,9 +26,9 @@ interface ReporteQueryHandlerContract
 
     /**
      * Obtiene el reporte estadistico
-     * 
-     * @param ReporteQueryDTO $dto
+     * [Ejecuta la query a nivel de base de datos]
+     * @param ReporteQuery $dto
      * @return mixed
      */
-    public function handle(ReporteQueryDTO $dto): mixed;
+    public function handle(ReporteQuery $dto): mixed;
 }

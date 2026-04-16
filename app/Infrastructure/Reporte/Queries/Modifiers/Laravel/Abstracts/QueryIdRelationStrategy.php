@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Abstracts;
 
-use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
+use App\Domains\Reporte\ValueObjects\ReporteQuery;
 use App\Infrastructure\Reporte\Contracts\Queries\ReporteQueryRelationStrategyContract;
 use App\Infrastructure\Reporte\Contracts\Enums\QueryRelationParamContract;
 use App\Shared\DTOs\Querys\IdsDTO;
@@ -21,14 +21,14 @@ abstract class QueryIdRelationStrategy implements ReporteQueryRelationStrategyCo
     protected string $table;
     protected string $relationColumn;
 
-    abstract protected function dtoProperty(ReporteQueryDTO $reporteQueryDTO): ?IdsDTO;
+    abstract protected function dtoProperty(ReporteQuery $reporteQueryDTO): ?IdsDTO;
 
-    public function supports(ReporteQueryDTO $reporteQueryDTO, QueryRelationParamContract $param): bool
+    public function supports(ReporteQuery $reporteQueryDTO, QueryRelationParamContract $param): bool
     {
         return $this->dtoProperty($reporteQueryDTO) !== null && $this->table === $param->value;
     }
 
-    public function apply(Builder $query, ReporteQueryDTO $reporteQueryDTO): Builder
+    public function apply(Builder $query, ReporteQuery $reporteQueryDTO): Builder
     {
         $ids = $this->dtoProperty($reporteQueryDTO);
 

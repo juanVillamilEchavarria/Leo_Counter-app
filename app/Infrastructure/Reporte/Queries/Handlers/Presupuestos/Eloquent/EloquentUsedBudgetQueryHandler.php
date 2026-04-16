@@ -9,7 +9,7 @@ use App\Application\Reporte\Contracts\Queries\ReporteQueryHandlerContract;
 use App\Domains\Reporte\Enums\Statistic\PresupuestoReportStatisticType;
 use App\Infrastructure\Reporte\Enums\Queries\Builders\PresupuestoQueryRelationParam;
 use App\Infrastructure\Reporte\Resolvers\Queries\Handlers\PresupuestoQueryRelationResolver;
-use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
+use App\Domains\Reporte\ValueObjects\ReporteQuery;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 use App\Infrastructure\Reporte\Builders\Eloquent\EloquentUsedBudgetBuilder;
@@ -28,7 +28,7 @@ final class EloquentUsedBudgetQueryHandler extends EloquentPresupuestoTableQuery
             && $type === PresupuestoReportStatisticType::USED_BUDGET;
     }
 
-    public function handle(ReporteQueryDTO $dto): UsedBudgetVO
+    public function handle(ReporteQuery $dto): UsedBudgetVO
     {
         // Construir query base con JOIN
         $query = $this->presupuestos()

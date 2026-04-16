@@ -2,9 +2,8 @@
 
 namespace App\Application\Reporte\Orchestrators;
 
-use App\Domains\Reporte\Contracts\Ports\DomainReportQueryOrchestrator;
-use App\Domains\Reporte\Enums\Domains\DomainReportQueryType;
-use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
+use App\Application\Reporte\Contracts\Orchestrators\DomainReportQueryOrchestrator;
+use App\Domains\Reporte\ValueObjects\ReporteQuery;
 use App\Domains\Reporte\ValueObjects\ReporteQueryResult;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 use App\Application\Reporte\Contracts\Queries\ReporteQueryHandlerContract;
@@ -17,12 +16,8 @@ final class PresupuestoReportQueryOrchestrator implements DomainReportQueryOrche
         private readonly iterable $handlers
     ) {}
 
-    public function supports(DomainReportQueryType $type): bool
-    {
-        return $type === DomainReportQueryType::PRESUPUESTOS;
-    }
 
-    public function get(ReportStatisticTypeContract $type, ReporteQueryDTO $dto): mixed
+    public function get(ReportStatisticTypeContract $type, ReporteQuery $dto): mixed
     {
         foreach ($this->handlers as $handler) {
             if ($handler->supports($type)) {
@@ -32,7 +27,7 @@ final class PresupuestoReportQueryOrchestrator implements DomainReportQueryOrche
         throw new \InvalidArgumentException("No handler found for type: {$type->value}");
     }
 
-    public function getMultiple(array $types, ReporteQueryDTO $dto): ReporteQueryResult
+    public function getMultiple(array $types, ReporteQuery $dto): ReporteQueryResult
     {
         return array_reduce(
             $types,

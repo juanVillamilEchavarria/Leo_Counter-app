@@ -2,7 +2,7 @@
 
 namespace App\Application\Reporte\Contracts;
 
-use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
+use App\Domains\Reporte\ValueObjects\ReporteQuery;
 use App\Domains\Reporte\ValueObjects\ReporteQueryResult;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 
@@ -20,19 +20,19 @@ interface ReportContributorContract
     /**
      * Genera y retorna los resultados para los tipos solicitados.
      *
-     * @param ReporteQueryDTO $dto Parámetros de la consulta de dominio.
+     * @param ReporteQuery $dto Parámetros de la consulta de dominio.
      * @param array<int, ReportStatisticTypeContract> $types Tipos de métricas a calcular definidas para cada dominio.
      * @return ReporteQueryResult
      */
-    public function handle(ReporteQueryDTO $dto, array $types): ReporteQueryResult;
+    public function handle(ReporteQuery $dto, array $types): ReporteQueryResult;
 
     /**
      * Genera la contribución completa de los datos estadísticos del dominio para el reporte global.
      *
-     * @param ReporteQueryDTO $dto Parámetros de la consulta de dominio.
+     * @param ReporteQuery $dto Parámetros de la consulta de dominio.
      * @return ReporteQueryResult
      */
-    public function contribute(ReporteQueryDTO $dto): ReporteQueryResult;
+    public function contribute(ReporteQuery $dto): ReporteQueryResult;
 
     /**
      * Determina si este contribuidor debe ejecutarse para los tipos solicitados.

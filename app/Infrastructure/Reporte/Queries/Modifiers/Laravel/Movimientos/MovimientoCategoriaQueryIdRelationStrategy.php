@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Movimientos;
 
 use App\Infrastructure\Reporte\Enums\Queries\Builders\MovimientoQueryRelationParam;
-use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
+use App\Domains\Reporte\ValueObjects\ReporteQuery;
 use App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Abstracts\QueryIdRelationStrategy;
 use App\Shared\DTOs\Querys\IdsDTO;
 
@@ -15,7 +15,7 @@ final class MovimientoCategoriaQueryIdRelationStrategy extends QueryIdRelationSt
         $this->relationColumn = 'movimientos.categoria_id';
     }
 
-    protected function dtoProperty(ReporteQueryDTO $reporteQueryDTO): ?IdsDTO
+    protected function dtoProperty(ReporteQuery $reporteQueryDTO): ?IdsDTO
     {
         return $reporteQueryDTO->categorias;
     }

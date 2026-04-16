@@ -4,7 +4,7 @@ namespace App\Infrastructure\Reporte\Queries\Handlers\Presupuestos\Eloquent\Abst
 
 use App\Application\Reporte\Contracts\Queries\ReporteQueryHandlerContract;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
-use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
+use App\Domains\Reporte\ValueObjects\ReporteQuery;
 use App\Shared\QueryBuilders\ConditionalAggregateBuilder;
 use DateTimeImmutable;
 use Illuminate\Database\Query\Builder;
@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\DB;
 abstract class EloquentPresupuestoTableQueryHandler implements ReporteQueryHandlerContract
 {
     abstract public function supports(ReportStatisticTypeContract $type): bool;
-    abstract public function handle(ReporteQueryDTO $dto): mixed;
+    abstract public function handle(ReporteQuery $dto): mixed;
 
     /**
      * Consulta base de presupuestos

@@ -8,7 +8,7 @@ use App\Infrastructure\Reporte\Builders\Eloquent\EloquentFinancialPeriodBuilder;
 use App\Domains\Reporte\Enums\Statistic\MovimientoReportStatisticType;
 use App\Infrastructure\Reporte\Enums\Queries\Builders\MovimientoQueryRelationParam;
 use App\Infrastructure\Reporte\Resolvers\Queries\Handlers\MovimientoQueryRelationResolver;
-use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
+use App\Domains\Reporte\ValueObjects\ReporteQuery;
 use App\Infrastructure\Reporte\Collections\Laravel\Movimientos\LaravelIncomeExpenseCollection;
 use App\Domains\Reporte\Collections\IncomeExpensePeriodCollection;
 use App\Domains\Reporte\Contracts\Collections\Movimientos\IncomeExpenseCollectionContract;
@@ -42,7 +42,7 @@ final class EloquentIngresosVsGastosQueryHandler extends EloquentMovimientoTable
         return $type instanceof MovimientoReportStatisticType && $type === MovimientoReportStatisticType::INGRESOS_VS_GASTOS;
     }
 
-    public function handle(ReporteQueryDTO $dto): LaravelIncomeExpenseCollection
+    public function handle(ReporteQuery $dto): LaravelIncomeExpenseCollection
     {
         $date = $dto->granularityStrategy->groupBy();
 

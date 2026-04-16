@@ -10,7 +10,8 @@ use App\Application\Reporte\Support\ReporteFilterOptionsService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Reporte\GenerateReporteRequest;
 use App\Http\Resources\Reporte\ReporteResource;
-use App\Http\Resources\Reporte\ReporteFilterOptionsResource;
+use App\Application\Reporte\Resolvers\AssemblerResolver;
+use App\Application\Reporte\Enums\Statistics\ReportStatisticType;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -31,7 +32,6 @@ final class ReporteApiController extends Controller
      */
     public function __construct(
         private readonly GenerateReportHandler $reportHandler,
-        private readonly ReporteFilterOptionsService $filterOptionsService,
     ) {
     }
 
@@ -42,9 +42,9 @@ final class ReporteApiController extends Controller
      */
     public function index(): JsonResponse
     {
-        $result = $this->reportHandler->fullReport(new ReportGenerationDTO());
+        $result = $this->reportHandler->handle( ReportStatisticType::statistics(),new ReportGenerationDTO());
 
-        return ReporteResource::make($result, app(\App\Application\Reporte\Resolvers\AssemblerResolver::class))->response();
+        return ReporteResource::make($result, app(AssemblerResolver::class))->response();
     }
 
     /**
@@ -56,22 +56,9 @@ final class ReporteApiController extends Controller
     public function generate(GenerateReporteRequest $request): JsonResponse
     {
         $dto = ReportGenerationDTO::fromArray($request->validated());
-        $result = $this->reportHandler->fullReport($dto);
-
-        return ReporteResource::make($result, app(\App\Application\Reporte\Resolvers\AssemblerResolver::class))->response();
+        $result = $this->reportHandler->handle( ReportStatisticType::statistics(),$dto);
+        return ReporteResource::make($result, app(AssemblerResolver::class))->response();
     }
-
-    /**
-     * Aqui podrias implementar un enpoint para generar reportes dinamicos, con estadisticas variadas, colocas los parametros en el request, deberia contener un arreglo de estadisticas solicitadas (que luego se deben mappear/convertir en su respectivo enum) y los datos de filtrado de reporte.
-     * @return JsonResponse
-     */
-    // public function report(Request $request){
-        // $types = [mappeo de tipos de estadisticas a enums, debe retornar un array de enums]
-        // $dto = ReportGenerationDTO::fromArray($request->validated());
-        // $result= $this->reportHandler->handle($types, $dto);
-        // return  ReporteResource::make($result, app(\App\Application\Reporte\Resolvers\AssemblerResolver::class))->response();
-        // puedes retornar el ReporteResource normal o uno generico
-    // }
 
     // pendiente de implementarse luego de que se refactorice los dominios relacionados a las opciones de reporte
     // /**

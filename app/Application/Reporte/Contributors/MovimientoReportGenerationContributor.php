@@ -4,9 +4,8 @@ namespace App\Application\Reporte\Contributors;
 
 use App\Application\Reporte\Contracts\ReportContributorContract;
 use App\Domains\Reporte\Enums\Statistic\MovimientoReportStatisticType;
-use App\Domains\Reporte\Enums\Domains\DomainReportQueryType;
 use App\Application\Reporte\Orchestrators\MovimientoReportQueryOrchestrator;
-use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
+use App\Domains\Reporte\ValueObjects\ReporteQuery;
 use App\Domains\Reporte\ValueObjects\ReporteQueryResult;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 
@@ -39,11 +38,11 @@ final class MovimientoReportGenerationContributor implements ReportContributorCo
      * Para tipos comparativos consulta el periodo anterior una única vez
      * y reutiliza el DTO resultante para evitar lógica duplicada.
      *
-     * @param ReporteQueryDTO $dto Parámetros de la consulta.
+     * @param ReporteQuery $dto Parámetros de la consulta.
      * @param array<int, ReportStatisticTypeContract> $types Tipos de métricas a calcular.
      * @return ReporteQueryResult
      */
-    public function handle(ReporteQueryDTO $dto, array $types): ReporteQueryResult
+    public function handle(ReporteQuery $dto, array $types): ReporteQueryResult
     {
         $result = $this->queryOrchestrator->getMultiple($types, $dto);
         $previousDto = null;
@@ -64,10 +63,10 @@ final class MovimientoReportGenerationContributor implements ReportContributorCo
     /**
      * Contribuye con el conjunto completo de estadísticas de movimientos.
      *
-     * @param ReporteQueryDTO $dto Parámetros de la consulta.
+     * @param ReporteQuery $dto Parámetros de la consulta.
      * @return ReporteQueryResult
      */
-    public function contribute(ReporteQueryDTO $dto): ReporteQueryResult
+    public function contribute(ReporteQuery $dto): ReporteQueryResult
     {
         return $this->handle($dto, MovimientoReportStatisticType::fullReport());
     }

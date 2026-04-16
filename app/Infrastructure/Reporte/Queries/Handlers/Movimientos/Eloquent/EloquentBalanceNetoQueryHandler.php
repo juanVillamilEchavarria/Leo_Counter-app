@@ -8,7 +8,7 @@ use App\Infrastructure\Reporte\Builders\Eloquent\EloquentBalanceNetoBuilder;
 use App\Domains\Reporte\Enums\Statistic\MovimientoReportStatisticType;
 use App\Infrastructure\Reporte\Enums\Queries\Builders\MovimientoQueryRelationParam;
 use App\Infrastructure\Reporte\Resolvers\Queries\Handlers\MovimientoQueryRelationResolver;
-use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
+use App\Domains\Reporte\ValueObjects\ReporteQuery;
 use App\Infrastructure\Reporte\Collections\Laravel\Movimientos\LaravelBalanceNetoCollection;
 use App\Domains\Reporte\Contracts\Collections\Movimientos\BalanceNetoCollectionContract;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
@@ -41,7 +41,7 @@ final class EloquentBalanceNetoQueryHandler extends EloquentMovimientoTableQuery
         return $type instanceof MovimientoReportStatisticType && $type === MovimientoReportStatisticType::BALANCE_NETO;
     }
 
-    public function handle(ReporteQueryDTO $dto): LaravelBalanceNetoCollection
+    public function handle(ReporteQuery $dto): LaravelBalanceNetoCollection
     {
         $date = $dto->granularityStrategy->groupBy();
 

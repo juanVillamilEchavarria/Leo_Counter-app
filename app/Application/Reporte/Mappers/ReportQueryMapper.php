@@ -2,7 +2,7 @@
 
 namespace App\Application\Reporte\Mappers;
 
-use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
+use App\Domains\Reporte\ValueObjects\ReporteQuery;
 use App\Application\Reporte\DTOs\ReportGenerationDTO;
 use App\Application\Reporte\Specifications\DefaultDateRangeSpecification;
 use App\Domains\Reporte\ValueObjects\DateRange;
@@ -11,12 +11,14 @@ use App\Shared\DTOs\Querys\IdsDTO;
 use App\Application\Reporte\Specifications\IdsSpecification;
 use DateTimeImmutable;
 
+
 /**
  * Mapper para instanciar ReportQuery usando el DTO ReportGenerationDTO
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  * @since 1.0.0
  * @version 1.0.0
  * @package App\Application\Reporte\Mappers
+ * @see App\Application\Reporte\DTOs\ReportGenerationDTO
  */
 final class ReportQueryMapper
 {
@@ -29,14 +31,14 @@ final class ReportQueryMapper
     /**
      * Instancia el ReportQuery usando el DTO ReportGenerationDTO
      * @param ReportGenerationDTO $dto
-     * @return ReporteQueryDTO
+     * @return ReporteQuery
      * 
      */
-    public function map(ReportGenerationDTO $dto): ReporteQueryDTO
+    public function map(ReportGenerationDTO $dto): ReporteQuery
     {
         $dateRange = $this->resolveDateRange($dto);
 
-        return new ReporteQueryDTO(
+        return new ReporteQuery(
             granularityStrategy:   $this->granularityResolver->resolve($dateRange->diffDays()),
             dateRange:             $dateRange,
             only_categorias_fijas: $dto->only_categorias_fijas,

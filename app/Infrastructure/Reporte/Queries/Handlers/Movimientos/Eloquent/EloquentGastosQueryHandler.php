@@ -8,7 +8,7 @@ use App\Infrastructure\Reporte\Builders\Eloquent\EloquentGastosBuilder;
 use App\Domains\Reporte\Enums\Statistic\MovimientoReportStatisticType;
 use App\Infrastructure\Reporte\Enums\Queries\Builders\MovimientoQueryRelationParam;
 use App\Infrastructure\Reporte\Resolvers\Queries\Handlers\MovimientoQueryRelationResolver;
-use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
+use App\Domains\Reporte\ValueObjects\ReporteQuery;
 use App\Infrastructure\Reporte\Collections\Laravel\Movimientos\LaravelMetricPointCollection;
 use App\Domains\Reporte\Contracts\Collections\Movimientos\MetricPointCollectionContract;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
@@ -25,7 +25,7 @@ final class EloquentGastosQueryHandler extends EloquentMovimientoTableQueryHandl
         return $type instanceof MovimientoReportStatisticType && $type === MovimientoReportStatisticType::GASTOS;
     }
 
-    public function handle(ReporteQueryDTO $dto): LaravelMetricPointCollection
+    public function handle(ReporteQuery $dto): LaravelMetricPointCollection
     {
         $query = $this->movimientos()
             ->selectRaw("{$dto->granularityStrategy->groupBy()} as fecha, {$this->getSumQuery('monto')} as monto");

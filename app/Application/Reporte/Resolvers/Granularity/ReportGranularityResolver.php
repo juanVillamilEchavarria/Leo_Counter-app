@@ -1,7 +1,7 @@
 <?php
 namespace App\Application\Reporte\Resolvers\Granularity;
 use App\Domains\Reporte\Contracts\Strategies\ReportGranularityStrategyContract;
-use App\Domains\Reporte\Exception\CannotResolveGranualityException;
+use App\Application\Reporte\Exceptions\CannotResolveGranualityException;
 
 class ReportGranularityResolver{
     public function __construct(

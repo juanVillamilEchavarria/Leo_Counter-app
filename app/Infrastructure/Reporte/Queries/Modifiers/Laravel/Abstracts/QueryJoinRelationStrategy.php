@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Abstracts;
 
-use App\Domains\Reporte\ValueObjects\ReporteQueryDTO;
+use App\Domains\Reporte\ValueObjects\ReporteQuery;
 use App\Infrastructure\Reporte\Contracts\Queries\ReporteQueryRelationStrategyContract;
 use App\Infrastructure\Reporte\Contracts\Enums\QueryRelationParamContract;
 use App\Shared\DTOs\Querys\WhereFilterQueryDTO;
@@ -31,14 +31,14 @@ abstract class QueryJoinRelationStrategy implements ReporteQueryRelationStrategy
     protected string $comparativeColumn = 'id';
     protected ComparativeOperators $joinOperator = ComparativeOperators::EQUALS;
 
-    abstract protected function dtoProperty(ReporteQueryDTO $reporteQueryDTO): mixed;
+    abstract protected function dtoProperty(ReporteQuery $reporteQueryDTO): mixed;
 
-    public function supports(ReporteQueryDTO $reporteQueryDTO, QueryRelationParamContract $param): bool
+    public function supports(ReporteQuery $reporteQueryDTO, QueryRelationParamContract $param): bool
     {
         return $this->dtoProperty($reporteQueryDTO) !== null && $this->table === $param->value;
     }
 
-    public function apply(Builder $query, ReporteQueryDTO $reporteQueryDTO): Builder
+    public function apply(Builder $query, ReporteQuery $reporteQueryDTO): Builder
     {
         if (!$this->queryService->hasJoin($query,$this->relationTable)) {
             $query = $query->join(

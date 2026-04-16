@@ -32,7 +32,7 @@ final class ReporteFilterOptionsService
     public function getValidCategories(): IngresoAndGastoCategoriaVO
     {
         return new IngresoAndGastoCategoriaVO(
-            ingresos: CollectionCOntract::make($this->categoriaRepository->getForOptionsByTipoMovimiento(TipoMovimientoEnum::INGRESO)),
+            ingresos: CollectionContract::make($this->categoriaRepository->getForOptionsByTipoMovimiento(TipoMovimientoEnum::INGRESO)),
             gastos:   CollectionContract::make($this->categoriaRepository->getForOptionsByTipoMovimiento(TipoMovimientoEnum::GASTO))
         );
     }

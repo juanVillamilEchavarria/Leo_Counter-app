@@ -1,7 +1,7 @@
 <?php
 namespace App\Application\Home\Services;
 
-use App\Application\Reporte\DTOs\ReporteQueryDTO;
+use App\Application\Reporte\DTOs\ReporteQuery;
 use App\Domains\Home\DTO\HomeReportDTO;
 use App\Http\Resources\Home\HomeResource;
 use App\Domains\Home\Services\HomeQueryService;
@@ -26,10 +26,10 @@ class HomeService{
         
     }
 
-    private function buildDTO(): ReporteQueryDTO{
+    private function buildDTO(): ReporteQuery{
         $dateRange= DateRange::lastMonth();
         $granularity = $this->granularityResolver->resolve($dateRange->diffDays());
-        return new ReporteQueryDTO(
+        return new ReporteQuery(
             dateRange: $dateRange,
             granularityStrategy: $granularity
         );
