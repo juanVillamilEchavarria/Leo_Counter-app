@@ -2,7 +2,7 @@
 
 namespace App\Domains\Reporte\ValueObjects;
 
-use App\Shared\Domain\ValueObjects\ValueObject;
+use App\Shared\Domain\ValueObjects\Abstracts\ValueObject;
 use DateInterval;
 use DateTimeImmutable;
 /**
@@ -22,20 +22,31 @@ final class DateRange extends ValueObject
 
     /**
      * Obtiene la diferencia en dias entre las fechas
+     * @return int
      */
     public function diffDays(): int
     {
         return (int) $this->startDate->diff($this->endDate)->days;
     }
 
-    public function getPreviousPeriod(): self
-    {
-        $duration = $this->diffDays();
-        $previousStartDate = $this->startDate->sub(new DateInterval('P' . $duration . 'D'));
-        $previousEndDate = $this->startDate->sub(new DateInterval('P1D'));
-
-        return new self($previousStartDate, $previousEndDate);
-    }
+    /**
+     * Genera un nuevo DateRange equivalente al periodo anterior.
+     * El periodo anterior tiene la misma duración que el actual,
+     * terminando el día antes de que comience el actual.
+     * @return self
+     */
+        public function getPreviousPeriod(): self
+        {
+            $duration = $this->diffDays();
+            
+            // El periodo anterior termina el día antes de que comience el actual
+            $previousEndDate = $this->startDate->sub(new DateInterval('P1D'));
+            
+            // Para mantener la misma duración, restamos $duration días a la fecha de fin anterior
+            $previousStartDate = $previousEndDate->sub(new DateInterval('P' . $duration . 'D'));
+            
+            return new self($previousStartDate, $previousEndDate);
+        }
 
     /**
      * Genera un nuevo DateRange equivalente al periodo anterior.
@@ -51,6 +62,7 @@ final class DateRange extends ValueObject
 
     /**
      * Instancia un rango de fechas con una diferencia de 6 meses
+     * @return self
      */
     public static function lastSixMonths(): self
     {

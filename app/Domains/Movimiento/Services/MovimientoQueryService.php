@@ -8,8 +8,8 @@ use App\Application\MovimientoFijo\Services\MovimientoFijoService;
 // CONTRACTS
 use App\Domains\Movimiento\Contracts\Repositories\MovimientoReadRepositoryContract;
 // DTO
-use App\Shared\DTOs\Querys\WhereFilterQueryDTO;
-use App\Shared\DTOs\Querys\TableQueryDTO;
+use App\Shared\Domain\ValueObjects\WhereFilterQueryDTO;
+use App\Shared\Domain\ValueObjects\TableQueryDTO;
 use App\Http\Resources\Movimiento\MovimientoResource;
 use App\Http\Resources\Movimiento\ShowMovimientoResource;
 use App\Http\Resources\Movimiento\EditMovimientoResource;

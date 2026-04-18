@@ -4,7 +4,7 @@ namespace App\Domains\MovimientoPendiente\Contracts\Repositories;
 
 use App\Models\MovimientoPendiente\MovimientoPendiente;
 use App\Shared\Contracts\Repositories\SoftDeleteReadRepositoryContract;
-use App\Shared\DTOs\Querys\TableQueryDTO;
+use App\Shared\Domain\ValueObjects\TableQueryDTO;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;

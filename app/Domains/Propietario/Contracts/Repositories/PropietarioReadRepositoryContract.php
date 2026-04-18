@@ -3,7 +3,7 @@
 namespace App\Domains\Propietario\Contracts\Repositories;
 
 use App\Models\Propietario\Propietario;
-use App\Shared\DTOs\Querys\TableQueryDTO;
+use App\Shared\Domain\ValueObjects\TableQueryDTO;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;

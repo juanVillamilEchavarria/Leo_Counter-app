@@ -1,9 +1,9 @@
 <?php
-namespace App\Application\Reporte\DTOs\Movimientos\Comparatives;
+namespace App\Application\Reporte\Queries\Movimientos\Comparatives;
 
 use App\Domains\Reporte\ValueObjects\Financial\IncomeExpensePeriodVO;
 use App\Shared\Abstracts\DTOs\DTO;
-use App\Application\Reporte\DTOs\Movimientos\Averages\PromedioDTO;
+use App\Application\Reporte\Queries\Movimientos\Averages\PromedioDTO;
 use App\Shared\Domain\Contracts\CollectionContract;
 
 final class IngresosVsGastosDTO extends DTO{

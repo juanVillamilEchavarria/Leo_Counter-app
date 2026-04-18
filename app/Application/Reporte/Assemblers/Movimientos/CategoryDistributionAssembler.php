@@ -3,7 +3,7 @@
 namespace App\Application\Reporte\Assemblers\Movimientos;
 
 use App\Application\Reporte\Contracts\AssemblerContract;
-use App\Application\Reporte\DTOs\Movimientos\Distributions\FullCategoryDistributionDTO;
+use App\Application\Reporte\Queries\Movimientos\Distributions\FullCategoryDistributionDTO;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 use App\Domains\Reporte\Enums\Statistic\MovimientoReportStatisticType;
 use App\Domains\Reporte\ValueObjects\ReporteQueryResult;

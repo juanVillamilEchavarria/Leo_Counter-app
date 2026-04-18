@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\DTOs\Querys;
+namespace App\Shared\Domain\ValueObjects;
 
 use App\Shared\Abstracts\DTOs\DTO;
 /**

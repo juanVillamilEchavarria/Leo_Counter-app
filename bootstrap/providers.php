@@ -23,8 +23,8 @@ return [
     App\Providers\Application\Reporte\ReporteHandlerServiceProvider::class,
     App\Providers\Reporte\PresupuestoQueryRelationServiceProvider::class,
     App\Providers\Reporte\MovimientoQueryRelationServiceProvider::class,
-    App\Providers\Reporte\PresupuestoQueryHandlerServiceProvider::class,
-    App\Providers\Reporte\MovimientoQueryHandlerServiceProvider::class,
+    App\Providers\Reporte\PresupuestoQueryExecutorServiceProvider::class,
+    App\Providers\Reporte\MovimientoQueryExecutorServiceProvider::class,
     App\Providers\Shared\Infrastructure\Collections\SharedCollectionServiceProvider::class,
     App\Providers\Reporte\Infrastructure\Collections\ReporteCollectionServiceProvider::class,
 ];

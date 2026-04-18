@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Domain\ValueObjects;
+namespace App\Shared\Domain\ValueObjects\Abstracts;
 
 /**
  * Clase base para todos los Value Objects del dominio.
@@ -32,5 +32,10 @@ abstract class ValueObject
         $current = get_object_vars($this);
         $merged  = array_merge($current, $overrides);
         return new static(...array_values($merged));
+    }
+
+    public function toArray() : array{
+        return get_object_vars($this);
+
     }
 }

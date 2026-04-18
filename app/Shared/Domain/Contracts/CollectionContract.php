@@ -33,7 +33,7 @@ interface CollectionContract{
      * Devuelve los items de la coleccion en un array
      * @return array
      */
-    public function toArray(): array ;
+    public function toArray() ;
     /**
      * Mapea los items de la coleccion
      * @param callable $callback

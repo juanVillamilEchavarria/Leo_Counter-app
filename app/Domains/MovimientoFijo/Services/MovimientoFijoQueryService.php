@@ -7,7 +7,7 @@ use App\Models\MovimientoFijo\MovimientoFijo;
 // CONTRACTS
 use App\Domains\MovimientoFijo\Contracts\Repositories\MovimientoFijoReadRepositoryContract;
 // DTO
-use App\Shared\DTOs\Querys\TableQueryDTO;
+use App\Shared\Domain\ValueObjects\TableQueryDTO;
 // Resources
 use App\Http\Resources\MovimientoFijo\MovimientoFijoResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;

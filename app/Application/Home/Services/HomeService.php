@@ -1,7 +1,7 @@
 <?php
 namespace App\Application\Home\Services;
 
-use App\Application\Reporte\DTOs\ReporteQuery;
+use App\Application\Reporte\Queries\ReporteQuery;
 use App\Domains\Home\DTO\HomeReportDTO;
 use App\Http\Resources\Home\HomeResource;
 use App\Domains\Home\Services\HomeQueryService;

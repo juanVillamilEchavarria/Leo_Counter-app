@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Reporte\DTOs\Movimientos\KPI;
+namespace App\Application\Reporte\Queries\Movimientos\KPI;
 
 use App\Shared\Abstracts\DTOs\DTO;
 

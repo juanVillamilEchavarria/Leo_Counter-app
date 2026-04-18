@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Reporte\DTOs\Presupuestos\Used;
+namespace App\Application\Reporte\Queries\Presupuestos\Used;
 use App\Shared\Abstracts\DTOs\DTO;
 
 /**

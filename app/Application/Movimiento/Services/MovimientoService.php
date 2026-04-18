@@ -15,7 +15,7 @@ use App\Domains\Movimiento\Strategies\Application\CuentaResolverStrategy;
 use App\Application\Movimiento\DTOs\StoreMovimientoDTO;
 use App\Application\Movimiento\DTOs\UpdateMovimientoDTO;
 use App\Application\Movimiento\DTOs\DestroyMovimientoDTO;
-use App\Shared\DTOs\Querys\TableQueryDTO;
+use App\Shared\Domain\ValueObjects\TableQueryDTO;
 use App\Http\Resources\Movimiento\ShowMovimientoResource;
 use App\Http\Resources\Movimiento\EditMovimientoResource;
 // Models

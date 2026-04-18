@@ -19,15 +19,8 @@ use Illuminate\Http\JsonResponse;
  */
 final class GenerateReportApiController extends Controller
 {
-    /**
-     * @param GenerateFullFinancialReportHandler $reportHandler Handler del reporte financiero completo.
-     * @param GenerateMovimientoReportHandler $movimientoHandler Handler especializado en movimientos.
-     * @param ReporteFilterOptionsService $filterOptionsService Servicio de opciones de filtro.
-     * @param ReportQueryMapper $mapper Mapper de DTOs de entrada.
-     */
     public function __construct(
         private readonly GenerateReportHandler $reportHandler,
-        private readonly ReporteFilterOptionsService $filterOptionsService,
     ) {
     }
     /**
@@ -36,7 +29,7 @@ final class GenerateReportApiController extends Controller
      */
     // public function report(Request $request){
         // $types = [mappeo de tipos de estadisticas a enums, debe retornar un array de enums]
-        // $dto = ReportGenerationDTO::fromArray($request->validated());
+        // $dto = GenerateFinancialReportQuery::fromArray($request->validated());
         // $result= $this->reportHandler->handle($types, $dto);
         // return  ReporteResource::make($result, app(\App\Application\Reporte\Resolvers\AssemblerResolver::class))->response();
         // puedes retornar el ReporteResource normal o uno generico

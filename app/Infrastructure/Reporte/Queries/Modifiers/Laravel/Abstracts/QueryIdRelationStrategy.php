@@ -5,7 +5,7 @@ namespace App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Abstracts;
 use App\Domains\Reporte\ValueObjects\ReporteQuery;
 use App\Infrastructure\Reporte\Contracts\Queries\ReporteQueryRelationStrategyContract;
 use App\Infrastructure\Reporte\Contracts\Enums\QueryRelationParamContract;
-use App\Shared\DTOs\Querys\IdsDTO;
+use App\Shared\Domain\ValueObjects\Ids;
 use Illuminate\Database\Query\Builder;
 
 /**
@@ -21,7 +21,7 @@ abstract class QueryIdRelationStrategy implements ReporteQueryRelationStrategyCo
     protected string $table;
     protected string $relationColumn;
 
-    abstract protected function dtoProperty(ReporteQuery $reporteQueryDTO): ?IdsDTO;
+    abstract protected function dtoProperty(ReporteQuery $reporteQueryDTO): ?Ids;
 
     public function supports(ReporteQuery $reporteQueryDTO, QueryRelationParamContract $param): bool
     {
@@ -30,8 +30,13 @@ abstract class QueryIdRelationStrategy implements ReporteQueryRelationStrategyCo
 
     public function apply(Builder $query, ReporteQuery $reporteQueryDTO): Builder
     {
+        /** @var Ids */
         $ids = $this->dtoProperty($reporteQueryDTO);
+        if($ids->ids === []) {
+            // Si el array de ids está vacío, se asume que no se deben aplicar filtros (se incluyen todos los registros)
+            return $query;
+        }
 
-        return $query->whereIn($this->relationColumn, $ids?->toArray()['ids'] ?? []);
+        return $query->whereIn($this->relationColumn, $ids->ids);
     }
 }

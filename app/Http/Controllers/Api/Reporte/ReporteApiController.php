@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers\Api\Reporte;
 
-use App\Application\Reporte\DTOs\ReportGenerationDTO;
+use App\Application\Reporte\Queries\GenerateFinancialReportQuery;
 use App\Application\Reporte\Handlers\GenerateReportHandler;
-use App\Application\Reporte\Contributors\GenerateMovimientoReportHandler;
-use App\Application\Reporte\Mappers\ReportQueryMapper;
-use App\Application\Reporte\Support\ReporteFilterOptionsService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Reporte\GenerateReporteRequest;
 use App\Http\Resources\Reporte\ReporteResource;
@@ -25,10 +22,7 @@ use Illuminate\Http\JsonResponse;
 final class ReporteApiController extends Controller
 {
     /**
-     * @param GenerateFullFinancialReportHandler $reportHandler Handler del reporte financiero completo.
-     * @param GenerateMovimientoReportHandler $movimientoHandler Handler especializado en movimientos.
-     * @param ReporteFilterOptionsService $filterOptionsService Servicio de opciones de filtro.
-     * @param ReportQueryMapper $mapper Mapper de DTOs de entrada.
+     * @param GenerateReportHandler $reportHandler Handler de generacion de reportes
      */
     public function __construct(
         private readonly GenerateReportHandler $reportHandler,
@@ -42,7 +36,7 @@ final class ReporteApiController extends Controller
      */
     public function index(): JsonResponse
     {
-        $result = $this->reportHandler->handle( ReportStatisticType::statistics(),new ReportGenerationDTO());
+        $result = $this->reportHandler->handle( ReportStatisticType::statistics(),new GenerateFinancialReportQuery());
 
         return ReporteResource::make($result, app(AssemblerResolver::class))->response();
     }
@@ -55,7 +49,7 @@ final class ReporteApiController extends Controller
      */
     public function generate(GenerateReporteRequest $request): JsonResponse
     {
-        $dto = ReportGenerationDTO::fromArray($request->validated());
+        $dto = GenerateFinancialReportQuery::fromArray($request->validated());
         $result = $this->reportHandler->handle( ReportStatisticType::statistics(),$dto);
         return ReporteResource::make($result, app(AssemblerResolver::class))->response();
     }

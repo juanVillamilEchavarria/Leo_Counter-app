@@ -6,6 +6,13 @@ use App\Domains\Reporte\Contracts\Strategies\ReportGranularityStrategyContract;
 
 use App\Infrastructure\Reporte\Queries\Aggregators\Abstracts\ReportGranularityStrategy;
 
+/**
+ * Estrategia de granularidad para reportes anuales
+ * Agrupa los datos por año
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @version 1.0.0
+ * @since 1.0.0
+ */
 class YearlyReportGranularityStrategy extends ReportGranularityStrategy implements ReportGranularityStrategyContract{
     public function supports(int $days)
     {
@@ -13,6 +20,6 @@ class YearlyReportGranularityStrategy extends ReportGranularityStrategy implemen
     }
     public function groupBy(): string
     {
-        return 'DATE_FORMAT(fecha, "%Y")';
+        return 'DATE(fecha, "%Y")';
     }
 }

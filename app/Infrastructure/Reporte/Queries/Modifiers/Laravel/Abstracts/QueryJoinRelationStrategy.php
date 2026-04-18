@@ -5,7 +5,7 @@ namespace App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Abstracts;
 use App\Domains\Reporte\ValueObjects\ReporteQuery;
 use App\Infrastructure\Reporte\Contracts\Queries\ReporteQueryRelationStrategyContract;
 use App\Infrastructure\Reporte\Contracts\Enums\QueryRelationParamContract;
-use App\Shared\DTOs\Querys\WhereFilterQueryDTO;
+use App\Shared\Domain\ValueObjects\WhereFilterQueryDTO;
 use App\Shared\Enums\ComparativeOperators;
 use App\Shared\Infrastructure\Services\Eloquent\EloquentQueryService;
 use Illuminate\Database\Query\Builder;

@@ -10,7 +10,7 @@ use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 final class MovimientoReportQueryOrchestrator implements DomainReportQueryOrchestrator
 {
     public function __construct(
-        /** @var iterable<ReporteQueryHandlerContract> */
+        /** @var iterable<ReporteQueryExecutorContract> */
         private readonly iterable $handlers
     ) {}
 

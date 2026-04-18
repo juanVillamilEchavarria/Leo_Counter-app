@@ -3,7 +3,7 @@
 namespace App\Application\Reporte\Assemblers\Presupuestos;
 
 use App\Application\Reporte\Contracts\AssemblerContract;
-use App\Application\Reporte\DTOs\Presupuestos\Used\UsedBudgetDTO;
+use App\Application\Reporte\Queries\Presupuestos\Used\UsedBudgetDTO;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 use App\Domains\Reporte\Enums\Statistic\PresupuestoReportStatisticType;
 use App\Domains\Reporte\ValueObjects\Budget\UsedBudgetVO;

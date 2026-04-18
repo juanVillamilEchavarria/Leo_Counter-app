@@ -3,7 +3,7 @@
 namespace App\Application\Reporte\Support;
 
 use App\Application\Categoria\DTOs\IngresoAndGastoCategoriaDTO;
-use App\Application\Reporte\DTOs\Form\ReporteFormOptionsDTO;
+use App\Application\Reporte\Queries\Form\ReporteFormOptionsDTO;
 use App\Domains\Categoria\Contracts\Repositories\CategoriaReadRepositoryContract;
 use App\Domains\Cuenta\Contracts\Repositories\CuentaReadRepositoryContract;
 use App\Shared\Domain\Collections\DomainCollection;

@@ -8,7 +8,7 @@ use App\Domains\Presupuesto\Contracts\Repositories\PresupuestoWriteRepositoryCon
 use App\Domains\Categoria\Contracts\Repositories\CategoriaReadRepositoryContract;
 use App\Application\Presupuesto\DTOs\PresupuestoFormOptionsDTO;
 use App\Application\Presupuesto\DTOs\StorePresupuestoMesActualDTO;
-use App\Shared\DTOs\Querys\TableQueryDTO;
+use App\Shared\Domain\ValueObjects\TableQueryDTO;
 use App\Application\Presupuesto\DTOs\UpdatePresupuestoMesActualDTO;
 use App\Models\Presupuesto\Presupuesto;
 // ENUMS

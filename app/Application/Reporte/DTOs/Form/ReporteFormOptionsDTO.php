@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Reporte\DTOs\Form;
+namespace App\Application\Reporte\Queries\Form;
 
 use App\Shared\Abstracts\DTOs\DTO;
 use Illuminate\Support\Collection;

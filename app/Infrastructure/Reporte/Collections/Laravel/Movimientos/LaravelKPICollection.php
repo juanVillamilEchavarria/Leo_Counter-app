@@ -15,6 +15,7 @@ use App\Shared\Infrastructure\Framework\Laravel\Collections\LaravelCollection;
  */
 final class LaravelKPICollection extends LaravelCollection implements KPICollectionContract
 {
+    
     public function totalIngresos(): float
     {
         return $this->sum(fn(KPIVO $mes) => $mes->ingresos);

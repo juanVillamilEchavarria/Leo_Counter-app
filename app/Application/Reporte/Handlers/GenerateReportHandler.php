@@ -2,7 +2,7 @@
 
 namespace App\Application\Reporte\Handlers;
 
-use App\Application\Reporte\DTOs\ReportGenerationDTO;
+use App\Application\Reporte\Queries\GenerateFinancialReportQuery;
 use App\Application\Reporte\Contracts\ReportContributorContract;
 use App\Application\Reporte\Mappers\ReportQueryMapper;
 use App\Domains\Reporte\ValueObjects\ReporteQueryResult;
@@ -33,11 +33,11 @@ final class GenerateReportHandler
      * Puede generar reportes de diferentes dominios con diferentes estadisticas, de un solo dominio con varias consultas estadisticas, o una sola consulta estadistica de un dominio.
      * Simplemente pasa el tipo o los tipos de estadisticas a consultar a los contribuidores registrados.
      * @param array<int, ReportStatisticTypeContract> $types Tipos de métricas a calcular definidas para cada dominio.
-     * @param ReportGenerationDTO $data DTO de entrada desde la capa HTTP.
+     * @param GenerateFinancialReportQuery $data DTO de entrada desde la capa HTTP.
      * @return ReporteQueryResult - Objeto de salida con los resultados de las contribuciones.
      */
 
-    public function handle(array $types, ReportGenerationDTO $data): ReporteQueryResult{
+    public function handle(array $types, GenerateFinancialReportQuery $data): ReporteQueryResult{
         $dto = $this->mapper->map($data);
         $result = new ReporteQueryResult();
         /** @param ReportContributorContract $contributor */
@@ -53,10 +53,10 @@ final class GenerateReportHandler
      * Genera el reporte financiero completo combinando las contribuciones
      * de todos los dominios registrados en el sistema para reportes.
      *
-     * @param ReportGenerationDTO $data DTO de entrada desde la capa HTTP.
+     * @param GenerateFinancialReportQuery $data DTO de entrada desde la capa HTTP.
      * @return ReporteQueryResult
      */
-    public function fullReport(ReportGenerationDTO $data): ReporteQueryResult
+    public function fullReport(GenerateFinancialReportQuery $data): ReporteQueryResult
     {
         $dto = $this->mapper->map($data);
         $result = new ReporteQueryResult();

@@ -2,19 +2,25 @@
 namespace App\Shared\QueryBuilders;
 
 /**
- * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
- * construira una query para un aggregate con una condicion
- * ejemplo de retornos :
+ *
+ * construira una query para un aggregate con una condicion.
+ * 
+ * Ejemplo de retornos :
+ * 
  * con COALESCE y conditionColumn : 
+ * 
  * COALESCE(SUM(CASE WHEN movimientos.tipo_movimiento_id = ? THEN monto END), 0)
  * 
  * con COALESCE y sin conditionColumn :
+ * 
  * COALESCE(SUM(monto), 0)
  * 
  * sin COALESCE y conditionColumn :
+ * 
  * SUM(CASE WHEN movimientos.tipo_movimiento_id = ? THEN monto END)
  * 
  * sin COALESCE y sin conditionColumn :
+ * 
  * SUM(monto)
  * @example
  * $builder = ConditionalAggregateBuilder::make()
@@ -23,7 +29,9 @@ namespace App\Shared\QueryBuilders;
  * ->conditionColumn('movimientos.tipo_movimiento_id')
  * ->useCoalesce(true)
  * ->build();
- * 
+ *  @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 class ConditionalAggregateBuilder{

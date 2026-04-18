@@ -20,6 +20,14 @@ class LaravelCollection extends Collection implements CollectionContract
         return new static($collection);
     }
 
+    public function map(callable $callback) : static
+    {
+        return parent::map($callback);
+    }
+    public function filter(?callable $callback = null): static
+    {
+        return parent::filter($callback);
+    }
     public function getItems(): array
     {
         return $this->all();

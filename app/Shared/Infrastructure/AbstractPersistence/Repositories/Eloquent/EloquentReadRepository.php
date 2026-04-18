@@ -3,10 +3,10 @@
 namespace App\Infrastructure\AbstractPersistence\Repositories\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Shared\DTOs\Querys\WhereFilterQueryDTO;
+use App\Shared\Domain\ValueObjects\WhereFilterQueryDTO;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
-use App\Shared\DTOs\Querys\TableQueryDTO;
+use App\Shared\Domain\ValueObjects\TableQueryDTO;
 use Illuminate\Database\Eloquent\Collection;
 
 /**

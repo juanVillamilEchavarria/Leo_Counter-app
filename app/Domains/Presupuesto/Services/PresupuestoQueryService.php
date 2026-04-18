@@ -3,8 +3,8 @@
 namespace App\Domains\Presupuesto\Services;
 
 use App\Models\Presupuesto\Presupuesto;
-use App\Shared\DTOs\Querys\TableQueryDTO;
-use App\Shared\DTOs\Querys\WhereFilterQueryDTO;
+use App\Shared\Domain\ValueObjects\TableQueryDTO;
+use App\Shared\Domain\ValueObjects\WhereFilterQueryDTO;
 use App\Domains\Presupuesto\Contracts\Repositories\PresupuestoReadRepositoryContract;
 use App\Http\Resources\Presupuesto\PresupuestoResource;
 use App\Domains\Presupuesto\Enums\PresupuestoVariants;

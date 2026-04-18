@@ -6,13 +6,13 @@ use App\Application\Reporte\Contracts\Orchestrators\DomainReportQueryOrchestrato
 use App\Domains\Reporte\ValueObjects\ReporteQuery;
 use App\Domains\Reporte\ValueObjects\ReporteQueryResult;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
-use App\Application\Reporte\Contracts\Queries\ReporteQueryHandlerContract;
+use App\Application\Reporte\Contracts\Queries\ReporteQueryExecutorContract;
 
 final class PresupuestoReportQueryOrchestrator implements DomainReportQueryOrchestrator
 {
 
     public function __construct(
-        /** @var iterable<ReporteQueryHandlerContract> */
+        /** @var iterable<ReporteQueryExecutorContract> */
         private readonly iterable $handlers
     ) {}
 

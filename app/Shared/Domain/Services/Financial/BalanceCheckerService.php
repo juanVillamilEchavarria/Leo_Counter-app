@@ -5,7 +5,7 @@ use App\Domains\Cuenta\Contracts\Repositories\CuentaReadRepositoryContract;
 use App\Domains\Movimiento\Contracts\Repositories\MovimientoReadRepositoryContract;
 use App\Shared\Enums\ComparativeOperators;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
-use App\Shared\DTOs\Querys\WhereFilterQueryDTO;
+use App\Shared\Domain\ValueObjects\WhereFilterQueryDTO;
 use App\Models\Cuenta\Cuenta;
 use App\Models\Movimiento\Movimiento;
 use App\Shared\Exceptions\InsufficientBalanceException;

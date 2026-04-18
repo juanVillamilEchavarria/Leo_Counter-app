@@ -29,7 +29,7 @@ class ReporteCollectionServiceProvider extends ServiceProvider
     /**
      * Array de bindings: Contrato => Implementación
      */
-    private array $bindings = [
+    public array $bindings = [
         KPICollectionContract::class => LaravelKPICollection::class,
         BalanceNetoCollectionContract::class => LaravelBalanceNetoCollection::class,
         CategoryDistributionCollectionContract::class => LaravelCategoryDistributionCollection::class,
