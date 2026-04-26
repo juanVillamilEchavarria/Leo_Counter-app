@@ -3,7 +3,7 @@
 namespace App\Application\Cuenta\Services;
 
 use App\Domains\Propietario\Contracts\Repositories\PropietarioReadRepositoryContract;
-use App\Domains\Cuenta\Contracts\Repositories\CuentaWriteRepositoryContract;
+use App\Domains\Cuenta\Contracts\Repositories\CuentaRepositoryContract;
 use App\Domains\Cuenta\Services\CuentaQueryService;
 use App\Domains\TipoCuenta\Contracts\Repositories\TipoCuentaReadRepositoryContract;
 use App\Application\Cuenta\DTOs\CuentaFormOptionsDTO;
@@ -28,7 +28,7 @@ class CuentaService
     public function __construct(
         private CuentaQueryService $cuentaQueryService,
         private PropietarioReadRepositoryContract $propietarioReadRepository,
-        private CuentaWriteRepositoryContract $cuentaWriteRepository,
+        private CuentaRepositoryContract $cuentaRepository,
         private TipoCuentaReadRepositoryContract $tipoCuentaReadRepository
     )
     {
@@ -56,7 +56,7 @@ class CuentaService
     public function store(array $data): Cuenta
     {
         $dto = StoreCuentaDTO::fromArray($data);
-        return $this->cuentaWriteRepository->store($dto);
+        return $this->cuentaRepository->store($dto);
     }
 
     /**
@@ -72,7 +72,7 @@ class CuentaService
         if (!$this->canUpdateSaldoInicial($cuenta)) {
             $dto->setExcept(['saldo_actual']);
         }
-        return $this->cuentaWriteRepository->update($cuenta, $dto);
+        return $this->cuentaRepository->update($cuenta, $dto);
     }
 
     /**
@@ -83,7 +83,7 @@ class CuentaService
      */
     public function destroy(Cuenta $cuenta): bool
     {
-        return $this->cuentaWriteRepository->destroy($cuenta);
+        return $this->cuentaRepository->destroy($cuenta);
     }
 
     /**
@@ -94,7 +94,7 @@ class CuentaService
      */
     public function toggleActive(Cuenta $cuenta): bool
     {
-        return $this->cuentaWriteRepository->toggle($cuenta, 'active');
+        return $this->cuentaRepository->toggle($cuenta, 'active');
     }
 
     /**

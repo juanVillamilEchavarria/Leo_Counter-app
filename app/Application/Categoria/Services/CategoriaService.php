@@ -4,7 +4,7 @@ namespace App\Application\Categoria\Services;
 
 use App\Models\Categoria\Categoria;
 use App\Domains\Categoria\Services\CategoriaQueryService;
-use App\Domains\Categoria\Contracts\Repositories\CategoriaWriteRepositoryContract;
+use App\Domains\Categoria\Contracts\Repositories\CategoriaRepositoryContract;
 use App\Domains\TipoMovimiento\Contracts\Repositories\TipoMovimientoReadRepositoryContract;
 use App\Application\Categoria\DTOs\CategoriaFormOptionsDTO;
 use App\Application\Categoria\DTOs\StoreAndUpdateCategoriaDTO;
@@ -26,7 +26,7 @@ class CategoriaService
 {
     public function __construct(
         private CategoriaQueryService $categoriaQueryService,
-        private CategoriaWriteRepositoryContract $categoriaWriteRepository,
+        private CategoriaRepositoryContract $categoriaRepository,
         private TipoMovimientoReadRepositoryContract $tipoMovimientoReadRepository
     )
     {
@@ -56,7 +56,7 @@ class CategoriaService
     {
         $dto = StoreAndUpdateCategoriaDTO::fromArray($data);
         $this->storeValidate($dto);
-        return $this->categoriaWriteRepository->store($dto);
+        return $this->categoriaRepository->store($dto);
     }
 
     /**
@@ -69,7 +69,7 @@ class CategoriaService
     public function update(Categoria $categoria, array $data): bool
     {
         $dto = StoreAndUpdateCategoriaDTO::fromArray($data);
-        return $this->categoriaWriteRepository->update($categoria, $dto);
+        return $this->categoriaRepository->update($categoria, $dto);
     }
 
     /**
@@ -80,7 +80,7 @@ class CategoriaService
      */
     public function destroy(Categoria $categoria): bool
     {
-        return $this->categoriaWriteRepository->destroy($categoria);
+        return $this->categoriaRepository->destroy($categoria);
     }
 
     /**
@@ -91,7 +91,7 @@ class CategoriaService
      */
     public function toggleEsFijo(Categoria $categoria): bool
     {
-        return $this->categoriaWriteRepository->toggle($categoria, 'es_fijo');
+        return $this->categoriaRepository->toggle($categoria, 'es_fijo');
     }
 
     /**

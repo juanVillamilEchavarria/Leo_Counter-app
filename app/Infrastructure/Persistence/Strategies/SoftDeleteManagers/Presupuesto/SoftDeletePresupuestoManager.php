@@ -4,7 +4,7 @@ namespace App\Infrastructure\Persistence\Strategies\SoftDeleteManagers\Presupues
 use App\Infrastructure\AbstractPersistence\Strategies\SoftDeleteManager;
 use App\Domains\Configuracion\Contracts\Strategies\SoftDeleteManagerContract;
 use App\Domains\Presupuesto\Contracts\Repositories\PresupuestoReadRepositoryContract;
-use App\Domains\Presupuesto\Contracts\Repositories\PresupuestoWriteRepositoryContract;
+use App\Domains\Presupuesto\Contracts\Repositories\PresupuestoRepositoryContract;
 use App\Domains\Configuracion\Enums\SoftDeleteManagerTypes;
 use App\Http\Resources\Configuracion\SoftDeletesManagers\Presupuesto\DeletedPresupuestosResource;
 
@@ -13,7 +13,7 @@ class SoftDeletePresupuestoManager extends SoftDeleteManager implements SoftDele
     protected ?string $resource = DeletedPresupuestosResource::class;
     public function __construct(
         PresupuestoReadRepositoryContract $readRepository,
-        PresupuestoWriteRepositoryContract $writeRepository
+        PresupuestoRepositoryContract $writeRepository
     ) {
         parent::__construct($readRepository, $writeRepository);
     }

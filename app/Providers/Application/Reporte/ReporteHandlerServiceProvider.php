@@ -6,7 +6,7 @@ use App\Application\Reporte\Contributors\MovimientoReportGenerationContributor;
 use App\Application\Reporte\Contributors\PresupuestoReportGenerationContributor;
 use App\Application\Reporte\Handlers\GenerateReportHandler;
 use App\Application\Reporte\Mappers\ReportQueryMapper;
-
+use App\Application\Reporte\Handlers\GenerateFullReportHandler;
 use App\Application\Reporte\Orchestrators\MovimientoReportQueryOrchestrator;
 use App\Application\Reporte\Orchestrators\PresupuestoReportQueryOrchestrator;
 use Illuminate\Support\ServiceProvider;
@@ -53,5 +53,13 @@ final class ReporteHandlerServiceProvider extends ServiceProvider
                 contributors: $app->tagged('reporte.contributors'),
             )
         );
+        $this->app->bind(
+            GenerateFullReportHandler::class,
+            static fn($app): GenerateFullReportHandler => new GenerateFullReportHandler(
+                mapper: $app->make(ReportQueryMapper::class),
+                contributors: $app->tagged('reporte.contributors'),
+            )
+        );
+
     }
 }

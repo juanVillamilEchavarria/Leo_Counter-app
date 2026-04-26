@@ -4,7 +4,7 @@ namespace App\Infrastructure\Persistence\Strategies\SoftDeleteManagers\Movimient
 use App\Infrastructure\AbstractPersistence\Strategies\SoftDeleteManager;
 use App\Domains\Configuracion\Contracts\Strategies\SoftDeleteManagerContract;
 use App\Domains\MovimientoPendiente\Contracts\Repositories\MovimientoPendienteReadRepositoryContract;
-use App\Domains\MovimientoPendiente\Contracts\Repositories\MovimientoPendienteWriteRepositoryContract;
+use App\Domains\MovimientoPendiente\Contracts\Repositories\MovimientoPendienteRepositoryContract;
 use App\Domains\Configuracion\Enums\SoftDeleteManagerTypes;
 use App\Http\Resources\Configuracion\SoftDeletesManagers\MovimientoPendiente\DeletedMovimientoPendientesResource;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +14,7 @@ class SoftDeleteMovimientoPendienteManager extends SoftDeleteManager implements 
     protected ?string $resource = DeletedMovimientoPendientesResource::class;
     public function __construct(
         MovimientoPendienteReadRepositoryContract $readRepository,
-        MovimientoPendienteWriteRepositoryContract $writeRepository
+        MovimientoPendienteRepositoryContract $writeRepository
     ) {
         parent::__construct($readRepository, $writeRepository);
     }

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @since 1.0.0
  * @version 1.0.0
  */
-interface SoftDeleteWriteRepositoryContract
+interface SoftDeleteRepositoryContract
 {
     /**
      * Recupera un registro eliminado

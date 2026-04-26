@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Collection;
  * - búsqueda por columnas
  * - carga de relaciones
  *
- * No gestiona operaciones de escritura; para eso existe EloquentWriteRepository.
+ * No gestiona operaciones de escritura; para eso existe EloquentRepository.
  *
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  * @package App\Infrastructure\AbstractPersistence\Repositories\Eloquent

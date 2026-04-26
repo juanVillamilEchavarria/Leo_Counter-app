@@ -7,7 +7,7 @@ use App\Models\MovimientoFijo\MovimientoFijo;
 // Domain Services
 use App\Domains\MovimientoFijo\Services\MovimientoFijoQueryService;
 // Contracts
-use App\Domains\MovimientoFijo\Contracts\Repositories\MovimientoFijoWriteRepositoryContract;
+use App\Domains\MovimientoFijo\Contracts\Repositories\MovimientoFijoRepositoryContract;
 use App\Domains\Categoria\Contracts\Repositories\CategoriaReadRepositoryContract;
 use App\Domains\TipoMovimiento\Contracts\Repositories\TipoMovimientoReadRepositoryContract;
 use App\Domains\FrecuenciaMovimiento\Contracts\Repositories\FrecuenciaMovimientoReadRepositoryContract;
@@ -37,7 +37,7 @@ class MovimientoFijoService
 {
     public function __construct(
         private MovimientoFijoQueryService $movimientoFijoQueryService,
-        private MovimientoFijoWriteRepositoryContract $movimientoFijoWriteRepository,
+        private MovimientoFijoRepositoryContract $movimientoFijoRepository,
         private CategoriaReadRepositoryContract $categoriaReadRepository,
         private TipoMovimientoReadRepositoryContract $tipoMovimientoReadRepository,
         private FrecuenciaMovimientoReadRepositoryContract $frecuenciaMovimientoReadRepository,
@@ -55,7 +55,7 @@ class MovimientoFijoService
     public function store(array $data): MovimientoFijo
     {
         $dto = StoreMovimientoFijoDTO::fromArray($data);
-        return $this->movimientoFijoWriteRepository->store($dto);
+        return $this->movimientoFijoRepository->store($dto);
     }
 
     /**
@@ -68,7 +68,7 @@ class MovimientoFijoService
     public function update(MovimientoFijo $movimientoFijo, array $data): bool
     {
         $dto = UpdateMovimientoFijoDTO::fromArray($data);
-        return $this->movimientoFijoWriteRepository->update($movimientoFijo, $dto);
+        return $this->movimientoFijoRepository->update($movimientoFijo, $dto);
     }
 
     /**
@@ -79,7 +79,7 @@ class MovimientoFijoService
      */
     public function destroy(MovimientoFijo $movimientoFijo): bool
     {
-        return $this->movimientoFijoWriteRepository->destroy($movimientoFijo);
+        return $this->movimientoFijoRepository->destroy($movimientoFijo);
     }
 
     /**
@@ -91,7 +91,7 @@ class MovimientoFijoService
      */
     public function toggle(MovimientoFijo $movimientoFijo, string $attribute): bool
     {
-        return $this->movimientoFijoWriteRepository->toggle($movimientoFijo, $attribute);
+        return $this->movimientoFijoRepository->toggle($movimientoFijo, $attribute);
     }
 
     /**

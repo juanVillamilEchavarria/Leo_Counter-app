@@ -3,7 +3,7 @@
 namespace App\Application\Propietario\Services;
 
 use App\Domains\Propietario\Contracts\Repositories\PropietarioReadRepositoryContract;
-use App\Domains\Propietario\Contracts\Repositories\PropietarioWriteRepositoryContract;
+use App\Domains\Propietario\Contracts\Repositories\PropietarioRepositoryContract;
 use App\Application\Propietario\DTOs\StoreAndUpdatePropietarioDTO;
 use App\Http\Resources\Propietario\PropietarioResource;
 use App\Domains\Propietario\Exceptions\CannotDeletePropietarioException;
@@ -13,18 +13,18 @@ use App\Models\Propietario\Propietario;
 class PropietarioService{
     public function __construct(
         private PropietarioReadRepositoryContract $propietarioReadRepository,
-        private PropietarioWriteRepositoryContract $propietarioWriteRepository
+        private PropietarioRepositoryContract $propietarioRepository
     ){}
 
     public function store (array $data): Propietario{
         $dto = StoreAndUpdatePropietarioDTO::fromArray($data);
-        return $this->propietarioWriteRepository->store($dto);
+        return $this->propietarioRepository->store($dto);
 
     }
 
     public function update(Propietario $propietario, array $data ): bool{
         $dto = StoreAndUpdatePropietarioDTO::fromArray($data);
-        return $this->propietarioWriteRepository->update($propietario, $dto);
+        return $this->propietarioRepository->update($propietario, $dto);
         
     }
     public function destroy(Propietario $propietario): bool{
@@ -32,7 +32,7 @@ class PropietarioService{
         if(!empty($cuentas->toArray())){
             throw new CannotDeletePropietarioException ('No se puede eliminar el propietario, tiene cuentas asociadas');
         }
-        return $this->propietarioWriteRepository->destroy($propietario);
+        return $this->propietarioRepository->destroy($propietario);
     }
 
     public function getWithDetails(Propietario $propietario): ShowPropietarioResource{

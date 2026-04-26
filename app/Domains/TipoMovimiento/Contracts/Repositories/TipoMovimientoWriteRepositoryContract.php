@@ -5,7 +5,7 @@ namespace App\Domains\TipoMovimiento\Contracts\Repositories;
 use Illuminate\Database\Eloquent\Model;
 use App\Shared\Contracts\DTOs\DTOContract;
 
-interface TipoMovimientoWriteRepositoryContract
+interface TipoMovimientoRepositoryContract
 {
     public function store(DTOContract $storeTipoMovimientoDTO);
     public function update(Model $tipoMovimiento, DTOContract $updateTipoMovimientoDTO): bool;

@@ -3,7 +3,7 @@
 namespace App\Domains\Cuenta\Contracts\Repositories;
 use App\Shared\Contracts\DTOs\DTOContract;
 use Illuminate\Database\Eloquent\Model;
-use App\Shared\Contracts\Repositories\SoftDeleteWriteRepositoryContract;
+use App\Shared\Contracts\Repositories\SoftDeleteRepositoryContract;
 
 
 /**
@@ -13,7 +13,7 @@ use App\Shared\Contracts\Repositories\SoftDeleteWriteRepositoryContract;
  * @since 1.0.0
  * @version 1.0.0
  */
-interface CuentaWriteRepositoryContract extends SoftDeleteWriteRepositoryContract {
+interface CuentaRepositoryContract extends SoftDeleteRepositoryContract {
     /**
      * Guarda un nuevo registro
      * @param DTOContract $storeCuentaDTO

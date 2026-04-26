@@ -4,10 +4,10 @@ namespace App\Domains\Movimiento\Services;
 
 use App\Domains\Movimiento\Services\MovimientoAttachmentService;
 //Contracts
-use App\Domains\Movimiento\Contracts\Repositories\MovimientoWriteRepositoryContract;
-use App\Domains\Cuenta\Actions\cuentaWriteRepository;
+use App\Domains\Movimiento\Contracts\Repositories\MovimientoRepositoryContract;
+use App\Domains\Cuenta\Actions\cuentaRepository;
 use App\Domains\Cuenta\Contracts\Repositories\CuentaReadRepositoryContract;
-use App\Domains\Cuenta\Contracts\Repositories\CuentaWriteRepositoryContract;
+use App\Domains\Cuenta\Contracts\Repositories\CuentaRepositoryContract;
 use App\Application\Movimiento\DTOs\StoreMovimientoDTO;
 use App\Application\Movimiento\DTOs\UpdateMovimientoDTO;
 use App\Application\Movimiento\DTOs\DestroyMovimientoDTO;
@@ -20,8 +20,8 @@ use Illuminate\Support\Facades\DB;
 class MovimientoFinancialService {
     public function __construct(
         private CuentaReadRepositoryContract $cuentaReadRepository,
-        private MovimientoWriteRepositoryContract $repository,
-        private CuentaWriteRepositoryContract $cuentaWriteRepository,
+        private MovimientoRepositoryContract $repository,
+        private CuentaRepositoryContract $cuentaRepository,
         private MovimientoAttachmentService $movimientoAttachmentService
     )
     {
@@ -38,7 +38,7 @@ class MovimientoFinancialService {
             $this->executeAttachmentServiceFunction($dto, $movimiento);
             $dto instanceof UpdateMovimientoDTO && $this->repository->update($movimiento, $dto);
 
-            $this->cuentaWriteRepository->update($cuenta, $updateSaldoDTO); // si todo sale bien se actualiza el saldo
+            $this->cuentaRepository->update($cuenta, $updateSaldoDTO); // si todo sale bien se actualiza el saldo
             $dto instanceof DestroyMovimientoDTO && $this->repository->destroy($movimiento);
                 return $movimiento ; // se retorna el movimiento
         });
@@ -68,7 +68,7 @@ class MovimientoFinancialService {
                     $oldCuenta= $this->cuentaReadRepository->whereAttr('id', $movimiento->cuenta_id)->firstOrFail();
                     $saldoDto = new UpdateSaldoDTO($oldCuenta->saldo_actual);
                     $saldoDto->moneyFlow($movimiento->tipo_movimiento_id, $movimiento->monto, MoneyFlowEnum::REVERT);
-                    $this->cuentaWriteRepository->update($oldCuenta, $saldoDto);
+                    $this->cuentaRepository->update($oldCuenta, $saldoDto);
              }else{ // sino, se revierte el movimiento para la cuenta
                  $updateSaldoDTO->moneyFlow($movimiento->tipo_movimiento_id, $movimiento->monto, MoneyFlowEnum::REVERT);
              } 

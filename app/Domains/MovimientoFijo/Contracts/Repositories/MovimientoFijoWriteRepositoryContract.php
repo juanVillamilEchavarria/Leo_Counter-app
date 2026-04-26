@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Shared\Contracts\DTOs\DTOContract;
 use App\Models\MovimientoFijo\MovimientoFijo;
 use App\Application\MovimientoFijo\DTOs\Contracts\MovimientoFijoDTOContract;
-interface MovimientoFijoWriteRepositoryContract
+interface MovimientoFijoRepositoryContract
 {
     public function store(MovimientoFijoDTOContract $storeMovimientoFijoDTO);
     public function update(Model $movimientoFijo, MovimientoFijoDTOContract $updateMovimientoFijoDTO): bool;

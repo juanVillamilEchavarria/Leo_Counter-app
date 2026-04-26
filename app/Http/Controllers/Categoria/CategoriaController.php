@@ -2,31 +2,39 @@
 
 namespace App\Http\Controllers\Categoria;
 
+use App\Application\Categoria\Commands\StoreCategoryCommand;
+use App\Application\Categoria\Commands\UpdateCategoryCommand;
+use App\Application\Categoria\Commands\DestroyCategoryCommand;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Application\Categoria\Services\CategoriaService;
+use App\Shared\Application\Contracts\Bus\QueryBus;
+use App\Application\Categoria\Queries\ListAllCategoriesWithDetailsQuery;
+use App\Application\Categoria\Queries\ListCategoriesRecordsCountQuery;
+use App\Application\Categoria\Queries\ListCategoryFormOptionsQuery;
+use Illuminate\Contracts\Bus\Dispatcher;
 use App\Http\Requests\Categoria\StoreAndUpdateCategoriaRequest;
-use App\Models\Categoria\Categoria;
 use Inertia\Inertia;
 
 class CategoriaController extends Controller
 {
 
     
-    public function __construct(private CategoriaService $categoriaService)
+    public function __construct(
+        private QueryBus $queryBus,
+        private Dispatcher $dispatcher
+        )
     {
     }   
 
 
     private function NoRegistros(){
-        return $this->categoriaService->getRecordsCount();
+        return $this->queryBus->ask(new ListCategoriesRecordsCountQuery());
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $categorias = $this->categoriaService->getAllWithDetails();
+        $categorias = $this->queryBus->ask(new ListAllCategoriesWithDetailsQuery());
         return Inertia::render('Categorias/Index',[
             'title' => 'Categorias',
             'NoRegistros' => $this->NoRegistros(),
@@ -39,7 +47,7 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        $options = $this->categoriaService->getOptions();
+        $options = $this->queryBus->ask(new ListCategoryFormOptionsQuery());
         return Inertia::render('Categorias/Create',[
             'title'=>'Crear Categoria',
             'NoRegistros'=>$this->NoRegistros(),
@@ -52,7 +60,12 @@ class CategoriaController extends Controller
      */
     public function store(StoreAndUpdateCategoriaRequest $request)
     {
-        $this->categoriaService->store($request->validated());
+        $command = new StoreCategoryCommand(
+            nombre: $request->nombre,
+            tipo_movimiento_id: $request->tipo_movimiento_id,
+            descripcion: $request->descripcion
+        );
+        $this->dispatcher->dispatch($command);
         Inertia::flash('success','Categoria creada con exito');
         return redirect()->route('categorias.index');
     }
@@ -65,25 +78,32 @@ class CategoriaController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Categoria $categoria)
-    {
-        return Inertia::render('Categorias/Edit',[
-            'title'=>'Editar Categoria',
-            'NoRegistros'=>$this->NoRegistros(),
-            'data'=>$categoria,
-            'options'=>$this->categoriaService->getOptions()
-        ]);
-    }
+    // Pendiente de implementar 
+    // /**
+    //  * Show the form for editing the specified resource.
+    //  */
+    // public function edit(int $id)
+    // {
+    //     return Inertia::render('Categorias/Edit',[
+    //         'title'=>'Editar Categoria',
+    //         'NoRegistros'=>$this->NoRegistros(),
+    //         'data'=>$categoria,
+    //         'options'=>$this->queryBus->ask(new ListCategoryFormOptionsQuery())
+    //     ]);
+    // }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreAndUpdateCategoriaRequest $request, Categoria $categoria)
+    public function update(StoreAndUpdateCategoriaRequest $request, int $id)
     {
-        $this->categoriaService->update($categoria, $request->validated());
+        $command = new UpdateCategoryCommand(
+            id: $id,
+            nombre: $request->nombre,
+            tipo_movimiento_id: $request->tipo_movimiento_id,
+            descripcion: $request->descripcion
+        );
+        $this->dispatcher->dispatch($command);
         Inertia::flash('success','Categoria actualizada con exito');
         return redirect()->route('categorias.index');
     }
@@ -91,17 +111,20 @@ class CategoriaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Categoria $categoria)
+    public function destroy(int $id)
     {
-        $this->categoriaService->destroy($categoria);
+            $command = new DestroyCategoryCommand(
+                id: $id
+        );
+        $this->dispatcher->dispatch($command);
         Inertia::flash('success','Categoria eliminada con exito');
         return redirect()->route('categorias.index');
     }
 
-    public function toggleEsFijo(Categoria $categoria, string $attribute)
-    {
-        $this->categoriaService->toggleEsFijo($categoria);
-        Inertia::flash('success','Categoria actualizada con exito');
-        return redirect()->route('categorias.index');
-    }
+    // public function toggleEsFijo(Categoria $categoria, string $attribute)
+    // {
+    //     $this->categoriaService->toggleEsFijo($categoria);
+    //     Inertia::flash('success','Categoria actualizada con exito');
+    //     return redirect()->route('categorias.index');
+    // }
 }

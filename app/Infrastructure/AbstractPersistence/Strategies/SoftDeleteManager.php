@@ -5,7 +5,7 @@ namespace App\Infrastructure\AbstractPersistence\Strategies;
 use App\Domains\Configuracion\Contracts\Strategies\SoftDeleteManagerContract;
 use App\Domains\Configuracion\Enums\SoftDeleteManagerTypes;
 use App\Shared\Contracts\Repositories\SoftDeleteReadRepositoryContract;
-use App\Shared\Contracts\Repositories\SoftDeleteWriteRepositoryContract;
+use App\Shared\Contracts\Repositories\SoftDeleteRepositoryContract;
 use Illuminate\Database\Eloquent\Model;
 use App\Domains\Configuracion\Exceptions\CannotHardDeleteModel;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -39,9 +39,9 @@ abstract class SoftDeleteManager implements SoftDeleteManagerContract{
         protected SoftDeleteReadRepositoryContract $readRepository,
         /**
          * Repositorio write de soft delete
-         * @var SoftDeleteWriteRepositoryContract
+         * @var SoftDeleteRepositoryContract
          */
-        protected SoftDeleteWriteRepositoryContract $writeRepository
+        protected SoftDeleteRepositoryContract $writeRepository
     )
     {
     }

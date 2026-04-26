@@ -4,7 +4,7 @@ namespace App\Domains\Movimiento\Contracts\Repositories;
 use App\Shared\Contracts\DTOs\DTOContract;
 use Illuminate\Database\Eloquent\Model;
 
-interface MovimientoWriteRepositoryContract
+interface MovimientoRepositoryContract
 {
     public function store(DTOContract $dto);
     public function update(Model $movimiento, DTOContract $dto);

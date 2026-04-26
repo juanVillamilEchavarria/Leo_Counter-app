@@ -3,7 +3,7 @@
 namespace App\Application\ArchivoMovimiento\Services;
 
 use App\Shared\Services\Files\FileService;
-use App\Domains\ArchivoMovimiento\Contracts\Repositories\ArchivoMovimientoWriteRepositoryContract;
+use App\Domains\ArchivoMovimiento\Contracts\Repositories\ArchivoMovimientoRepositoryContract;
 use App\Application\ArchivoMovimiento\DTOs\StoreArchivoMovimientoDTO;
 use App\Application\ArchivoMovimiento\DTOs\UpdateArchivoMovimientoLocationDTO;
 use App\Models\ArchivoMovimiento\ArchivoMovimiento;
@@ -20,7 +20,7 @@ class ArchivoMovimientoService  {
     private static string $disk = 'movimientos';
     public function __construct(
         private FileService $fileService,
-        private ArchivoMovimientoWriteRepositoryContract $archivoMovimientoWriteRepository,
+        private ArchivoMovimientoRepositoryContract $archivoMovimientoRepository,
     )
     {
     }
@@ -42,7 +42,7 @@ class ArchivoMovimientoService  {
         );
 
         $this->fileService->upload($dtoUpload);
-        return $this->archivoMovimientoWriteRepository->store($dto);
+        return $this->archivoMovimientoRepository->store($dto);
     }
     public function store(ArchivoMovimientoTransferDTO $dto, FilePath $filePath) : void{
         foreach($dto->comprobantes as $file){
@@ -65,7 +65,7 @@ class ArchivoMovimientoService  {
         $oldPath = FilePath::fromString($file->path);
         if($oldPath->equals($filePath)) return; // si la nueva ruta es igual a la antigua no se hace nada
         $dtoMove = MoveFileDTO::fromArchivoMovimientoAndNewPath($file, $filePath->toString());
-        $this->archivoMovimientoWriteRepository->update($file, $dtoUpdate);
+        $this->archivoMovimientoRepository->update($file, $dtoUpdate);
         $this->fileService->move($dtoMove);
     }
     public function delete(ArchivoMovimiento $archivoMovimiento): void{

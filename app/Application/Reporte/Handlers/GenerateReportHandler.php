@@ -37,7 +37,7 @@ final class GenerateReportHandler
      * @return ReporteQueryResult - Objeto de salida con los resultados de las contribuciones.
      */
 
-    public function handle(array $types, GenerateFinancialReportQuery $data): ReporteQueryResult{
+    public function __invoke(array $types, GenerateFinancialReportQuery $data): ReporteQueryResult{
         $dto = $this->mapper->map($data);
         $result = new ReporteQueryResult();
         /** @param ReportContributorContract $contributor */
@@ -49,24 +49,6 @@ final class GenerateReportHandler
         return $result;
     }
 
-    /**
-     * Genera el reporte financiero completo combinando las contribuciones
-     * de todos los dominios registrados en el sistema para reportes.
-     *
-     * @param GenerateFinancialReportQuery $data DTO de entrada desde la capa HTTP.
-     * @return ReporteQueryResult
-     */
-    public function fullReport(GenerateFinancialReportQuery $data): ReporteQueryResult
-    {
-        $dto = $this->mapper->map($data);
-        $result = new ReporteQueryResult();
-
-        foreach ($this->contributors as $contributor) {
-            $result = $result->merge($contributor->contribute($dto));
-        }
-
-        return $result;
-    }
 }
 
 
