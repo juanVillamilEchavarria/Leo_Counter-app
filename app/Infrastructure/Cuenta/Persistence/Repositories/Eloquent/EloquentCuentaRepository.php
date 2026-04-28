@@ -5,12 +5,50 @@ namespace App\Infrastructure\Cuenta\Persistence\Repositories\Eloquent;
 use App\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentRepository;
 use App\Domains\Cuenta\Contracts\Repositories\CuentaRepositoryContract;
 use App\Models\Cuenta\Cuenta;
+use App\Domains\Cuenta\Aggregates\Cuenta as CuentaAggregate;
+use App\Shared\Domain\Contracts\AggregateModelContract;
+use Illuminate\Database\Eloquent\Model;
 
 class EloquentCuentaRepository extends EloquentRepository implements CuentaRepositoryContract
 {
     protected array $toggeable = [
-        'active'
+        'active',
+        'archived',
     ];
+
+    /**
+     * @param CuentaAggregate $aggregate
+     */
+    protected function mapAggregateToAttributes(object $aggregate): array
+    {
+        assert($aggregate instanceof CuentaAggregate, 'El argumento debe ser una instancia de CuentaAggregate');
+        return [
+            'nombre' => $aggregate->getNombre(),
+            'notas' => $aggregate->getNotas(),
+            'saldo_inicial' => $aggregate->getSaldoInicial(),
+            'saldo_actual' => $aggregate->getSaldoActual(), 
+            'propietario_id' => $aggregate->getPropietarioId(),
+            'tipo_cuenta_id' => $aggregate->getTipoCuentaId(),
+            'active' => $aggregate->getActive(),
+        ];
+    }
+
+    /**
+     * @param Cuenta $model
+     * @return CuentaAggregate
+     */
+    protected function mapDatabaseRecordToAggregate(Model $model): AggregateModelContract
+    {
+        return CuentaAggregate::reconstitute(
+            nombre: $model->nombre,
+            notas: $model->notas,
+            saldo_inicial: $model->saldo_inicial,
+            saldo_actual: $model->saldo_actual,
+            active: $model->active,
+            propietario_id: $model->propietario_id,
+            tipo_cuenta_id: $model->tipo_cuenta_id,
+        );
+    }
 
     public function __construct()
     {

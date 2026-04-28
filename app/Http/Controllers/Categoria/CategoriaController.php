@@ -6,11 +6,13 @@ use App\Application\Categoria\Commands\StoreCategoryCommand;
 use App\Application\Categoria\Commands\UpdateCategoryCommand;
 use App\Application\Categoria\Commands\DestroyCategoryCommand;
 use App\Http\Controllers\Controller;
+use App\Application\Categoria\Queries\GetCategoryForEditQuery;
 use App\Shared\Application\Contracts\Bus\QueryBus;
 use App\Application\Categoria\Queries\ListAllCategoriesWithDetailsQuery;
 use App\Application\Categoria\Queries\ListCategoriesRecordsCountQuery;
 use App\Application\Categoria\Queries\ListCategoryFormOptionsQuery;
 use Illuminate\Contracts\Bus\Dispatcher;
+use App\Application\Categoria\Commands\ToggleCategoryCommand;
 use App\Http\Requests\Categoria\StoreAndUpdateCategoriaRequest;
 use Inertia\Inertia;
 
@@ -77,20 +79,19 @@ class CategoriaController extends Controller
     {
         //
     }
-
-    // Pendiente de implementar 
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  */
-    // public function edit(int $id)
-    // {
-    //     return Inertia::render('Categorias/Edit',[
-    //         'title'=>'Editar Categoria',
-    //         'NoRegistros'=>$this->NoRegistros(),
-    //         'data'=>$categoria,
-    //         'options'=>$this->queryBus->ask(new ListCategoryFormOptionsQuery())
-    //     ]);
-    // }
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(int $id)
+    {
+        $categoria = $this->queryBus->ask(new GetCategoryForEditQuery(id: $id));
+        return Inertia::render('Categorias/Edit',[
+            'title'=>'Editar Categoria',
+            'NoRegistros'=>$this->NoRegistros(),
+            'data'=>$categoria,
+            'options'=>$this->queryBus->ask(new ListCategoryFormOptionsQuery())
+        ]);
+    }
 
     /**
      * Update the specified resource in storage.
@@ -113,7 +114,7 @@ class CategoriaController extends Controller
      */
     public function destroy(int $id)
     {
-            $command = new DestroyCategoryCommand(
+        $command = new DestroyCategoryCommand(
                 id: $id
         );
         $this->dispatcher->dispatch($command);
@@ -121,10 +122,10 @@ class CategoriaController extends Controller
         return redirect()->route('categorias.index');
     }
 
-    // public function toggleEsFijo(Categoria $categoria, string $attribute)
-    // {
-    //     $this->categoriaService->toggleEsFijo($categoria);
-    //     Inertia::flash('success','Categoria actualizada con exito');
-    //     return redirect()->route('categorias.index');
-    // }
+    public function toggleEsFijo(int $id, string $attribute)
+    {
+        $this->dispatcher->dispatch(new ToggleCategoryCommand(id: $id, attribute: $attribute));
+        Inertia::flash('success','Categoria actualizada con exito');
+        return redirect()->route('categorias.index');
+    }
 }

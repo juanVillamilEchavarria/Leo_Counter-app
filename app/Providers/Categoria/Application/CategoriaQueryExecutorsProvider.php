@@ -7,7 +7,7 @@ use App\Application\Categoria\Queries\Handlers\ListCategoryFormOptionsHandler;
 use App\Infrastructure\Categoria\Queries\Executors\Eloquent\EloquentListAllCategoriesWithDetailsExecutor;
 use App\Infrastructure\Categoria\Queries\Executors\Eloquent\EloquentListCategoriesRecordsCountExecutor;
 use App\Infrastructure\TipoMovimiento\Queries\Executors\Eloquent\EloquentListAllTipoMovimientoExecutor;
-use App\Application\Categoria\Contracts\Queries\Executors\ListCategoriesExecutorContract;
+use App\Application\Categoria\Contracts\Queries\Executors\CategoriaQueryExecutorContract;
 use App\Application\Categoria\Contracts\Queries\Executors\ListCategoryFormOptionExecutorContract;
 use Illuminate\Support\ServiceProvider;
 
@@ -19,11 +19,11 @@ class CategoriaQueryExecutorsProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->when(ListAllCategoriesWithDetailsHandler::class)
-            ->needs(ListCategoriesExecutorContract::class)
+            ->needs(CategoriaQueryExecutorContract::class)
             ->give(EloquentListAllCategoriesWithDetailsExecutor::class);
 
         $this->app->when(ListCategoriesRecordsCountHandler::class)
-            ->needs(ListCategoriesExecutorContract::class)
+            ->needs(CategoriaQueryExecutorContract::class)
             ->give(EloquentListCategoriesRecordsCountExecutor::class);
 
         $this->app->when(ListCategoryFormOptionsHandler::class)

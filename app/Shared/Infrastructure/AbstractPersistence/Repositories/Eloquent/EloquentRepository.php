@@ -73,16 +73,20 @@ abstract class EloquentRepository {
         }
         return $model->update($this->mapAggregateToAttributes($aggregate));
     }
-    // /**
-    //  * Funcion que se encarga de cambiar el valor de un atributo booleano en la base de datos
-    //   * @param Model $model
-    //   * @param string $attribute
-    //  * @return bool
-    //  */
-    // public function toggle(Model $model, string $attribute): bool{
-    //     $this->validateToggleAttribute($model, $attribute);
-    //     return $model->update([$attribute => !$model->$attribute]);
-    // }
+    /**
+     * Funcion que se encarga de cambiar el valor de un atributo booleano en la base de datos
+      * @param int $id El ID de la categoría a la que se le va a alternar el valor del atributo
+      * @param string $attribute
+     * @return bool
+     */
+    public function toggle(int $id, string $attribute): bool{
+        $model = ($this->model)::find($id);
+        if (!$model) {
+            return false;
+        }
+        $this->validateToggleAttribute($model, $attribute);
+        return $model->update([$attribute => !$model->$attribute]);
+    }
 
     /**
      * Funcion que se encarga de eliminar un registro en la base de datos, o si esta declarado como soft delete, recibe el modelo a eliminar, devuelve un booleano indicando si la eliminacion fue exitosa o no

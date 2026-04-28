@@ -36,7 +36,7 @@ final class ReporteApiController extends Controller
      */
     public function index(): JsonResponse
     {
-        $result = $this->reportHandler->handle( ReportStatisticType::statistics(),new GenerateFinancialReportQuery());
+        $result = $this->reportHandler->__invoke( ReportStatisticType::statistics(),new GenerateFinancialReportQuery());
 
         return ReporteResource::make($result, app(AssemblerResolver::class))->response();
     }
@@ -50,7 +50,7 @@ final class ReporteApiController extends Controller
     public function generate(GenerateReporteRequest $request): JsonResponse
     {
         $dto = GenerateFinancialReportQuery::fromArray($request->validated());
-        $result = $this->reportHandler->handle( ReportStatisticType::statistics(),$dto);
+        $result = $this->reportHandler->__invoke( ReportStatisticType::statistics(),$dto);
         return ReporteResource::make($result, app(AssemblerResolver::class))->response();
     }
 

@@ -36,12 +36,17 @@ interface CategoriaRepositoryContract extends SoftDeleteRepositoryContract
      * @return bool
      */
     public function destroy(int $id): bool;
-    // /**
-    //  * Alterna el valor de un atributo booleano
-    //  * @param Model $categoria
-    //  * @return bool
-    //  */
-    // public function toggle(Model $categoria, string $attribute): bool;
-
+    /**
+     * Alterna el valor de un atributo booleano
+     * @param int $id El ID de la categoría a la que se le va a alternar el valor del atributo
+     * @param string $attribute El nombre del atributo booleano a alternar
+     * @return bool
+     */
+    public function toggle(int $id, string $attribute): bool;
+    /**
+     * Busca una categoría por su ID
+     * @param int $id El ID de la categoría a buscar
+     * @return Categoria|null La categoría encontrada o null si no se encuentra ninguna categoría con el ID proporcionado
+     */
     public function findById(int $id): ?Categoria;
 }

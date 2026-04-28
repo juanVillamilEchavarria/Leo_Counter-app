@@ -12,6 +12,7 @@ namespace App\Application\Categoria\Commands\Abstracts;
  */
 abstract readonly class WriteCategoryCommand
 {
+
     public function __construct(
         public string $nombre,
         public int $tipo_movimiento_id,

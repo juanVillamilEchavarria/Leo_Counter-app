@@ -10,6 +10,8 @@ use App\Application\Categoria\Commands\DestroyCategoryCommand;
 use App\Application\Categoria\Commands\Handlers\StoreCategoryHandler;
 use App\Application\Categoria\Commands\Handlers\UpdateCategoryHandler;
 use App\Application\Categoria\Commands\Handlers\DestroyCategoryHandler;
+use App\Application\Categoria\Commands\Handlers\ToggleCategoryHandler;
+use App\Application\Categoria\Commands\ToggleCategoryCommand;
 
 class CategoryBusProvider extends ServiceProvider
 {
@@ -29,7 +31,8 @@ class CategoryBusProvider extends ServiceProvider
          Bus::map([
             StoreCategoryCommand::class => StoreCategoryHandler::class,
             UpdateCategoryCommand::class => UpdateCategoryHandler::class,
-            DestroyCategoryCommand::class => DestroyCategoryHandler::class
+            DestroyCategoryCommand::class => DestroyCategoryHandler::class,
+            ToggleCategoryCommand::class => ToggleCategoryHandler::class
         ]);
         
     }

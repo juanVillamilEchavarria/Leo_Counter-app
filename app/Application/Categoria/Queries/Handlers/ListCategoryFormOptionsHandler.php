@@ -5,6 +5,7 @@ namespace App\Application\Categoria\Queries\Handlers;
 use App\Application\Categoria\Queries\ListCategoryFormOptionsQuery;
 use App\Application\Categoria\Contracts\Queries\Executors\ListCategoryFormOptionExecutorContract;
 use App\Application\Categoria\DTOs\CategoriaFormOptionsDTO;
+use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListTipoMovimientoForFormContract;
 
 /**
  * Handler encargado de manejar la consulta para obtener las opciones necesarias para los formularios relacionados con categorías.
@@ -17,11 +18,10 @@ use App\Application\Categoria\DTOs\CategoriaFormOptionsDTO;
 final readonly class ListCategoryFormOptionsHandler{
     public function __construct(
         /**
-         * @param ListCategoryFormOptionExecutorContract $executor El ejecutor encargado de manejar la consulta para obtener las opciones de formulario de categoría.
+         * @param ListTipoMovimientoForFormContract $executor El ejecutor encargado de manejar la consulta para obtener los tipos de movimiento para mostrar en el formulario.
          * 
-         * Si el dia de mañana es necesario agregar mas opciones, seria un iterable del contrato ListCategoryFormOptionExecutorContract, y el handler se encargaria de ejecutar cada uno de los ejecutores para obtener las opciones necesarias para el formulario de categoría.
          */
-        private ListCategoryFormOptionExecutorContract $executor
+        private ListTipoMovimientoForFormContract $executor
     )
     {
     }
