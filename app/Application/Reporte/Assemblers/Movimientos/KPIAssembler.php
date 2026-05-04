@@ -3,9 +3,9 @@
 namespace App\Application\Reporte\Assemblers\Movimientos;
 
 use App\Application\Reporte\Contracts\AssemblerContract;
-use App\Application\Reporte\Queries\Movimientos\KPI\PeriodKPIDTO;
-use App\Application\Reporte\Queries\Movimientos\KPI\TotalsKPIDTO;
-use App\Application\Reporte\Queries\Movimientos\KPI\VariationsKPIDTO;
+use App\Application\Reporte\DTOs\Movimientos\KPI\PeriodKPIDTO;
+use App\Application\Reporte\DTOs\Movimientos\KPI\TotalsKPIDTO;
+use App\Application\Reporte\DTOs\Movimientos\KPI\VariationsKPIDTO;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 use App\Domains\Reporte\Enums\Statistic\MovimientoReportStatisticType;
 use App\Domains\Reporte\ValueObjects\ReporteQueryResult;

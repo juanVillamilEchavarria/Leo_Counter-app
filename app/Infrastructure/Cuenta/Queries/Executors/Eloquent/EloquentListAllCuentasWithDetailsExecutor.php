@@ -7,6 +7,7 @@ use App\Application\Cuenta\Contracts\Queries\ListCuentasQueryContract;
 use App\Shared\Domain\Contracts\CollectionContract;
 use App\Models\Cuenta\Cuenta;
 use App\Shared\Infrastructure\Framework\Laravel\Collections\LaravelCollection;
+use Illuminate\Database\Query\Builder;
 
 /**
  * Executor for listing all cuentas with details using Eloquent
@@ -14,12 +15,12 @@ use App\Shared\Infrastructure\Framework\Laravel\Collections\LaravelCollection;
 final readonly class EloquentListAllCuentasWithDetailsExecutor implements CuentaQueryExecutorContract
 {
     private function relations(): array
-    {
-        return [
-            'propietario',
-            'tipo_cuenta',
-        ];
-    }
+{
+    return [
+        'propietario:id,nombre,apellido',
+        'tipo_cuenta:id,tipo_cuenta',
+    ];
+}
 
     public function execute(ListCuentasQueryContract $query): CollectionContract
     {

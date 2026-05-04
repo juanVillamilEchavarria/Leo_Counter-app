@@ -11,14 +11,11 @@ use App\Shared\Enums\ComparativeOperators;
 
 final class PresupuestoOnlyFixedCategoriesQueryRelationStrategy extends QueryJoinRelationStrategy
 {
-    public function __construct()
-    {
-        $this->table = PresupuestoQueryRelationParam::TABLE->value;
-        $this->relationTable = 'categorias';
-        $this->relationColumn = 'presupuestos.categoria_id';
-        $this->comparativeColumn = 'categorias.id';
-        $this->joinOperator = ComparativeOperators::EQUALS;
-    }
+     protected string $table = PresupuestoQueryRelationParam::TABLE->value;
+        protected string $relationTable = 'categorias';
+        protected string $relationColumn = 'presupuestos.categoria_id';
+        protected string $comparativeColumn = 'categorias.id';
+        protected ComparativeOperators $joinOperator = ComparativeOperators::EQUALS;
 
     protected function dtoProperty(ReporteQuery $reporteQueryDTO): mixed
     {

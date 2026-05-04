@@ -11,7 +11,7 @@ use App\Shared\Infrastructure\Framework\Laravel\Collections\LaravelCollection;
 
 final readonly class EloquentListTipoCuentaForForm implements ListTipoCuentaForFormContract
 {
-    public function execute(QueryContract $query): CollectionContract
+    public function execute(): CollectionContract
     {
         $tiposCuenta = TipoCuenta::all(['id', 'tipo_cuenta']);
         return new LaravelCollection($tiposCuenta);

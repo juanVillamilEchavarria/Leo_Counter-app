@@ -14,6 +14,7 @@ use App\Application\Categoria\Queries\ListCategoryFormOptionsQuery;
 use Illuminate\Contracts\Bus\Dispatcher;
 use App\Application\Categoria\Commands\ToggleCategoryCommand;
 use App\Http\Requests\Categoria\StoreAndUpdateCategoriaRequest;
+use App\Http\Resources\Categoria\CategoriaResource;
 use Inertia\Inertia;
 
 class CategoriaController extends Controller
@@ -40,7 +41,7 @@ class CategoriaController extends Controller
         return Inertia::render('Categorias/Index',[
             'title' => 'Categorias',
             'NoRegistros' => $this->NoRegistros(),
-            'categorias'=>$categorias
+            'categorias'=>CategoriaResource::collection($categorias)
         ]);
     }
 

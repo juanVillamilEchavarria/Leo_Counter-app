@@ -34,7 +34,7 @@ export default function Cuentas({
     hardDelete('cuentas', item?.id)
     close()
   },[hardDelete, item])
-  console.log(data)
+
   return (
     <SectionTransition>
       <ConfiguracionNavBar />

@@ -5,7 +5,7 @@ use App\Application\Reporte\Contracts\Orchestrators\ReporteRepositoryContract;
 use App\Application\Reporte\Queries\ReporteQuery;
 use App\Domains\Reporte\QueryExecutors\KPIQueryExecutor;
 use App\Domains\Reporte\QueryExecutors\IngresoVsGastosQueryExecutor;
-use App\Application\Reporte\Queries\Movimientos\KPI\PeriodKPIDTO;
+use App\Application\Reporte\DTOs\Movimientos\KPI\PeriodKPIDTO;
 
 class HomeQueryService{
     public function __construct(

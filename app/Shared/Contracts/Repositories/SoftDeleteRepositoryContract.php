@@ -14,12 +14,12 @@ interface SoftDeleteRepositoryContract
 {
     /**
      * Recupera un registro eliminado
-     * @param Model $model
+     * @param int $id
      */
-    public function restore(Model $model): bool;
+    public function restore(int $id): bool;
     /**
      * Elimina un registro de forma permanente
-     * @param Model $model
+     * @param int $id
      */
-    public function hardDelete(Model $model): bool;
+    public function hardDelete(int $id): bool;
 }

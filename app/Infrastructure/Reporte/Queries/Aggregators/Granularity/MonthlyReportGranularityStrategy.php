@@ -16,7 +16,7 @@ class MonthlyReportGranularityStrategy extends ReportGranularityStrategy impleme
     protected int $limit = 365;
     public function groupBy(): string
     {
-        return 'DATE(fecha, "%Y-%m")';
+        return 'DATE_FORMAT(fecha, "%Y-%m")';
     }
 
 }

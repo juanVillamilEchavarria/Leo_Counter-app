@@ -7,33 +7,44 @@ use App\Domains\Reporte\ValueObjects\ReporteQuery;
 use App\Domains\Reporte\ValueObjects\ReporteQueryResult;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 use App\Application\Reporte\Contracts\Queries\ReporteQueryExecutorContract;
+use App\Domains\Reporte\Enums\Statistic\PresupuestoReportStatisticType;
 
-final class PresupuestoReportQueryOrchestrator implements DomainReportQueryOrchestrator
+final readonly class PresupuestoReportQueryOrchestrator implements DomainReportQueryOrchestrator
 {
 
-    public function __construct(
-        /** @var iterable<ReporteQueryExecutorContract> */
-        private readonly iterable $handlers
-    ) {}
+    /** @var array<ReporteQueryExecutorContract> */
+    private array $executors;   
+ public function __construct(iterable $executors) {
+        $this->executors = is_array($executors) ? $executors : iterator_to_array($executors);
+    }
 
 
     public function get(ReportStatisticTypeContract $type, ReporteQuery $dto): mixed
     {
-        foreach ($this->handlers as $handler) {
-            if ($handler->supports($type)) {
-                return $handler->handle($dto);
+        /**
+         * @var ReporteQueryExecutorContract $executor
+         */
+        foreach ($this->executors as $executor) {
+            if ($executor->supports($type)) {
+                return $executor->execute($dto);
             }
         }
-        throw new \InvalidArgumentException("No handler found for type: {$type->value}");
+
+        throw new \InvalidArgumentException("Executor no encontrado para el tipo: {$type->value}");
     }
 
     public function getMultiple(array $types, ReporteQuery $dto): ReporteQueryResult
     {
-        return array_reduce(
-            $types,
-            fn(ReporteQueryResult $result, ReportStatisticTypeContract $type): ReporteQueryResult =>
-                $result->add($type, $this->get($type, $dto)),
-            new ReporteQueryResult()
-        );
+        $result = new ReporteQueryResult();
+
+        /** @var ReportStatisticTypeContract $type */
+        foreach ($types as $type) {
+            if(!$type instanceof PresupuestoReportStatisticType){
+                continue;
+            }
+            $result = $result->add($type, $this->get($type, $dto));
+        }
+
+        return $result;
     }
 }

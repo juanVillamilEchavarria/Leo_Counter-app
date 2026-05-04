@@ -42,7 +42,7 @@ final class EloquentIngresosVsGastosQueryExecutor extends EloquentMovimientoTabl
         return $type instanceof MovimientoReportStatisticType && $type === MovimientoReportStatisticType::INGRESOS_VS_GASTOS;
     }
 
-    public function handle(ReporteQuery $dto): LaravelIncomeExpenseCollection
+    public function execute(ReporteQuery $dto): LaravelIncomeExpenseCollection
     {
         $date = $dto->granularityStrategy->groupBy();
 
@@ -64,6 +64,7 @@ final class EloquentIngresosVsGastosQueryExecutor extends EloquentMovimientoTabl
         $query = $this->baseQuery($dto->dateRange->startDate, $dto->dateRange->endDate, $query, "movimientos.fecha");
         $query = $this->relationResolver->resolve($query, $dto, MovimientoQueryRelationParam::TABLE);
         $query->groupByRaw($date)->orderBy('fecha');
+      
 
         return EloquentFinancialPeriodBuilder::buildCollection($query->get());
     }

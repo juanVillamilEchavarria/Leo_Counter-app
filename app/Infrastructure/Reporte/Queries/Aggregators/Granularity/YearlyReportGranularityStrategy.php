@@ -20,6 +20,6 @@ class YearlyReportGranularityStrategy extends ReportGranularityStrategy implemen
     }
     public function groupBy(): string
     {
-        return 'DATE(fecha, "%Y")';
+        return 'DATE_FORMAT(fecha, "%Y")';
     }
 }

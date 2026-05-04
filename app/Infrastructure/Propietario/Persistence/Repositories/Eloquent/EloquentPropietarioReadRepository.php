@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Propietario\Persistence\Repositories\Eloquent;
 
 use App\Domains\Propietario\Contracts\Repositories\PropietarioReadRepositoryContract;
-use App\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentReadRepository;
+use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentReadRepository;
 use App\Models\Propietario\Propietario;
 
 class EloquentPropietarioReadRepository extends EloquentReadRepository implements PropietarioReadRepositoryContract {

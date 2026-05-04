@@ -19,7 +19,9 @@ use App\Shared\Application\Contracts\Queries\QueryContract;
  */
 final class LaravelQueryBus implements QueryBus
 {
-    public function __construct(private readonly Application $app) {}
+    public function __construct(
+        private readonly Application $app
+        ) {}
 
     public function ask(QueryContract $query): mixed
     {
@@ -34,6 +36,12 @@ final class LaravelQueryBus implements QueryBus
         return $handler($query); // invocar el handler como un callable, asumiendo que implementa el método __invoke
     }
 
+    /**
+     * Devuelve el handler correspondiente a un query utilizando una convención de nombres.
+     * 
+     * @param QueryContract $query El query para el cual se desea resolver el handler.
+     * @return string El FQCN del handler correspondiente.
+     */
     private function resolveHandlerClass(QueryContract $query): string
     {
      // Clase del query   

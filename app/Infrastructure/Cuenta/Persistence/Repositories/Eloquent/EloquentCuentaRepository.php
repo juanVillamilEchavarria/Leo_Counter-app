@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Cuenta\Persistence\Repositories\Eloquent;
 
-use App\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentRepository;
+use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentRepository;
 use App\Domains\Cuenta\Contracts\Repositories\CuentaRepositoryContract;
 use App\Models\Cuenta\Cuenta;
 use App\Domains\Cuenta\Aggregates\Cuenta as CuentaAggregate;

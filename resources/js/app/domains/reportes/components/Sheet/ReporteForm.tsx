@@ -28,6 +28,7 @@ export default function ReporteForm({
   isLoading = false,
   options,
 }: ReporteFormProps) {
+  console.log('options', options)
   const { addItem: addCategoria, removeItem: removeCategoria } = useMultiSelect<Categoria>({
     items: data.categorias,
     setItems: (categorias) => setData('categorias', categorias),
@@ -56,7 +57,6 @@ export default function ReporteForm({
     const cuenta = options?.data.cuentas.find(c => c.id === Number(e.target.value))
     if (cuenta) addCuenta(cuenta)
   }
-
   return (
     <form className="formulario-general h-full flex flex-col gap-4" onSubmit={onSubmit}>
       {/* Solo Categorías Fijas */}

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\Reporte;
 
 use App\Application\Reporte\Queries\GenerateFinancialReportQuery;
+use App\Shared\Application\Contracts\Bus\QueryBus;
+use App\Application\Reporte\Queries\ListReporteFormOptionsQuery;
 use App\Application\Reporte\Handlers\GenerateReportHandler;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Reporte\GenerateReporteRequest;
@@ -10,7 +12,7 @@ use App\Http\Resources\Reporte\ReporteResource;
 use App\Application\Reporte\Resolvers\AssemblerResolver;
 use App\Application\Reporte\Enums\Statistics\ReportStatisticType;
 use Illuminate\Http\JsonResponse;
-
+use App\Http\Resources\Reporte\ReporteFilterOptionsResource;
 /**
  * Controlador API para el módulo de Reportes.
  * Delega la lógica de negocio a handlers de aplicación y limita su
@@ -26,6 +28,7 @@ final class ReporteApiController extends Controller
      */
     public function __construct(
         private readonly GenerateReportHandler $reportHandler,
+        private readonly QueryBus $queryBus
     ) {
     }
 
@@ -55,15 +58,15 @@ final class ReporteApiController extends Controller
     }
 
     // pendiente de implementarse luego de que se refactorice los dominios relacionados a las opciones de reporte
-    // /**
-    //  * Retorna las opciones disponibles para los filtros del formulario.
-    //  *
-    //  * @return JsonResponse
-    //  */
-    // public function formOptions(): JsonResponse
-    // {
-    //     return ReporteFilterOptionsResource::make(
-    //         $this->filterOptionsService->getOptions()
-    //     )->response();
-    // }
+    /**
+     * Retorna las opciones disponibles para los filtros del formulario.
+     *
+     * @return JsonResponse
+     */
+    public function formOptions(): JsonResponse
+    {
+        return ReporteFilterOptionsResource::make(
+            $this->queryBus->ask(new ListReporteFormOptionsQuery())
+        )->response();
+    }
 }

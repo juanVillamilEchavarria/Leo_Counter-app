@@ -14,7 +14,6 @@ final readonly class UpdateCuentaCommand extends WriteCuentaCommand
         string $nombre,
         ?string $notas,
         float $saldo_inicial,
-        public float $saldo_actual,
         int $propietario_id,
         int $tipo_cuenta_id,
     ) {

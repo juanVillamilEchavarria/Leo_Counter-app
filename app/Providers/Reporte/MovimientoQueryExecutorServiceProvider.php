@@ -21,6 +21,6 @@ final class MovimientoQueryExecutorServiceProvider extends ServiceProvider
             EloquentIngresosVsGastosQueryExecutor::class,
             EloquentCategoryDistributionQueryExecutor::class,
             EloquentBalanceNetoQueryExecutor::class,
-        ], 'reporte.movimiento.query.handlers');
+        ], 'reporte.movimiento.query.executors');
     }
 }

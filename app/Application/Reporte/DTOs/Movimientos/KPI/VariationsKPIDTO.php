@@ -1,5 +1,5 @@
 <?php
-namespace App\Application\Reporte\Queries\Movimientos\KPI;
+namespace App\Application\Reporte\DTOs\Movimientos\KPI;
 use App\Shared\Abstracts\DTOs\DTO;
 
 class VariationsKPIDTO extends DTO{

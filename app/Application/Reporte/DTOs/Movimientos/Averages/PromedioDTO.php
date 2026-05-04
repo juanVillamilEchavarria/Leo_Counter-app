@@ -1,5 +1,5 @@
 <?php
-namespace App\Application\Reporte\Queries\Movimientos\Averages;
+namespace App\Application\Reporte\DTOs\Movimientos\Averages;
 
 use App\Shared\Abstracts\DTOs\DTO;
 

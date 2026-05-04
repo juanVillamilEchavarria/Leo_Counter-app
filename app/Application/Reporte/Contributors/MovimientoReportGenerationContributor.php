@@ -42,18 +42,18 @@ final class MovimientoReportGenerationContributor implements ReportContributorCo
      * @param array<int, ReportStatisticTypeContract> $types Tipos de métricas a calcular.
      * @return ReporteQueryResult
      */
-    public function handle(ReporteQuery $dto, array $types): ReporteQueryResult
+    public function handle(ReporteQuery $query, array $types): ReporteQueryResult
     {
-        $result = $this->queryOrchestrator->getMultiple($types, $dto);
-        $previousDto = null;
+        $result = $this->queryOrchestrator->getMultiple($types, $query);
+        $previousQuery = null;
 
         foreach ($types as $type) {
             if (!$type instanceof MovimientoReportStatisticType || !$type->requiresComparativeData()) {
                 continue;
             }
 
-            $previousDto ??= $dto->toPreviousPeriod();
-            $previousCollection = $this->queryOrchestrator->get($type, $previousDto);
+            $previousQuery ??= $query->toPreviousPeriod();
+            $previousCollection = $this->queryOrchestrator->get($type, $previousQuery);
             $result = $result->addPrevious($type, $previousCollection);
         }
 

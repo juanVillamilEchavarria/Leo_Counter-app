@@ -10,6 +10,17 @@ interface StatisticalSummaryTextProps {
   text: string
   type ? :  Types
 }
+/**
+ * Componente para los textos que muestran un resumen estadistico para un grafico, devuelve el texto con un circulo de color, el texto, y el valor con el color correspondiente.
+ * 
+ * Ejemplo : () Ingresos : $1000,00
+ * @param {string} color - el color del circulo
+ * @param {string} valueColor - el color del valor (numero)
+ * @param {number} value - el valor
+ * @param {string} text - el texto
+ * @param {'money' | 'percentage' | 'number'} type - que tipo de valor es el que se muestra
+ * @returns 
+ */
 export default function StatisticalSummaryText({
   color,
   valueColor,
@@ -18,6 +29,7 @@ export default function StatisticalSummaryText({
   type = 'money'
 }: StatisticalSummaryTextProps) {
   const valueFormated = useMemo(() => {
+    if (value === null) return '-'
     if (type === 'money') return moneyFormat(value)
     if (type === 'percentage') return `${value}%`
     return value

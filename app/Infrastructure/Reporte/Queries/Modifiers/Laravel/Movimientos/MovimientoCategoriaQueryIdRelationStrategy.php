@@ -9,11 +9,9 @@ use App\Shared\Domain\ValueObjects\Ids;
 
 final class MovimientoCategoriaQueryIdRelationStrategy extends QueryIdRelationStrategy
 {
-    public function __construct()
-    {
-        $this->table = MovimientoQueryRelationParam::TABLE->value;
-        $this->relationColumn = 'movimientos.categoria_id';
-    }
+
+    protected string $table = MovimientoQueryRelationParam::TABLE->value;
+    protected string $relationColumn = 'movimientos.categoria_id';
 
     protected function dtoProperty(ReporteQuery $reporteQueryDTO): ?Ids
     {

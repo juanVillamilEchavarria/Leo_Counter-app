@@ -26,7 +26,7 @@ final readonly class GetCuentaForEditHandler{
         return new CuentaEditDTO(
             id: $query->id,
             nombre: $existing->getNombre(),
-            descripcion: $existing->getNotas(),
+            notas: $existing->getNotas(),
             saldo_inicial: $existing->getSaldoInicial(),
             propietario_id: $existing->getPropietarioId(),
             tipo_cuenta_id: $existing->getTipoCuentaId(),

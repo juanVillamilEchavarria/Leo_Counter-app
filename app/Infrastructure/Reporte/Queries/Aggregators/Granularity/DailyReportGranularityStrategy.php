@@ -15,6 +15,6 @@ use App\Infrastructure\Reporte\Queries\Aggregators\Abstracts\ReportGranularitySt
 class DailyReportGranularityStrategy extends ReportGranularityStrategy implements ReportGranularityStrategyContract{
     protected int $limit = 30;
     public function groupBy(): string{
-        return 'DATE(fecha)';
+        return 'DATE_FORMAT(fecha, "%Y-%m-%d")';
     }
 }

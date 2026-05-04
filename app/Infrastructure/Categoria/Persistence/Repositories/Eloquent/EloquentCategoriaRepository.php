@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Categoria\Persistence\Repositories\Eloquent;
 
-use App\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentRepository;
+use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentRepository;
 use App\Domains\Categoria\Contracts\Repositories\CategoriaRepositoryContract;
 use App\Models\Categoria\Categoria;
 use App\Domains\Categoria\Aggregates\Categoria as CategoriaAggregate;

@@ -32,7 +32,7 @@ final readonly class UpdateCuentaHandler
             nombre: $command->nombre,
             notas: $command->notas,
            saldo_inicial: $command->saldo_inicial,
-            saldo_actual: $command->saldo_actual,
+            saldo_actual: $existing->getSaldoActual(),
             tipo_cuenta_id: $command->tipo_cuenta_id,
             id: $command->id,
             checker: $this->checker,

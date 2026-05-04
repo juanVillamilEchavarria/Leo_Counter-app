@@ -21,7 +21,7 @@ final class EloquentTotalPresupuestoQueryExecutor extends EloquentPresupuestoTab
         return $type instanceof PresupuestoReportStatisticType && $type === PresupuestoReportStatisticType::TOTAL_PRESUPUESTO;
     }
 
-    public function handle(ReporteQuery $dto): float
+    public function execute(ReporteQuery $dto): float
     {
         $query = $this->presupuestos();
         $query = $this->baseQuery($dto->dateRange->startDate, $dto->dateRange->endDate, $query, "presupuestos.periodo");

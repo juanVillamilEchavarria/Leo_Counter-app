@@ -2,7 +2,7 @@
 namespace App\Infrastructure\Movimiento\Persistence\Repositories\Eloquent;
 
 use App\Domains\Movimiento\Contracts\Repositories\MovimientoReadRepositoryContract;
-use App\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentReadRepository;
+use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentReadRepository;
 use App\Models\Movimiento\Movimiento;
 use Illuminate\Support\Carbon;
 

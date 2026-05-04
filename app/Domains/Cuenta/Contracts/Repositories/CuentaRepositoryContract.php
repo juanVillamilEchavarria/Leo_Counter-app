@@ -10,7 +10,7 @@ use App\Shared\Domain\Contracts\AggregateModelContract;
 /**
  * Repository contract for Cuenta domain
  */
-interface CuentaRepositoryContract extends SoftDeleteRepositoryContract
+interface CuentaRepositoryContract
 {
     /**
      * Store a new Cuenta
@@ -47,5 +47,5 @@ interface CuentaRepositoryContract extends SoftDeleteRepositoryContract
      * @param int $id
      * @return Cuenta|null
      */
-    public function findById(int $id): ?Cuenta;
+    public function findById(int $id): ?AggregateModelContract;
 }

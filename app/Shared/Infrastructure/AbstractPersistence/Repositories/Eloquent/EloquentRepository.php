@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\AbstractPersistence\Repositories\Eloquent;
+namespace App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent;
 
 use App\Shared\Contracts\DTOs\DTOContract;
 use App\Shared\Domain\Contracts\AggregateModelContract;
@@ -17,7 +17,7 @@ use App\Shared\Exceptions\InvalidToggleAttributeException;
  * No gestiona operaciones de lectura; para eso existe EloquentReadRepository.
  *
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
- * @package App\Infrastructure\AbstractPersistence\Repositories\Eloquent
+ * @package App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent
  * @since 1.0.0
  */
 abstract class EloquentRepository {

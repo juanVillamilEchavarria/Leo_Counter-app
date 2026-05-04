@@ -9,11 +9,8 @@ use App\Shared\Domain\ValueObjects\Ids;
 
 final class PresupuestoCategoriaQueryIdRelationStrategy extends QueryIdRelationStrategy
 {
-    public function __construct()
-    {
-        $this->table = PresupuestoQueryRelationParam::TABLE->value;
-        $this->relationColumn = 'presupuestos.categoria_id';
-    }
+      protected string $table = PresupuestoQueryRelationParam::TABLE->value;
+        protected string $relationColumn = 'presupuestos.categoria_id';
 
     protected function dtoProperty(ReporteQuery $reporteQueryDTO): ?Ids
     {

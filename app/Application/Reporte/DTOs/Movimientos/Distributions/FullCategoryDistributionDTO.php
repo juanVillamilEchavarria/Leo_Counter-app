@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Reporte\Queries\Movimientos\Distributions;
+namespace App\Application\Reporte\DTOs\Movimientos\Distributions;
 
 
 use App\Shared\Abstracts\DTOs\DTO;

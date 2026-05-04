@@ -5,7 +5,7 @@ namespace App\Application\Cuenta\Queries\Handlers;
 use App\Application\Cuenta\DTOs\CuentaFormOptionsDTO;
 use App\Application\Cuenta\Contracts\Queries\Executors\FormOptions\ListTipoCuentaForFormContract;
 use App\Application\Cuenta\Contracts\Queries\Executors\FormOptions\ListPropietarioForFormContract;
-use App\Application\Cuenta\Contracts\Queries\ListCuentasQueryContract;
+use App\Application\Cuenta\Queries\ListCuentaFormOptionsQuery;
 
 /**
  * Handler for getting form options for cuenta forms
@@ -17,7 +17,7 @@ final readonly class ListCuentaFormOptionsHandler
         private ListTipoCuentaForFormContract $tipoCuentaForForm,
     ) {}
 
-    public function __invoke( ListCuentasQueryContract $query ): CuentaFormOptionsDTO
+    public function __invoke( ListCuentaFormOptionsQuery $query ): CuentaFormOptionsDTO
     {
         return new CuentaFormOptionsDTO(
             propietarios: $this->propietarioForForm->execute(),

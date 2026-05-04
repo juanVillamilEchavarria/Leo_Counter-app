@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Categoria\Persistence\Repositories\Eloquent;
 
 use App\Domains\Categoria\Contracts\Repositories\CategoriaReadRepositoryContract;
-use App\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentReadRepository;
+use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentReadRepository;
 use App\Models\Categoria\Categoria;
 use Illuminate\Database\Eloquent\Collection;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;

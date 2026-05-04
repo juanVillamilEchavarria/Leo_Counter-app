@@ -15,6 +15,7 @@ export default function Index({
 }:{
   cuentas : {data: Cuenta[]}
 }) {
+  console.log(cuentas.data)
   const {item, modal, open, close, setItem}= useModalItem<Cuenta>()
   const {handleSubmit}= useCuenta({method: 'delete', id: item?.id})
 

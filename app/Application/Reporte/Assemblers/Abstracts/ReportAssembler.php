@@ -30,7 +30,7 @@ abstract class ReportAssembler implements AssemblerContract{
     }
     public function assemble(ReporteQueryResult $results): mixed
     {
-        // Garantiza que todas las implementaciones de reportes esten validadas
+        // Garantiza que todas las implementaciones de reportes esten validadas, devolviendo null si el reporte no existe
         if(!$results->get($this->statisticType)){
             return null;
         }

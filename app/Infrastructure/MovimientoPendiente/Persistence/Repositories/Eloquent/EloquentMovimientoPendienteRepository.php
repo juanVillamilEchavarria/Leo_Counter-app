@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\MovimientoPendiente\Persistence\Repositories\Eloquent;
 
-use App\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentRepository;
+use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentRepository;
 use App\Domains\MovimientoPendiente\Contracts\Repositories\MovimientoPendienteRepositoryContract;
 use App\Models\MovimientoPendiente\MovimientoPendiente;
 

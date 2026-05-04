@@ -17,7 +17,7 @@ use App\Shared\Infrastructure\Framework\Laravel\Collections\LaravelCollection;
  */
 final readonly class EloquentListPropietarioForForm implements ListPropietarioForFormContract
 {
-    public function execute(QueryContract $query): CollectionContract
+    public function execute(): CollectionContract
     {
         $propietarios = Propietario::all(['id', 'nombre']);
 

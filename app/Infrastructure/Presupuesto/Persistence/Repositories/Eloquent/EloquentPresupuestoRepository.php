@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Presupuesto\Persistence\Repositories\Eloquent;
 
-use App\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentRepository;
+use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentRepository;
 use App\Domains\Presupuesto\Contracts\Repositories\PresupuestoRepositoryContract;
 use App\Models\Presupuesto\Presupuesto;
 

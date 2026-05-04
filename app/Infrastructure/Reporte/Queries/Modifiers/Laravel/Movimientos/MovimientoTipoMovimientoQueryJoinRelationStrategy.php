@@ -10,14 +10,11 @@ use App\Shared\Enums\ComparativeOperators;
 
 final class MovimientoTipoMovimientoQueryJoinRelationStrategy extends QueryJoinRelationStrategy
 {
-    public function __construct()
-    {
-        $this->table = MovimientoQueryRelationParam::TABLE->value;
-        $this->relationTable = 'tipo_movimientos';
-        $this->relationColumn = 'movimientos.tipo_movimiento_id';
-        $this->comparativeColumn = 'tipo_movimientos.id';
-        $this->joinOperator = ComparativeOperators::EQUALS;
-    }
+     protected string $table = MovimientoQueryRelationParam::TABLE->value;
+        protected string $relationTable = 'tipo_movimientos';
+        protected string $relationColumn = 'movimientos.tipo_movimiento_id';
+        protected string $comparativeColumn = 'tipo_movimientos.id';
+        protected ComparativeOperators $joinOperator = ComparativeOperators::EQUALS;
 
     protected function dtoProperty(ReporteQuery $reporteQueryDTO): mixed
     {

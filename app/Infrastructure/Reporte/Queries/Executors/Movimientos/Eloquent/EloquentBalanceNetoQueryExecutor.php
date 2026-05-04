@@ -42,7 +42,7 @@ final class EloquentBalanceNetoQueryExecutor extends EloquentMovimientoTableQuer
         return $type instanceof MovimientoReportStatisticType && $type === MovimientoReportStatisticType::BALANCE_NETO;
     }
 
-    public function handle(ReporteQuery $dto): LaravelBalanceNetoCollection
+    public function execute(ReporteQuery $dto): LaravelBalanceNetoCollection
     {
         $date = $dto->granularityStrategy->groupBy();
 

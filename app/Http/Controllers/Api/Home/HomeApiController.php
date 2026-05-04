@@ -5,15 +5,20 @@ namespace App\Http\Controllers\Api\Home;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Application\Home\Services\HomeService;
+use App\Shared\Application\Contracts\Bus\QueryBus;
+use App\Application\Home\Queries\GenerateHomeReportQuery;
+use App\Application\Reporte\Resolvers\AssemblerResolver;
+use App\Http\Resources\Home\HomeResource;
 class HomeApiController extends Controller
 {
     public function __construct(
-        private HomeService $homeService
+        private QueryBus $queryBus
     )
     {
     }
     public function index(){
-        return $this->homeService->getReport();
+         $data = $this->queryBus->ask(new GenerateHomeReportQuery());
+         return HomeResource::make($data, app(AssemblerResolver::class))->response();
 
     }
 }

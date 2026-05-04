@@ -32,7 +32,7 @@ class StoreAndUpdateCategoriaRequest extends FormRequest
                                 ->where(fn ($q) => 
                                 $q->where('nombre', $this->nombre)
                                 )
-                                ->ignore(optional($this->route('categoria'))->id)
+                                ->ignore($this->id)
                             ],
             'descripcion' => 'nullable|string|max:1000',
         ];

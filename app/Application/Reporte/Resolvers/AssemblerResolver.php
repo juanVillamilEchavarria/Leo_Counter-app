@@ -4,14 +4,25 @@ namespace App\Application\Reporte\Resolvers;
 
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 use App\Domains\Reporte\ValueObjects\ReporteQueryResult;
+use App\Application\Reporte\Contracts\AssemblerContract;
 /**
  * Resolver de ensambladores de reportes
  * Responsabilidades:
  * - Buscar el ensamblador adecuado para el tipo de reporte y el resultado de la consulta
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @package App\Application\Reporte\Resolvers
+ * @since 1.0.0
+ * @version 1.0.0
  */
 final class AssemblerResolver
 {
-    public function __construct(private readonly iterable $assemblers) {}
+    /**
+     * @param iterable<AssemblerContract> $assemblers
+     */
+    public function __construct(
+        
+        private readonly iterable $assemblers
+    ) {}
 
     /**
      * Itera todos los ensambladores y busca el adecuado para el tipo de reporte y el resultado de la consulta
@@ -32,7 +43,7 @@ final class AssemblerResolver
         }
 
         throw new \InvalidArgumentException(
-            "No assembler found for type: {$type->value}"
+            "Assembler no encontrado para el tipo: {$type->value}"
         );
     }
     /**

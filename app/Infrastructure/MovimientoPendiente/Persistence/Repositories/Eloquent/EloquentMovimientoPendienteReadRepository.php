@@ -3,7 +3,7 @@
 namespace App\Infrastructure\MovimientoPendiente\Persistence\Repositories\Eloquent;
 
 use App\Domains\MovimientoPendiente\Contracts\Repositories\MovimientoPendienteReadRepositoryContract;
-use App\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentReadRepository;
+use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentReadRepository;
 use App\Models\MovimientoPendiente\MovimientoPendiente;
 
 class EloquentMovimientoPendienteReadRepository extends EloquentReadRepository implements MovimientoPendienteReadRepositoryContract {

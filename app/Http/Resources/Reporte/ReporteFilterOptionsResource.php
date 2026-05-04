@@ -15,7 +15,10 @@ class ReporteFilterOptionsResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'categorias'=> $this->categorias,
+            'categorias'=>[
+                'ingresos'=> $this->categorias->ingresos(),
+                'gastos'=> $this->categorias->gastos()
+            ],
             'cuentas'=> $this->cuentas
 
         ];

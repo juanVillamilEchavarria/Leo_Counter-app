@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Cuenta\Persistence\Repositories\Eloquent;
 
 use App\Domains\Cuenta\Contracts\Repositories\CuentaReadRepositoryContract;
-use App\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentReadRepository;
+use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentReadRepository;
 use App\Models\Cuenta\Cuenta;
 use Illuminate\Database\Eloquent\Collection;
 

@@ -6,22 +6,29 @@ use App\Application\Reporte\Contracts\Orchestrators\DomainReportQueryOrchestrato
 use App\Domains\Reporte\ValueObjects\ReporteQuery;
 use App\Domains\Reporte\ValueObjects\ReporteQueryResult;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
+use App\Application\Reporte\Contracts\Queries\ReporteQueryExecutorContract;
+use App\Domains\Reporte\Enums\Statistic\MovimientoReportStatisticType;
 
-final class MovimientoReportQueryOrchestrator implements DomainReportQueryOrchestrator
+final readonly class MovimientoReportQueryOrchestrator implements DomainReportQueryOrchestrator
 {
-    public function __construct(
-        /** @var iterable<ReporteQueryExecutorContract> */
-        private readonly iterable $handlers
-    ) {}
+     /** @var array<ReporteQueryExecutorContract> */
+    private array $executors;   
+    public function __construct(iterable $executors) {
+        $this->executors = is_array($executors) ? $executors : iterator_to_array($executors);
+    }
 
     public function get(ReportStatisticTypeContract $type, ReporteQuery $dto): mixed
     {
-        foreach ($this->handlers as $handler) {
-            if ($handler->supports($type)) {
-                return $handler->handle($dto);
+        
+        /**
+         * @var ReporteQueryExecutorContract $executor
+         */
+        foreach ($this->executors as $executor) {
+            if ($executor->supports($type)) {
+                return $executor->execute($dto);
             }
         }
-        throw new \InvalidArgumentException("No handler found for type: {$type->value}");
+       throw new \InvalidArgumentException("Executor no encontrado para el tipo: {$type->value}");
     }
 
     public function getMultiple(array $types, ReporteQuery $dto): ReporteQueryResult
@@ -30,6 +37,9 @@ final class MovimientoReportQueryOrchestrator implements DomainReportQueryOrches
 
         /** @var ReportStatisticTypeContract $type */
         foreach ($types as $type) {
+            if(!$type instanceof MovimientoReportStatisticType){
+                continue;
+            }
             $result = $result->add($type, $this->get($type, $dto));
         }
 

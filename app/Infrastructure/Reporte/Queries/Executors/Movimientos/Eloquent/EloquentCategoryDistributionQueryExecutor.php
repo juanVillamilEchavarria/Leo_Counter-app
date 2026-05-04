@@ -42,7 +42,7 @@ final class EloquentCategoryDistributionQueryExecutor extends EloquentMovimiento
         return $type instanceof MovimientoReportStatisticType && $type === MovimientoReportStatisticType::CATEGORY_DISTRIBUTION;
     }
 
-    public function handle(ReporteQuery $dto): LaravelCategoryDistributionCollection
+    public function execute(ReporteQuery $dto): LaravelCategoryDistributionCollection
     {
         $date = $dto->granularityStrategy->groupBy();
         $query = $this->movimientos()
@@ -61,6 +61,7 @@ final class EloquentCategoryDistributionQueryExecutor extends EloquentMovimiento
 
         $query->groupByRaw("categorias.id, categorias.nombre, tipo_movimientos.id, {$date}")
               ->orderByDesc('total');
+
         return EloquentCategoryDistributionBuilder::buildCollection($query->get());
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Presupuesto\Persistence\Repositories\Eloquent;
 
 use App\Domains\Presupuesto\Contracts\Repositories\PresupuestoReadRepositoryContract;
-use App\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentReadRepository;
+use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentReadRepository;
 use App\Models\Presupuesto\Presupuesto;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;

@@ -24,7 +24,7 @@ final class EloquentUsedBudgetQueryExecutor extends EloquentPresupuestoTableQuer
             && $type === PresupuestoReportStatisticType::USED_BUDGET;
     }
 
-    public function handle(ReporteQuery $dto): UsedBudgetVO
+    public function execute(ReporteQuery $dto): UsedBudgetVO
     {
         // Construir query base con JOIN
         $query = $this->presupuestos()

@@ -13,6 +13,6 @@ final class PresupuestoQueryExecutorServiceProvider extends ServiceProvider
         $this->app->tag([
             EloquentTotalPresupuestoQueryExecutor::class,
             EloquentUsedBudgetQueryExecutor::class,
-        ], 'reporte.presupuesto.query.handlers');
+        ], 'reporte.presupuesto.query.executors');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\AbstractPersistence\Repositories\Eloquent;
+namespace App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Shared\Domain\ValueObjects\WhereFilterQueryDTO;
@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Collection;
  * No gestiona operaciones de escritura; para eso existe EloquentRepository.
  *
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
- * @package App\Infrastructure\AbstractPersistence\Repositories\Eloquent
+ * @package App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent
  * @since 1.0.0
  */
 

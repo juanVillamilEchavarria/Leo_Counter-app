@@ -15,6 +15,7 @@ use App\Application\Cuenta\Queries\ListCuentaFormOptionsQuery;
 use App\Application\Cuenta\Queries\GetCuentaForEditQuery;
 use Illuminate\Contracts\Bus\Dispatcher;
 use App\Http\Requests\Cuenta\StoreAndUpdateCuentaRequest;
+use App\Http\Resources\Cuenta\CuentaResource;
 use Inertia\Inertia;
 
 class CuentaController extends Controller
@@ -35,11 +36,10 @@ class CuentaController extends Controller
     public function index()
     {
         $cuentas = $this->queryBus->ask(new ListAllCuentasWithDetailsQuery());
-
         return Inertia::render('Cuentas/Index', [
             'title' => 'Cuentas',
             'NoRegistros' => $this->NoRegistros(),
-            'cuentas' => $cuentas,
+            'cuentas' => CuentaResource::collection($cuentas),
         ]);
     }
 
@@ -113,7 +113,6 @@ class CuentaController extends Controller
             nombre: $request->nombre,
             notas: $request->notas,
             saldo_inicial: $request->saldo_inicial,
-            saldo_actual: $request->saldo_actual,
             propietario_id: $request->propietario_id,
             tipo_cuenta_id: $request->tipo_cuenta_id,
         );

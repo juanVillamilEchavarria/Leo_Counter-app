@@ -31,6 +31,8 @@ return [
     App\Providers\Reporte\MovimientoQueryRelationServiceProvider::class,
     App\Providers\Reporte\PresupuestoQueryExecutorServiceProvider::class,
     App\Providers\Reporte\PresupuestoQueryRelationServiceProvider::class,
+    App\Providers\Shared\Application\ListForFormProvider::class,
+    App\Providers\Shared\Application\QueryBusPovider::class,
     App\Providers\Shared\Infrastructure\Collections\SharedCollectionServiceProvider::class,
     App\Providers\TipoCuenta\TipoCuentaRepositoryProvider::class,
     App\Providers\TipoMovimiento\TipoMovimientoRepositoryProvider::class,

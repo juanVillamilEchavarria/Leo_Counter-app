@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\DB;
 abstract class EloquentMovimientoTableQueryExecutor extends EloquentTableQueryExecutor implements ReporteQueryExecutorContract
 {
     abstract public function supports(ReportStatisticTypeContract $type): bool;
-    abstract public function handle(ReporteQuery $dto): mixed;
+    abstract public function execute(ReporteQuery $dto): mixed;
 
     /**
      * Consulta base de movimientos

@@ -48,5 +48,5 @@ interface CategoriaRepositoryContract extends SoftDeleteRepositoryContract
      * @param int $id El ID de la categoría a buscar
      * @return Categoria|null La categoría encontrada o null si no se encuentra ninguna categoría con el ID proporcionado
      */
-    public function findById(int $id): ?Categoria;
+    public function findById(int $id): ?AggregateModelContract;
 }

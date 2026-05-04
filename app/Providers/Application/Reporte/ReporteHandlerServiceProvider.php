@@ -35,14 +35,14 @@ final class ReporteHandlerServiceProvider extends ServiceProvider
         $this->app->bind(
             MovimientoReportQueryOrchestrator::class,
             static fn($app): MovimientoReportQueryOrchestrator => new MovimientoReportQueryOrchestrator(
-                handlers: $app->tagged('reporte.movimiento.query.handlers'),
+                executors: $app->tagged('reporte.movimiento.query.executors'),
             )
         );
 
         $this->app->bind(
             PresupuestoReportQueryOrchestrator::class,
             static fn($app): PresupuestoReportQueryOrchestrator => new PresupuestoReportQueryOrchestrator(
-                handlers: $app->tagged('reporte.presupuesto.query.handlers'),
+                executors: $app->tagged('reporte.presupuesto.query.executors'),
             )
         );
 

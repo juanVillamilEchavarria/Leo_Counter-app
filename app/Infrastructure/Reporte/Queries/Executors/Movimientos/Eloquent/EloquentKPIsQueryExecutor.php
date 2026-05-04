@@ -39,7 +39,7 @@ final class EloquentKPIsQueryExecutor extends EloquentMovimientoTableQueryExecut
         return $type instanceof MovimientoReportStatisticType && $type === MovimientoReportStatisticType::KPIS;
     }
 
-    public function handle(ReporteQuery $dto): LaravelKPICollection
+    public function execute(ReporteQuery $dto): LaravelKPICollection
     {
         $date = $dto->granularityStrategy->groupBy();
 
@@ -58,6 +58,7 @@ final class EloquentKPIsQueryExecutor extends EloquentMovimientoTableQueryExecut
         $query = $this->baseQuery($dto->dateRange->startDate, $dto->dateRange->endDate, $query, "movimientos.fecha");
         $query = $this->relationResolver->resolve($query, $dto, MovimientoQueryRelationParam::TABLE);
         $query->groupByRaw($date);
+
 
         return EloquentKPIBuilder::buildCollection($query->get());
     }

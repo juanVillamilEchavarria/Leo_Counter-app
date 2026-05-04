@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\TipoCuenta\Persistence\Repositories\Eloquent;
 
-use App\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentRepository;
+use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentRepository;
 use App\Domains\TipoCuenta\Contracts\Repositories\TipoCuentaRepositoryContract;
 use App\Models\TipoCuenta\TipoCuenta;
 

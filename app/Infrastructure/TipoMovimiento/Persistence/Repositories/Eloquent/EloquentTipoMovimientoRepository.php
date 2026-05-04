@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\TipoMovimiento\Persistence\Repositories\Eloquent;
 
-use App\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentRepository;
+use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentRepository;
 use App\Domains\TipoMovimiento\Contracts\Repositories\TipoMovimientoRepositoryContract;
 use App\Models\TipoMovimiento\TipoMovimiento;
 

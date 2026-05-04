@@ -15,22 +15,22 @@ interface IncomeExpenseCollectionContract extends CollectionContract {
     /**
     * Promedio de ingresos por periodo, es decir monto de ingresos / Numero de periodos
     */
-    public function ingresosPeriodAverage(): float;
+    public function ingresosPeriodAverage(): ?float;
     
     /**
      * Promedio de gastos por periodo, es decir monto de gastos / Numero de periodos
      */
 
-    public function gastosPeriodAverage(): float;
+    public function gastosPeriodAverage(): ?float;
     
 
     /**
      * Promedio total de ingresos, es decir Monto de ingresos / Numero de movimientos tipo ingreso
      */
-    public function ingresosIndividualAverage(): float;
+    public function ingresosIndividualAverage(): ?float;
     /**
      * Promedio total de gastos, es decir Monto de gastos / Numero de movimientos tipo gasto
      */
 
-    public function gastosIndividualAverage(): float;
+    public function gastosIndividualAverage(): ?float;
 }

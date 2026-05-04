@@ -30,5 +30,5 @@ interface ReporteQueryExecutorContract
      * @param ReporteQuery $dto
      * @return mixed
      */
-    public function handle(ReporteQuery $dto): mixed;
+    public function execute(ReporteQuery $dto): mixed;
 }

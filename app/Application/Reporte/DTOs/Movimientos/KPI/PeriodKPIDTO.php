@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Application\Reporte\Queries\Movimientos\KPI;
+namespace App\Application\Reporte\DTOs\Movimientos\KPI;
 use App\Shared\Abstracts\DTOs\DTO;
-use App\Application\Reporte\Queries\Movimientos\KPI\VariationsKPIDTO;
-use App\Application\Reporte\Queries\Movimientos\KPI\TotalsKPIDTO;
+use App\Application\Reporte\DTOs\Movimientos\KPI\VariationsKPIDTO;
+use App\Application\Reporte\DTOs\Movimientos\KPI\TotalsKPIDTO;
 class PeriodKPIDTO extends DTO{
     public function __construct(
         public TotalsKPIDTO $totales,

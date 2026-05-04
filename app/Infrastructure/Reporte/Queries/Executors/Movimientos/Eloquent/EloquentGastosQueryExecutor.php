@@ -25,7 +25,7 @@ final class EloquentGastosQueryExecutor extends EloquentMovimientoTableQueryExec
         return $type instanceof MovimientoReportStatisticType && $type === MovimientoReportStatisticType::GASTOS;
     }
 
-    public function handle(ReporteQuery $dto): LaravelMetricPointCollection
+    public function execute(ReporteQuery $dto): LaravelMetricPointCollection
     {
         $query = $this->movimientos()
             ->selectRaw("{$dto->granularityStrategy->groupBy()} as fecha, {$this->getSumQuery('monto')} as monto");

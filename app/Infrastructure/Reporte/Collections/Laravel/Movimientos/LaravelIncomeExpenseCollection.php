@@ -19,7 +19,7 @@ final class LaravelIncomeExpenseCollection extends LaravelCollection implements 
     /**
      * Promedio de ingresos por periodo, es decir monto de ingresos / Numero de periodos
      */
-    public function ingresosPeriodAverage(): float
+    public function ingresosPeriodAverage(): ?float
     {
         return $this->avg(fn(IncomeExpensePeriodVO $mes) => $mes->ingresos);
     }
@@ -27,7 +27,7 @@ final class LaravelIncomeExpenseCollection extends LaravelCollection implements 
     /**
      * Promedio de gastos por periodo, es decir monto de gastos / Numero de periodos
      */
-    public function gastosPeriodAverage(): float
+    public function gastosPeriodAverage(): ?float
     {
         return $this->avg(fn(IncomeExpensePeriodVO $mes) => $mes->gastos);
     }
@@ -35,7 +35,7 @@ final class LaravelIncomeExpenseCollection extends LaravelCollection implements 
     /**
      * Promedio total de ingresos, es decir Monto de ingresos / Numero de movimientos tipo ingreso
      */
-    public function ingresosIndividualAverage(): float
+    public function ingresosIndividualAverage(): ?float
     {
         $totalIngresos = $this->totalIngresos();
         $totalIngresosCount = $this->totalIngresosCount();
@@ -45,29 +45,29 @@ final class LaravelIncomeExpenseCollection extends LaravelCollection implements 
     /**
      * Promedio total de gastos, es decir Monto de gastos / Numero de movimientos tipo gasto
      */
-    public function gastosIndividualAverage(): float
+    public function gastosIndividualAverage(): ?float
     {
         $totalGastos = $this->totalGastos();
         $totalGastosCount = $this->totalGastosCount();
         return AverageService::average($totalGastos, $totalGastosCount);
     }
 
-    private function totalIngresos(): float
+    private function totalIngresos(): ?float
     {
         return $this->sum(fn(IncomeExpensePeriodVO $mes) => $mes->ingresos);
     }
 
-    private function totalGastos(): float
+    private function totalGastos(): ?float
     {
         return $this->sum(fn(IncomeExpensePeriodVO $mes) => $mes->gastos);
     }
 
-    private function totalIngresosCount(): int
+    private function totalIngresosCount(): ?int
     {
         return $this->sum(fn(IncomeExpensePeriodVO $mes) => $mes->count_ingresos);
     }
 
-    private function totalGastosCount(): int
+    private function totalGastosCount(): ?int
     {
         return $this->sum(fn(IncomeExpensePeriodVO $mes) => $mes->count_gastos);
     }
