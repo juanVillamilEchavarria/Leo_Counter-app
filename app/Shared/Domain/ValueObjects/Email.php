@@ -1,13 +1,17 @@
 <?php
 
-namespace App\Shared\ValueObjects;
+namespace App\Shared\Domain\ValueObjects;
 
 /**
  * Value Object para representar un correo electrónico, valida su formato.
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @version 1.0.0
+ * @since 1.0.0
  */
-final class Email{
+final readonly class Email{
+    private string $value;
     public function __construct(
-        public string $value
+         string $value
     )
     {
         if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {

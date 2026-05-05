@@ -18,15 +18,17 @@ export default function Index({
   data 
 }:{
   propietarios: {data:PropietarioTableData[]}
-  data ?: {data: PropietarioShowData}
+  data ?:  PropietarioShowData
 }) {
   useEffect(()=>{
     if(data){
-      setItem(data.data)
+      setItem(data)
     }
   },[data])
   const {item, modal, open, close, setItem}= useModalItem<PropietarioShowData>()
   const {handleSubmit}= usePropietario({method: 'delete', id: item?.id})
+
+  console.log(data)
 
   return (
     <SectionTransition>

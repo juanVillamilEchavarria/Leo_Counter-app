@@ -16,7 +16,7 @@ use App\Shared\Infrastructure\Framework\Laravel\Collections\LaravelCollection;
  * @since 1.0.0
  * @version 1.0.0
  */
-final readonly class EloquentListAllCategoriesWithDetailsExecutor implements CategoriaQueryExecutorContract{
+final readonly class EloquentListAllCategoriesWithDetailsQueryExecutor implements CategoriaQueryExecutorContract{
     private function relations (){
         return [
             'tipoMovimiento'

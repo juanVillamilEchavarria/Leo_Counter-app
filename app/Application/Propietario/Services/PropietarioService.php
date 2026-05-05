@@ -1,5 +1,6 @@
 <?php
 
+/*
 namespace App\Application\Propietario\Services;
 
 use App\Domains\Propietario\Contracts\Repositories\PropietarioReadRepositoryContract;
@@ -45,3 +46,4 @@ class PropietarioService{
         return PropietarioResource::collection($this->propietarioReadRepository->getAll());
     }
 }
+*/

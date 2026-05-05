@@ -10,9 +10,9 @@ use App\Shared\Infrastructure\Framework\Laravel\Collections\LaravelCollection;
 use Illuminate\Database\Query\Builder;
 
 /**
- * Executor for listing all cuentas with details using Eloquent
+ * QueryExecutor for listing all cuentas with details using Eloquent
  */
-final readonly class EloquentListAllCuentasWithDetailsExecutor implements CuentaQueryExecutorContract
+final readonly class EloquentListAllCuentasWithDetailsQueryExecutor implements CuentaQueryExecutorContract
 {
     private function relations(): array
 {

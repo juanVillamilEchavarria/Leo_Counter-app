@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Infrastructure\Reporte\Queries\Executors\Movimientos\Eloquent;
+namespace Tests\Unit\Infrastructure\Reporte\Queries\QueryExecutors\Movimientos\Eloquent;
 
 use App\Domains\Reporte\Enums\Statistic\MovimientoReportStatisticType;
 use App\Domains\Reporte\ValueObjects\DateRange;

@@ -12,7 +12,7 @@ use App\Shared\Domain\Contracts\CollectionContract;
 final readonly class ListAllCuentasWithDetailsHandler
 {
     public function __construct(
-        private CuentaQueryExecutorContract $listCuentasExecutor,
+        private CuentaQueryExecutorContract $listCuentasQueryExecutor,
     ) {}
 
     /**
@@ -22,6 +22,6 @@ final readonly class ListAllCuentasWithDetailsHandler
      */
     public function __invoke(ListAllCuentasWithDetailsQuery $query): CollectionContract
     {
-        return $this->listCuentasExecutor->execute($query);
+        return $this->listCuentasQueryExecutor->execute($query);
     }
 }

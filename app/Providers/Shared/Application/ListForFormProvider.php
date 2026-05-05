@@ -3,10 +3,10 @@
 namespace App\Providers\Shared\Application;
 
 use Illuminate\Support\ServiceProvider;
-use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListCuentaForFormContract;
-use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListCategoriaForFormContract;
-use App\Infrastructure\Cuenta\Queries\Executors\Eloquent\EloquentListCuentaForFormExecutor;
-use App\Infrastructure\Categoria\Queries\Executors\Eloquent\EloquentListCategoriaForFormExecutor;
+use App\Shared\Application\Contracts\Queries\QueryExecutors\FormOptions\ListCuentaForFormContract;
+use App\Shared\Application\Contracts\Queries\QueryExecutors\FormOptions\ListCategoriaForFormContract;
+use App\Infrastructure\Cuenta\Queries\Executors\Eloquent\EloquentListCuentaForFormQueryExecutor;
+use App\Infrastructure\Categoria\Queries\Executors\Eloquent\EloquentListCategoriaForFormQueryExecutor;
 
 class ListForFormProvider extends ServiceProvider
 {
@@ -15,8 +15,8 @@ class ListForFormProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(ListCuentaForFormContract::class, EloquentListCuentaForFormExecutor::class);
-        $this->app->singleton(ListCategoriaForFormContract::class, EloquentListCategoriaForFormExecutor::class);
+        $this->app->singleton(ListCuentaForFormContract::class, EloquentListCuentaForFormQueryExecutor::class);
+        $this->app->singleton(ListCategoriaForFormContract::class, EloquentListCategoriaForFormQueryExecutor::class);
     }
 
     /**

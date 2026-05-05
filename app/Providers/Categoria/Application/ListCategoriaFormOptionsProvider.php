@@ -2,8 +2,8 @@
 
 namespace App\Providers\Categoria\Application;
 use Illuminate\Support\ServiceProvider;
-use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListTipoMovimientoForFormContract;
-use App\Infrastructure\TipoMovimiento\Queries\Executors\Eloquent\EloquentListTipoMovimientoForFormExecutor;
+use App\Shared\Application\Contracts\Queries\QueryExecutors\FormOptions\ListTipoMovimientoForFormContract;
+use App\Infrastructure\TipoMovimiento\Queries\Executors\Eloquent\EloquentListTipoMovimientoForFormQueryExecutor;
 
 class ListCategoriaFormOptionsProvider extends ServiceProvider
 {
@@ -12,7 +12,7 @@ class ListCategoriaFormOptionsProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(ListTipoMovimientoForFormContract::class, EloquentListTipoMovimientoForFormExecutor::class);
+        $this->app->singleton(ListTipoMovimientoForFormContract::class, EloquentListTipoMovimientoForFormQueryExecutor::class);
     }
 
     /**

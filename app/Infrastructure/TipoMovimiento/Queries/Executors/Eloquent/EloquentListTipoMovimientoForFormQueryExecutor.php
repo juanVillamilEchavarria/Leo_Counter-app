@@ -1,7 +1,7 @@
 <?php
 namespace App\Infrastructure\TipoMovimiento\Queries\Executors\Eloquent;
 use App\Models\TipoMovimiento\TipoMovimiento;
-use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListTipoMovimientoForFormContract;
+use App\Shared\Application\Contracts\Queries\QueryExecutors\FormOptions\ListTipoMovimientoForFormContract;
 use App\Shared\Infrastructure\Framework\Laravel\Collections\LaravelCollection;
 
 /**
@@ -13,7 +13,7 @@ use App\Shared\Infrastructure\Framework\Laravel\Collections\LaravelCollection;
  * @since 1.0.0
  * @version 1.0.0
  */
-final readonly class EloquentListTipoMovimientoForFormExecutor implements ListTipoMovimientoForFormContract
+final readonly class EloquentListTipoMovimientoForFormQueryExecutor implements ListTipoMovimientoForFormContract
 {
     public function execute(): LaravelCollection
     {

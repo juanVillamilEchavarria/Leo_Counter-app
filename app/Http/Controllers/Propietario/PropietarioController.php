@@ -3,22 +3,32 @@
 namespace App\Http\Controllers\Propietario;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Application\Propietario\Services\PropietarioService;
+use App\Shared\Application\Contracts\Bus\QueryBus;
+use App\Application\Propietario\Commands\StorePropietarioCommand;
+use App\Application\Propietario\Commands\UpdatePropietarioCommand;
+use App\Application\Propietario\Commands\DestroyPropietarioCommand;
+use App\Application\Propietario\Queries\ListAllPropietariosWithDetailsQuery;
+use App\Application\Propietario\Queries\GetPropietariosRecordsCountQuery;
+use App\Application\Propietario\Queries\GetPropietarioForEditQuery;
+use App\Application\Propietario\Queries\GetPropietarioForShowQuery;
 use App\Http\Requests\Propietario\StoreAndUpdatePropietarioRequest;
-use App\Models\Propietario\Propietario;
+use App\Http\Resources\Propietario\PropietarioResource;
+use App\Application\Propietario\Contracts\Queries\Executors\GetNumberOfCuentasForPropietarioQueryExecutorContract;
+use Illuminate\Contracts\Bus\Dispatcher;
 use Inertia\Inertia;
 
 class PropietarioController extends Controller
 {
     public function __construct(
-        private PropietarioService $propietarioService
-    ){}
-    protected function props(string $title = 'Propietarios') : array{
+        private QueryBus $queryBus,
+        private Dispatcher $dispatcher,
+    ) {}
+
+    protected function props(string $title = 'Propietarios'): array
+    {
         return [
             'title' => $title,
-            'NoRegistros' => $this->propietarioService->getRecordsCount(),
-
+            'NoRegistros' => $this->queryBus->ask(new GetPropietariosRecordsCountQuery()),
         ];
     }
 
@@ -27,11 +37,12 @@ class PropietarioController extends Controller
      */
     public function index()
     {
-        $propietarios = $this->propietarioService->getAll();
-        $props = array_merge($this->props(),[
-            'propietarios' => $propietarios
-        ]);
-        return Inertia::render('Propietarios/Index',$props);
+        $propietarios = $this->queryBus->ask(new ListAllPropietariosWithDetailsQuery());
+
+        return Inertia::render('Propietarios/Index', array_merge($this->props(), [
+            'propietarios' => PropietarioResource::collection(
+                resource:$propietarios)
+        ]));
     }
 
     /**
@@ -39,7 +50,7 @@ class PropietarioController extends Controller
      */
     public function create()
     {
-       return Inertia::render('Propietarios/Create',$this->props('Crear Propietario'));
+        return Inertia::render('Propietarios/Create', $this->props('Crear Propietario'));
     }
 
     /**
@@ -47,51 +58,66 @@ class PropietarioController extends Controller
      */
     public function store(StoreAndUpdatePropietarioRequest $request)
     {
-        $this->propietarioService->store($request->validated());
-        Inertia::flash('success','Propietario creado con exito');
+        $this->dispatcher->dispatch(new StorePropietarioCommand(
+            nombre: $request->nombre,
+            apellido: $request->apellido,
+            telefono: $request->telefono,
+            email: $request->email,
+        ));
+
+        Inertia::flash('success', 'Propietario creado con éxito');
         return redirect()->route('propietarios.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Propietario $propietario)
+    public function show(int $id)
     {
-        $props = array_merge($this->props('Detalle Propietario'),[
-            'propietarios' => $this->propietarioService->getAll(),
-            'data'=> $this->propietarioService->getWithDetails($propietario)
-        ]);
-          return Inertia::render('Propietarios/Index',$props);
+        $propietario = $this->queryBus->ask(new GetPropietarioForShowQuery(id: $id));
+
+        return Inertia::render('Propietarios/Index', array_merge($this->props('Detalle Propietario'), [
+            'propietarios' => $this->queryBus->ask(new ListAllPropietariosWithDetailsQuery()),
+            'data' => $propietario,
+        ]));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Propietario $propietario)
+    public function edit(int $id)
     {
-        $props = array_merge($this->props('Editar Propietario'),[
-            'data' => $propietario
-        ]);
-        return Inertia::render('Propietarios/Edit',$props);
+        $propietario = $this->queryBus->ask(new GetPropietarioForEditQuery(id: $id));
+
+        return Inertia::render('Propietarios/Edit', array_merge($this->props('Editar Propietario'), [
+            'data' => $propietario,
+        ]));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreAndUpdatePropietarioRequest $request, Propietario $propietario)
+    public function update(StoreAndUpdatePropietarioRequest $request, int $id)
     {
-        $this->propietarioService->update($propietario, $request->validated());
-        Inertia::flash('success','Propietario actualizado con exito');
+        $this->dispatcher->dispatch(new UpdatePropietarioCommand(
+            id: $id,
+            nombre: $request->nombre,
+            apellido: $request->apellido,
+            telefono: $request->telefono,
+            email: $request->email,
+        ));
+
+        Inertia::flash('success', 'Propietario actualizado con éxito');
         return redirect()->route('propietarios.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Propietario $propietario)
+    public function destroy(int $id)
     {
-        $this->propietarioService->destroy($propietario);
-        Inertia::flash('success','Propietario eliminado con exito');
+        $this->dispatcher->dispatch(new DestroyPropietarioCommand(id: $id));
+        Inertia::flash('success', 'Propietario eliminado con éxito');
         return redirect()->route('propietarios.index');
     }
 }

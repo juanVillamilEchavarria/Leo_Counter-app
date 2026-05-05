@@ -18,9 +18,9 @@ final readonly class ListAllCategoriesWithDetailsHandler
 {
     public function __construct(
         /**
-         * @param CategoriaQueryExecutorContract $listCategoriesExecutor El ejecutor encargado de manejar la consulta de listar categorías
+         * @param CategoriaQueryExecutorContract $listCategoriesQueryExecutor El ejecutor encargado de manejar la consulta de listar categorías
          */
-        private CategoriaQueryExecutorContract $listCategoriesExecutor
+        private CategoriaQueryExecutorContract $listCategoriesQueryExecutor
     ) {
     }
 
@@ -31,6 +31,6 @@ final readonly class ListAllCategoriesWithDetailsHandler
      */
     public function __invoke(ListAllCategoriesWithDetailsQuery $query) : CollectionContract
     {
-        return $this->listCategoriesExecutor->execute($query);
+        return $this->listCategoriesQueryExecutor->execute($query);
     }
 }

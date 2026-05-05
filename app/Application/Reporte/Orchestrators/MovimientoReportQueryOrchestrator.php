@@ -28,7 +28,7 @@ final readonly class MovimientoReportQueryOrchestrator implements DomainReportQu
                 return $executor->execute($dto);
             }
         }
-       throw new \InvalidArgumentException("Executor no encontrado para el tipo: {$type->value}");
+       throw new \InvalidArgumentException("QueryExecutor no encontrado para el tipo: {$type->value}");
     }
 
     public function getMultiple(array $types, ReporteQuery $dto): ReporteQueryResult

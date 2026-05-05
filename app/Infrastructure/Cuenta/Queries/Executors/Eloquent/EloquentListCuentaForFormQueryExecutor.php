@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Cuenta\Queries\Executors\Eloquent;
 
-use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListCuentaForFormContract;
+use App\Shared\Application\Contracts\Queries\QueryExecutors\FormOptions\ListCuentaForFormContract;
 
 use App\Models\Cuenta\Cuenta;
 use App\Shared\Domain\Contracts\CollectionContract;
@@ -18,7 +18,7 @@ use Override;
  * @version 1.0.0
  * @since 1.0.0
  */
-final readonly class EloquentListCuentaForFormExecutor implements ListCuentaForFormContract{
+final readonly class EloquentListCuentaForFormQueryExecutor implements ListCuentaForFormContract{
     #[Override]
     public function execute(): CollectionContract
     {

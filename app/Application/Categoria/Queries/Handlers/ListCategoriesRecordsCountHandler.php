@@ -2,7 +2,7 @@
 
 namespace App\Application\Categoria\Queries\Handlers;
 
-use App\Application\Categoria\Contracts\Queries\Executors\CategoriaQueryExecutorContract;
+use App\Application\Categoria\Contracts\Queries\Executors\GetCategoriaRecordsCountQueryExecutorContract;
 use App\Application\Categoria\Queries\ListCategoriesRecordsCountQuery;
 /**
  * Handler encargado de manejar la consulta para obtener el conteo de registros de categorías.
@@ -15,7 +15,7 @@ use App\Application\Categoria\Queries\ListCategoriesRecordsCountQuery;
 final readonly class ListCategoriesRecordsCountHandler 
 {
     public function __construct(
-        private CategoriaQueryExecutorContract $executor
+        private GetCategoriaRecordsCountQueryExecutorContract $executor
     )
     {
     }
@@ -26,6 +26,6 @@ final readonly class ListCategoriesRecordsCountHandler
      */
     public function __invoke(ListCategoriesRecordsCountQuery $query): int
     {
-        return $this->executor->execute($query);
+        return $this->executor->execute();
     }
 }

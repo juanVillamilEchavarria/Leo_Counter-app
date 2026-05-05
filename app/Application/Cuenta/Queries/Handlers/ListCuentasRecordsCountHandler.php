@@ -2,7 +2,7 @@
 
 namespace App\Application\Cuenta\Queries\Handlers;
 
-use App\Application\Cuenta\Contracts\Queries\Executors\CuentaQueryExecutorContract;
+use App\Application\Cuenta\Contracts\Queries\Executors\GetCuentaRecordsCountQueryExecutorContract;
 use App\Application\Cuenta\Queries\ListCuentasRecordsCountQuery;
 
 /**
@@ -11,11 +11,11 @@ use App\Application\Cuenta\Queries\ListCuentasRecordsCountQuery;
 final readonly class ListCuentasRecordsCountHandler
 {
     public function __construct(
-        private CuentaQueryExecutorContract $executor,
+        private GetCuentaRecordsCountQueryExecutorContract $executor,
     ) {}
 
     public function __invoke(ListCuentasRecordsCountQuery $query): int
     {
-        return $this->executor->execute($query);
+        return $this->executor->execute();
     }
 }

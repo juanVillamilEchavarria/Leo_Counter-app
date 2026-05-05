@@ -13,7 +13,7 @@ use App\Shared\Domain\Contracts\CollectionContract;
  * @since 1.0.0
  * @version 1.0.0
  */
- interface ListCategoryFormOptionExecutorContract
+ interface ListCategoryFormOptionQueryExecutorContract
 {
     /**
      * Ejecuta la consulta para obtener la opcion.

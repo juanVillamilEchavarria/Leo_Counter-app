@@ -1,14 +1,16 @@
 <?php
 
 namespace App\Providers\Categoria\Application;
+
 use App\Application\Categoria\Queries\Handlers\ListAllCategoriesWithDetailsHandler;
 use App\Application\Categoria\Queries\Handlers\ListCategoriesRecordsCountHandler;
 use App\Application\Categoria\Queries\Handlers\ListCategoryFormOptionsHandler;
-use App\Infrastructure\Categoria\Queries\Executors\Eloquent\EloquentListAllCategoriesWithDetailsExecutor;
-use App\Infrastructure\Categoria\Queries\Executors\Eloquent\EloquentListCategoriesRecordsCountExecutor;
-use App\Infrastructure\TipoMovimiento\Queries\Executors\Eloquent\EloquentListAllTipoMovimientoExecutor;
+use App\Infrastructure\Categoria\Queries\Executors\Eloquent\EloquentListAllCategoriesWithDetailsQueryExecutor;
+use App\Infrastructure\Categoria\Queries\Executors\Eloquent\EloquentGetCategoriesRecordsCountQueryExecutor;
+use App\Infrastructure\TipoMovimiento\Queries\Executors\Eloquent\EloquentListAllTipoMovimientoQueryExecutor;
 use App\Application\Categoria\Contracts\Queries\Executors\CategoriaQueryExecutorContract;
-use App\Application\Categoria\Contracts\Queries\Executors\ListCategoryFormOptionExecutorContract;
+use App\Application\Categoria\Contracts\Queries\Executors\GetCategoriaRecordsCountQueryExecutorContract;
+use App\Application\Categoria\Contracts\Queries\Executors\ListCategoryFormOptionQueryExecutorContract;
 use Illuminate\Support\ServiceProvider;
 
 class CategoriaQueryExecutorsProvider extends ServiceProvider
@@ -20,15 +22,15 @@ class CategoriaQueryExecutorsProvider extends ServiceProvider
     {
         $this->app->when(ListAllCategoriesWithDetailsHandler::class)
             ->needs(CategoriaQueryExecutorContract::class)
-            ->give(EloquentListAllCategoriesWithDetailsExecutor::class);
+            ->give(EloquentListAllCategoriesWithDetailsQueryExecutor::class);
 
         $this->app->when(ListCategoriesRecordsCountHandler::class)
-            ->needs(CategoriaQueryExecutorContract::class)
-            ->give(EloquentListCategoriesRecordsCountExecutor::class);
+            ->needs(GetCategoriaRecordsCountQueryExecutorContract::class)
+            ->give(EloquentGetCategoriesRecordsCountQueryExecutor::class);
 
         $this->app->when(ListCategoryFormOptionsHandler::class)
-            ->needs(ListCategoryFormOptionExecutorContract::class)
-            ->give(EloquentListAllTipoMovimientoExecutor::class);
+            ->needs(ListCategoryFormOptionQueryExecutorContract::class)
+            ->give(EloquentListAllTipoMovimientoQueryExecutor::class);
     }
 
     /**
