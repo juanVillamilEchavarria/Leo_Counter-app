@@ -11,11 +11,11 @@ namespace App\Application\Categoria\Commands;
 final readonly class ToggleCategoryCommand
 {
     /**
-     * @param int $id El ID de la categoría a la que se le va a alternar el valor del atributo
+     * @param string $id El ID de la categoría a la que se le va a alternar el valor del atributo
      * @param string $attribute El nombre del atributo booleano que se va a alternar
      */
     public function __construct(
-        public int $id,
+        public string $id,
         public string $attribute
     ){}
 }

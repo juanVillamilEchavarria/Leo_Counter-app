@@ -3,22 +3,28 @@
 namespace App\Domains\Categoria\Aggregates;
 
 use App\Domains\Categoria\Contracts\CategoriaUniquenessCheckerContract;
-use App\Shared\Abstracts\Exceptions\DomainException;
+use App\Domains\Categoria\Exceptions\CannotStoreCategoriaException;
+use App\Domains\Categoria\Exceptions\CannotUpdateCategoriaException;
+use App\Domains\Categoria\ValueObjects\CategoriaId;
 use App\Shared\Domain\Contracts\AggregateModelContract;
 
-final readonly class Categoria implements AggregateModelContract{
+/**
+ * Agregado raíz del dominio Categoría.
+ * Representa una categoría de movimientos con nombre, tipo y descripción opcional.
+ *
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @package App\Domains\Categoria\Aggregates
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+final readonly class Categoria implements AggregateModelContract
+{
     private function __construct(
-        /**
-         * @param string $nombre El nombre de la categoría. Este atributo es esencial para identificar la categoría y debe ser único dentro del sistema.
-         * @param int $tipo_movimiento_id El identificador del tipo de movimiento asociado a la categoría. Este atributo es crucial para clasificar la categoría dentro de un tipo específico de movimiento, como ingresos o gastos.
-         * @param string|null $descripcion Una descripción opcional de la categoría
-         * @param CategoriaUniquenessCheckerContract $categoriaUniquenessChecker Un servicio que se utiliza para verificar la unicidad de la categoría antes de su creación o actualización, asegurando que no existan categorías duplicadas en el sistema.
-         */
+        private CategoriaId $id,
         private string $nombre,
         private int $tipo_movimiento_id,
         private ?string $descripcion = null
-    )
-    {
+    ) {
     }
 
     /**
@@ -31,15 +37,23 @@ final readonly class Categoria implements AggregateModelContract{
      * @return self La nueva instancia de la clase Categoria.
      */
     public static function create(
+        CategoriaId $id,
         string $nombre,
         int $tipo_movimiento_id,
         ?string $descripcion,
         CategoriaUniquenessCheckerContract $checker
     ): self {
         if ($checker->exists($nombre, $tipo_movimiento_id)) {
-            throw new DomainException("La categoría con nombre $nombre y tipo de movimiento $tipo_movimiento_id ya existe.");
+            throw new CannotStoreCategoriaException(
+                message: "La categoría con nombre $nombre y tipo de movimiento $tipo_movimiento_id ya existe."
+            );
         }
-        return new self($nombre, $tipo_movimiento_id, $descripcion);
+        return new self(
+            id: $id,
+            nombre: $nombre,
+            tipo_movimiento_id: $tipo_movimiento_id,
+            descripcion: $descripcion
+        );
     }
     /**
      * Reconstituye (hidrata) una instancia de la clase Categoria a partir de sus atributos.
@@ -49,35 +63,37 @@ final readonly class Categoria implements AggregateModelContract{
      * @return self La instancia reconstituida de la clase Categoria.
      */
 
-    public  static function reconstitute(
+    public static function reconstitute(
+        CategoriaId $id,
         string $nombre,
         int $tipo_movimiento_id,
         ?string $descripcion
     ): self
     {
-        return new self($nombre, $tipo_movimiento_id, $descripcion);
-        
+        return new self(
+            id: $id,
+            nombre: $nombre,
+            tipo_movimiento_id: $tipo_movimiento_id,
+            descripcion: $descripcion
+        );
     }
-        /**
-     * Actualiza los datos de la categoría.
-     * Verifica si ya existe una categoría con el mismo nombre y tipo de movimiento antes de actualizarla.
-     * @param string $nombre El nombre de la categoría.
-     * @param int $tipo_movimiento_id El identificador del tipo de movimiento asociado a la categoría.
-     * @param string|null $descripcion Una descripción opcional de la categoría.
-     * @param CategoriaUniquenessCheckerContract $checker Un servicio que se utiliza para verificar la unicidad de la categoría.
-     * @return self La nueva instancia de la clase Categoria.
-     */
     public function updateData(
         string $nombre,
         int $tipo_movimiento_id,
         ?string $descripcion,
-        CategoriaUniquenessCheckerContract $checker,
-        int $id
+        CategoriaUniquenessCheckerContract $checker
     ): self {
-        if ($checker->exists($nombre, $tipo_movimiento_id, $id)) {
-            throw new DomainException("La categoría con nombre $nombre y tipo de movimiento $tipo_movimiento_id ya existe.");
+        if ($checker->exists($nombre, $tipo_movimiento_id, $this->id->getValue())) {
+            throw new CannotUpdateCategoriaException(
+                message: "La categoría con nombre $nombre y tipo de movimiento $tipo_movimiento_id ya existe."
+            );
         }
-        return new self($nombre, $tipo_movimiento_id, $descripcion);
+        return new self(
+            id: $this->id,
+            nombre: $nombre,
+            tipo_movimiento_id: $tipo_movimiento_id,
+            descripcion: $descripcion
+        );
     }
 
     public function getNombre(): string
@@ -93,5 +109,15 @@ final readonly class Categoria implements AggregateModelContract{
     public function getDescripcion(): ?string
     {
         return $this->descripcion;
+    }
+
+    /**
+     * Retorna la identidad única de la categoría.
+     *
+     * @return CategoriaId Identidad de la categoría (UUID v7)
+     */
+    public function getId(): CategoriaId
+    {
+        return $this->id;
     }
 }

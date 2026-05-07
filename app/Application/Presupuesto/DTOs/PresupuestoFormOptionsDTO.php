@@ -2,12 +2,17 @@
 
 namespace App\Application\Presupuesto\DTOs;
 
-use App\Shared\Abstracts\DTOs\DTO;
-use Illuminate\Database\Eloquent\Collection;
-class PresupuestoFormOptionsDTO extends DTO
+use App\Shared\Domain\Contracts\CollectionContract;
+/**
+ * DTO para encapsular las opciones de formularios de presupuesto.
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+final readonly class PresupuestoFormOptionsDTO 
 {
     public function __construct(
-        public ?Collection $categorias,
+        public CollectionContract $categorias,
     )
     {
     }

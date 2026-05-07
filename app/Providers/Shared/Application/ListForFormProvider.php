@@ -3,8 +3,8 @@
 namespace App\Providers\Shared\Application;
 
 use Illuminate\Support\ServiceProvider;
-use App\Shared\Application\Contracts\Queries\QueryExecutors\FormOptions\ListCuentaForFormContract;
-use App\Shared\Application\Contracts\Queries\QueryExecutors\FormOptions\ListCategoriaForFormContract;
+use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListCuentaForFormContract;
+use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListCategoriaForFormContract;
 use App\Infrastructure\Cuenta\Queries\Executors\Eloquent\EloquentListCuentaForFormQueryExecutor;
 use App\Infrastructure\Categoria\Queries\Executors\Eloquent\EloquentListCategoriaForFormQueryExecutor;
 

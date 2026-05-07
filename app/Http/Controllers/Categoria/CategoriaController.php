@@ -83,7 +83,7 @@ class CategoriaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(int $id)
+    public function edit(string $id)
     {
         $categoria = $this->queryBus->ask(new GetCategoryForEditQuery(id: $id));
         return Inertia::render('Categorias/Edit',[
@@ -97,7 +97,7 @@ class CategoriaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreAndUpdateCategoriaRequest $request, int $id)
+    public function update(StoreAndUpdateCategoriaRequest $request, string $id)
     {
         $command = new UpdateCategoryCommand(
             id: $id,
@@ -113,7 +113,7 @@ class CategoriaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id)
+    public function destroy(string $id)
     {
         $command = new DestroyCategoryCommand(
                 id: $id
@@ -123,7 +123,7 @@ class CategoriaController extends Controller
         return redirect()->route('categorias.index');
     }
 
-    public function toggleEsFijo(int $id, string $attribute)
+    public function toggleEsFijo(string $id, string $attribute)
     {
         $this->dispatcher->dispatch(new ToggleCategoryCommand(id: $id, attribute: $attribute));
         Inertia::flash('success','Categoria actualizada con exito');

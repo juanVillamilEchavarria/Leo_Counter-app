@@ -14,5 +14,5 @@ interface CategoriaUniquenessCheckerContract
     /**
      * Verifica si ya existe una categoría con el mismo nombre y tipo de movimiento.
      */
-    public function exists(string $nombre, int $tipoMovimientoId, ?int $excludeId = null): bool;
+    public function exists(string $nombre, int $tipoMovimientoId, ?string $excludeId = null): bool;
 }

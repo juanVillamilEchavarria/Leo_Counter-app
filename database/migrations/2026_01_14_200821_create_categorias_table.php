@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('categorias', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('nombre');
             $table->foreignId('tipo_movimiento_id')->constrained('tipo_movimientos')->onDelete('cascade');
             $table->boolean('es_fijo')->default(false); // este no hace referencia a si el monto es fijo, sino a si es una categoria fija (ej: alquiler) o algo que sea siempre el mismo cada x tiempo

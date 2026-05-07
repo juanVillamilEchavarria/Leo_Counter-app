@@ -14,6 +14,8 @@ class MovimientoFijo extends Model
 {
     use HasFactory;
 
+      public $incrementing = false;
+    protected $keyType = 'string';
     protected $casts = [
         'active'=>'boolean',
         'registrar_automatico' =>'boolean'

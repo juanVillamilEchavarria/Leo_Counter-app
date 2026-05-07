@@ -25,7 +25,7 @@ class StoreAndUpdatePresupuestoMesActualRequest extends FormRequest
         return [
             'categoria_id' => [
                     'required',
-                    'integer',
+                    'string',
                     'exists:categorias,id',
                     Rule::unique('presupuestos')
                         ->where(fn ($q) =>

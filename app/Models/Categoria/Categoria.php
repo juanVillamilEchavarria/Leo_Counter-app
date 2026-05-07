@@ -12,10 +12,14 @@ class Categoria extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public $incrementing = false;
+    protected $keyType = 'string';
+
     protected $casts = [
         'es_fijo'=>'boolean'
     ];
     protected $fillable = [
+        'id',
         'nombre',
         'tipo_movimiento_id',
         'es_fijo',

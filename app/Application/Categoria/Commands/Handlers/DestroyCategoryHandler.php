@@ -3,6 +3,7 @@
 namespace App\Application\Categoria\Commands\Handlers;
 use App\Domains\Categoria\Contracts\Repositories\CategoriaRepositoryContract;
 use App\Application\Categoria\Commands\DestroyCategoryCommand;
+use App\Domains\Categoria\ValueObjects\CategoriaId;
 
 /**
  * Handler para el comando de eliminación de categorías.
@@ -20,6 +21,6 @@ final readonly class DestroyCategoryHandler{
 
     public function __invoke(DestroyCategoryCommand $command)
     {
-        return $this->repository->destroy($command->id);
+        return $this->repository->destroy(new CategoriaId($command->id));
     }
 }

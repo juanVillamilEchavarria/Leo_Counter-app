@@ -5,9 +5,9 @@ import { useRoute } from "ziggy-js"
 const route= useRoute()
 
 export type Presupuesto ={
-    id: number
+    id: string
     user_id: number
-    categoria_id: number
+    categoria_id: string
     monto: number
     descripcion?: string
     fecha_inicio: string,

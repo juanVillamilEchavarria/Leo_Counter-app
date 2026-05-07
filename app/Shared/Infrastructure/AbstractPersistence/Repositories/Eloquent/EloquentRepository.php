@@ -2,8 +2,10 @@
 
 namespace App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent;
 
+use App\Models\Cuenta\Cuenta;
 use App\Shared\Contracts\DTOs\DTOContract;
 use App\Shared\Domain\Contracts\AggregateModelContract;
+use App\Shared\Domain\Contracts\AggregateModelIdContract;
 use Illuminate\Database\Eloquent\Model;
 use App\Shared\Exceptions\InvalidToggleAttributeException;
 /**
@@ -55,7 +57,7 @@ abstract class EloquentRepository {
       * @param DTOContract $dto
      * @return Model
      */
-    public function store ( object $aggregate): AggregateModelContract{
+    public function store ( AggregateModelContract $aggregate): AggregateModelContract{
         $record = $this->create($this->mapAggregateToAttributes($aggregate));
         return $this->mapDatabaseRecordToAggregate($record);
     }
@@ -66,8 +68,8 @@ abstract class EloquentRepository {
      * @return bool
      */
 
-    public function update( object $aggregate, int $id) : bool{
-        $model = ($this->model)::find($id);
+    public function update( AggregateModelContract $aggregate) : bool{
+        $model = ($this->model)::find($aggregate->getId());
         if (!$model) {
             return false;
         }
@@ -79,7 +81,7 @@ abstract class EloquentRepository {
       * @param string $attribute
      * @return bool
      */
-    public function toggle(int $id, string $attribute): bool{
+    public function toggle(AggregateModelIdContract $id, string $attribute): bool{
         $model = ($this->model)::find($id);
         if (!$model) {
             return false;
@@ -93,12 +95,12 @@ abstract class EloquentRepository {
       * @param Model $model
      * @return bool
      */
-    public function destroy(int $id): bool{
+    public function destroy(AggregateModelIdContract $id): bool{
         $model = ($this->model)::find($id);
         return $model ? $model->delete() : false;
     }
 
-    public function findById(int $id): ?AggregateModelContract{
+    public function findById(AggregateModelIdContract $id): ?AggregateModelContract{
         $model = ($this->model)::find($id);
         return $model ? $this->mapDatabaseRecordToAggregate($model) : null;
     }
@@ -108,7 +110,7 @@ abstract class EloquentRepository {
      * @return bool
      */
 
-    public function restore(int $id) : bool{
+    public function restore(AggregateModelIdContract $id) : bool{
         $model = ($this->model)::withTrashed()->find($id);
         return $model ? $model->restore() : false;
     }
@@ -118,7 +120,7 @@ abstract class EloquentRepository {
       * @param Model $model
      * @return bool
      */
-    public function hardDelete(int $id): bool{
+    public function hardDelete(AggregateModelIdContract $id): bool{
         $model = ($this->model)::withTrashed()->find($id);
         return $model ? $model->forceDelete() : false;
     }

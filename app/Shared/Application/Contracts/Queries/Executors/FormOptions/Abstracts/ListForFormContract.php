@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Application\Contracts\Queries\QueryExecutors\FormOptions\Abstracts;
+namespace App\Shared\Application\Contracts\Queries\Executors\FormOptions\Abstracts;
 
 use App\Shared\Domain\Contracts\CollectionContract;
 
@@ -8,7 +8,7 @@ use App\Shared\Domain\Contracts\CollectionContract;
  * Contrato que debe implementar cada dominio que sea una opción para los formularios, para ser listada en el formulario de creación y edicion.
  *Debe traer unicamente los campos necesarios, entre mas sencillos sea el query, mejor.
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
- * @package App\Shared\Application\Contracts\Queries\QueryExecutors
+ * @package App\Shared\Application\Contracts\Queries\Executors
  * @since 1.0.0
  * @version 1.0.0
  */

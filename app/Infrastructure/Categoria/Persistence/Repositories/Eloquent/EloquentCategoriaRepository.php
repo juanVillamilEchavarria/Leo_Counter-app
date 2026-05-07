@@ -6,6 +6,7 @@ use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\Eloquent
 use App\Domains\Categoria\Contracts\Repositories\CategoriaRepositoryContract;
 use App\Models\Categoria\Categoria;
 use App\Domains\Categoria\Aggregates\Categoria as CategoriaAggregate;
+use App\Domains\Categoria\ValueObjects\CategoriaId;
 use App\Shared\Domain\Contracts\AggregateModelContract;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,6 +23,7 @@ class EloquentCategoriaRepository extends EloquentRepository implements Categori
     {
         assert($aggregate instanceof CategoriaAggregate, 'El argumento debe ser una instancia de CategoriaAggregate');
         return [
+            'id' => $aggregate->getId()->getValue(),
             'nombre' => $aggregate->getNombre(),
             'tipo_movimiento_id' => $aggregate->getTipoMovimientoId(),
             'descripcion' => $aggregate->getDescripcion()
@@ -35,6 +37,7 @@ class EloquentCategoriaRepository extends EloquentRepository implements Categori
     protected function mapDatabaseRecordToAggregate(Model $model): AggregateModelContract
     {
         return CategoriaAggregate::reconstitute(
+            id: new CategoriaId($model->id),
             nombre: $model->nombre,
             tipo_movimiento_id: $model->tipo_movimiento_id,
             descripcion: $model->descripcion

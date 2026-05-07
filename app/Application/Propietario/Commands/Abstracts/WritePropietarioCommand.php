@@ -12,6 +12,7 @@ namespace App\Application\Propietario\Commands\Abstracts;
  */
 abstract readonly class WritePropietarioCommand
 {
+
     public function __construct(
         public string $nombre,
         public string $apellido,

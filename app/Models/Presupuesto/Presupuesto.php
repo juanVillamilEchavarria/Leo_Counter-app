@@ -11,8 +11,11 @@ use App\Models\User;
 class Presupuesto extends Model
 {
     use HasFactory, SoftDeletes;
+    public $incrementing = false;      
+    protected $keyType = 'string'; 
 
     protected $fillable = [
+        'id',
         'categoria_id',
         'monto',
         'descripcion',

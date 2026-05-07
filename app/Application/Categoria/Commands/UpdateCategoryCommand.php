@@ -14,7 +14,7 @@ use App\Application\Categoria\Commands\Abstracts\WriteCategoryCommand;
  * @version 1.0.0
  */
 final readonly class UpdateCategoryCommand extends WriteCategoryCommand{
-    public function __construct(public int $id, string $nombre, int $tipo_movimiento_id, ?string $descripcion = null)
+    public function __construct(public string $id, string $nombre, int $tipo_movimiento_id, ?string $descripcion = null)
     {
          parent::__construct($nombre, $tipo_movimiento_id, $descripcion);
     }

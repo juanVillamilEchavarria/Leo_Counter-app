@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('movimiento_fijos', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('nombre');
             $table->text('descripcion')->nullable();
             $table->foreignId('tipo_movimiento_id')->constrained('tipo_movimientos');
-            $table->foreignId('categoria_id')->constrained('categorias');
-            $table->foreignId('cuenta_id')->constrained('cuentas');
+            $table->foreignUuid('categoria_id')->constrained('categorias');
+            $table->foreignUuid('cuenta_id')->constrained('cuentas');
             $table->foreignId('frecuencia_movimiento_id')->constrained('frecuencia_movimientos');
             $table->decimal('monto', 12, 2);
             $table->date('fecha_proximo');

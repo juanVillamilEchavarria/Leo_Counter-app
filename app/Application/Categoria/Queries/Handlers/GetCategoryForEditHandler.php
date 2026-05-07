@@ -6,6 +6,7 @@ use App\Domains\Categoria\Contracts\Repositories\CategoriaRepositoryContract;
 use App\Application\Categoria\Queries\GetCategoryForEditQuery;
 use App\Application\Categoria\DTOs\CategoryForEditDTO;
 use App\Application\Categoria\Exceptions\CannotFindCategoriaException;
+use App\Domains\Categoria\ValueObjects\CategoriaId;
 
 /**
  * Handler encargado de procesar el query GetCategoryForEditQuery, que tiene la responsabilidad de obtener los datos necesarios para editar una categoría específica.
@@ -32,10 +33,11 @@ final readonly class GetCategoryForEditHandler
      */
     public function __invoke(GetCategoryForEditQuery $query): CategoryForEditDTO
     {
-        $categoria = $this->categoriaRepository->findById($query->id);
+        $categoria = $this->categoriaRepository->findById(new CategoriaId($query->id));
         if(!$categoria){
             throw new CannotFindCategoriaException();
         }
+        assert($categoria instanceof \App\Domains\Categoria\Aggregates\Categoria);
 
         return new CategoryForEditDTO(
             id: $query->id,

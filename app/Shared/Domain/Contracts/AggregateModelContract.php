@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Shared\Domain\Contracts;
-
+use App\Shared\Domain\Contracts\AggregateModelIdContract;
 /**
  * Contrato que representa un modelo de agregado de dominio.
  * Todos los agregados deben implementar este contrato para ser reconocidos por los repositorios y servicios que trabajan con agregados.
@@ -12,4 +12,5 @@ namespace App\Shared\Domain\Contracts;
  */
 interface AggregateModelContract
 {
+    public function getId(): AggregateModelIdContract;
 }

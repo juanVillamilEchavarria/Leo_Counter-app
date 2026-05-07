@@ -198,10 +198,10 @@ abstract class EloquentReadRepository{
      * - Retorna null si no existe.
      * - Para lanzar excepción, usar firstOrFail().
      *
-     * @param int $id
+     * @param string|int $id
      * @return Model|null
      */
-    public function find(int $id): ?Model{
+    public function find(string|int $id): ?Model{
         return $this->model::find($id);
     }
 
@@ -211,8 +211,10 @@ abstract class EloquentReadRepository{
      * IMPORTANTE:
      * - Retorna null si no existe.
      * - Para lanzar excepción, usar findOrFail().
+     * @param string|int $id
+     * @return Model|null
      */
-    public function findWithTrashed(int $id): ?Model{
+    public function findWithTrashed(string|int $id): ?Model{
         return $this->model::withTrashed()->find($id);
     }
     /**

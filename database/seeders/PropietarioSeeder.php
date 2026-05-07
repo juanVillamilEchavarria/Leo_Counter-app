@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Propietario\Propietario;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Ramsey\Uuid\Uuid;
 
 class PropietarioSeeder extends Seeder
 {
@@ -13,6 +14,9 @@ class PropietarioSeeder extends Seeder
      */
     public function run(): void
     {
-        Propietario::factory()->count(10)->create();
+         Propietario::factory()
+            ->count(10)
+            ->sequence(fn ($sequence) => ['id' => Uuid::uuid7()->toString()])
+            ->create();
     }
 }

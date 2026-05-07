@@ -14,7 +14,7 @@ use App\Shared\Abstracts\DTOs\DTO;
 final class CategoryForEditDTO extends DTO
 {
     public function __construct(
-        public int $id,
+        public string $id,
         public string $nombre,
         public int $tipo_movimiento_id,
         public ?string $descripcion,

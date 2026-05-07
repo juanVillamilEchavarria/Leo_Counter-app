@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Categoria\Queries\Executors\Eloquent;
 
 use App\Shared\Infrastructure\Framework\Laravel\Collections\FormOptions\LaravelCategoriaForFormCollection;
-use App\Shared\Application\Contracts\Queries\QueryExecutors\FormOptions\ListCategoriaForFormContract;
+use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListCategoriaForFormContract;
 
 use App\Models\Categoria\Categoria;
 use App\Shared\Domain\Contracts\CollectionContract;

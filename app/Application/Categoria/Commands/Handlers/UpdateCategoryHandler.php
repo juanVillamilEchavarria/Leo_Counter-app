@@ -4,8 +4,10 @@ namespace App\Application\Categoria\Commands\Handlers;
 
 use App\Application\Categoria\Exceptions\CannotFindCategoriaException;
 use App\Application\Categoria\Commands\UpdateCategoryCommand;
+use App\Domains\Categoria\Aggregates\Categoria as CategoriaAggregate;
 use App\Domains\Categoria\Contracts\Repositories\CategoriaRepositoryContract;
 use App\Domains\Categoria\Contracts\CategoriaUniquenessCheckerContract;
+use App\Domains\Categoria\ValueObjects\CategoriaId;
 /**
  * Handler para el comando de actualización de categorías.
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
@@ -23,17 +25,17 @@ final readonly class UpdateCategoryHandler{
 
     public function __invoke(UpdateCategoryCommand $command)
     {
-        $existing = $this->repository->findById($command->id);
+        $existing = $this->repository->findById(new CategoriaId($command->id));
         if(!$existing){
             throw new CannotFindCategoriaException();
         }
+        assert($existing instanceof CategoriaAggregate);
         $categoria = $existing->updateData(
             nombre: $command->nombre,
             tipo_movimiento_id: $command->tipo_movimiento_id,
             descripcion: $command->descripcion,
-            checker: $this->uniquenessChecker,
-            id: $command->id
+            checker: $this->uniquenessChecker
         );
-        return $this->repository->update($categoria, $command->id);
+        return $this->repository->update($categoria);
     }
 }

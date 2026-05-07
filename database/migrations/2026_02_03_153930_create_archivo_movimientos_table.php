@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('archivo_movimientos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('movimiento_id')->constrained('movimientos')->onDelete('cascade');
+            $table->foreignUuid('movimiento_id')->constrained('movimientos')->onDelete('cascade');
             $table->string('nombre_original');
             $table->string('nombre_guardado');
             $table->string('disk')->default('local');

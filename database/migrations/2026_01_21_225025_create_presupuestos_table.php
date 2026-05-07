@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('presupuestos', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('categoria_id')->constrained('categorias');
+            $table->uuid('id')->primary();
+            $table->foreignUuid('categoria_id')->constrained('categorias');
             $table->date('periodo');
             $table->decimal('monto', 12, 2);
-            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignUuid('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->text('descripcion')->nullable();
             $table->softDeletes();
             $table->timestamps();

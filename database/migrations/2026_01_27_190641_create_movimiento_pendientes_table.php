@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('movimiento_pendientes', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('nombre');
-            $table->foreignId('categoria_id')->constrained('categorias');
-            $table->foreignId('cuenta_id')->constrained('cuentas');
-            $table->foreignId('movimiento_fijo_id')->nullable()->constrained('movimiento_fijos')->nullOnDelete();
+            $table->foreignUuid('categoria_id')->constrained('categorias');
+            $table->foreignUuid('cuenta_id')->constrained('cuentas');
+            $table->foreignUuid('movimiento_fijo_id')->nullable()->constrained('movimiento_fijos')->nullOnDelete();
             $table->foreignId('tipo_movimiento_id')->constrained('tipo_movimientos');
             $table->decimal('monto', 12, 2);
             $table->date('fecha_programada');

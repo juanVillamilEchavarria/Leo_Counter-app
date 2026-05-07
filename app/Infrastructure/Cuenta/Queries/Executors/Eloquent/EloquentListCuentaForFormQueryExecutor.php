@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Cuenta\Queries\Executors\Eloquent;
 
-use App\Shared\Application\Contracts\Queries\QueryExecutors\FormOptions\ListCuentaForFormContract;
+use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListCuentaForFormContract;
 
 use App\Models\Cuenta\Cuenta;
 use App\Shared\Domain\Contracts\CollectionContract;

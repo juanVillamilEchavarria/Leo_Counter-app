@@ -12,7 +12,7 @@ use App\Shared\Application\Contracts\Queries\QueryContract;
  */
 final readonly class GetCategoryForEditQuery implements QueryContract{
     public function __construct(
-        public int $id
+        public string $id
     )
     {
     }

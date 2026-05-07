@@ -6,7 +6,8 @@ use App\Domains\Categoria\Aggregates\Categoria;
 use App\Application\Categoria\Commands\StoreCategoryCommand;
 use App\Domains\Categoria\Contracts\CategoriaUniquenessCheckerContract;
 use App\Domains\Categoria\Contracts\Repositories\CategoriaRepositoryContract;
-
+use App\Domains\Categoria\ValueObjects\CategoriaId;
+use App\Shared\Domain\Contracts\IdGeneratorContract;
 /**
  * Handler para el comando de creación de categorías.
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
@@ -17,7 +18,8 @@ use App\Domains\Categoria\Contracts\Repositories\CategoriaRepositoryContract;
 final readonly class StoreCategoryHandler{
     public function __construct(
         private CategoriaRepositoryContract $repository,
-        private CategoriaUniquenessCheckerContract $uniquenessChecker
+        private CategoriaUniquenessCheckerContract $uniquenessChecker,
+        private IdGeneratorContract $idGenerator
     )
     {
     }
@@ -25,6 +27,7 @@ final readonly class StoreCategoryHandler{
     public function __invoke(StoreCategoryCommand $command)
     {
         $categoria = Categoria::create(
+            id: CategoriaId::generate($this->idGenerator),
             nombre: $command->nombre,
             tipo_movimiento_id: $command->tipo_movimiento_id,
             descripcion: $command->descripcion,

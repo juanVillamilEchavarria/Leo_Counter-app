@@ -15,7 +15,6 @@ class PresupuestoRepositoryProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(PresupuestoReadRepositoryContract::class, EloquentPresupuestoReadRepository::class);
         $this->app->singleton(PresupuestoRepositoryContract::class, EloquentPresupuestoRepository::class);
     }
 

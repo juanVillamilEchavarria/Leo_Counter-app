@@ -3,8 +3,8 @@
 namespace App\Application\Reporte\Queries\Handlers;
 
 use App\Application\Reporte\Queries\ListReporteFormOptionsQuery;
-use App\Shared\Application\Contracts\Queries\QueryExecutors\FormOptions\ListCuentaForFormContract;
-use App\Shared\Application\Contracts\Queries\QueryExecutors\FormOptions\ListCategoriaForFormContract;
+use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListCuentaForFormContract;
+use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListCategoriaForFormContract;
 use App\Application\Reporte\DTOs\Form\ReporteFormOptionsDTO;
 use App\Shared\Application\Contracts\Collections\FormOptions\CategoriaForFormCollectionContract;
 

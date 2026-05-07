@@ -25,7 +25,7 @@ export default function PresupuestoMesActualForm({
               id="categoria_id"
               value={data?.categoria_id}
               onChange={
-                (e: React.ChangeEvent<HTMLSelectElement>) => setData('categoria_id', Number(e.target.value))
+                (e: React.ChangeEvent<HTMLSelectElement>) => setData('categoria_id', e.target.value)
               }
               iterable={options.categorias}
               className={` ${errors.categoria_id && 'border-red-500! text-red-500!'} `}

@@ -101,6 +101,7 @@ final readonly class Propietario implements AggregateModelContract
         );
     }
 
+    
     public function getNombre(): string
     {
         return $this->nombre;

@@ -5,7 +5,7 @@ namespace App\Application\Categoria\Queries\Handlers;
 use App\Application\Categoria\Queries\ListCategoryFormOptionsQuery;
 use App\Application\Categoria\Contracts\Queries\Executors\ListCategoryFormOptionQueryExecutorContract;
 use App\Application\Categoria\DTOs\CategoriaFormOptionsDTO;
-use App\Shared\Application\Contracts\Queries\QueryExecutors\FormOptions\ListTipoMovimientoForFormContract;
+use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListTipoMovimientoForFormContract;
 
 /**
  * Handler encargado de manejar la consulta para obtener las opciones necesarias para los formularios relacionados con categorías.

@@ -5,7 +5,7 @@ namespace App\Application\Categoria\Commands;
 final readonly class DestroyCategoryCommand
 {
     public function __construct(
-        public int $id
+        public string $id
     )
     {
     }

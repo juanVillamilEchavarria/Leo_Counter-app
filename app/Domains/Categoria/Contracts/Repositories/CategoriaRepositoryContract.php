@@ -2,11 +2,9 @@
 
 namespace App\Domains\Categoria\Contracts\Repositories;
 
-use App\Domains\Categoria\Aggregates\Categoria;
-use Illuminate\Database\Eloquent\Model;
-use App\Shared\Contracts\DTOs\DTOContract;
 use App\Shared\Contracts\Repositories\SoftDeleteRepositoryContract;
 use App\Shared\Domain\Contracts\AggregateModelContract;
+use App\Shared\Domain\Contracts\AggregateModelIdContract;
 
 /**
  * Contrato de implementación de repositorio de escritura para el modelo Categoria
@@ -19,34 +17,37 @@ interface CategoriaRepositoryContract extends SoftDeleteRepositoryContract
 {
     /**
      * Guardar un nuevo registro
-     * @param Categoria $categoria
-     * @return Model
+     * @param AggregateModelContract $categoria
+     * @return AggregateModelContract
      */
-    public function store(object $categoria): AggregateModelContract;
+    public function store(AggregateModelContract $categoria): AggregateModelContract;
+
     /**
      * Actualizar un registro existente
-     * @param Model $categoria
-     * @param DTOContract $updateCategoriaDTO
+     * @param AggregateModelContract $categoria
      * @return bool
      */
-    public function update(object $categoria, int $id): bool;
+    public function update(AggregateModelContract $categoria): bool;
+
     /**
      * Eliminar un registro existente
-     * @param Model $categoria
+     * @param AggregateModelIdContract $id
      * @return bool
      */
-    public function destroy(int $id): bool;
+    public function destroy(AggregateModelIdContract $id): bool;
+
     /**
      * Alterna el valor de un atributo booleano
-     * @param int $id El ID de la categoría a la que se le va a alternar el valor del atributo
+     * @param AggregateModelIdContract $id El ID de la categoría a la que se le va a alternar el valor del atributo
      * @param string $attribute El nombre del atributo booleano a alternar
      * @return bool
      */
-    public function toggle(int $id, string $attribute): bool;
+    public function toggle(AggregateModelIdContract $id, string $attribute): bool;
+
     /**
      * Busca una categoría por su ID
-     * @param int $id El ID de la categoría a buscar
-     * @return Categoria|null La categoría encontrada o null si no se encuentra ninguna categoría con el ID proporcionado
+     * @param AggregateModelIdContract $id El ID de la categoría a buscar
+     * @return AggregateModelContract|null La categoría encontrada o null si no se encuentra ninguna categoría con el ID proporcionado
      */
-    public function findById(int $id): ?AggregateModelContract;
+    public function findById(AggregateModelIdContract $id): ?AggregateModelContract;
 }

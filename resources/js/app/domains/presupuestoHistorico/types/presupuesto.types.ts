@@ -13,7 +13,7 @@ export const PresupuestoHistoricoApiActions = {
 }
 
 export interface Presupuesto extends SoftDeleteModel {
-    id: number
+    id: string
     user: string
     categoria: string
     monto: number

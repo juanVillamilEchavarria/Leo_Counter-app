@@ -2,21 +2,19 @@
 
 namespace App\Http\Controllers\Presupuesto;
 
+use App\Application\Presupuesto\Queries\GetHistoricPresupuestosRecordsCountQuery;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Application\Presupuesto\Services\PresupuestoService;
-use App\Domains\Presupuesto\Enums\PresupuestoVariants;
-
+use App\Shared\Application\Contracts\Bus\QueryBus;
 class PresupuestoHistoricoController extends Controller
 {
     public function __construct(
-        private PresupuestoService $presupuestoService
+        private QueryBus $queryBus
     ) {}
 
     public function index()
     {
-        $totalRecords = $this->presupuestoService->getRecordsCount(PresupuestoVariants::HISTORICO);
+        $totalRecords= $this->queryBus->ask(new GetHistoricPresupuestosRecordsCountQuery());
 
         return Inertia::render('Presupuestos/Historicos/Index', [
             'title' => 'Presupuestos Historicos',

@@ -6,7 +6,7 @@ use App\Models\Categoria\Categoria as CategoriaModel;
 
 final readonly class EloquentCategoriaUniquenessChecker implements CategoriaUniquenessCheckerContract
 {
-    public function exists(string $nombre, int $tipoMovimientoId, ?int $excludeId = null): bool
+    public function exists(string $nombre, int $tipoMovimientoId, ?string $excludeId = null): bool
     {
         $query = CategoriaModel::where('nombre', $nombre)
             ->where('tipo_movimiento_id', $tipoMovimientoId);
