@@ -4,6 +4,7 @@ namespace App\Application\Presupuesto\Queries\Handlers;
 
 use App\Application\Presupuesto\Queries\ListPresupuestoFormOptionsQuery;
 use App\Application\Presupuesto\DTOs\PresupuestoFormOptionsDTO;
+use App\Shared\Application\Contracts\Collections\FormOptions\CategoriaForFormCollectionContract;
 use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListCategoriaForFormContract;
 
 /**
@@ -22,8 +23,12 @@ final readonly class ListPresupuestoFormOptionsHandler
 
     public function __invoke(ListPresupuestoFormOptionsQuery $query): PresupuestoFormOptionsDTO
     {
+
        return new PresupuestoFormOptionsDTO(
-        categorias: $this->executor->execute()
+       /**
+        * @var CategoriaForFormCollectionContract
+        */
+        categorias: $this->executor->execute()->gastos()
        );
     }
 }

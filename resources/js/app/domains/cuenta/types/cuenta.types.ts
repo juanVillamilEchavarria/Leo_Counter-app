@@ -27,7 +27,7 @@ export interface Cuenta extends SoftDeleteModel {
   saldo_inicial: number
   saldo_actual: number
   tipo_cuenta_id: number,
-  propietario_id: number
+  propietario_id: string
   notas: string
   active: boolean
 }
@@ -56,4 +56,3 @@ export type CuentaFormProps = // declaramos las propiedades del formulario
     can_update_saldo : boolean
   }
 
-  

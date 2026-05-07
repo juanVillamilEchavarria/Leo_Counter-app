@@ -25,7 +25,7 @@ class StoreAndUpdateCuentaRequest extends FormRequest
             'nombre'=>['required', 'string', 'max:25'],
             'saldo_inicial'=>['required', 'numeric', 'min:0'],
             'tipo_cuenta_id'=>['required', 'numeric'],
-            'propietario_id'=>['required', 'numeric'],
+            'propietario_id'=>['required', 'string'],
             'notas'=>['nullable', 'string', 'max:255'],
         ];
     }

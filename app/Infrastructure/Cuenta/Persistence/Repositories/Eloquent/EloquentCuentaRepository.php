@@ -8,6 +8,7 @@ use App\Models\Cuenta\Cuenta;
 use App\Domains\Cuenta\Aggregates\Cuenta as CuentaAggregate;
 use App\Shared\Domain\Contracts\AggregateModelContract;
 use Illuminate\Database\Eloquent\Model;
+use App\Domains\Cuenta\ValueObjects\CuentaId;
 
 class EloquentCuentaRepository extends EloquentRepository implements CuentaRepositoryContract
 {
@@ -23,10 +24,11 @@ class EloquentCuentaRepository extends EloquentRepository implements CuentaRepos
     {
         assert($aggregate instanceof CuentaAggregate, 'El argumento debe ser una instancia de CuentaAggregate');
         return [
+            'id' => $aggregate->getId()->getValue(),
             'nombre' => $aggregate->getNombre(),
             'notas' => $aggregate->getNotas(),
             'saldo_inicial' => $aggregate->getSaldoInicial(),
-            'saldo_actual' => $aggregate->getSaldoActual(), 
+            'saldo_actual' => $aggregate->getSaldoActual(),
             'propietario_id' => $aggregate->getPropietarioId(),
             'tipo_cuenta_id' => $aggregate->getTipoCuentaId(),
             'active' => $aggregate->getActive(),
@@ -40,6 +42,7 @@ class EloquentCuentaRepository extends EloquentRepository implements CuentaRepos
     protected function mapDatabaseRecordToAggregate(Model $model): AggregateModelContract
     {
         return CuentaAggregate::reconstitute(
+            id: new CuentaId($model->id),
             nombre: $model->nombre,
             notas: $model->notas,
             saldo_inicial: $model->saldo_inicial,

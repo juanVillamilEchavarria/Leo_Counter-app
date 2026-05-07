@@ -2,6 +2,8 @@
 
 namespace App\Domains\Cuenta\Contracts;
 
+use App\Domains\Cuenta\ValueObjects\CuentaId;
+
 /**
  * Contrato que define la interfaz para verificar si se puede actualizar el saldo inicial de una cuenta especifica.
  * El que se pueda actualizar el saldo inicial de la cuenta, depende de que no tenga movimientos asociados
@@ -14,8 +16,8 @@ interface CuentaCanUpdateSaldoInicialCheckerContract
 {
     /**
      * Verifica si se puede actualizar el saldo de una cuenta especifica.
-     * @param int $cuentaId El id de la cuenta a verificar
+     * @param CuentaId $cuentaId El id de la cuenta a verificar
      * @return bool
      */
-    public function canUpdateSaldoInicial(int $cuentaId): bool;
+    public function canUpdateSaldoInicial(CuentaId $cuentaId): bool;
 }

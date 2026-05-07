@@ -12,11 +12,14 @@ class Cuenta extends Model
 {
   use HasFactory;
   use SoftDeletes;
+    public $incrementing = false;
+    protected $keyType = 'string';
 
   protected $casts = [
     'active'=>'boolean'
   ];
   protected $fillable = [
+      'id',
     'nombre',
     'saldo_inicial',
     'saldo_actual',

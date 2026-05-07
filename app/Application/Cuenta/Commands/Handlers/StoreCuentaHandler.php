@@ -5,6 +5,8 @@ namespace App\Application\Cuenta\Commands\Handlers;
 use App\Domains\Cuenta\Aggregates\Cuenta;
 use App\Application\Cuenta\Commands\StoreCuentaCommand;
 use App\Domains\Cuenta\Contracts\Repositories\CuentaRepositoryContract;
+use App\Shared\Domain\Contracts\IdGeneratorContract;
+use App\Domains\Cuenta\ValueObjects\CuentaId;
 
 /**
  * Handler encargado de crear una nueva Cuenta
@@ -16,12 +18,14 @@ use App\Domains\Cuenta\Contracts\Repositories\CuentaRepositoryContract;
 final readonly class StoreCuentaHandler
 {
     public function __construct(
-        private CuentaRepositoryContract $repository
+        private CuentaRepositoryContract $repository,
+        private IdGeneratorContract $idGenerator
     ) {}
 
     public function __invoke(StoreCuentaCommand $command)
     {
         $cuenta = Cuenta::create(
+            id: CuentaId::generate($this->idGenerator),
             nombre: $command->nombre,
             notas: $command->notas,
             saldo_inicial: $command->saldo_inicial,

@@ -10,11 +10,11 @@ use App\Application\Cuenta\Commands\Abstracts\WriteCuentaCommand;
 final readonly class UpdateCuentaCommand extends WriteCuentaCommand
 {
     public function __construct(
-        public int $id,
+        public string $id,
         string $nombre,
         ?string $notas,
         float $saldo_inicial,
-        int $propietario_id,
+        string $propietario_id,
         int $tipo_cuenta_id,
     ) {
         parent::__construct($nombre ,$notas, $saldo_inicial, $propietario_id, $tipo_cuenta_id);

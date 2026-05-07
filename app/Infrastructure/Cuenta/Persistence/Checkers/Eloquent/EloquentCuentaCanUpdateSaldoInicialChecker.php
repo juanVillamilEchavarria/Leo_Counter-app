@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Cuenta\Persistence\Checkers\Eloquent;
 
 use App\Domains\Cuenta\Contracts\CuentaCanUpdateSaldoInicialCheckerContract;
+use App\Domains\Cuenta\ValueObjects\CuentaId;
 use App\Models\Cuenta\Cuenta;
 
 /**
@@ -13,8 +14,12 @@ use App\Models\Cuenta\Cuenta;
  * @version 1.0.0
  */
 final readonly class EloquentCuentaCanUpdateSaldoInicialChecker implements CuentaCanUpdateSaldoInicialCheckerContract{
-    public function canUpdateSaldoInicial(int $cuentaId): bool
+    public function canUpdateSaldoInicial(CuentaId $cuentaId): bool
     {
-        return !Cuenta::find($cuentaId)->movimientos()->exists();
+        $model = Cuenta::find($cuentaId->getValue());
+        if (!$model) {
+            return false;
+        }
+        return !$model->movimientos()->exists();
     }
 }
