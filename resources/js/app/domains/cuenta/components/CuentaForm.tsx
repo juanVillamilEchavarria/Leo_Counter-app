@@ -23,7 +23,7 @@ export default function CuentaForm({
             <legend className="legend mt-5">Informacion de la cuenta</legend>
             <div className="formulario-campo">
                 <label htmlFor="nombre">Nombre</label>
-                <InputFillable 
+                <InputFillable
                     placeholder="Ej: Cuenta Mamá"
                     type="text"
                     name="nombre"
@@ -45,7 +45,7 @@ export default function CuentaForm({
             </div>
             <div className="formulario-campo">
                 <label htmlFor="saldo_inicial">Saldo Inicial</label>
-                <InputFillable 
+                <InputFillable
                     placeholder="Ej: 1000"
                     type="number"
                     name="saldo_inicial"
@@ -55,8 +55,8 @@ export default function CuentaForm({
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('saldo_inicial', Number(e.target.value))}
                     className={`
                             border-2 p-3 border-border text-foreground
-                            ${errors.saldo_inicial && 'border-red-500! text-red-500!'} 
-                            ${can_update_saldo === false && 'bg-muted cursor-not-allowed'} 
+                            ${errors.saldo_inicial && 'border-red-500! text-red-500!'}
+                            ${can_update_saldo === false && 'bg-muted cursor-not-allowed'}
                          `}
                     icon={`fa-solid fa-coins fa-xl top-6 text-muted-foreground ${errors.saldo_inicial && 'text-red-500!'} `}
                 />
@@ -71,9 +71,9 @@ export default function CuentaForm({
                 <div className="formulario-campo w-full">
                     <label htmlFor="tipo_cuenta_id">Tipo De Cuentas</label>
                     <select
-                            className={`select ${errors.tipo_cuenta_id && 'border-red-500! text-red-500!'}`} 
-                            name="tipo_cuenta_id" 
-                            id="tipo_cuenta_id" 
+                            className={`select ${errors.tipo_cuenta_id && 'border-red-500! text-red-500!'}`}
+                            name="tipo_cuenta_id"
+                            id="tipo_cuenta_id"
                             value={data?.tipo_cuenta_id ?? ''}
                             onChange={(e:React.ChangeEvent<HTMLSelectElement>)=> setData('tipo_cuenta_id', Number(e.target.value))}
                         >
@@ -92,12 +92,12 @@ export default function CuentaForm({
                 </div>
                 <div className="formulario-campo w-full">
                     <label htmlFor="propietario_id">Propietario</label>
-                    <select 
-                        className={`select ${errors.propietario_id && 'border-red-500! text-red-500!'}`} 
-                        name="propietario_id" 
+                    <select
+                        className={`select ${errors.propietario_id && 'border-red-500! text-red-500!'}`}
+                        name="propietario_id"
                         id="propietario_id"
                         value={data?.propietario_id ?? ''}
-                        onChange={(e:React.ChangeEvent<HTMLSelectElement>)=> setData('propietario_id', Number(e.target.value))}
+                        onChange={(e:React.ChangeEvent<HTMLSelectElement>)=> setData('propietario_id', e.target.value)}
                     >
                         <option value="">--Seleccione--</option>
                         {options?.propietarios?.map((propietario) => (
@@ -139,7 +139,7 @@ export default function CuentaForm({
 
         </form>
    </Card>
- 
+
 
   )
 }

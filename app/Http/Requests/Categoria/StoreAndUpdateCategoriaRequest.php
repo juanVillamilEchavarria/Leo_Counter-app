@@ -27,9 +27,9 @@ class StoreAndUpdateCategoriaRequest extends FormRequest
             'tipo_movimiento_id' => [
                                 'required',
                                 'integer',
-                                'exists:tipo_movimientos,id', 
+                                'exists:tipo_movimientos,id',
                                 Rule::unique('categorias')
-                                ->where(fn ($q) => 
+                                ->where(fn ($q) =>
                                 $q->where('nombre', $this->nombre)
                                 )
                                 ->ignore($this->id)

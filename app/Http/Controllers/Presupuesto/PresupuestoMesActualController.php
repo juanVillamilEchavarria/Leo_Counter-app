@@ -16,6 +16,7 @@ use App\Application\Presupuesto\Queries\GetPresupuestoForEditQuery;
 use App\Application\Presupuesto\Queries\ListAllCurrentMonthPresupuestosQuery;
 use App\Application\Presupuesto\Queries\ListPresupuestoFormOptionsQuery;
 use App\Domains\Presupuesto\Aggregates\Presupuesto;
+use App\Application\Presupuesto\DTOs\PresupuestoEditDTO;
 use Carbon\Carbon;
 use Inertia\Inertia;
 use Illuminate\Contracts\Bus\Dispatcher;
@@ -77,9 +78,10 @@ class PresupuestoMesActualController extends Controller
         /**
          * @var Presupuesto $presupuesto
          */
- 
+
         $presupuesto = $this->queryBus->ask(new GetPresupuestoForEditQuery(id: $id));
-        dd($presupuesto);
+
+
         return Inertia::render('Presupuestos/MesActual/Edit', [
             'title' => 'Editar presupuesto',
             'NoRegistros' => $this->NoRegistros(),

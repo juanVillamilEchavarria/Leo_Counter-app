@@ -9,6 +9,7 @@ export default function Edit({
     options,
     data
 }: CreateAndEditViewWithOptionsProps<Presupuesto, PresupuestoMesActualFormOptions>) {
+    console.log(data);
     const { form, handleSubmit } = usePresupuestoMesActual({ method: 'put', id: data?.id, data })
     return (
         <div className="section">

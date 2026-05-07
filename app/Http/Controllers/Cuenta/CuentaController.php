@@ -86,7 +86,7 @@ class CuentaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(int $id)
+    public function edit(string $id)
     {
         $options = $this->queryBus->ask(new ListCuentaFormOptionsQuery());
 
@@ -106,7 +106,7 @@ class CuentaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreAndUpdateCuentaRequest $request, int $id)
+    public function update(StoreAndUpdateCuentaRequest $request, string $id)
     {
         $command = new UpdateCuentaCommand(
             id: $id,
@@ -125,7 +125,7 @@ class CuentaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id)
+    public function destroy(string $id)
     {
         $command = new DestroyCuentaCommand(
             id: $id,
@@ -136,7 +136,7 @@ class CuentaController extends Controller
         return redirect()->route('cuentas.index');
     }
 
-    public function toggleActive(int $id, string $attribute)
+    public function toggleActive(string $id, string $attribute)
     {
         $this->dispatcher->dispatch(new ToggleCuentaCommand(
             id: $id,

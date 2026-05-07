@@ -21,7 +21,7 @@ interface CuentaReadRepositoryContract extends SoftDeleteReadRepositoryContract 
     public function paginate(TableQueryDTO $dto, array $initialWheres = []): LengthAwarePaginator;
     public function getAllDeleted(): Collection;
     public function where(array $wheres): Builder;
-    public function find(int $id): ?Model;
+    public function find(string|int $id): ?Model;
     public function whereAttr(string $attribute, $value): Builder;
     public function getForOptions(): Collection;
     public function getRecordsCount(): int;

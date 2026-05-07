@@ -17,7 +17,7 @@ export const PropietarioActions={
     delete : (id: number) => route('propietarios.destroy', {propietario:id})
 }as const
 export type Propietario={
-    id: number,
+    id: string,
     nombre: string,
     apellido: string,
     email: string,

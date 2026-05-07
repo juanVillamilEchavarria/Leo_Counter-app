@@ -79,7 +79,7 @@ final readonly class Presupuesto implements AggregateModelContract
      * Actualiza los datos de un presupuesto existente
      */
     public function updateData(
-        int $categoria_id,
+        string $categoria_id,
         float $monto,
         ?string $descripcion,
         PresupuestoUniquenessCheckerContract $checker

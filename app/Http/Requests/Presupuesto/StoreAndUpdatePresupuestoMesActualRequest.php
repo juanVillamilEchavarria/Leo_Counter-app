@@ -32,7 +32,7 @@ class StoreAndUpdatePresupuestoMesActualRequest extends FormRequest
                             $q->where('periodo', Carbon::now()->firstOfMonth())
                             ->where('categoria_id', $this->categoria_id)
                         )
-                        ->ignore(optional($this->route('presupuesto'))->id),
+                        ->ignore($this->id),
                 ],
             'monto' => ['required','numeric','min:0'],
             'descripcion' => ['nullable','string','max:80'],

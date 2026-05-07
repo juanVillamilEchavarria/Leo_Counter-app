@@ -6,6 +6,7 @@ use App\Application\Cuenta\Commands\UpdateCuentaCommand;
 use App\Domains\Cuenta\Contracts\Repositories\CuentaRepositoryContract;
 use App\Domains\Cuenta\Contracts\CuentaCanUpdateSaldoInicialCheckerContract;
 use App\Domains\Cuenta\Exceptions\CannotFindCuentaException;
+use App\Domains\Cuenta\ValueObjects\CuentaId;
 
 /**
  * Handler para el comando de actualización de cuentas.
@@ -23,9 +24,9 @@ final readonly class UpdateCuentaHandler
 
     public function __invoke(UpdateCuentaCommand $command)
     {
-        $existing = $this->repository->findById($command->id);
+        $existing = $this->repository->findById(new CuentaId($command->id));
         if (!$existing) {
-            throw new CannotFindCuentaException(); 
+            throw new CannotFindCuentaException();
         }
 
         $cuenta = $existing->updateData(
@@ -34,10 +35,10 @@ final readonly class UpdateCuentaHandler
            saldo_inicial: $command->saldo_inicial,
             saldo_actual: $existing->getSaldoActual(),
             tipo_cuenta_id: $command->tipo_cuenta_id,
-            id: $command->id,
+            id: new CuentaId($command->id),
             checker: $this->checker,
         );
 
-        return $this->repository->update($cuenta, $command->id);
+        return $this->repository->update($cuenta);
     }
 }

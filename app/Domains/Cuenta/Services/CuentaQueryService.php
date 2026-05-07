@@ -48,10 +48,10 @@ class CuentaQueryService
     /**
      * Busca una cuenta por ID
      * 
-     * @param int $id
+     * @param string|int $id
      * @return Cuenta|null
      */
-    public function find(int $id)
+    public function find(string|int $id)
     {
         return $this->repository->find($id);
     }

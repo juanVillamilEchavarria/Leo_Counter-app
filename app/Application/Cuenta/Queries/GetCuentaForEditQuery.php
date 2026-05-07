@@ -7,11 +7,11 @@ use App\Shared\Application\Contracts\Queries\QueryContract;
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  * @package App\Application\Cuenta\Queries
  * @since 1.0.0
- * @version 1.0.0   
+ * @version 1.0.0
  */
 final readonly class GetCuentaForEditQuery implements QueryContract {
     public function __construct(
-        public int $id
+        public string $id
     )
     {
     }

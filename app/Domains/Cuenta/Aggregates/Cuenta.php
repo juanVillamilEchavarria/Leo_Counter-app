@@ -3,6 +3,7 @@
 namespace App\Domains\Cuenta\Aggregates;
 
 use App\Domains\Cuenta\Contracts\CuentaCanUpdateSaldoInicialCheckerContract;
+use App\Domains\Cuenta\ValueObjects\CuentaId;
 use App\Shared\Domain\Contracts\AggregateModelContract;
 
 /**
@@ -18,16 +19,17 @@ final readonly class Cuenta implements AggregateModelContract
      * @param string $nombre - El nombre de la cuenta
      * @param ?string $notas - La descripción de la cuenta opcional
      * @param bool $active - Indica si la cuenta está activa
-     * @param int $propietario_id - El ID del propietario de la cuenta
+     * @param string $propietario_id - El ID del propietario de la cuenta
      * @param int $tipo_cuenta_id - El ID del tipo de cuenta
      */
     private function __construct(
+        private CuentaId $id,
         private string $nombre,
         private ?string $notas,
         private float $saldo_inicial,
         private float $saldo_actual,
         private bool $active,
-        private int $propietario_id,
+        private string $propietario_id,
         private int $tipo_cuenta_id,
     ) {}
 
@@ -37,14 +39,16 @@ final readonly class Cuenta implements AggregateModelContract
      * @param ?string $notas
      */
     public static function create(
+        CuentaId $id,
         string $nombre,
         ?string $notas,
         float $saldo_inicial,
-        int $propietario_id,
+        string $propietario_id,
         int $tipo_cuenta_id
     ): self {
 
         return new self(
+            id: $id,
             nombre: $nombre,
             notas: $notas,
             saldo_inicial: $saldo_inicial,
@@ -60,21 +64,21 @@ final readonly class Cuenta implements AggregateModelContract
      * @param string $nombre
      * @param ?string $notas
      * @param bool $active
-     * @param int $propietario_id
+     * @param string $propietario_id
      * @param int $tipo_cuenta_id
      */
     public static function reconstitute(
-    
+        CuentaId $id,
         string $nombre,
         ?string $notas,
         float $saldo_inicial,
         float $saldo_actual,
         bool $active,
-        int $propietario_id,
+        string $propietario_id,
         int $tipo_cuenta_id,
     ): self {
         return new self(
-        
+            id: $id,
             nombre: $nombre,
             notas: $notas,
             saldo_inicial: $saldo_inicial,
@@ -99,7 +103,7 @@ final readonly class Cuenta implements AggregateModelContract
         float $saldo_inicial,
         float $saldo_actual,
         int $tipo_cuenta_id,
-        int $id,
+        CuentaId $id,
         CuentaCanUpdateSaldoInicialCheckerContract $checker,
     ): self {
         if ($checker->canUpdateSaldoInicial($id)) {
@@ -107,7 +111,7 @@ final readonly class Cuenta implements AggregateModelContract
         }
 
         return new self(
-       
+            id:$this->id,
             nombre: $nombre,
             notas: $notas,
             saldo_inicial: $saldo_inicial,
@@ -118,6 +122,10 @@ final readonly class Cuenta implements AggregateModelContract
         );
     }
 
+    public function getId(): CuentaId
+    {
+        return $this->id;
+    }
 
     public function getNombre(): string
     {
@@ -134,7 +142,7 @@ final readonly class Cuenta implements AggregateModelContract
         return $this->active;
     }
 
-    public function getPropietarioId(): int
+    public function getPropietarioId(): string
     {
         return $this->propietario_id;
     }
