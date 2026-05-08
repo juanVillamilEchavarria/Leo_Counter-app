@@ -14,7 +14,7 @@ use App\Application\Propietario\Commands\Abstracts\WritePropietarioCommand;
 final readonly class UpdatePropietarioCommand extends WritePropietarioCommand
 {
     public function __construct(
-        public int $id,
+        public string $id,
         string $nombre,
         string $apellido,
         string $telefono,

@@ -2,6 +2,8 @@
 
 namespace App\Domains\Propietario\Contracts;
 
+use App\Domains\Propietario\ValueObjects\PropietarioId;
+
 /**
  * Contrato para verificar si un propietario tiene cuentas asociadas.
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
@@ -13,8 +15,8 @@ interface PropietarioHasCuentasCheckerContract
 {
     /**
      * Determina si el propietario tiene cuentas asociadas.
-     * @param int $propietarioId
+     * @param PropietarioId $propietarioId
      * @return bool
      */
-    public function hasCuentas(int $propietarioId): bool;
+    public function hasCuentas(PropietarioId $propietarioId): bool;
 }

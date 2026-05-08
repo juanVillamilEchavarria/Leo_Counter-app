@@ -2,6 +2,7 @@
 
 namespace App\Providers\Presupuesto;
 
+use App\Application\Presupuesto\Contracts\Queries\Executors\PresupuestoPaginatedTableQueryExecutorContract;
 use Illuminate\Support\ServiceProvider;
 use App\Application\Presupuesto\Queries\Handlers\ListPresupuestosWithDetailsHandler;
 use App\Application\Presupuesto\Queries\Handlers\GetPresupuestosRecordsCountHandler;
@@ -23,6 +24,8 @@ use App\Infrastructure\Presupuesto\Queries\Executors\Eloquent\EloquentGetCurrent
 use App\Infrastructure\Presupuesto\Queries\Executors\Eloquent\EloquentGetHistoricPresupuestoRecordsCountQueryExecutor;
 use App\Infrastructure\Presupuesto\Queries\Executors\Eloquent\EloquentListAllCurrentMonthPresupuestosWithDetailsQueryExecutor;
 use App\Infrastructure\Presupuesto\Queries\Executors\Eloquent\EloquentPresupuestoPaginatedTableQueryExecutor;
+use App\Application\Presupuesto\Contracts\Queries\CurrentMonthPresupuestoCollectionEnricherContract;
+use App\Infrastructure\Presupuesto\Queries\Enrichers\LaravelCurrentMonthPresupuestoCollectionEnricher;
 
 final class PresupuestoQueryExecutorsProvider extends ServiceProvider
 {
@@ -43,6 +46,12 @@ final class PresupuestoQueryExecutorsProvider extends ServiceProvider
         $this->app->when(ListAllCurrentMonthPresupuestosHandler::class)
             ->needs(PresupuestoQueryExecutorContract::class)
             ->give(EloquentListAllCurrentMonthPresupuestosWithDetailsQueryExecutor::class);
+
+        // Inyectar el enricher concreto cuando el handler de listado del mes actual lo requiera
+        $this->app->when(ListAllCurrentMonthPresupuestosHandler::class)
+            ->needs(CurrentMonthPresupuestoCollectionEnricherContract::class)
+            ->give(LaravelCurrentMonthPresupuestoCollectionEnricher::class);
+        $this->app->singleton(PresupuestoPaginatedTableQueryExecutorContract::class, EloquentPresupuestoPaginatedTableQueryExecutor::class);
     }
 
     public function boot(): void

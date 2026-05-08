@@ -13,7 +13,7 @@ use App\Shared\Abstracts\DTOs\DTO;
 final  class PropietarioEditDTO extends DTO{
 
     public function __construct(
-        public int $id,
+        public string $id,
         public string $nombre,
         public string $apellido,
         public string $telefono,

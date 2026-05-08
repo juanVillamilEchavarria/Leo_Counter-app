@@ -14,6 +14,6 @@ use App\Shared\Application\Contracts\Queries\QueryContract;
 final readonly class GetPropietarioForEditQuery implements QueryContract
 {
     public function __construct(
-        public int $id,
+        public string $id,
     ) {}
 }

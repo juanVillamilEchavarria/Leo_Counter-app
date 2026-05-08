@@ -6,6 +6,7 @@ use App\Application\Propietario\Commands\DestroyPropietarioCommand;
 use App\Domains\Propietario\Contracts\PropietarioHasCuentasCheckerContract;
 use App\Domains\Propietario\Contracts\Repositories\PropietarioRepositoryContract;
 use App\Domains\Propietario\Exceptions\CannotDeletePropietarioException;
+use App\Domains\Propietario\ValueObjects\PropietarioId;
 
 /**
  * Handler para la eliminación de un propietario.
@@ -23,10 +24,12 @@ final readonly class DestroyPropietarioHandler
 
     public function __invoke(DestroyPropietarioCommand $command) : bool
     {
-        if ($this->checker->hasCuentas($command->id)) {
+        $propietarioId = new PropietarioId($command->id);
+
+        if ($this->checker->hasCuentas($propietarioId)) {
             throw new CannotDeletePropietarioException('No se puede eliminar el propietario, tiene cuentas asociadas');
         }
 
-        return $this->repository->destroy($command->id);
+        return $this->repository->destroy($propietarioId);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Propietario\Persistence\Checkers\Eloquent;
 
 use App\Domains\Propietario\Contracts\PropietarioHasCuentasCheckerContract;
+use App\Domains\Propietario\ValueObjects\PropietarioId;
 use App\Models\Propietario\Propietario;
 
 /**
@@ -10,9 +11,9 @@ use App\Models\Propietario\Propietario;
  */
 final readonly class EloquentPropietarioHasCuentasChecker implements PropietarioHasCuentasCheckerContract
 {
-    public function hasCuentas(int $propietarioId): bool
+    public function hasCuentas(PropietarioId $propietarioId): bool
     {
-        return Propietario::where('id', $propietarioId)
+        return Propietario::where('id', $propietarioId->getValue())
             ->whereHas('cuentas')
             ->exists();
     }

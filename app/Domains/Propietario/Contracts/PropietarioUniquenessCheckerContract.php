@@ -2,6 +2,7 @@
 
 namespace App\Domains\Propietario\Contracts;
 
+use App\Domains\Propietario\ValueObjects\PropietarioId;
 use App\Shared\Domain\ValueObjects\Email;
 
 /**
@@ -12,8 +13,8 @@ interface PropietarioUniquenessCheckerContract
     /**
      * Verifica si existe un propietario con el email dado.
      * @param Email $email
-     * @param int|null $excludeId
+     * @param PropietarioId|null $excludeId
      * @return bool
      */
-    public function exists(Email $email, ?int $excludeId = null): bool;
+    public function exists(Email $email, ?PropietarioId $excludeId = null): bool;
 }

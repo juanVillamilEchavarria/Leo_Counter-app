@@ -3,6 +3,7 @@
 namespace App\Domains\Presupuesto\Contracts\Checkers;
 
 use App\Domains\Presupuesto\ValueObjects\PresupuestoId;
+use App\Domains\Categoria\ValueObjects\CategoriaId;
 use DateTimeImmutable;
 
 /**
@@ -13,5 +14,13 @@ use DateTimeImmutable;
  */
 interface PresupuestoUniquenessCheckerContract
 {
-    public function isUnique(string $categoria_id, DateTimeImmutable|string $periodo, ?PresupuestoId $excludeId = null): bool;
+    /**
+     * Indica si para una categoria y periodo no existe ya un presupuesto.
+     *
+     * @param CategoriaId $categoria_id Identidad de la categoria
+     * @param DateTimeImmutable|string $periodo Periodo a comprobar
+     * @param PresupuestoId|null $excludeId Id de presupuesto a excluir de la comprobacion
+     * @return bool
+     */
+    public function isUnique(CategoriaId $categoria_id, DateTimeImmutable|string $periodo, ?PresupuestoId $excludeId = null): bool;
 }

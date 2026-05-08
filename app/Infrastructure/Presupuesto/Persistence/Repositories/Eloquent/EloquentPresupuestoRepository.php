@@ -9,6 +9,7 @@ use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\Eloquent
 use App\Models\Presupuesto\Presupuesto;
 use Illuminate\Database\Eloquent\Model;
 use App\Domains\Presupuesto\ValueObjects\PresupuestoId;
+use App\Domains\Categoria\ValueObjects\CategoriaId;
 use Carbon\Carbon;
 use DateTimeImmutable;
 
@@ -20,7 +21,7 @@ final class EloquentPresupuestoRepository extends EloquentRepository implements 
 
         return [
             'id' => $aggregate->getId()->getValue(),
-            'categoria_id' => $aggregate->getCategoriaId(),
+            'categoria_id' => $aggregate->getCategoriaId()->getValue(),
             'monto' => $aggregate->getMonto(),
             'periodo' => $aggregate->getPeriodo()->format('Y-m'),
             'descripcion' => $aggregate->getDescripcion(),
@@ -32,7 +33,7 @@ final class EloquentPresupuestoRepository extends EloquentRepository implements 
     {
         return PresupuestoAggregate::reconstitute(
             id: new PresupuestoId($model->id),
-            categoria_id: $model->categoria_id,
+            categoria_id: new CategoriaId($model->categoria_id),
             monto: (float) $model->monto,
             periodo: new DateTimeImmutable($model->periodo),
             descripcion: $model->descripcion,

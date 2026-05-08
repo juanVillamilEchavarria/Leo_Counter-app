@@ -35,6 +35,7 @@ final readonly class UpdateCuentaHandler
            saldo_inicial: $command->saldo_inicial,
             saldo_actual: $existing->getSaldoActual(),
             tipo_cuenta_id: $command->tipo_cuenta_id,
+            propietario_id: $command->propietario_id,
             id: new CuentaId($command->id),
             checker: $this->checker,
         );

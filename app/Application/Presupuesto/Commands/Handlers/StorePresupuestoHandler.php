@@ -7,6 +7,7 @@ use App\Domains\Presupuesto\Aggregates\Presupuesto as PresupuestoAggregate;
 use App\Domains\Presupuesto\Contracts\Checkers\PresupuestoUniquenessCheckerContract;
 use App\Domains\Presupuesto\Contracts\Repositories\PresupuestoRepositoryContract;
 use App\Domains\Presupuesto\ValueObjects\PresupuestoId;
+use App\Domains\Categoria\ValueObjects\CategoriaId;
 use App\Shared\Domain\Contracts\IdGeneratorContract;
 use DateTimeImmutable;
 
@@ -23,7 +24,7 @@ final readonly class StorePresupuestoHandler
     {
         $presupuesto = PresupuestoAggregate::create(
             id: PresupuestoId::generate($this->idGenerator),
-            categoria_id: $command->categoria_id,
+            categoria_id: new CategoriaId($command->categoria_id),
             monto: $command->monto,
             periodo: new DateTimeImmutable(),
             descripcion: $command->descripcion,

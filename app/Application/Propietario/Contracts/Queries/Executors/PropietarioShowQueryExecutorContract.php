@@ -2,7 +2,6 @@
 namespace App\Application\Propietario\Contracts\Queries\Executors;
 
 use App\Application\Propietario\DTOs\PropietarioShowDTO;
-use App\Application\Propietario\Queries\GetPropietarioForShowQuery;
 
 /**
  * Contrato que debe implementar el query executor encargado de obtener un propietario por su id, trayendo informacion detallada de este.
@@ -17,5 +16,5 @@ interface PropietarioShowQueryExecutorContract
      * Ejecuta el query para obtener un propietario por su id, trayendo informacion detallada de este.
      * @return PropietarioShowDTO
      */
-    public function execute(GetPropietarioForShowQuery $query): PropietarioShowDTO;
+    public function execute(string $id): PropietarioShowDTO;
 }

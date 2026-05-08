@@ -7,7 +7,7 @@ export default function usePropietario({
   data
 }:{
     method ?: keyof typeof FormMethods,
-    id ?: number | null
+    id ?: string | null
     data ?: Propietario
 }) {
       const action = (() => {

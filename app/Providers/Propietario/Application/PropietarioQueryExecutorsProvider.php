@@ -2,13 +2,11 @@
 
 namespace App\Providers\Propietario\Application;
 
-use App\Application\Propietario\Contracts\Queries\Executors\GetNumberOfCuentasForPropietarioQueryExecutorContract;
 use Illuminate\Support\ServiceProvider;
 use App\Application\Propietario\Queries\Handlers\ListAllPropietariosWithDetailsHandler;
 use App\Application\Propietario\Queries\Handlers\GetPropietariosRecordsCountHandler;
 use App\Application\Propietario\Contracts\Queries\Executors\PropietarioQueryExecutorContract;
 use App\Application\Propietario\Contracts\Queries\Executors\GetPropietarioRecordsCountQueryExecutorContract;
-use App\Infrastructure\Propietario\Queries\Executors\Eloquent\EloquentGetNumberOfCuentasForPropietarioQueryExecutor;
 use App\Infrastructure\Propietario\Queries\Executors\Eloquent\EloquentListAllPropietariosWithDetailsQueryExecutor;
 use App\Infrastructure\Propietario\Queries\Executors\Eloquent\EloquentGetPropietariosRecordsCountQueryExecutor;
 

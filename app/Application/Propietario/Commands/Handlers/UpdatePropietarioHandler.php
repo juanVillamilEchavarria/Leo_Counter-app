@@ -6,6 +6,8 @@ use App\Application\Propietario\Commands\UpdatePropietarioCommand;
 use App\Domains\Propietario\Aggregates\Propietario as PropietarioAggregate;
 use App\Domains\Propietario\Contracts\PropietarioUniquenessCheckerContract;
 use App\Domains\Propietario\Contracts\Repositories\PropietarioRepositoryContract;
+use App\Domains\Propietario\Exceptions\CannotFindPropietarioException;
+use App\Domains\Propietario\ValueObjects\PropietarioId;
 use App\Shared\Domain\ValueObjects\Email;
 
 /**
@@ -24,9 +26,10 @@ final readonly class UpdatePropietarioHandler
 
     public function __invoke(UpdatePropietarioCommand $command) : bool
     {
-        $existing = $this->repository->findById($command->id);
+        $propietarioId = new PropietarioId($command->id);
+        $existing = $this->repository->findById($propietarioId);
         if (!$existing) {
-            throw new \RuntimeException('Propietario no encontrado.');
+            throw new CannotFindPropietarioException();
         }
 
         assert($existing instanceof PropietarioAggregate);
@@ -37,9 +40,8 @@ final readonly class UpdatePropietarioHandler
             telefono: $command->telefono,
             email: new Email(trim($command->email)),
             checker: $this->checker,
-            excludeId: $command->id,
         );
 
-        return $this->repository->update($updated, $command->id);
+        return $this->repository->update($updated);
     }
 }

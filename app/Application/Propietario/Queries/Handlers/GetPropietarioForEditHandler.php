@@ -6,6 +6,7 @@ use App\Application\Propietario\Queries\GetPropietarioForEditQuery;
 use App\Domains\Propietario\Contracts\Repositories\PropietarioRepositoryContract;
 use App\Application\Propietario\DTOs\PropietarioEditDTO;
 use App\Domains\Propietario\Exceptions\CannotFindPropietarioException;
+use App\Domains\Propietario\ValueObjects\PropietarioId;
 /**
  * Handler que maneja la consulta para obtener un propietario específico.
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
@@ -22,7 +23,7 @@ final readonly class GetPropietarioForEditHandler
 
     public function __invoke(GetPropietarioForEditQuery $query)
     {
-        $existing= $this->repository->findById($query->id);
+        $existing= $this->repository->findById(new PropietarioId($query->id));
         if(!$existing){
             throw new CannotFindPropietarioException();
         }

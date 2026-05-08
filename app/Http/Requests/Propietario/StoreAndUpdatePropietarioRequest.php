@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Propietario;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreAndUpdatePropietarioRequest extends FormRequest
 {
@@ -25,7 +26,13 @@ class StoreAndUpdatePropietarioRequest extends FormRequest
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
             'telefono' => 'required|string|max:255',
-            'email' => ['required','string','email','max:255','unique:propietarios,email,' . $this->id],
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('propietarios', 'email')->ignore($this->id),
+            ],
         ];
     }
 }

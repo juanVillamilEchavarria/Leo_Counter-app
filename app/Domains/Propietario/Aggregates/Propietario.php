@@ -4,6 +4,7 @@ namespace App\Domains\Propietario\Aggregates;
 
 use App\Domains\Propietario\Contracts\PropietarioUniquenessCheckerContract;
 use App\Domains\Propietario\Exceptions\PropietarioEmailNotUniqueException;
+use App\Domains\Propietario\ValueObjects\PropietarioId;
 use App\Shared\Domain\Contracts\AggregateModelContract;
 use App\Shared\Domain\ValueObjects\Email;
 
@@ -14,6 +15,7 @@ use App\Shared\Domain\ValueObjects\Email;
 final readonly class Propietario implements AggregateModelContract
 {
     private function __construct(
+        private PropietarioId $id,
         private string $nombre,
         private string $apellido,
         private string $telefono,
@@ -31,6 +33,7 @@ final readonly class Propietario implements AggregateModelContract
      * @return self
      */
     public static function create(
+        PropietarioId $id,
         string $nombre,
         string $apellido,
         string $telefono,
@@ -42,6 +45,7 @@ final readonly class Propietario implements AggregateModelContract
         }
 
         return new self(
+            id: $id,
             nombre: trim($nombre),
             apellido: trim($apellido),
             telefono: trim($telefono),
@@ -58,12 +62,14 @@ final readonly class Propietario implements AggregateModelContract
      * @return self
      */
     public static function reconstitute(
+        PropietarioId $id,
         string $nombre,
         string $apellido,
         string $telefono,
         Email $email,
     ): self {
         return new self(
+            id: $id,
             nombre: $nombre,
             apellido: $apellido,
             telefono: $telefono,
@@ -78,7 +84,6 @@ final readonly class Propietario implements AggregateModelContract
      * @param string $telefono
      * @param Email $email
      * @param PropietarioUniquenessCheckerContract $checker
-     * @param int|null $excludeId
      * @return self
      */
     public function updateData(
@@ -87,18 +92,23 @@ final readonly class Propietario implements AggregateModelContract
         string $telefono,
         Email $email,
         PropietarioUniquenessCheckerContract $checker,
-        ?int $excludeId = null,
     ): self {
-        if ($checker->exists($email, $excludeId)) {
+        if ($checker->exists($email, $this->id)) {
             throw new PropietarioEmailNotUniqueException();
         }
 
         return new self(
+            id: $this->id,
             nombre: trim($nombre),
             apellido: trim($apellido),
             telefono: trim($telefono),
             email: $email,
         );
+    }
+
+    public function getId(): PropietarioId
+    {
+        return $this->id;
     }
 
     
