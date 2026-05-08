@@ -102,6 +102,7 @@ final readonly class Cuenta implements AggregateModelContract
         ?string $notas,
         float $saldo_inicial,
         float $saldo_actual,
+        string $propietario_id,
         int $tipo_cuenta_id,
         CuentaId $id,
         CuentaCanUpdateSaldoInicialCheckerContract $checker,
@@ -117,7 +118,7 @@ final readonly class Cuenta implements AggregateModelContract
             saldo_inicial: $saldo_inicial,
             saldo_actual: $saldo_actual,
             active: $this->active,
-            propietario_id: $this->propietario_id,
+            propietario_id: $propietario_id,
             tipo_cuenta_id: $tipo_cuenta_id,
         );
     }

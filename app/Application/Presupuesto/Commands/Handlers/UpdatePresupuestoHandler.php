@@ -6,6 +6,7 @@ use App\Application\Presupuesto\Commands\UpdatePresupuestoCommand;
 use App\Domains\Presupuesto\Contracts\Checkers\PresupuestoUniquenessCheckerContract;
 use App\Domains\Presupuesto\Contracts\Repositories\PresupuestoRepositoryContract;
 use App\Domains\Presupuesto\ValueObjects\PresupuestoId;
+use App\Domains\Categoria\ValueObjects\CategoriaId;
 
 /**
  * Handler que se encarga de actualizar un presupuesto.
@@ -31,7 +32,7 @@ final readonly class UpdatePresupuestoHandler
         }
 
         $aggregate = $aggregate->updateData(
-            categoria_id: $command->categoria_id,
+            categoria_id: new CategoriaId($command->categoria_id),
             monto: $command->monto,
             descripcion: $command->descripcion,
             checker: $this->uniquenessChecker

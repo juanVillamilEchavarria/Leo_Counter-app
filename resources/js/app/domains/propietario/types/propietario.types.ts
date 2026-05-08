@@ -7,14 +7,14 @@ const route= useRoute()
 export const PropietarioRoutes={
     index : () => route('propietarios.index'),
     create :()=> route('propietarios.create'),
-    show : (id: number) => route('propietarios.show', {id}),
-    edit : (id: number) => route('propietarios.edit', {id})
+    show : (id: string) => route('propietarios.show', {id}),
+    edit : (id: string) => route('propietarios.edit', {id})
 }
 export const PropietarioActions={
     post : route('propietarios.store'),
-    put : (id: number) => route('propietarios.update', {id}),
-    patch : (id: number) => route('propietarios.update', {id}),
-    delete : (id: number) => route('propietarios.destroy', {propietario:id})
+    put : (id: string) => route('propietarios.update', {id}),
+    patch : (id: string) => route('propietarios.update', {id}),
+    delete : (id: string) => route('propietarios.destroy', {propietario:id})
 }as const
 export type Propietario={
     id: string,

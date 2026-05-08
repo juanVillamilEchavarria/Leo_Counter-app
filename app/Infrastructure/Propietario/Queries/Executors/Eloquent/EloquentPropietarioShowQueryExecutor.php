@@ -4,7 +4,7 @@ namespace App\Infrastructure\Propietario\Queries\Executors\Eloquent;
 
 use App\Application\Propietario\Contracts\Queries\Executors\PropietarioShowQueryExecutorContract;
 use App\Application\Propietario\DTOs\PropietarioShowDTO;
-use App\Application\Propietario\Queries\GetPropietarioForShowQuery;
+use App\Domains\Propietario\Exceptions\CannotFindPropietarioException;
 use App\Models\Propietario\Propietario;
 
 /**
@@ -15,10 +15,14 @@ use App\Models\Propietario\Propietario;
  */
 final readonly class EloquentPropietarioShowQueryExecutor implements PropietarioShowQueryExecutorContract{
 
-    public function execute(GetPropietarioForShowQuery $query): PropietarioShowDTO
+    public function execute(string $id): PropietarioShowDTO
     {
-        $record = Propietario::find($query->id);
+        $record = Propietario::find($id);
+        if (!$record) {
+            throw new CannotFindPropietarioException();
+        }
+
         $cuentas = $record->cuentas;
-        return new PropietarioShowDTO($record->id, $record->nombre, $record->apellido, $record->telefono, $record->email, $cuentas->toArray());
+        return new PropietarioShowDTO((string) $record->id, $record->nombre, $record->apellido, $record->telefono, $record->email, $cuentas->toArray());
     }
 }

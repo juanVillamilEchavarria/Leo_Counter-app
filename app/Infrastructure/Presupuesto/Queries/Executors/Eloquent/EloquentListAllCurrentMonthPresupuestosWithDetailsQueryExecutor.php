@@ -27,7 +27,6 @@ final readonly class EloquentListAllCurrentMonthPresupuestosWithDetailsQueryExec
      $items = Presupuesto::with(['categoria:id,nombre', 'user:id,name'])
             ->whereDate('periodo', Carbon::now()->firstOfMonth())
             ->get();
-            
     return LaravelCollection::make($items);
    }
 }

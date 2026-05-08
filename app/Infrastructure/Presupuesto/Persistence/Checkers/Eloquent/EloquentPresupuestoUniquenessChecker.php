@@ -5,6 +5,7 @@ namespace App\Infrastructure\Presupuesto\Persistence\Checkers\Eloquent;
 use App\Domains\Presupuesto\Contracts\Checkers\PresupuestoUniquenessCheckerContract;
 use App\Models\Presupuesto\Presupuesto;
 use App\Domains\Presupuesto\ValueObjects\PresupuestoId;
+use App\Domains\Categoria\ValueObjects\CategoriaId;
 use DateTimeImmutable;
 
 /**
@@ -15,10 +16,10 @@ use DateTimeImmutable;
  */
 final readonly class EloquentPresupuestoUniquenessChecker implements PresupuestoUniquenessCheckerContract
 {
-    public function isUnique(string $categoria_id, DateTimeImmutable|string $periodo, ?PresupuestoId $excludeId = null): bool
+    public function isUnique(CategoriaId $categoria_id, DateTimeImmutable|string $periodo, ?PresupuestoId $excludeId = null): bool
     {
         $query = Presupuesto::query()
-            ->where('categoria_id', $categoria_id)
+            ->where('categoria_id', $categoria_id->getValue())
             ->whereDate('periodo', $periodo);
 
         if (!is_null($excludeId)) {

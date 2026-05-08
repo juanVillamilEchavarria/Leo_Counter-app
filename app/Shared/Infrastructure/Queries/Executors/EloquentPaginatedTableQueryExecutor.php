@@ -4,7 +4,7 @@ namespace App\Shared\Infrastructure\Queries\Executors;
 
 use App\Shared\Application\Contracts\Queries\QueryContract;
 use App\Shared\Application\DTOs\PaginatedTableResultDTO;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use App\Shared\Application\DTOs\WhereFilterQueryDTO;
@@ -32,9 +32,9 @@ abstract readonly class EloquentPaginatedTableQueryExecutor{
         if(!empty($this->initialWheres())){
             $query = $this->applyWheres($query, $this->initialWheres());
         }
-        
+
         $paginator = $this->applyPaginate($dto, $query);
-       
+
         return new PaginatedTableResultDTO(
             items: LaravelCollection::make($paginator->items()),
             total: $paginator->total(),
@@ -44,18 +44,18 @@ abstract readonly class EloquentPaginatedTableQueryExecutor{
         );
     }
     /**
-     * Retorna el modelo asociado 
+     * Retorna el modelo asociado
      * @return string
      */
     abstract protected function model(): string;
     /**
      * Retorna las relaciones que se pueden cargar con los registros del modelo
-     * Formato: [relacion1, relacion2]  
+     * Formato: [relacion1, relacion2]
       * @return array<string>
      */
     abstract protected function modelRelations(): array;
     /**
-     * Retorna las columnas que se pueden buscar en la tabla, estas columnas se utilizan para aplicar la busqueda de strings en la tabla, opcionalmente puede tener relaciones con otras tablas 
+     * Retorna las columnas que se pueden buscar en la tabla, estas columnas se utilizan para aplicar la busqueda de strings en la tabla, opcionalmente puede tener relaciones con otras tablas
      * formato: [relacion1 => [columna1, columna2], relacion2 => [columna3, columna4]]
       * @return array<string|array<string>>
      */
@@ -107,7 +107,7 @@ abstract readonly class EloquentPaginatedTableQueryExecutor{
                 $isFirst = false;
             }
         });
-      
+
         return $query;
     }
 
@@ -120,12 +120,12 @@ abstract readonly class EloquentPaginatedTableQueryExecutor{
      * @return Builder<Model>
      */
     private function applyColumnSearch(Builder $query, string $column, string $search, bool $isFirst): Builder{
-        return $isFirst ? 
-        $query->where($column, 'like', "%$search%") : 
+        return $isFirst ?
+        $query->where($column, 'like', "%$search%") :
         $query->orWhere($column, 'like', "%$search%");
     }
     /**
-     * Funcion que aplica la consulta de busqueda en las relaciones de la tabla 
+     * Funcion que aplica la consulta de busqueda en las relaciones de la tabla
      * @param Builder $query
      * @param string $relation
      * @param array<string> $columns
@@ -141,7 +141,7 @@ abstract readonly class EloquentPaginatedTableQueryExecutor{
                     foreach ($columns as $column) {// recorre cada columna y aplica la busqueda
                         if ($first) {
                             $subQuery->where($column, 'like', "%$search%");
-                            $first = false; 
+                            $first = false;
                         } else {
                             $subQuery->orWhere($column, 'like', "%$search%");
                         }
@@ -167,7 +167,7 @@ abstract readonly class EloquentPaginatedTableQueryExecutor{
            $query = $this->applySort($dto, $query);
         }
         return $query->paginate($dto->perPage);
-        
+
     }
 
     /**

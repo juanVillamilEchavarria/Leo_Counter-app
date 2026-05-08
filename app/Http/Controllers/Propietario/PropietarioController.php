@@ -13,7 +13,6 @@ use App\Application\Propietario\Queries\GetPropietarioForEditQuery;
 use App\Application\Propietario\Queries\GetPropietarioForShowQuery;
 use App\Http\Requests\Propietario\StoreAndUpdatePropietarioRequest;
 use App\Http\Resources\Propietario\PropietarioResource;
-use App\Application\Propietario\Contracts\Queries\Executors\GetNumberOfCuentasForPropietarioQueryExecutorContract;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Inertia\Inertia;
 
@@ -72,7 +71,7 @@ class PropietarioController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $id)
+    public function show(string $id)
     {
         $propietario = $this->queryBus->ask(new GetPropietarioForShowQuery(id: $id));
 
@@ -85,7 +84,7 @@ class PropietarioController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(int $id)
+    public function edit(string $id)
     {
         $propietario = $this->queryBus->ask(new GetPropietarioForEditQuery(id: $id));
 
@@ -97,7 +96,7 @@ class PropietarioController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreAndUpdatePropietarioRequest $request, int $id)
+    public function update(StoreAndUpdatePropietarioRequest $request, string $id)
     {
         $this->dispatcher->dispatch(new UpdatePropietarioCommand(
             id: $id,
@@ -114,7 +113,7 @@ class PropietarioController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id)
+    public function destroy(string $id)
     {
         $this->dispatcher->dispatch(new DestroyPropietarioCommand(id: $id));
         Inertia::flash('success', 'Propietario eliminado con éxito');

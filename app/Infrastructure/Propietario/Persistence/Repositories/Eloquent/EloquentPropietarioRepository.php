@@ -6,6 +6,7 @@ use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\Eloquent
 use App\Domains\Propietario\Contracts\Repositories\PropietarioRepositoryContract;
 use App\Models\Propietario\Propietario;
 use App\Domains\Propietario\Aggregates\Propietario as PropietarioAggregate;
+use App\Domains\Propietario\ValueObjects\PropietarioId;
 use App\Shared\Domain\Contracts\AggregateModelContract;
 use App\Shared\Domain\ValueObjects\Email;
 use Illuminate\Database\Eloquent\Model;
@@ -22,6 +23,7 @@ class EloquentPropietarioRepository extends EloquentRepository implements Propie
         assert($aggregate instanceof PropietarioAggregate, 'El agregado debe ser una instancia de PropietarioAggregate');
 
         return [
+            'id' => $aggregate->getId()->getValue(),
             'nombre' => $aggregate->getNombre(),
             'apellido' => $aggregate->getApellido(),
             'telefono' => $aggregate->getTelefono(),
@@ -37,6 +39,7 @@ class EloquentPropietarioRepository extends EloquentRepository implements Propie
     protected function mapDatabaseRecordToAggregate(Model $model): AggregateModelContract
     {
         return PropietarioAggregate::reconstitute(
+            id: new PropietarioId($model->id),
             nombre: $model->nombre,
             apellido: $model->apellido,
             telefono: $model->telefono,

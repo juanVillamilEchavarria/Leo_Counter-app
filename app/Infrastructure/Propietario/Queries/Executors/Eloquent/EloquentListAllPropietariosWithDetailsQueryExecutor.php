@@ -24,7 +24,7 @@ final readonly class EloquentListAllPropietariosWithDetailsQueryExecutor impleme
 
         $dtos = $propietarios->map(function ($propietario) {
             return new PropietarioWithDetailsListDTO(
-                id: $propietario->id,
+                id: (string) $propietario->id,
                 nombre: $propietario->nombre,
                 apellido: $propietario->apellido,
                 email: $propietario->email,

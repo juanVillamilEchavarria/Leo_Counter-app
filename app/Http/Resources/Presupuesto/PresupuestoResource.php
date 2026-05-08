@@ -16,11 +16,11 @@ class PresupuestoResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'categoria' => $this->categoria ? $this->categoria->nombre : null,
+            'categoria' => is_object($this->categoria) ? $this->categoria->nombre : $this->categoria,
             'monto' => $this->monto,
             'descripcion' => $this->descripcion,
             'periodo' => $this->periodo,
-            'user' => $this->user ? $this->user->name .' '. $this->user->apellido : null,
+            'user' => is_object($this->user)  ? $this->user->name : $this->user,
         ];
     }
 }

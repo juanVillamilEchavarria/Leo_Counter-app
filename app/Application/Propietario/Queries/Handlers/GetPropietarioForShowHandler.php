@@ -20,6 +20,6 @@ final readonly class GetPropietarioForShowHandler
 
     public function __invoke(GetPropietarioForShowQuery $query): PropietarioShowDTO
     {
-        return $this->executor->execute($query);
+        return $this->executor->execute($query->id);
     }
 }

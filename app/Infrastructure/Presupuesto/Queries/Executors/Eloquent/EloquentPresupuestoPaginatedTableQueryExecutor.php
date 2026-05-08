@@ -34,8 +34,7 @@ final readonly class EloquentPresupuestoPaginatedTableQueryExecutor extends Eloq
             'categorias.nombre'
         ],
         'user' => [
-            'users.name',
-            'users.apellido'
+            'users.name'
         ]
     ];
     }
@@ -53,5 +52,5 @@ final readonly class EloquentPresupuestoPaginatedTableQueryExecutor extends Eloq
         ]
     ];
     }
-    
+
 }

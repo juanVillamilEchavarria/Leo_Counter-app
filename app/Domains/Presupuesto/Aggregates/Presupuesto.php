@@ -6,6 +6,7 @@ use App\Domains\Presupuesto\Contracts\Checkers\PresupuestoCanDuplicateCheckerCon
 use App\Domains\Presupuesto\Contracts\Checkers\PresupuestoUniquenessCheckerContract;
 use App\Shared\Domain\Contracts\AggregateModelContract;
 use App\Domains\Presupuesto\ValueObjects\PresupuestoId;
+use App\Domains\Categoria\ValueObjects\CategoriaId;
 use DateTimeImmutable;
 /**
  * Agregado de dominio Presupuesto.
@@ -18,7 +19,7 @@ final readonly class Presupuesto implements AggregateModelContract
 {
     private function __construct(
         private PresupuestoId $id,
-        private string $categoria_id,
+        private CategoriaId $categoria_id,
         private float $monto,
         private DateTimeImmutable $periodo,
         private ?string $descripcion,
@@ -31,7 +32,7 @@ final readonly class Presupuesto implements AggregateModelContract
 
     public static function create(
         PresupuestoId $id,
-        string $categoria_id,
+        CategoriaId $categoria_id,
         float $monto,
         DateTimeImmutable $periodo,
         ?string $descripcion,
@@ -59,7 +60,7 @@ final readonly class Presupuesto implements AggregateModelContract
 
     public static function reconstitute(
         PresupuestoId $id,
-        string $categoria_id,
+        CategoriaId $categoria_id,
         float $monto,
         DateTimeImmutable $periodo,
         ?string $descripcion,
@@ -79,7 +80,7 @@ final readonly class Presupuesto implements AggregateModelContract
      * Actualiza los datos de un presupuesto existente
      */
     public function updateData(
-        string $categoria_id,
+        CategoriaId $categoria_id,
         float $monto,
         ?string $descripcion,
         PresupuestoUniquenessCheckerContract $checker
@@ -125,7 +126,12 @@ final readonly class Presupuesto implements AggregateModelContract
     {
         return $this->id;
     }
-    public function getCategoriaId(): string
+    /**
+     * Retorna la identidad de la categoria asociada al presupuesto.
+     *
+     * @return CategoriaId
+     */
+    public function getCategoriaId(): CategoriaId
     {
         return $this->categoria_id;
     }

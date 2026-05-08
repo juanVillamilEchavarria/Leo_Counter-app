@@ -2,6 +2,7 @@
 
 namespace App\Application\Presupuesto\Mappers;
 
+use App\Shared\Application\Contracts\Queries\QueryContract;
 use App\Shared\Application\Mappers\TableQueryMapper;
 use App\Application\Presupuesto\Queries\ListHistoricPresupuestosForTableQuery;
 use Override;
@@ -19,6 +20,6 @@ final readonly class ListHistoricPresupuestosForTableMapper extends TableQueryMa
     protected function query(): string
     {
         return ListHistoricPresupuestosForTableQuery::class;
-        
+
     }
 }

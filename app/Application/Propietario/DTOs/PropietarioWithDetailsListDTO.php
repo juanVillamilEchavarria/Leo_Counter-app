@@ -13,7 +13,7 @@ namespace App\Application\Propietario\DTOs;
  */
 final readonly class PropietarioWithDetailsListDTO{
     public function __construct(
-        public int $id,
+        public string $id,
         public string $nombre,
         public string $apellido,
         public ?string $email,

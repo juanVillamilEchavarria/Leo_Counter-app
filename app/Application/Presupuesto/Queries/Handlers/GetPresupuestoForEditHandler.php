@@ -21,8 +21,8 @@ final readonly class GetPresupuestoForEditHandler{
             throw new CannotFindPresupuestoException();
         }
         return new PresupuestoEditDTO(
-            id: $aggregate->getId(),
-            categoria_id: $aggregate->getCategoriaId(),
+            id: (string) $aggregate->getId(),
+            categoria_id: $aggregate->getCategoriaId()->getValue(),
             monto: $aggregate->getMonto(),
             descripcion: $aggregate->getDescripcion()
         );
