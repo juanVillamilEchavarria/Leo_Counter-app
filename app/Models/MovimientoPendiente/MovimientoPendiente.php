@@ -17,6 +17,7 @@ class MovimientoPendiente extends Model
       public $incrementing = false;
     protected $keyType = 'string';
     protected $fillable =[
+        'id',
         'nombre',
         'cuenta_id',
         'tipo_movimiento_id',
@@ -26,7 +27,8 @@ class MovimientoPendiente extends Model
         'estado',
         'dias_aviso',
         'monto',
-        'descripcion'
+        'descripcion',
+        'paid_at'
     ];
 
     public function cuenta()

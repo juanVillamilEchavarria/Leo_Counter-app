@@ -3,6 +3,8 @@
 namespace App\Domains\Presupuesto\Contracts\Checkers;
 
 use App\Domains\Categoria\ValueObjects\CategoriaId;
+use App\Shared\Domain\Contracts\CollectionContract;
+use App\Shared\Domain\ValueObjects\Date;
 
 /**
  * Contrato que verifica si se puede duplicar un presupuesto.
@@ -26,8 +28,8 @@ interface PresupuestoCanDuplicateCheckerContract
      * Devuelve las categorias que ya tienen un presupuesto en el proximo periodo indicado.
      *
      * @param array $categoriaIds Lista de id de categorias a comprobar
-     * @param string $nextPeriodMonth Periodo objetivo (ej: "2026-06" o cualquier valor parseable por Carbon)
-     * @return array Lista de id de categorias que ya poseen un presupuesto en el periodo objetivo
+     * @param Date $nextPeriodMonth Periodo objetivo (ej: "2026-06" o cualquier valor parseable por Carbon)
+     * @return CollectionContract Lista de id de categorias que ya poseen un presupuesto en el periodo objetivo
      */
-    public function findDuplicatedCategories(array $categoriaIds, string $nextPeriodMonth): array;
+    public function findDuplicatedCategories(array $categoriaIds, Date $nextPeriodMonth): CollectionContract;
 }

@@ -5,6 +5,9 @@ namespace App\Infrastructure\Presupuesto\Persistence\Checkers\Eloquent;
 use App\Domains\Presupuesto\Contracts\Checkers\PresupuestoCanDuplicateCheckerContract;
 use App\Domains\Categoria\ValueObjects\CategoriaId;
 use App\Models\Presupuesto\Presupuesto;
+use App\Shared\Domain\Contracts\CollectionContract;
+use App\Shared\Domain\ValueObjects\Date;
+use App\Shared\Infrastructure\Framework\Laravel\Collections\LaravelCollection;
 use Carbon\Carbon;
 
 /**
@@ -29,23 +32,22 @@ final readonly class EloquentPresupuestoCanDuplicateChecker implements Presupues
     /**
      * {@inheritDoc}
      */
-    public function findDuplicatedCategories(array $categoriaIds, string $nextPeriodMonth): array
+    public function findDuplicatedCategories(array $categoriaIds, Date $nextPeriodMonth): CollectionContract
     {
         if (empty($categoriaIds)) {
             return [];
         }
 
 
-        $nextMonthFirstDay = Carbon::parse($nextPeriodMonth)->firstOfMonth()->toDateString();
+        $nextMonthFirstDay = Carbon::parse($nextPeriodMonth->format('Y-m'))->firstOfMonth()->toDateString();
+
 
         $rows = Presupuesto::query()
+            ->select('categoria_id')
             ->whereIn('categoria_id', $categoriaIds)
             ->whereDate('periodo', $nextMonthFirstDay)
-            ->pluck('categoria_id')
-            ->unique()
-            ->values()
-            ->toArray();
+            ->get();
 
-        return array_map('strval', $rows);
+        return LaravelCollection::make($rows);
     }
 }

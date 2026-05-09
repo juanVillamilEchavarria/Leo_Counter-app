@@ -69,7 +69,7 @@ abstract class EloquentRepository {
      */
 
     public function update( AggregateModelContract $aggregate) : bool{
-        $model = ($this->model)::find($aggregate->getId());
+        $model = ($this->model)::find($this->normalizeId($aggregate->getId()));
         if (!$model) {
             return false;
         }
@@ -82,7 +82,7 @@ abstract class EloquentRepository {
      * @return bool
      */
     public function toggle(AggregateModelIdContract $id, string $attribute): bool{
-        $model = ($this->model)::find($id);
+        $model = ($this->model)::find($this->normalizeId($id));
         if (!$model) {
             return false;
         }
@@ -96,12 +96,12 @@ abstract class EloquentRepository {
      * @return bool
      */
     public function destroy(AggregateModelIdContract $id): bool{
-        $model = ($this->model)::find($id);
+        $model = ($this->model)::find($this->normalizeId($id));
         return $model ? $model->delete() : false;
     }
 
     public function findById(AggregateModelIdContract $id): ?AggregateModelContract{
-        $model = ($this->model)::find($id);
+        $model = ($this->model)::find($this->normalizeId($id));
         return $model ? $this->mapDatabaseRecordToAggregate($model) : null;
     }
     /**
@@ -111,7 +111,7 @@ abstract class EloquentRepository {
      */
 
     public function restore(AggregateModelIdContract $id) : bool{
-        $model = ($this->model)::withTrashed()->find($id);
+        $model = ($this->model)::withTrashed()->find($this->normalizeId($id));
         return $model ? $model->restore() : false;
     }
 
@@ -121,7 +121,7 @@ abstract class EloquentRepository {
      * @return bool
      */
     public function hardDelete(AggregateModelIdContract $id): bool{
-        $model = ($this->model)::withTrashed()->find($id);
+        $model = ($this->model)::withTrashed()->find($this->normalizeId($id));
         return $model ? $model->forceDelete() : false;
     }
     /**
@@ -131,6 +131,11 @@ abstract class EloquentRepository {
      */
     protected function create ( array $data): Model{
         return ($this->model)::create($data);
+    }
+
+    private function normalizeId(AggregateModelIdContract $id): string
+    {
+        return $id->getValue();
     }
 
     private function validateToggleAttribute(Model $model, string $attribute): void{

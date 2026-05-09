@@ -24,14 +24,13 @@ class StoreAndUpdateMovimientoFijoRequest extends FormRequest
         return [
             'nombre'=> 'required|string|max:255',
             'tipo_movimiento_id'=> 'required|integer|exists:tipo_movimientos,id',
-            'categoria_id'=> 'required|integer|exists:categorias,id',
-            'cuenta_id'=> 'required|integer|exists:cuentas,id',
+            'categoria_id'=> 'required|uuid|exists:categorias,id',
+            'cuenta_id'=> 'required|uuid|exists:cuentas,id',
             'monto'=> 'required|numeric|min:0',
             'fecha_proximo'=> 'required|date',
             'frecuencia_movimiento_id'=> 'required|numeric|exists:frecuencia_movimientos,id',
             'dias_aviso'=> 'nullable|numeric|min:0',
             'descripcion'=> 'nullable|string|max:1000',
-            'url_pago'=> 'nullable|url|max:255',
         ];
     }
 }

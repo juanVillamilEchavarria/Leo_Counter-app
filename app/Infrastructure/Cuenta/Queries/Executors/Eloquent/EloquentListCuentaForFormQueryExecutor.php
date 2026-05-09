@@ -12,7 +12,7 @@ use Override;
 /**
  * Clase que se encarga de traer todas las cuentas para mostrar como opcion de un formulario.
  * Trae las cuentas solo con el id y el nombre.
- * 
+ *
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  * @package App\Infrastructure\Cuenta\Queries\Executors\Eloquent
  * @version 1.0.0
@@ -22,6 +22,6 @@ final readonly class EloquentListCuentaForFormQueryExecutor implements ListCuent
     #[Override]
     public function execute(): CollectionContract
     {
-        return LaravelCollection::make(Cuenta::all(['id', 'nombre']));
+        return LaravelCollection::make( Cuenta::where('active', true)->get(['id', 'nombre']));
     }
 }

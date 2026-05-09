@@ -9,6 +9,16 @@ use App\Shared\Domain\ValueObjects\WhereFilterQueryDTO;
 use App\Models\Cuenta\Cuenta;
 use App\Models\Movimiento\Movimiento;
 use App\Shared\Exceptions\InsufficientBalanceException;
+use App\Domains\Cuenta\Contracts\Repositories\CuentaRepositoryContract;
+
+/**
+ * Servicio que verifica si una cuenta tiene saldo suficiente para realizar una transacción.
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @package App\Shared\Domain\Services\Financial
+ * @version 1.0.0
+ * @since 1.0.0
+ */
+// PENDIENTE LUEGO DE HACER EL REFACTOR AL MODULO DE MOVIMIENTOS
 class BalanceCheckerService{
     public function __construct(
         private CuentaReadRepositoryContract $cuentaReadRepository,
@@ -29,7 +39,7 @@ class BalanceCheckerService{
             throw new InsufficientBalanceException;
         }
         return $cuenta;
-        
+
     }
 
         private function calculateAvalaibleBalance(Movimiento |int | null $movimiento, float $saldo, int $cuenta_id): float{

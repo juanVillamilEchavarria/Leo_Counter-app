@@ -23,11 +23,12 @@ final readonly class LaravelCurrentMonthPresupuestoCollectionEnricher implements
     /**
      * {@inheritDoc}
      */
-    public function enrich(CollectionContract $items, array $duplicatedCategoriaIds): CollectionContract
+    public function enrich(CollectionContract $items, CollectionContract $duplicatedCategoriaIds): CollectionContract
     {
         /**
          * @var Collection<Presupuesto> $items
          */
+
         $mapped = $items->map(function($item) use ($duplicatedCategoriaIds) {
             return new CurrentMonthPresupuestoForListDTO(
                 (string) $item->id,
@@ -36,7 +37,7 @@ final readonly class LaravelCurrentMonthPresupuestoCollectionEnricher implements
                 (string) $item->periodo,
                 (float) $item->monto,
                 (string) ($item->descripcion ?? ''),
-                in_array($item->categoria_id, $duplicatedCategoriaIds, true)
+                $duplicatedCategoriaIds->contains(fn($model) => $model->categoria_id === $item->categoria_id)
             );
         });
 

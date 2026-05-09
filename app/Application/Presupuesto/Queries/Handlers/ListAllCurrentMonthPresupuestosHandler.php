@@ -8,6 +8,7 @@ use App\Shared\Domain\Contracts\CollectionContract;
 use App\Domains\Presupuesto\Contracts\Checkers\PresupuestoCanDuplicateCheckerContract;
 use App\Application\Presupuesto\Contracts\Queries\CurrentMonthPresupuestoCollectionEnricherContract;
 use App\Domains\Categoria\ValueObjects\CategoriaId;
+use App\Shared\Domain\ValueObjects\Date;
 use DateTimeImmutable;
 use DateInterval;
 
@@ -31,9 +32,7 @@ final readonly class ListAllCurrentMonthPresupuestosHandler{
         $items = $this->executor->execute($query);
 
         $categoriaIds = $items->pluck('categoria_id')->unique()->toArray();
-
-        $nextMonth = (new DateTimeImmutable())->add(new DateInterval('P1M'))->format('Y-m');
-
+        $nextMonth = (new Date(new DateTimeImmutable()))->addMonths();
         $duplicatedIds = $this->duplicateChecker->findDuplicatedCategories($categoriaIds, $nextMonth);
 
         return $this->enricher->enrich($items, $duplicatedIds);

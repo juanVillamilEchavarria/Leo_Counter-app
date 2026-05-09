@@ -7,7 +7,7 @@ use App\Domains\Presupuesto\Contracts\Checkers\PresupuestoUniquenessCheckerContr
 use App\Shared\Domain\Contracts\AggregateModelContract;
 use App\Domains\Presupuesto\ValueObjects\PresupuestoId;
 use App\Domains\Categoria\ValueObjects\CategoriaId;
-use DateTimeImmutable;
+use App\Shared\Domain\ValueObjects\Date;
 /**
  * Agregado de dominio Presupuesto.
  * Representa un presupuesto del sistema con su información.
@@ -21,7 +21,7 @@ final readonly class Presupuesto implements AggregateModelContract
         private PresupuestoId $id,
         private CategoriaId $categoria_id,
         private float $monto,
-        private DateTimeImmutable $periodo,
+        private Date $periodo,
         private ?string $descripcion,
         private string $user_id,
     ) {
@@ -34,7 +34,7 @@ final readonly class Presupuesto implements AggregateModelContract
         PresupuestoId $id,
         CategoriaId $categoria_id,
         float $monto,
-        DateTimeImmutable $periodo,
+        Date $periodo,
         ?string $descripcion,
         string $user_id,
         PresupuestoUniquenessCheckerContract $checker
@@ -62,7 +62,7 @@ final readonly class Presupuesto implements AggregateModelContract
         PresupuestoId $id,
         CategoriaId $categoria_id,
         float $monto,
-        DateTimeImmutable $periodo,
+        Date $periodo,
         ?string $descripcion,
         string $user_id
     ): self {
@@ -116,7 +116,7 @@ final readonly class Presupuesto implements AggregateModelContract
             id: $id,
             categoria_id: $this->categoria_id,
             monto: $this->monto,
-            periodo: $this->periodo->add(new \DateInterval('P1M')),
+            periodo: $this->periodo->addMonths(),
             descripcion: $this->descripcion,
             user_id: $this->user_id,
         );
@@ -141,7 +141,7 @@ final readonly class Presupuesto implements AggregateModelContract
         return $this->monto;
     }
 
-    public function getPeriodo(): DateTimeImmutable
+    public function getPeriodo(): Date
     {
         return $this->periodo;
     }
