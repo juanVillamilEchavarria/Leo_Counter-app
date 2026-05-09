@@ -18,8 +18,8 @@ interface CurrentMonthPresupuestoCollectionEnricherContract
      * Enriquecer la coleccion de presupuestos con datos derivados (por ejemplo isDuplicate).
      *
      * @param CollectionContract $items Coleccion de items a enriquecer
-     * @param array<int,string> $duplicatedCategoriaIds Lista de categoria_id duplicadas para el proximo periodo
+     * @param CollectionContract $duplicatedCategoriaIds Lista de categoria_id duplicadas para el proximo periodo
      * @return CollectionContract Nueva coleccion enriquecida
      */
-    public function enrich(CollectionContract $items, array $duplicatedCategoriaIds): CollectionContract;
+    public function enrich(CollectionContract $items, CollectionContract $duplicatedCategoriaIds): CollectionContract;
 }

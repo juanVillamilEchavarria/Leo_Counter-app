@@ -35,7 +35,9 @@ final readonly class EloquentPresupuestoPaginatedTableQueryExecutor extends Eloq
         ],
         'user' => [
             'users.name'
-        ]
+        ],
+        'periodo',
+         'monto'
     ];
     }
     #[Override]

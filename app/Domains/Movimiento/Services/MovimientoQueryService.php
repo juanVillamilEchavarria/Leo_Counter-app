@@ -3,10 +3,13 @@
 namespace App\Domains\Movimiento\Services;
 // MODELS
 use App\Models\Movimiento\Movimiento;
-// SERVICES
-use App\Application\MovimientoFijo\Services\MovimientoFijoService;
+use App\Application\MovimientoFijo\DTOs\MovimientoFijoFormOptionsDTO;
 // CONTRACTS
 use App\Domains\Movimiento\Contracts\Repositories\MovimientoReadRepositoryContract;
+use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListCategoriaForFormContract;
+use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListCuentaForFormContract;
+use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListFrecuenciaMovimientoForFormContract;
+use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListTipoMovimientoForFormContract;
 // DTO
 use App\Shared\Domain\ValueObjects\WhereFilterQueryDTO;
 use App\Shared\Domain\ValueObjects\TableQueryDTO;
@@ -25,13 +28,21 @@ class MovimientoQueryService{
 
     protected readonly ?LengthAwarePaginator $paginator;
     public function __construct(
-        private MovimientoFijoService $movimientoFijoService,
-        private MovimientoReadRepositoryContract $repository
+        private MovimientoReadRepositoryContract $repository,
+        private ListCategoriaForFormContract $categoriaForForm,
+        private ListCuentaForFormContract $cuentaForForm,
+        private ListTipoMovimientoForFormContract $tipoMovimientoForForm,
+        private ListFrecuenciaMovimientoForFormContract $frecuenciaMovimientoForForm,
     )
     {
     }
-    public function getOptions(){
-      return $this->movimientoFijoService->getOptions();
+    public function getOptions(): MovimientoFijoFormOptionsDTO{
+      return new MovimientoFijoFormOptionsDTO(
+          categorias: $this->categoriaForForm->execute(),
+          tipos_movimientos: $this->tipoMovimientoForForm->execute(),
+          frecuencias_movimientos: $this->frecuenciaMovimientoForForm->execute(),
+          cuentas: $this->cuentaForForm->execute(),
+      );
     }
 
     public function getPaginator(){

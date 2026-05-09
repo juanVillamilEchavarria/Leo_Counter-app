@@ -30,10 +30,10 @@ export type MovimientoPendienteEstados= 'pendiente' | 'realizado' | 'vencido'
 export interface MovimientoPendiente extends SoftDeleteModel {
     id: number
     nombre : string
-    cuenta_id : number
+    cuenta_id : string
     tipo_movimiento_id : number
-    categoria_id ?: number
-    movimiento_fijo_id : number | null
+    categoria_id ?: string
+    movimiento_fijo_id : string | null
     fecha_programada : string
     estado : MovimientoPendienteEstados
     dias_aviso: number | null
@@ -42,7 +42,7 @@ export interface MovimientoPendiente extends SoftDeleteModel {
 }
 
 export type MarkAsDonePayload = {
-    comprobantes :FileWithPreview[] |null 
+    comprobantes :FileWithPreview[] |null
 }
 
 export interface MovimientoPendienteTableData extends Omit< MovimientoPendiente, 'cuenta_id' | 'tipo_movimiento_id' | 'categoria_id' | 'movimiento_fijo_id'> {

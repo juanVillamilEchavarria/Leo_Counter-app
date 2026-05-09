@@ -5,6 +5,7 @@ namespace App\Infrastructure\Presupuesto\Persistence\Repositories\Eloquent;
 use App\Domains\Presupuesto\Aggregates\Presupuesto as PresupuestoAggregate;
 use App\Domains\Presupuesto\Contracts\Repositories\PresupuestoRepositoryContract;
 use App\Shared\Domain\Contracts\AggregateModelContract;
+use App\Shared\Domain\ValueObjects\Date;
 use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentRepository;
 use App\Models\Presupuesto\Presupuesto;
 use Illuminate\Database\Eloquent\Model;
@@ -35,7 +36,7 @@ final class EloquentPresupuestoRepository extends EloquentRepository implements 
             id: new PresupuestoId($model->id),
             categoria_id: new CategoriaId($model->categoria_id),
             monto: (float) $model->monto,
-            periodo: new DateTimeImmutable($model->periodo),
+            periodo: new Date(new DateTimeImmutable($model->periodo)),
             descripcion: $model->descripcion,
             user_id: $model->user_id,
         );

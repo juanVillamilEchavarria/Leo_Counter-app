@@ -38,7 +38,7 @@ export default function MovimientoPendienteForm({
         <legend className="legend mt-5">Información del movimiento pendiente</legend>
         <div className="formulario-campo">
             <label htmlFor="nombre">Nombre del movimiento pendiente</label>
-            <InputFillable 
+            <InputFillable
                 placeholder="Ej: Pago de servicios"
                 type="text"
                 name="nombre"
@@ -57,8 +57,8 @@ export default function MovimientoPendienteForm({
         <div className="flex w-full gap-4">
             <div className="formulario-campo w-full">
                 <label htmlFor="tipo_movimiento_id">Tipo de movimiento</label>
-               
-                    <SelectModel 
+
+                    <SelectModel
                     name="tipo_movimiento_id"
                     id="tipo_movimiento_id"
                     iterable={options.tipos_movimientos}
@@ -77,12 +77,12 @@ export default function MovimientoPendienteForm({
             </div>
             <div className="formulario-campo w-full">
                 <label htmlFor="categoria_id">Categoría</label>
-                
-                <SelectModel 
+
+                <SelectModel
                     name="categoria_id"
                     id="categoria_id"
                     iterable={categoriasFiltered}
-                    onChange={(e) => setData('categoria_id', Number(e.target.value))}
+                    onChange={(e) => setData('categoria_id', e.target.value)}
                     value={data?.categoria_id}
                     className={`${errors.categoria_id && 'border-red-500! text-red-500!'}`}
                     placeholder="Seleccione una categoría"
@@ -95,12 +95,12 @@ export default function MovimientoPendienteForm({
         <div className="flex w-full gap-4">
             <div className="formulario-campo w-full">
                 <label htmlFor="cuenta_id">Cuenta</label>
-                
-                <SelectModel 
+
+                <SelectModel
                     name="cuenta_id"
                     id="cuenta_id"
                     iterable={options.cuentas}
-                    onChange={(e) => setData('cuenta_id', Number(e.target.value))}
+                    onChange={(e) => setData('cuenta_id', e.target.value)}
                     value={data?.cuenta_id}
                     className={`${errors.cuenta_id && 'border-red-500! text-red-500!'}`}
                     placeholder="Seleccione una cuenta"
@@ -175,7 +175,7 @@ export default function MovimientoPendienteForm({
                 <AlertMessage message={errors?.descripcion} />
             </TransitionMotion>
         </div>
-         
+
           <div className="w-1/6 my-5 mx-auto">
             <Button
             variant="secondary"

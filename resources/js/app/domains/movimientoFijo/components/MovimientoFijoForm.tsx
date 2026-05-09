@@ -36,7 +36,7 @@ export default function MovimientoFijoForm({
         <legend className="legend mt-5">Información del movimiento fijo</legend>
         <div className="formulario-campo">
             <label htmlFor="nombre">Nombre del movimiento fijo</label>
-            <InputFillable 
+            <InputFillable
                 placeholder="Ej: Pago de empleada"
                 type="text"
                 name="nombre"
@@ -55,8 +55,8 @@ export default function MovimientoFijoForm({
         <div className="flex w-full gap-4">
             <div className="formulario-campo w-full">
                 <label htmlFor="tipo_movimiento_id">Tipo de movimiento</label>
-               
-                    <SelectModel 
+
+                    <SelectModel
                     name="tipo_movimiento_id"
                     id="tipo_movimiento_id"
                     iterable={options.tipos_movimientos}
@@ -75,12 +75,12 @@ export default function MovimientoFijoForm({
             </div>
             <div className="formulario-campo w-full">
                 <label htmlFor="categoria_id">Categoría</label>
-                
-                <SelectModel 
+
+                <SelectModel
                     name="categoria_id"
                     id="categoria_id"
                     iterable={categoriasFiltered}
-                    onChange={(e) => setData('categoria_id', Number(e.target.value))}
+                    onChange={(e) => setData('categoria_id', e.target.value)}
                     value={data?.categoria_id}
                     className={`${errors.categoria_id && 'border-red-500! text-red-500!'}`}
                     placeholder="Seleccione una categoría"
@@ -93,12 +93,12 @@ export default function MovimientoFijoForm({
         <div className="flex w-full gap-4">
             <div className="formulario-campo w-full">
                 <label htmlFor="cuenta_id">Cuenta</label>
-                
-                <SelectModel 
+
+                <SelectModel
                     name="cuenta_id"
                     id="cuenta_id"
                     iterable={options.cuentas}
-                    onChange={(e) => setData('cuenta_id', Number(e.target.value))}
+                    onChange={(e) => setData('cuenta_id', e.target.value)}
                     value={data?.cuenta_id}
                     className={`${errors.cuenta_id && 'border-red-500! text-red-500!'}`}
                     placeholder="Seleccione una cuenta"
@@ -109,12 +109,12 @@ export default function MovimientoFijoForm({
             </div>
             <div className="formulario-campo w-full">
                 <label htmlFor="frecuencia_id">Frecuencia</label>
-                <SelectModel 
+                <SelectModel
                     name="frecuencia_movimiento_id"
                     id="frecuencia_movimiento_id"
                     iterable={options.frecuencias_movimientos}
                     iterableOutput="frecuencia_movimiento"
-                    onChange={(e) => setData('frecuencia_movimiento_id', e.target.value)}
+                    onChange={(e) => setData('frecuencia_movimiento_id', Number(e.target.value))}
                     value={data?.frecuencia_movimiento_id}
                     className={`${errors.frecuencia_movimiento_id && 'border-red-500! text-red-500!'}`}
                     placeholder="Seleccione una frecuencia"
@@ -189,7 +189,7 @@ export default function MovimientoFijoForm({
                 <AlertMessage message={errors?.descripcion} />
             </TransitionMotion>
         </div>
-         
+
           <div className="w-1/6 my-5 mx-auto">
             <Button
             variant="secondary"

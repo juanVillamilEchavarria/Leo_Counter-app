@@ -9,6 +9,7 @@ use App\Domains\Presupuesto\Contracts\Repositories\PresupuestoRepositoryContract
 use App\Domains\Presupuesto\ValueObjects\PresupuestoId;
 use App\Domains\Categoria\ValueObjects\CategoriaId;
 use App\Shared\Domain\Contracts\IdGeneratorContract;
+use App\Shared\Domain\ValueObjects\Date;
 use DateTimeImmutable;
 
 final readonly class StorePresupuestoHandler
@@ -26,7 +27,7 @@ final readonly class StorePresupuestoHandler
             id: PresupuestoId::generate($this->idGenerator),
             categoria_id: new CategoriaId($command->categoria_id),
             monto: $command->monto,
-            periodo: new DateTimeImmutable(),
+            periodo: new Date(new DateTimeImmutable()),
             descripcion: $command->descripcion,
             user_id: $command->user_id,
             checker: $this->uniquenessChecker

@@ -7,14 +7,14 @@ import { useRoute } from "ziggy-js"
 const route= useRoute()
 
 export type MovimientoFijo={
-    id : number,
+    id : string,
     nombre: string,
-    cuenta_id : number,
+    cuenta_id : string,
     tipo_movimiento_id : number,
-    categoria_id?: number,
+    categoria_id?: string,
     monto: number,
     fecha_proximo : string,
-    frecuencia_movimiento_id: string,
+    frecuencia_movimiento_id: number,
     dias_aviso: number,
     descripcion: string,
     active: boolean,
@@ -29,10 +29,10 @@ export type MovimientoFijoTableData = Omit<MovimientoFijo,'tipo_movimiento_id' |
 }
 export const MovimientoFijoActions = {
     post : route('movimientosFijos.store'),
-    put : (id: number) => route('movimientosFijos.update', {id}),
-    delete : (id: number) => route('movimientosFijos.destroy', {movimientoFijo:id}),
-    patch : (id: number) => route('movimientosFijos.update', {id}),
-    toggle : (id: number, attribute: keyof typeof MovimientoFijoToggleTypes) => route('movimientosFijos.toggle', {movimientoFijo:id, attribute}),
+    put : (id: string) => route('movimientosFijos.update', {id}),
+    delete : (id: string) => route('movimientosFijos.destroy', {id}),
+    patch : (id: string) => route('movimientosFijos.update', {id}),
+    toggle : (id: string, attribute: keyof typeof MovimientoFijoToggleTypes) => route('movimientosFijos.toggle', {id, attribute}),
 }as const
 export const MovimientoFijoToggleTypes = {
     active: 'active',
@@ -42,8 +42,8 @@ export const MovimientoFijoToggleTypes = {
 export const MovimientoFijoRoutes = {
     index : () => route('movimientosFijos.index'),
     create : () => route('movimientosFijos.create'),
-    show : (id: number) => route('movimientosFijos.show', {id}),
-    edit : (id: number) => route('movimientosFijos.edit', {id})
+    show : (id: string) => route('movimientosFijos.show', {id}),
+    edit : (id: string) => route('movimientosFijos.edit', {id})
 }
 
 export type MovimientoFijoFormData = Omit<MovimientoFijo,'id' | 'active' | 'registrar_automatico'>

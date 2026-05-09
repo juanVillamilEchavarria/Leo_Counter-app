@@ -14,7 +14,7 @@ class MovimientoFijo extends Model
 {
     use HasFactory;
 
-      public $incrementing = false;
+    public $incrementing = false;
     protected $keyType = 'string';
     protected $casts = [
         'active'=>'boolean',
@@ -22,6 +22,7 @@ class MovimientoFijo extends Model
     ];
 
     protected $fillable = [
+        'id',
         'nombre',
         'descripcion',
         'tipo_movimiento_id',
@@ -53,9 +54,19 @@ class MovimientoFijo extends Model
         return $this->belongsTo(TipoMovimiento::class);
     }
 
+    public function tipoMovimiento()
+    {
+        return $this->belongsTo(TipoMovimiento::class, 'tipo_movimiento_id');
+    }
+
     public function frecuencia_movimiento()
     {
         return $this->belongsTo(FrecuenciaMovimiento::class);
+    }
+
+    public function frecuencia()
+    {
+        return $this->belongsTo(FrecuenciaMovimiento::class, 'frecuencia_movimiento_id');
     }
 
     public function movimientos_pendientes()

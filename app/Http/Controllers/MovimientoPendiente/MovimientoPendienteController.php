@@ -2,105 +2,154 @@
 
 namespace App\Http\Controllers\MovimientoPendiente;
 
+use App\Application\MovimientoPendiente\Commands\DestroyMovimientoPendienteCommand;
+use App\Application\MovimientoPendiente\Commands\StoreMovimientoPendienteCommand;
+use App\Application\MovimientoPendiente\Commands\UpdateMovimientoPendienteCommand;
+use App\Application\MovimientoPendiente\Queries\GetMovimientoPendienteForEditQuery;
+use App\Application\MovimientoPendiente\Queries\GetMovimientoPendienteRecordsCountQuery;
+use App\Application\MovimientoPendiente\Queries\ListAllMovimientoPendienteQuery;
+use App\Application\MovimientoPendiente\Queries\ListMovimientoPendienteFormOptionsQuery;
 use App\Http\Controllers\Controller;
-use Inertia\Inertia;
-use App\Application\MovimientoPendiente\Services\MovimientoPendienteService;
 use App\Http\Requests\MovimientoPendiente\StoreAndUpdateMovimientoPendienteRequest;
-use App\Models\MovimientoPendiente\MovimientoPendiente;
-use App\Http\Requests\MovimientoPendiente\MarkAsDoneRequest;
+use App\Http\Resources\MovimientoPendiente\MovimientoPendienteResource;
+use App\Shared\Application\Contracts\Bus\QueryBus;
+use Illuminate\Contracts\Bus\Dispatcher;
+use Inertia\Inertia;
+
+/**
+ * Controlador de presentacion para MovimientoPendiente.
+ * Coordina requests HTTP con comandos y queries de aplicacion sin acoplarse
+ * a Eloquent, servicios legacy ni route model binding.
+ *
+ * No implementa la funcionalidad de marcar como realizado, que sera
+ * abordada en una fase posterior del refactor.
+ *
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @package App\Http\Controllers\MovimientoPendiente
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 class MovimientoPendienteController extends Controller
 {
-    
     public function __construct(
-        protected MovimientoPendienteService $movimientoPendienteService
+        private QueryBus $queryBus,
+        private Dispatcher $dispatcher,
     ) {
     }
 
-    protected function props(string $title = 'Movimientos Pendientes') : array{
-        return [
-            'title'=> $title,
-            'NoRegistros'=>$this->movimientoPendienteService->getRecordsCount(),
-
-        ];
-    }
-
-    public function index()
+    /**
+     * Obtiene el total de registros de movimientos pendientes para las props compartidas.
+     *
+     * @return int Total de registros pendientes.
+     */
+    private function NoRegistros(): int
     {
-        $movimientos= $this->movimientoPendienteService->getAll();
-        $props = array_merge($this->props(),[
-            'movimientos'=>$movimientos
-        ]);
-        return Inertia::render('MovimientosPendientes/Index', $props);
+        return $this->queryBus->ask(new GetMovimientoPendienteRecordsCountQuery());
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Muestra la lista de movimientos pendientes.
+     */
+    public function index()
+    {
+        $movimientos = $this->queryBus->ask(new ListAllMovimientoPendienteQuery());
+
+        return Inertia::render('MovimientosPendientes/Index', [
+            'title' => 'Movimientos Pendientes',
+            'NoRegistros' => $this->NoRegistros(),
+            'movimientos' => MovimientoPendienteResource::collection($movimientos),
+        ]);
+    }
+
+    /**
+     * Muestra el formulario de creacion de movimiento pendiente.
      */
     public function create()
     {
-        $props = array_merge($this->props('Crear Movimiento Pendiente'),[
-            'options' => $this->movimientoPendienteService->getOptions()
+        return Inertia::render('MovimientosPendientes/Create', [
+            'title' => 'Crear Movimiento Pendiente',
+            'NoRegistros' => $this->NoRegistros(),
+            'options' => $this->queryBus->ask(new ListMovimientoPendienteFormOptionsQuery()),
         ]);
-        return Inertia::render('MovimientosPendientes/Create', $props);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Almacena un nuevo movimiento pendiente.
      */
     public function store(StoreAndUpdateMovimientoPendienteRequest $request)
     {
-        $this->movimientoPendienteService->store($request->validated());
-        Inertia::flash('success','Movimiento Pendiente creado con exito');
+        $this->dispatcher->dispatch(new StoreMovimientoPendienteCommand(
+            categoria_id: $request->categoria_id,
+            tipo_movimiento_id: (int) $request->tipo_movimiento_id,
+            cuenta_id: $request->cuenta_id,
+            nombre: $request->nombre,
+            monto: (float) $request->monto,
+            fecha_programada: $request->fecha_programada,
+            dias_aviso: $request->dias_aviso !== null ? (int) $request->dias_aviso : null,
+            descripcion: $request->descripcion,
+        ));
+
+        Inertia::flash('success', 'Movimiento Pendiente creado con exito');
         return redirect()->route('movimientosPendientes.index');
     }
 
     /**
-     * Display the specified resource.
+     * Muestra el detalle de un movimiento pendiente.
      */
-    public function show(MovimientoPendiente $movimientoPendiente)
+    public function show(string $id)
     {
-        $props = array_merge($this->props('Detalle Movimiento Pendiente'),[
-            'movimientos' => $this->movimientoPendienteService->getAll(),
-            'data' => $this->movimientoPendienteService->getWithDetails($movimientoPendiente)
+        $movimientos = $this->queryBus->ask(new ListAllMovimientoPendienteQuery());
+
+        return Inertia::render('MovimientosPendientes/Index', [
+            'title' => 'Detalle Movimiento Pendiente',
+            'NoRegistros' => $this->NoRegistros(),
+            'movimientos' => MovimientoPendienteResource::collection($movimientos),
+            'data' => $this->queryBus->ask(new GetMovimientoPendienteForEditQuery(id: $id)),
         ]);
-        return Inertia::render('MovimientosPendientes/Index', $props);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Muestra el formulario de edicion de movimiento pendiente.
      */
-    public function edit(MovimientoPendiente $movimientoPendiente)
+    public function edit(string $id)
     {
-        $props = array_merge($this->props('Editar Movimiento Pendiente'),[
-            'data' => $movimientoPendiente,
-            'options' => $this->movimientoPendienteService->getOptions()
+        return Inertia::render('MovimientosPendientes/Edit', [
+            'title' => 'Editar Movimiento Pendiente',
+            'NoRegistros' => $this->NoRegistros(),
+            'data' => $this->queryBus->ask(new GetMovimientoPendienteForEditQuery(id: $id)),
+            'options' => $this->queryBus->ask(new ListMovimientoPendienteFormOptionsQuery()),
         ]);
-        return Inertia::render('MovimientosPendientes/Edit', $props);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza un movimiento pendiente existente.
      */
-    public function update(StoreAndUpdateMovimientoPendienteRequest $request, MovimientoPendiente $movimientoPendiente)
+    public function update(StoreAndUpdateMovimientoPendienteRequest $request, string $id)
     {
-        $this->movimientoPendienteService->update($movimientoPendiente, $request->validated());
-        Inertia::flash('success','Movimiento Pendiente actualizado con exito');
+        $this->dispatcher->dispatch(new UpdateMovimientoPendienteCommand(
+            id: $id,
+            categoria_id: $request->categoria_id,
+            tipo_movimiento_id: (int) $request->tipo_movimiento_id,
+            cuenta_id: $request->cuenta_id,
+            nombre: $request->nombre,
+            monto: (float) $request->monto,
+            fecha_programada: $request->fecha_programada,
+            dias_aviso: $request->dias_aviso !== null ? (int) $request->dias_aviso : null,
+            descripcion: $request->descripcion,
+        ));
+
+        Inertia::flash('success', 'Movimiento Pendiente actualizado con exito');
         return redirect()->route('movimientosPendientes.index');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina (soft delete) un movimiento pendiente.
      */
-    public function destroy(MovimientoPendiente $movimientoPendiente)
+    public function destroy(string $id)
     {
-        $this->movimientoPendienteService->destroy($movimientoPendiente);
-        Inertia::flash('success','Movimiento Pendiente eliminado con exito');
-        return redirect()->route('movimientosPendientes.index');
-    }
+        $this->dispatcher->dispatch(new DestroyMovimientoPendienteCommand(id: $id));
 
-    public function markAsDone(MarkAsDoneRequest $request, MovimientoPendiente $movimientoPendiente){
-         $this->movimientoPendienteService->markAsDone($movimientoPendiente, $request->validated());
-         Inertia::flash('success','Movimiento Pendiente marcado como realizado, miralo en la tabla de movimientos');
-         return redirect()->route('movimientosPendientes.index');
+        Inertia::flash('success', 'Movimiento Pendiente eliminado con exito');
+        return redirect()->route('movimientosPendientes.index');
     }
 }

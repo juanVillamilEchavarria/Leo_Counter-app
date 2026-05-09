@@ -44,13 +44,13 @@ Route::middleware('auth')->group( function () {
     Route::patch('movimientos-pendientes/{movimientoPendiente}/mark-as-done', [MovimientoPendienteController::class, 'markAsDone'])->name('movimientosPendientes.markAsDone');
     // MOVIMIENTOS FIJOS
     Route::resource('movimientos-fijos',MovimientoFijoController::class)->names('movimientosFijos')->parameters([
-        'movimientos-fijos'=> 'movimientoFijo'
+        'movimientos-fijos'=> 'id'
     ]);
     // ARCHIVOS_MOVIMIENTOS 
     Route::get('movimientos/archivos/{archivoMovimiento}', [ArchivoMovimientoController::class, 'show'])->name('movimientos.archivos.show');
     Route::get('movimientos/archivos/{archivoMovimiento}/download', [ArchivoMovimientoController::class, 'download'])->name('movimientos.archivos.download');
 
-    Route::patch('movimientos-fijos/{movimientoFijo}/{attribute}/toggle', [MovimientoFijoController::class, 'toggle'])->name('movimientosFijos.toggle');
+    Route::patch('movimientos-fijos/{id}/{attribute}/toggle', [MovimientoFijoController::class, 'toggle'])->name('movimientosFijos.toggle');
     // CATEGORIAS
     Route::resource('categorias',CategoriaController::class)->names('categorias')->except('patch');
     Route::patch('categorias/{categoria}/{attribute}/toggle', [CategoriaController::class, 'toggleEsFijo'])->name('categorias.toggle');
@@ -78,4 +78,3 @@ Route::middleware('auth')->group( function () {
     Route::put('/configuracion/deleted/{domain}/restore/{id}', [SoftDeleteRecordsController::class, 'restore'])->name('configuracion.deleted.restore');
     Route::delete('/configuracion/deleted/{domain}/hard-delete/{id}', [SoftDeleteRecordsController::class, 'hardDelete'])->name('configuracion.deleted.hardDelete');
 });
-

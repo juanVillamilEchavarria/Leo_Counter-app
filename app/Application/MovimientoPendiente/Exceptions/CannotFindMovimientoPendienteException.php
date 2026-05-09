@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Application\MovimientoPendiente\Exceptions;
+
+use RuntimeException;
+
+/**
+ * Excepcion de aplicacion lanzada cuando no se encuentra el movimiento pendiente solicitado.
+ * Se utiliza en casos de uso de consulta o actualizacion que requieren un agregado existente.
+ *
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @package App\Application\MovimientoPendiente\Exceptions
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+final class CannotFindMovimientoPendienteException extends RuntimeException
+{
+    public function __construct(string $message = 'No se encontro el movimiento pendiente solicitado.')
+    {
+        parent::__construct($message);
+    }
+}
