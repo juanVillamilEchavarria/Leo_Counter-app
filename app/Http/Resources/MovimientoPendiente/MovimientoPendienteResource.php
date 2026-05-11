@@ -18,15 +18,15 @@ class MovimientoPendienteResource extends JsonResource
             'id'=>$this->id,
             'nombre'=>$this->nombre,
             'descripcion'=>$this->descripcion,
-            'tipo_movimiento'=>$this->tipo_movimiento ? $this->tipo_movimiento->tipo_movimiento : null,
-            'categoria'=>$this->categoria ? $this->categoria->nombre : null,
-            'cuenta'=>$this->cuenta ? $this->cuenta->nombre : null,
-            'movimiento_fijo'=>$this->movimiento_fijo ? $this->movimiento_fijo->nombre : null,
-            'fecha_programada'=>$this->fecha_programada,   
+            'tipo_movimiento'=>$this->tipo_movimiento,
+            'categoria'=>$this->categoria,
+            'cuenta'=>$this->cuenta,
+            'movimiento_fijo'=>$this->movimiento_fijo,
+            'fecha_programada'=>$this->fecha_programada,
             'monto'=>$this->monto,
             'estado'=>$this->estado,
             'dias_aviso'=>$this->dias_aviso,
-            'enough_balance'=>$this->enough_balance ?? null 
+            'enough_balance'=>$this->enough_balance
         ];
     }
 }

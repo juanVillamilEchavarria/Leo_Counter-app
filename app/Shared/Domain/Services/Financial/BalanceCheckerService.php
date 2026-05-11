@@ -20,19 +20,11 @@ use App\Domains\Cuenta\Contracts\Repositories\CuentaRepositoryContract;
  */
 // PENDIENTE LUEGO DE HACER EL REFACTOR AL MODULO DE MOVIMIENTOS
 class BalanceCheckerService{
-    public function __construct(
-        private CuentaReadRepositoryContract $cuentaReadRepository,
-        private MovimientoReadRepositoryContract $repository
-    )
-    {
-    }
-     public function canAfford(int $cuenta_id, float $monto, Movimiento | int | null $movimiento=null): bool{
-        $cuenta = $this->cuentaReadRepository->whereAttr('id', $cuenta_id)->firstOrFail();
-        $saldo = $this->calculateAvalaibleBalance($movimiento, $cuenta->saldo_actual,$cuenta_id);
+     public function canAfford(float $saldo, float $monto): bool{
         return $saldo >= $monto;
     }
 
-    public function getCuentaIfCanAfford(int $cuenta_id, float $monto, Movimiento | int | null $movimiento=null): ?Cuenta{
+    /*public function getCuentaIfCanAfford(int $cuenta_id, float $monto, Movimiento | int | null $movimiento=null): ?Cuenta{
               $cuenta = $this->cuentaReadRepository->whereAttr('id', $cuenta_id)->firstOrFail();
               $saldo = $this->calculateAvalaibleBalance($movimiento, $cuenta->saldo_actual,$cuenta_id);
         if($saldo < $monto){
@@ -63,5 +55,5 @@ class BalanceCheckerService{
             TipoMovimientoEnum::INGRESO->value => $saldo - $movimiento->monto,
             default => $saldo
         };
-    }
+    }*/
 }

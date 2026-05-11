@@ -8,7 +8,10 @@ use App\Application\MovimientoPendiente\Queries\Handlers\GetMovimientoPendienteR
 use App\Application\MovimientoPendiente\Queries\Handlers\ListAllMovimientoPendienteHandler;
 use App\Infrastructure\MovimientoPendiente\Queries\Executors\Eloquent\EloquentGetMovimientoPendienteRecordsCountExecutor;
 use App\Infrastructure\MovimientoPendiente\Queries\Executors\Eloquent\EloquentListAllMovimientoPendienteWithDetailsExecutor;
+use App\Domains\MovimientoPendiente\Contracts\GetAllAccountsBalanceForMovimientosPendientesContract;
+use App\Infrastructure\MovimientoPendiente\Queries\Executors\Eloquent\EloquentGetAllAccountsBalanceForMovimientosPendientesQueryExecutor;
 use Illuminate\Support\ServiceProvider;
+
 
 /**
  * Query executor provider del modulo MovimientoPendiente.
@@ -31,6 +34,8 @@ final class MovimientoPendienteQueryExecutorServiceProvider extends ServiceProvi
         $this->app->when(GetMovimientoPendienteRecordsCountHandler::class)
             ->needs(GetMovimientoPendienteRecordsCountQueryExecutorContract::class)
             ->give(EloquentGetMovimientoPendienteRecordsCountExecutor::class);
+
+        $this->app->singleton(GetAllAccountsBalanceForMovimientosPendientesContract::class, EloquentGetAllAccountsBalanceForMovimientosPendientesQueryExecutor::class);
     }
 
     public function boot(): void
