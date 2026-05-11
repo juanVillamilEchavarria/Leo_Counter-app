@@ -7,12 +7,15 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Application\Movimiento\Services\MovimientoService;
 use App\Models\Movimiento\Movimiento;
+use App\Shared\Application\Contracts\Bus\QueryBus;
+use App\Application\Movimiento\Queries\GetMovimientoRecordsCountQuery;
 
 class MovimientoController extends Controller
 {
 
     public function __construct(
-        private MovimientoService $movimientoService
+        private MovimientoService $movimientoService,
+        private QueryBus $queryBus
     )
     {
     }
@@ -20,7 +23,7 @@ class MovimientoController extends Controller
     protected function props (): array{
         return [
             'title'=>'Movimientos',
-            'NoRegistros'=>$this->movimientoService->getRecordsCount(),
+            'NoRegistros'=>$this->queryBus->ask(new GetMovimientoRecordsCountQuery()),
 
         ];
     }

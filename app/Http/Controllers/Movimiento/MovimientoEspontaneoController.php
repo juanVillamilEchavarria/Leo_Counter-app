@@ -12,12 +12,18 @@ use App\Domains\Movimiento\Enums\ResourceEnum;
 use App\Http\Requests\MovimientoEspontaneo\DestroyMovimientoEspontaneoRequest;
 use Carbon\Carbon;
 use Inertia\Inertia;
+use App\Shared\Application\Contracts\Bus\QueryBus;
+use App\Application\Movimiento\Queries\GetEspontaneoMovimientoRecordsCountQuery;
+use App\Application\Movimiento\Queries\ListAllMovimientoWithDetailsQuery;
+use App\Application\Movimiento\Queries\ListMovimientoFormOptionsQuery;
+use App\Application\Movimiento\Queries\GetMovimientoForEditQuery;
 
 class MovimientoEspontaneoController extends Controller
 {
 
     public function __construct(
         private MovimientoService $movimientoService,
+        private QueryBus $queryBus,
     )
     {
     }
@@ -27,14 +33,14 @@ class MovimientoEspontaneoController extends Controller
     protected function props(string $title = 'Movimientos Espontaneos') : array{
         return [
             'title'=> $title,
-            'NoRegistros'=> $this->movimientoService->getRecordsCount(MovimientoVariants::ESPONTANEO),
+            'NoRegistros'=> $this->queryBus->ask(new GetEspontaneoMovimientoRecordsCountQuery()),
         ];
     }
     public function index()
     {
         $props = array_merge($this->props(),[
             'dia'=> Carbon::now()->format('Y-m-d'),
-            'movimientos'=>$this->movimientoService->getAll(MovimientoVariants::ESPONTANEO)
+            'movimientos'=>$this->queryBus->ask(new ListAllMovimientoWithDetailsQuery(MovimientoVariants::ESPONTANEO))
         ]);
         return Inertia::render('Movimientos/Espontaneos/Index',$props);
     }
@@ -45,7 +51,7 @@ class MovimientoEspontaneoController extends Controller
     public function create()
     {
         $props = array_merge($this->props('Crear Movimiento Espontaneo'),[
-            'options'=> $this->movimientoService->getOptions()
+            'options'=> $this->queryBus->ask(new ListMovimientoFormOptionsQuery())
         ]);
        return Inertia::render('Movimientos/Espontaneos/Create',$props);
     }
@@ -75,8 +81,8 @@ class MovimientoEspontaneoController extends Controller
     {
 
         $props = array_merge($this->props('Editar Movimiento Espontaneo'),[
-            'data'=>$this->movimientoService->getWithDetails($movimientoEspontaneo, ResourceEnum::EDIT),
-            'options'=> $this->movimientoService->getOptions()
+            'data'=>$this->queryBus->ask(new GetMovimientoForEditQuery($movimientoEspontaneo->id)),
+            'options'=> $this->queryBus->ask(new ListMovimientoFormOptionsQuery())
         ]);
         return Inertia::render('Movimientos/Espontaneos/Edit',$props);
     }
