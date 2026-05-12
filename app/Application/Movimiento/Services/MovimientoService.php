@@ -1,11 +1,11 @@
 <?php
-
+/*
 namespace App\Application\Movimiento\Services;
 
 
 // Actions
 use App\Domains\Cuenta\Contracts\Repositories\CuentaReadRepositoryContract;
-// Services 
+// Services
 use App\Application\Auth\Services\AuthService;
 use App\Domains\Movimiento\Services\MovimientoFinancialService;
 use App\Domains\Movimiento\Services\MovimientoQueryService;
@@ -43,7 +43,7 @@ class MovimientoService{
     // METODOS PRIVADOS PARA LA LOGICA PROPIA DEL SERVICE
     private function resolveCuenta(StoreMovimientoDTO | UpdateMovimientoDTO | DestroyMovimientoDTO $dto, ?Movimiento $movimiento = null): Cuenta{
         return $this->cuentaResolverStrategy->resolve($dto->tipo_movimiento_id, $dto->cuenta_id, $dto->monto, $movimiento?->id);
-        
+
     }
     // METODOS PUBLICOS
     public function store(StoreMovimientoDTO | array $data): Movimiento{
@@ -55,7 +55,7 @@ class MovimientoService{
         $dto = UpdateMovimientoDTO::fromArray($data);
         $cuenta = $this->resolveCuenta($dto, $movimiento);
         return $this->movimientoFinancialService->executeMovimientoTransaction($dto, $cuenta, $movimiento);
-        
+
     }
 
     public function destroy(Movimiento $movimiento, array $data){
@@ -69,13 +69,13 @@ class MovimientoService{
             throw new CannotFindCuentaException('No se encontro la cuenta asociada al movimiento, error: ' . $th->getMessage());
         }
         return $this->movimientoFinancialService->executeMovimientoTransaction($dto, $cuenta, $movimiento);
-        
+
     }
 
 
     public function getOptions(){
         return $this->movimientoQueryService->getOptions();
- 
+
     }
 
     public function getWithDetails(Movimiento $movimiento, ResourceEnum $resource = ResourceEnum::SHOW) : ShowMovimientoResource | EditMovimientoResource{
@@ -111,4 +111,4 @@ class MovimientoService{
 
         return $this->movimientoQueryService->getRecordsCount($variant);
     }
-}
+}*/
