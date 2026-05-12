@@ -8,17 +8,18 @@ use App\Shared\Application\Contracts\Bus\QueryBus;
 use App\Application\Movimiento\Mappers\MovimientoForTableMapper;
 use App\Http\Resources\Movimiento\MovimientoResource;
 
+
 class MovimientoApiController extends Controller
 {
     public function __construct(
-        private QueryBus $queryBus
+        private QueryBus $queryBus,
+        private MovimientoForTableMapper $mapper
     )
     {
     }
 
     public function totalPaginated(TableQueryRequest $request){
-        $mapper = new MovimientoForTableMapper();
-        $query = $mapper->map((object) $request->validated());
+        $query = $this->mapper->map($request);
         $result = $this->queryBus->ask($query);
 
         return response()->json([

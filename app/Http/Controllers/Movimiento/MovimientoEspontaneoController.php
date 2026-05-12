@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Movimiento;
 
 use App\Models\Movimiento\Movimiento;
 use App\Http\Controllers\Controller;
-use App\Application\Movimiento\Services\MovimientoService;
 use App\Http\Requests\MovimientoEspontaneo\StoreMovimientoEspontaneoRequest;
 use App\Http\Requests\MovimientoEspontaneo\UpdateMovimientoEspontaneoRequest;
 use App\Domains\Movimiento\Enums\MovimientoVariants;
@@ -14,7 +13,7 @@ use Carbon\Carbon;
 use Inertia\Inertia;
 use App\Shared\Application\Contracts\Bus\QueryBus;
 use App\Application\Movimiento\Queries\GetEspontaneoMovimientoRecordsCountQuery;
-use App\Application\Movimiento\Queries\ListAllMovimientoWithDetailsQuery;
+use App\Application\Movimiento\Queries\ListAllSpontaneousMovimientosWithDetailsQuery;
 use App\Application\Movimiento\Queries\ListMovimientoFormOptionsQuery;
 use App\Application\Movimiento\Queries\GetMovimientoForEditQuery;
 
@@ -22,7 +21,6 @@ class MovimientoEspontaneoController extends Controller
 {
 
     public function __construct(
-        private MovimientoService $movimientoService,
         private QueryBus $queryBus,
     )
     {
@@ -40,7 +38,7 @@ class MovimientoEspontaneoController extends Controller
     {
         $props = array_merge($this->props(),[
             'dia'=> Carbon::now()->format('Y-m-d'),
-            'movimientos'=>$this->queryBus->ask(new ListAllMovimientoWithDetailsQuery(MovimientoVariants::ESPONTANEO))
+            'movimientos'=>$this->queryBus->ask(new ListAllSpontaneousMovimientosWithDetailsQuery(MovimientoVariants::ESPONTANEO))
         ]);
         return Inertia::render('Movimientos/Espontaneos/Index',$props);
     }
@@ -59,20 +57,21 @@ class MovimientoEspontaneoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreMovimientoEspontaneoRequest $request)
-    {
-        $this->movimientoService->store($request->validated());
-        Inertia::flash('success','Movimiento creado con exito');
-        return redirect()->route('movimientosEspontaneos.index');
-    }
+    //public function store(StoreMovimientoEspontaneoRequest $request)
+    //{
+    //    $this->movimientoService->store($request->validated());
+     //   Inertia::flash('success','Movimiento creado con exito');
+    //    return redirect()->route('movimientosEspontaneos.index');
+   // }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
+
+    ///**
+    // * Display the specified resource.
+    // */
+ //  ////public function show(string $id)
+    //{
         //
-    }
+    //}
 
     /**
      * Show the form for editing the specified resource.
@@ -90,21 +89,21 @@ class MovimientoEspontaneoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMovimientoEspontaneoRequest $request, Movimiento $movimientoEspontaneo)
-    {
+   // public function update(UpdateMovimientoEspontaneoRequest $request, Movimiento $movimientoEspontaneo)
+    //{
 
-        $this->movimientoService->update($movimientoEspontaneo, $request->validated());
-        Inertia::flash('success','Movimiento actualizado con exito');
-        return redirect()->route('movimientosEspontaneos.index');
-    }
+     //   $this->movimientoService->update($movimientoEspontaneo, $request->validated());
+    //    Inertia::flash('success','Movimiento actualizado con exito');
+      //  return redirect()->route('movimientosEspontaneos.index');
+    //}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DestroyMovimientoEspontaneoRequest $request, Movimiento $movimientoEspontaneo )
-    {
-        $this->movimientoService->destroy($movimientoEspontaneo, $request->validated());
-        Inertia::flash('success','Movimiento eliminado con exito');
-        return redirect()->route('movimientosEspontaneos.index');
-    }
+    //public function destroy(DestroyMovimientoEspontaneoRequest $request, Movimiento $movimientoEspontaneo )
+    //{
+     //   $this->movimientoService->destroy($movimientoEspontaneo, $request->validated());
+     //   Inertia::flash('success','Movimiento eliminado con exito');
+      //  return redirect()->route('movimientosEspontaneos.index');
+   // }
 }

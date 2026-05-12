@@ -3,9 +3,9 @@
 namespace App\Providers\Movimiento;
 
 use Illuminate\Support\ServiceProvider;
-use App\Application\Movimiento\Queries\Handlers\ListAllMovimientoWithDetailsHandler;
+use App\Application\Movimiento\Queries\Handlers\ListAllSpontaneousMovimientosWithDetailsHandler;
 use App\Application\Movimiento\Contracts\Queries\Executors\MovimientoQueryExecutorContract;
-use App\Infrastructure\Movimiento\Queries\Executors\Eloquent\EloquentListAllMovimientoWithDetailsExecutor;
+use App\Infrastructure\Movimiento\Queries\Executors\Eloquent\EloquentListAllSpontaneousMovimientosWithDetailsExecutor;
 use App\Application\Movimiento\Queries\Handlers\GetMovimientoRecordsCountHandler;
 use App\Application\Movimiento\Queries\Handlers\GetEspontaneoMovimientoRecordsCountHandler;
 use App\Application\Movimiento\Contracts\Queries\Executors\GetMovimientoRecordsCountQueryExecutorContract;
@@ -19,9 +19,9 @@ final class MovimientoQueryServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->app->when(ListAllMovimientoWithDetailsHandler::class)
+        $this->app->when(ListAllSpontaneousMovimientosWithDetailsHandler::class)
             ->needs(MovimientoQueryExecutorContract::class)
-            ->give(EloquentListAllMovimientoWithDetailsExecutor::class);
+            ->give(EloquentListAllSpontaneousMovimientosWithDetailsExecutor::class);
 
         $this->app->when(GetMovimientoRecordsCountHandler::class)
             ->needs(GetMovimientoRecordsCountQueryExecutorContract::class)
