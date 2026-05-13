@@ -45,7 +45,7 @@ export default function MovimientoEspontaneoForm({
             <legend>Informacion del Movimiento Espontaneo</legend>
             <div className="formulario-campo">
                 <label htmlFor="nombre"> Nombre</label>
-                <InputFillable 
+                <InputFillable
                     placeholder="Ej: Pago de servicios"
                     type="text"
                     name="nombre"
@@ -66,8 +66,8 @@ export default function MovimientoEspontaneoForm({
             <div className="flex w-full gap-4">
                 <div className="formulario-campo w-full">
                     <label htmlFor="tipo_movimiento_id">Tipo de movimiento</label>
-                    
-                        <SelectModel 
+
+                        <SelectModel
                         name="tipo_movimiento_id"
                         id="tipo_movimiento_id"
                         iterable={options.tipos_movimientos}
@@ -86,12 +86,12 @@ export default function MovimientoEspontaneoForm({
                 </div>
                 <div className="formulario-campo w-full">
                     <label htmlFor="categoria_id">Categoría</label>
-                    
-                    <SelectModel 
+
+                    <SelectModel
                         name="categoria_id"
                         id="categoria_id"
                         iterable={categoriasFiltered}
-                        onChange={(e) => setData('categoria_id', Number(e.target.value))}
+                        onChange={(e) => setData('categoria_id', e.target.value)}
                         value={data?.categoria_id}
                         className={`${errors.categoria_id && 'border-red-500! text-red-500!'}`}
                         placeholder="Seleccione una categoría"
@@ -104,12 +104,12 @@ export default function MovimientoEspontaneoForm({
             <div className="flex w-full gap-4">
                 <div className="formulario-campo w-full">
                     <label htmlFor="cuenta_id">Cuenta</label>
-                    
-                    <SelectModel 
+
+                    <SelectModel
                         name="cuenta_id"
                         id="cuenta_id"
                         iterable={options.cuentas}
-                        onChange={(e) => setData('cuenta_id', Number(e.target.value))}
+                        onChange={(e) => setData('cuenta_id',e.target.value)}
                         value={data?.cuenta_id}
                         className={`${errors.cuenta_id && 'border-red-500! text-red-500!'}`}
                         placeholder="Seleccione una cuenta"
@@ -122,7 +122,7 @@ export default function MovimientoEspontaneoForm({
                         <TransitionMotion active={isError}>
                             <AlertMessage message={error?.message || 'Error al validar saldo'} />
                         </TransitionMotion>
-                        
+
                         {/* Saldo insuficiente */}
                         <TransitionMotion active={dataValidate?.allowed !== undefined}>
                             <SaldoValidationFeedback allowed={dataValidate?.allowed} />
@@ -138,11 +138,11 @@ export default function MovimientoEspontaneoForm({
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('monto', Number(e.target.value))}
                         className={` ${errors.monto && 'border-red-500! text-red-500!'} `}
                     ></InputFillable>
-    
+
                     <TransitionMotion active={errors?.monto}>
                         <AlertMessage message={errors?.monto} />
                     </TransitionMotion>
-    
+
                 </div>
             </div>
             <div className="formulario-campo">
@@ -167,12 +167,12 @@ export default function MovimientoEspontaneoForm({
                 ) : (
                     <p className="text-muted-foreground italic">Has alcanzado el límite máximo de archivos adjuntos. Elimina algunos archivos existentes para agregar nuevos.</p>
                 )}
-                
+
                     <ErrorList rejectedFiles={rejectedFiles}/>
                     <div className={`${hasExistingFiles ? ' grid grid-cols-2' : 'flex flex-col gap-4'} mt-5`}>
-                       
+
                             { data?.comprobantes_existing && data?.comprobantes_existing?.length>0  &&(
-                                
+
                                  <div className="flex flex-col">
                                     <p className="text-muted-foreground font-bold">Archivos Guardados:</p>
                                 <UploadedFileList preview_route={ArchivoMovimientoRoutes.movimientosArchivosShow}  files={data.comprobantes_existing} handleDeleteFile={(index : number, id?: number)=>{
@@ -181,7 +181,7 @@ export default function MovimientoEspontaneoForm({
                                 }} className="text-foreground" />
                                 </div>
                             )}
-                            
+
                         <div className="flex flex-col">
                             <p className="text-muted-foreground font-bold">Archivos Nuevos:</p>
                             {data?.comprobantes && data?.comprobantes?.length > 0 ? (
@@ -197,7 +197,7 @@ export default function MovimientoEspontaneoForm({
                             </div>
                     </div>
             </div>
-                        
+
             <div className="w-1/6 my-5 mx-auto">
                 <Button
                 variant="secondary"

@@ -2,8 +2,8 @@
 
 namespace App\Shared\Actions\Files;
 
+use App\Shared\Application\DTOs\Files\MoveFileDTO;
 use Illuminate\Support\Facades\Storage;
-use App\Shared\DTOs\Files\MoveFileDTO;
 
 class MoveFileAction
 {

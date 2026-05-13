@@ -27,9 +27,9 @@ interface PresupuestoCanDuplicateCheckerContract
     /**
      * Devuelve las categorias que ya tienen un presupuesto en el proximo periodo indicado.
      *
-     * @param array $categoriaIds Lista de id de categorias a comprobar
+     * @param CollectionContract $records Coleccion de presupuestos con el parametro de categoria_id
      * @param Date $nextPeriodMonth Periodo objetivo (ej: "2026-06" o cualquier valor parseable por Carbon)
      * @return CollectionContract Lista de id de categorias que ya poseen un presupuesto en el periodo objetivo
      */
-    public function findDuplicatedCategories(array $categoriaIds, Date $nextPeriodMonth): CollectionContract;
+    public function findDuplicatedCategories(CollectionContract $records, Date $nextPeriodMonth): CollectionContract;
 }

@@ -2,7 +2,6 @@
 
 namespace App\Domains\ArchivoMovimiento\ValueObjects;
 
-use Illuminate\Support\Str;
 use Stringable;
 
 class FilePath implements Stringable{
@@ -35,11 +34,12 @@ class FilePath implements Stringable{
     public function toString():string{
 
         return sprintf(
-            '%d/%d/%s/%s/', 
-            $this->year, 
-            $this->month, 
-            $this->tipo_movimiento, 
-            Str::slug($this->categoria));
+            '%d/%d/%s/%s/',
+            $this->year,
+            $this->month,
+            $this->tipo_movimiento,
+            $this->categoria
+        );
 
     }
     public function __toString(): string
@@ -59,5 +59,5 @@ class FilePath implements Stringable{
     public function equals(FilePath $other): bool{
         return $this->toString() === $other->toString();
     }
-    
+
 }

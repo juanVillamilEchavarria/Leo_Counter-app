@@ -7,9 +7,9 @@ export const saldoValidate = async ({
     monto,
     movimiento_id
 }: {
-    cuentaId: number;
+    cuentaId: string;
     monto: number;
-    movimiento_id?: number | undefined
+    movimiento_id?: string | undefined
 }): Promise<SaldoValidateResponse> => {
     return apiRequest<SaldoValidateResponse, any>({
         method: ApiMethods.post,

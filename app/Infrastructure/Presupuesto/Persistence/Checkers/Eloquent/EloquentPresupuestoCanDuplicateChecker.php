@@ -32,8 +32,9 @@ final readonly class EloquentPresupuestoCanDuplicateChecker implements Presupues
     /**
      * {@inheritDoc}
      */
-    public function findDuplicatedCategories(array $categoriaIds, Date $nextPeriodMonth): CollectionContract
+    public function findDuplicatedCategories(CollectionContract $records, Date $nextPeriodMonth): CollectionContract
     {
+        $categoriaIds= $records->pluck('categoria_id')->unique()->toArray();
         if (empty($categoriaIds)) {
             return [];
         }

@@ -8,4 +8,4 @@ namespace App\Application\Movimiento\Exceptions;
  * @since 1.0.0
  * @version 1.0.0
  */
-final class CannotFindMovimientoException extends \Exception {}
+final class CannotFindMovimientoException extends \RuntimeException {}

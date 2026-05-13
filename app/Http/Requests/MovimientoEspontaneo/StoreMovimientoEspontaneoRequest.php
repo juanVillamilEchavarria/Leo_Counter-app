@@ -23,8 +23,8 @@ class StoreMovimientoEspontaneoRequest extends FormRequest
         return [
             'nombre'=> 'required|string|max:255',
             'tipo_movimiento_id'=> 'required|integer|exists:tipo_movimientos,id',
-            'cuenta_id'=> 'required|integer|exists:cuentas,id',
-            'categoria_id'=> 'required|integer|exists:categorias,id',
+            'cuenta_id'=> 'required|string|exists:cuentas,id',
+            'categoria_id'=> 'required|string|exists:categorias,id',
             'monto'=> 'required|numeric|min:0',
             'descripcion'=> 'nullable|string|max:1000',
             'comprobantes'=> ['nullable', 'array'],
