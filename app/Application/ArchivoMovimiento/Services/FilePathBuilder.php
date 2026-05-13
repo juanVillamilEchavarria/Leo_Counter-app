@@ -6,7 +6,7 @@ use App\Domains\ArchivoMovimiento\ValueObjects\FilePath;
 use App\Models\Movimiento\Movimiento;
 use Illuminate\Support\Carbon;
 
-class FilePathBuilder {
+final readonly class FilePathBuilder {
     public function buildFromMovimiento(Movimiento $Movimiento, ?Carbon $date = null): FilePath {
         $date = $date ?? Carbon::now();
         return new FilePath(

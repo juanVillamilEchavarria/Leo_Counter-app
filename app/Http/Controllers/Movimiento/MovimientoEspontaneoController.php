@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Movimiento;
 
 use App\Models\Movimiento\Movimiento;
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Events\Dispatcher;
+use App\Application\Movimiento\Commands\StoreMovimientoCommand;
+use App\Shared\Infrastructure\Framework\Laravel\ValueObjects\LaravelUploadedFile;
 use App\Http\Requests\MovimientoEspontaneo\StoreMovimientoEspontaneoRequest;
 use App\Http\Requests\MovimientoEspontaneo\UpdateMovimientoEspontaneoRequest;
 use App\Domains\Movimiento\Enums\MovimientoVariants;
@@ -16,12 +19,14 @@ use App\Application\Movimiento\Queries\GetEspontaneoMovimientoRecordsCountQuery;
 use App\Application\Movimiento\Queries\ListAllSpontaneousMovimientosWithDetailsQuery;
 use App\Application\Movimiento\Queries\ListMovimientoFormOptionsQuery;
 use App\Application\Movimiento\Queries\GetMovimientoForEditQuery;
+use App\Shared\Infrastructure\Framework\Laravel\Builders\LaravelUploadedFileBuilder;
 
 class MovimientoEspontaneoController extends Controller
 {
 
     public function __construct(
         private QueryBus $queryBus,
+        private Dispatcher $dispatcher
     )
     {
     }
@@ -57,12 +62,22 @@ class MovimientoEspontaneoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    //public function store(StoreMovimientoEspontaneoRequest $request)
-    //{
-    //    $this->movimientoService->store($request->validated());
-     //   Inertia::flash('success','Movimiento creado con exito');
-    //    return redirect()->route('movimientosEspontaneos.index');
-   // }
+    public function store(StoreMovimientoEspontaneoRequest $request)
+    {
+       $laravelFiles = LaravelUploadedFileBuilder::many($request->file('comprobantes'));
+       $command = new StoreMovimientoCommand(
+           nombre: $request->nombre,
+           cuenta_id: $request->cuenta_id,
+           categoria_id: $request->categoria_id,
+           tipo_movimiento_id: $request->tipo_movimiento_id,
+           monto: $request->monto,
+           descripcion: $request->descripcion,
+           comprobantes: $laravelFiles
+       );
+       $this->dispatcher->dispatch($command);
+        Inertia::flash('success','Movimiento creado con exito');
+        return redirect()->route('movimientosEspontaneos.index');
+    }
 
 
     ///**

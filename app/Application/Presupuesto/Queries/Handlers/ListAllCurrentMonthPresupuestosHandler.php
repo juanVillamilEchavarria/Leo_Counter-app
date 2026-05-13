@@ -30,10 +30,8 @@ final readonly class ListAllCurrentMonthPresupuestosHandler{
     public function __invoke(ListAllCurrentMonthPresupuestosQuery $query): CollectionContract
     {
         $items = $this->executor->execute($query);
-
-        $categoriaIds = $items->pluck('categoria_id')->unique()->toArray();
         $nextMonth = (new Date(new DateTimeImmutable()))->addMonths();
-        $duplicatedIds = $this->duplicateChecker->findDuplicatedCategories($categoriaIds, $nextMonth);
+        $duplicatedIds = $this->duplicateChecker->findDuplicatedCategories($items, $nextMonth);
 
         return $this->enricher->enrich($items, $duplicatedIds);
     }

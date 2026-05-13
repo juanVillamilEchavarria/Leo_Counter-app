@@ -4,7 +4,7 @@ namespace App\Domains\Movimiento\Aggregates;
 
 use App\Domains\Categoria\ValueObjects\CategoriaId;
 use App\Domains\Cuenta\ValueObjects\CuentaId;
-use App\Domains\Movimiento\Exceptions\CannotStoreMovimientoException;
+use App\Domains\Movimiento\Exceptions\CannotExecuteMovimientoTransactionException;
 use App\Domains\Movimiento\Exceptions\CannotUpdateMovimientoException;
 use App\Domains\Movimiento\ValueObjects\MovimientoId;
 use App\Domains\MovimientoPendiente\ValueObjects\MovimientoPendienteId;
@@ -64,7 +64,7 @@ final readonly class Movimiento implements AggregateModelContract
         ?MovimientoPendienteId $movimiento_pendiente_id = null,
     ): self
     {
-        self::validateData($nombre, $monto, $tipo_movimiento_id, CannotStoreMovimientoException::class);
+        self::validateData($nombre, $monto, $tipo_movimiento_id, CannotExecuteMovimientoTransactionException::class);
 
         return new self(
             id: $id,

@@ -9,10 +9,10 @@ export default function useFormSaldoValidate({
     tipo_movimiento_id,
     movimiento_id
 }:{
-    cuentaId?: number | undefined,
+    cuentaId?: string | undefined,
     monto?: number | undefined
     tipo_movimiento_id?: number
-    movimiento_id?: number | undefined
+    movimiento_id?: string | undefined
 }) {
     const [debounceMonto] = useDebounce(monto, 500)
     const isGasto = useMemo(() => {
@@ -21,7 +21,7 @@ export default function useFormSaldoValidate({
     return useQuery({
         queryKey: ['validar-saldo', cuentaId, debounceMonto],
          enabled: !!cuentaId && !!debounceMonto && debounceMonto>0 && isGasto,
-        queryFn: () =>{ 
+        queryFn: () =>{
             if(cuentaId === undefined || debounceMonto === undefined){
                 throw new Error('cuentaId y monto son requeridos')
 
@@ -32,5 +32,5 @@ export default function useFormSaldoValidate({
         retry: false
     }
     )
-  
+
 }

@@ -2,16 +2,16 @@
 
 namespace App\Application\ArchivoMovimiento\Services;
 
-use App\Shared\Services\Files\FileService;
-use App\Domains\ArchivoMovimiento\Contracts\Repositories\ArchivoMovimientoRepositoryContract;
+use App\Application\ArchivoMovimiento\DTOs\ArchivoMovimientoTransferDTO;
 use App\Application\ArchivoMovimiento\DTOs\StoreArchivoMovimientoDTO;
 use App\Application\ArchivoMovimiento\DTOs\UpdateArchivoMovimientoLocationDTO;
-use App\Models\ArchivoMovimiento\ArchivoMovimiento;
-use App\Shared\DTOs\Files\MoveFileDTO;
-use App\Shared\DTOs\Files\UploadFileDTO;
-use App\Application\ArchivoMovimiento\DTOs\ArchivoMovimientoTransferDTO;
+use App\Domains\ArchivoMovimiento\Contracts\Repositories\ArchivoMovimientoRepositoryContract;
 use App\Domains\ArchivoMovimiento\Exceptions\CannotDeleteArchivoMovimientoException;
 use App\Domains\ArchivoMovimiento\ValueObjects\FilePath;
+use App\Models\ArchivoMovimiento\ArchivoMovimiento;
+use App\Shared\Application\DTOs\Files\MoveFileDTO;
+use App\Shared\Application\DTOs\Files\UploadFileDTO;
+use App\Shared\Infrastructure\Framework\Laravel\Services\Files\FileService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 
@@ -28,7 +28,7 @@ class ArchivoMovimientoService  {
     private function storeFile(int $movimiento_id, $file, FilePath $filePath): ArchivoMovimiento{
         $nombre_guardado = Str::uuid() . '.pdf';
          $dtoUpload = new UploadFileDTO(
-            disk: self::$disk, 
+            disk: self::$disk,
             path: $filePath->toString(),
             name: $nombre_guardado,
             file: $file
@@ -48,7 +48,7 @@ class ArchivoMovimientoService  {
         foreach($dto->comprobantes as $file){
             $this->storeFile($dto->movimiento_id, $file, $filePath);
         }
-       
+
     }
 
     public function moveFiles(array | Collection $files, FilePath $filePath):void{
@@ -76,7 +76,7 @@ class ArchivoMovimientoService  {
                  }
         } catch (\Throwable $th) {
             throw new CannotDeleteArchivoMovimientoException("No se pudo eliminar el archivo del movimiento. Error: " . $th->getMessage());
-            
+
         }
     }
 

@@ -6,8 +6,8 @@ use App\Domains\Movimiento\Contracts\Repositories\MovimientoReadRepositoryContra
 use App\Shared\Enums\ComparativeOperators;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 use App\Shared\Domain\ValueObjects\WhereFilterQueryDTO;
-use App\Models\Cuenta\Cuenta;
-use App\Models\Movimiento\Movimiento;
+use App\Domains\Cuenta\Aggregates\Cuenta;
+use App\Domains\Movimiento\Aggregates\Movimiento;
 use App\Shared\Exceptions\InsufficientBalanceException;
 use App\Domains\Cuenta\Contracts\Repositories\CuentaRepositoryContract;
 
@@ -24,36 +24,35 @@ class BalanceCheckerService{
         return $saldo >= $monto;
     }
 
-    /*public function getCuentaIfCanAfford(int $cuenta_id, float $monto, Movimiento | int | null $movimiento=null): ?Cuenta{
-              $cuenta = $this->cuentaReadRepository->whereAttr('id', $cuenta_id)->firstOrFail();
-              $saldo = $this->calculateAvalaibleBalance($movimiento, $cuenta->saldo_actual,$cuenta_id);
-        if($saldo < $monto){
-            throw new InsufficientBalanceException;
-        }
-        return $cuenta;
-
-    }
-
-        private function calculateAvalaibleBalance(Movimiento |int | null $movimiento, float $saldo, int $cuenta_id): float{
-        if(!$movimiento) return $saldo;
-        $movimiento = $this->resolveMovimiento($movimiento);
-        if($movimiento->cuenta_id !== $cuenta_id) return $saldo;
-        return $this->revertMovimientoEffect($movimiento, $saldo);
-    }
-
-    private function resolveMovimiento (Movimiento | int $movimiento): Movimiento{
-        if($movimiento instanceof Movimiento) return $movimiento;
-        $wheres = [
-            new WhereFilterQueryDTO('id', ComparativeOperators::EQUALS, $movimiento)
-        ];
-        return $this->repository->where($wheres)->firstOrFail();
-    }
-
-    private function revertMovimientoEffect(Movimiento $movimiento, float $saldo): float{
-        return match($movimiento->tipo_movimiento_id){
-            TipoMovimientoEnum::GASTO->value => $saldo + $movimiento->monto,
-            TipoMovimientoEnum::INGRESO->value => $saldo - $movimiento->monto,
-            default => $saldo
-        };
-    }*/
+//    /**
+//     * Proceso de verificacion de saldo para una cuenta con un monto nuevo.
+//     * Calcula si la cuenta tiene lo suficiente para realizar la transacción.
+//     * @param Cuenta $cuenta - cuenta asociada al movimiento
+//     * @param float $monto - monto nuevo a almacenar en el movimiento
+//     * @param Movimiento|null $movimiento - movimiento existente
+//     * @return Cuenta - devuelve la cuenta
+//     */
+//    public function VerifyCanAffordForCuentaWithANewMonto(Cuenta $cuenta, float $monto, Movimiento | null $movimiento=null): Cuenta{
+//              $saldo = $this->calculateAvalaibleBalance($movimiento, $cuenta);
+//        if($saldo < $monto){
+//            throw new InsufficientBalanceException;
+//        }
+//        return $cuenta;
+//
+//    }
+//
+//        private function calculateAvalaibleBalance(Movimiento | null $movimiento, Cuenta $cuenta): float{
+//        if(!$movimiento) return $cuenta->getSaldoActual();
+//        if($movimiento->getCuentaId() !== $cuenta->getId()) return $cuenta->getSaldoActual();
+//        return $this->revertMovimientoEffect($movimiento, $cuenta->getSaldoActual());
+//    }
+//
+//
+//    private function revertMovimientoEffect(Movimiento $movimiento, float $saldo): float{
+//        return match($movimiento->getTipoMovimientoId()){
+//            TipoMovimientoEnum::GASTO->value => $saldo + $movimiento->getMonto(),
+//            TipoMovimientoEnum::INGRESO->value => $saldo - $movimiento->getMonto(),
+//            default => $saldo
+//        };
+//    }
 }

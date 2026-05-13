@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Domains\Movimiento\Contracts\Repositories;
-use App\Shared\Contracts\DTOs\DTOContract;
-use Illuminate\Database\Eloquent\Model;
+use App\Shared\Domain\Contracts\RepositoryContract;
 
-interface MovimientoRepositoryContract
+/**
+ * Contrato del repositorio de movimiento
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+interface MovimientoRepositoryContract extends RepositoryContract
 {
-    public function store(DTOContract $dto);
-    public function update(Model $movimiento, DTOContract $dto);
-    public function destroy(Model $movimiento): bool;
 }

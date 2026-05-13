@@ -8,18 +8,18 @@ export const MovimientoRoutes={
     show : (id: number) => route('movimientos.show', {id}),
 }
 export const MovimientoApiActions={
-    paginatedData: '/movimientos' 
+    paginatedData: '/movimientos'
 }
 export type Movimiento={
-    id: number,
+    id: string,
     nombre: string,
-    categoria_id?: number,
-    cuenta_id: number,
+    categoria_id?: string,
+    cuenta_id: string,
     tipo_movimiento_id: number,
     monto: number,
     fecha: string,
     descripcion: string,
-    movimiento_pendiente_id: number | null,
+    movimiento_pendiente_id: string | null,
 }
 
 export type MovimientoTableData= Omit<Movimiento, 'movimiento_pendiente_id'| 'categoria_id' | 'cuenta_id' | 'tipo_movimiento_id'> & {
