@@ -17,8 +17,11 @@ final readonly class LaravelUploadedFileBuilder
      * @param array $comprobantes
      * @return array<LaravelUploadedFile>
      */
-    public static function many(array $comprobantes): array{
+    public static function many(?array $comprobantes): array{
         $cmp = [];
+        if($comprobantes === null){
+            return $cmp;
+        }
         foreach($comprobantes as $comprobante){
             $cmp[]= LaravelUploadedFile::fromHttp($comprobante);
         }

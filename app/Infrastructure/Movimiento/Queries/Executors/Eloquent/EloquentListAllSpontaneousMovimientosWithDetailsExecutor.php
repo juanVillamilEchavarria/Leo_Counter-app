@@ -24,7 +24,7 @@ final readonly class EloquentListAllSpontaneousMovimientosWithDetailsExecutor im
     public function execute(ListMovimientoQueryContract $query): CollectionContract
     {
         $items = Movimiento::with(['cuenta:id,nombre', 'categoria:id,nombre', 'tipo_movimiento:id,tipo_movimiento', 'movimientoPendiente'])
-        ->where('movimiento_pendiente_id', null)->where('fecha', Carbon::now()->format('Y-m-d'))
+        ->where('movimiento_pendiente_id', null)->whereDate('fecha','=', Carbon::now()->format('Y-m-d'))
         ->get();
         return LaravelCollection::make($items);
     }

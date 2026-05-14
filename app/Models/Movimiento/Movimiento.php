@@ -16,6 +16,7 @@ class Movimiento extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
+        'id',
         'nombre',
         'cuenta_id',
         'categoria_id',

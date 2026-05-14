@@ -7,13 +7,15 @@ use App\Application\Movimiento\Queries\Handlers\ListAllSpontaneousMovimientosWit
 use App\Application\Movimiento\Contracts\Queries\Executors\MovimientoQueryExecutorContract;
 use App\Infrastructure\Movimiento\Queries\Executors\Eloquent\EloquentListAllSpontaneousMovimientosWithDetailsExecutor;
 use App\Application\Movimiento\Queries\Handlers\GetMovimientoRecordsCountHandler;
-use App\Application\Movimiento\Queries\Handlers\GetEspontaneoMovimientoRecordsCountHandler;
+use App\Application\Movimiento\Queries\Handlers\GetSpontaneousMovimientoRecordsCountHandler;
 use App\Application\Movimiento\Contracts\Queries\Executors\GetMovimientoRecordsCountQueryExecutorContract;
 use App\Infrastructure\Movimiento\Queries\Executors\Eloquent\EloquentGetMovimientoRecordsCountQueryExecutor;
 use App\Infrastructure\Movimiento\Queries\Executors\Eloquent\EloquentGetEspontaneoMovimientoRecordsCountQueryExecutor;
 use App\Application\Movimiento\Queries\Handlers\ListMovimientoForTableHandler;
 use App\Infrastructure\Movimiento\Queries\Executors\Eloquent\EloquentMovimientoPaginatedTableQueryExecutor;
 use App\Application\Movimiento\Contracts\Queries\Executors\MovimientoPaginatedTableQueryExecutorContract;
+use App\Application\Movimiento\Contracts\Queries\Executors\MovimientoForShowQueryExecutorContract;
+use App\Infrastructure\Movimiento\Queries\Executors\Eloquent\EloquentMovimientoForShowQueryExecutor;
 
 final class MovimientoQueryServiceProvider extends ServiceProvider
 {
@@ -27,7 +29,7 @@ final class MovimientoQueryServiceProvider extends ServiceProvider
             ->needs(GetMovimientoRecordsCountQueryExecutorContract::class)
             ->give(EloquentGetMovimientoRecordsCountQueryExecutor::class);
 
-        $this->app->when(GetEspontaneoMovimientoRecordsCountHandler::class)
+        $this->app->when(GetSpontaneousMovimientoRecordsCountHandler::class)
             ->needs(GetMovimientoRecordsCountQueryExecutorContract::class)
             ->give(EloquentGetEspontaneoMovimientoRecordsCountQueryExecutor::class);
 
@@ -36,6 +38,7 @@ final class MovimientoQueryServiceProvider extends ServiceProvider
             ->give(EloquentMovimientoPaginatedTableQueryExecutor::class);
 
         $this->app->singleton(MovimientoPaginatedTableQueryExecutorContract::class, EloquentMovimientoPaginatedTableQueryExecutor::class);
+        $this->app->singleton(MovimientoForShowQueryExecutorContract::class, EloquentMovimientoForShowQueryExecutor::class);
     }
 
     public function boot(): void

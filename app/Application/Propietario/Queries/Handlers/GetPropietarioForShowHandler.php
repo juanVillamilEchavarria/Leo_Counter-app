@@ -2,7 +2,7 @@
 namespace App\Application\Propietario\Queries\Handlers;
 
 use App\Application\Propietario\DTOs\PropietarioShowDTO;
-use App\Application\Propietario\Contracts\Queries\Executors\PropietarioShowQueryExecutorContract;
+use App\Application\Propietario\Contracts\Queries\Executors\PropietarioForShowQueryExecutorContract;
 use App\Application\Propietario\Queries\GetPropietarioForShowQuery;
 /**
  * Handler que se encarga de obtener un propietario con sus detalles completos.
@@ -15,7 +15,7 @@ use App\Application\Propietario\Queries\GetPropietarioForShowQuery;
 final readonly class GetPropietarioForShowHandler
 {
     public function __construct(
-        private PropietarioShowQueryExecutorContract $executor
+        private PropietarioForShowQueryExecutorContract $executor
     ) {}
 
     public function __invoke(GetPropietarioForShowQuery $query): PropietarioShowDTO

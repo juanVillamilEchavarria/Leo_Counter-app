@@ -10,7 +10,7 @@ use App\Application\Propietario\DTOs\PropietarioShowDTO;
  * @since 1.0.0
  * @version 1.0.0
  */
-interface PropietarioShowQueryExecutorContract
+interface PropietarioForShowQueryExecutorContract
 {
     /**
      * Ejecuta el query para obtener un propietario por su id, trayendo informacion detallada de este.

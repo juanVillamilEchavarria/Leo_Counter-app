@@ -20,7 +20,7 @@ final readonly class TransactionValidatorResolver{
         foreach($this->strategies as $strategy){
             if($strategy->supports($tipo_movimiento_id)){
 
-                return $strategy->resolve($cuenta, $monto);
+                return $strategy->validate($cuenta, $monto);
             }
         }
         throw new \InvalidArgumentException("Tipo de movimiento no soportado");

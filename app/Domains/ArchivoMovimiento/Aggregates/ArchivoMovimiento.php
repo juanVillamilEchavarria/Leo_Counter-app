@@ -43,7 +43,7 @@ final readonly class ArchivoMovimiento implements AggregateModelContract
             id: $id,
             movimiento_id: $movimiento_id,
             nombre_original: $nombre_original,
-            nombre_guardado: $id->getValue() . $extension,
+            nombre_guardado: $id->getValue() . '.'.$extension,
             disk: $disk,
             path: $path,
             mime_type: $mime_type,
@@ -60,13 +60,13 @@ final readonly class ArchivoMovimiento implements AggregateModelContract
         string $mime_type,
         string $extension,
         int $tamano_bytes,
-        string $notas
+        ?string $notas
     ): self{
         return new self(
             id: $this->id,
             movimiento_id: $movimiento_id,
             nombre_original: $nombre_original,
-            nombre_guardado: $this->id->getValue() . $extension,
+            nombre_guardado: $this->id->getValue() .'.'. $extension,
             disk: $disk,
             path: $path,
             mime_type: $mime_type,
@@ -84,13 +84,13 @@ final readonly class ArchivoMovimiento implements AggregateModelContract
         string $mime_type,
         string $extension,
         int $tamano_bytes,
-        string $notas
+        ?string $notas
     ): self{
         return new self(
             id: $id,
             movimiento_id: $movimiento_id,
             nombre_original: $nombre_original,
-            nombre_guardado: $id->getValue() . $extension,
+            nombre_guardado: $id->getValue() . '.'. $extension,
             disk: $disk,
             path: $path,
             mime_type: $mime_type,

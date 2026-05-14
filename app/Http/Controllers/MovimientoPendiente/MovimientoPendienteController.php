@@ -10,11 +10,14 @@ use App\Application\MovimientoPendiente\Queries\GetMovimientoPendienteRecordsCou
 use App\Application\MovimientoPendiente\Queries\ListAllMovimientoPendienteQuery;
 use App\Application\MovimientoPendiente\Queries\ListMovimientoPendienteFormOptionsQuery;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MovimientoPendiente\MarkAsDoneRequest;
 use App\Http\Requests\MovimientoPendiente\StoreAndUpdateMovimientoPendienteRequest;
 use App\Http\Resources\MovimientoPendiente\MovimientoPendienteResource;
 use App\Shared\Application\Contracts\Bus\QueryBus;
+use App\Shared\Infrastructure\Framework\Laravel\Builders\LaravelUploadedFileBuilder;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Inertia\Inertia;
+use App\Application\MovimientoPendiente\Commands\MarkAsDoneMovimientoPendienteCommand;
 
 /**
  * Controlador de presentacion para MovimientoPendiente.
@@ -142,6 +145,16 @@ class MovimientoPendienteController extends Controller
         return redirect()->route('movimientosPendientes.index');
     }
 
+    public function markAsDone(MarkAsDoneRequest $request, string $id){
+        $this->dispatcher->dispatch(new MarkAsDoneMovimientoPendienteCommand(
+            id: $id,
+            comprobantes: LaravelUploadedFileBuilder::many($request->file('comprobantes'))
+        ));
+
+        Inertia::flash('success', 'Movimiento Pendiente marcado como realizado con exito');
+        return redirect()->route('movimientosPendientes.index');
+
+    }
     /**
      * Elimina (soft delete) un movimiento pendiente.
      */

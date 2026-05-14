@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Propietario\Queries\Executors\Eloquent;
 
-use App\Application\Propietario\Contracts\Queries\Executors\PropietarioShowQueryExecutorContract;
+use App\Application\Propietario\Contracts\Queries\Executors\PropietarioForShowQueryExecutorContract;
 use App\Application\Propietario\DTOs\PropietarioShowDTO;
 use App\Domains\Propietario\Exceptions\CannotFindPropietarioException;
 use App\Models\Propietario\Propietario;
@@ -13,7 +13,7 @@ use App\Models\Propietario\Propietario;
  * @since 1.0.0
  * @version 1.0.0
  */
-final readonly class EloquentPropietarioShowQueryExecutor implements PropietarioShowQueryExecutorContract{
+final readonly class EloquentPropietarioForShowQueryExecutor implements PropietarioForShowQueryExecutorContract{
 
     public function execute(string $id): PropietarioShowDTO
     {

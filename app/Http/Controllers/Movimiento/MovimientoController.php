@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Movimiento;
 
+use App\Application\Movimiento\Queries\GetMovimientoForShowQuery;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Movimiento\ShowMovimientoResource;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Shared\Application\Contracts\Bus\QueryBus;
@@ -29,13 +31,14 @@ class MovimientoController extends Controller
    }
 
 
-  /* public function show(Movimiento $movimiento){
+   public function show(string $id){
 
+        $data =$this->queryBus->ask(new GetMovimientoForShowQuery($id));
     $props = array_merge($this->props(),[
-        'data'=>$this->movimientoService->getWithDetails($movimiento)
+        'data'=> ShowMovimientoResource::make($data)
     ]);
 
     return Inertia::render('Movimientos/Historicos/Index', $props);
 
-   }*/
+   }
 }

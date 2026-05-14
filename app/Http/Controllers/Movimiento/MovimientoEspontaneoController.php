@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Movimiento;
 
 use App\Models\Movimiento\Movimiento;
 use App\Http\Controllers\Controller;
-use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Bus\Dispatcher;
 use App\Application\Movimiento\Commands\StoreMovimientoCommand;
 use App\Shared\Infrastructure\Framework\Laravel\ValueObjects\LaravelUploadedFile;
 use App\Http\Requests\MovimientoEspontaneo\StoreMovimientoEspontaneoRequest;
@@ -15,11 +15,12 @@ use App\Http\Requests\MovimientoEspontaneo\DestroyMovimientoEspontaneoRequest;
 use Carbon\Carbon;
 use Inertia\Inertia;
 use App\Shared\Application\Contracts\Bus\QueryBus;
-use App\Application\Movimiento\Queries\GetEspontaneoMovimientoRecordsCountQuery;
+use App\Application\Movimiento\Queries\GetSpontaneousMovimientoRecordsCountQuery;
 use App\Application\Movimiento\Queries\ListAllSpontaneousMovimientosWithDetailsQuery;
 use App\Application\Movimiento\Queries\ListMovimientoFormOptionsQuery;
 use App\Application\Movimiento\Queries\GetMovimientoForEditQuery;
 use App\Shared\Infrastructure\Framework\Laravel\Builders\LaravelUploadedFileBuilder;
+use App\Http\Resources\Movimiento\MovimientoResource;
 
 class MovimientoEspontaneoController extends Controller
 {
@@ -36,14 +37,15 @@ class MovimientoEspontaneoController extends Controller
     protected function props(string $title = 'Movimientos Espontaneos') : array{
         return [
             'title'=> $title,
-            'NoRegistros'=> $this->queryBus->ask(new GetEspontaneoMovimientoRecordsCountQuery()),
+            'NoRegistros'=> $this->queryBus->ask(new GetSpontaneousMovimientoRecordsCountQuery()),
         ];
     }
     public function index()
     {
+        $spontaneous = $this->queryBus->ask(new ListAllSpontaneousMovimientosWithDetailsQuery());
         $props = array_merge($this->props(),[
             'dia'=> Carbon::now()->format('Y-m-d'),
-            'movimientos'=>$this->queryBus->ask(new ListAllSpontaneousMovimientosWithDetailsQuery(MovimientoVariants::ESPONTANEO))
+            'movimientos'=>MovimientoResource::collection($spontaneous)
         ]);
         return Inertia::render('Movimientos/Espontaneos/Index',$props);
     }
@@ -65,7 +67,9 @@ class MovimientoEspontaneoController extends Controller
     public function store(StoreMovimientoEspontaneoRequest $request)
     {
        $laravelFiles = LaravelUploadedFileBuilder::many($request->file('comprobantes'));
-       $command = new StoreMovimientoCommand(
+
+       $this->dispatcher->dispatch(
+           new StoreMovimientoCommand(
            nombre: $request->nombre,
            cuenta_id: $request->cuenta_id,
            categoria_id: $request->categoria_id,
@@ -73,8 +77,8 @@ class MovimientoEspontaneoController extends Controller
            monto: $request->monto,
            descripcion: $request->descripcion,
            comprobantes: $laravelFiles
+       )
        );
-       $this->dispatcher->dispatch($command);
         Inertia::flash('success','Movimiento creado con exito');
         return redirect()->route('movimientosEspontaneos.index');
     }
