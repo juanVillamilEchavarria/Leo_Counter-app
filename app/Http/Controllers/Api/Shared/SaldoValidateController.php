@@ -3,14 +3,15 @@
 namespace App\Http\Controllers\Api\Shared;
 
 use App\Http\Controllers\Controller;
-use App\Shared\Services\Financial\BalanceCheckerService;
 use App\Http\Requests\Shared\SaldoValidateRequest;
 use Illuminate\Support\Facades\Response;
+use App\Shared\Application\Contracts\Bus\QueryBus;
+use App\Application\Movimiento\Queries\CheckEnoughBalanceQuery;
 
 class SaldoValidateController extends Controller
 {
     public function __construct(
-        private BalanceCheckerService $balanceCheckerService
+        private QueryBus $queryBus,
     )
     {
     }
@@ -18,7 +19,7 @@ class SaldoValidateController extends Controller
     {
         $validate = $request->validated();
         return Response::json([
-            'allowed'=>(bool) $this->balanceCheckerService->canAfford($validate['cuenta_id'], $validate['monto'], $validate['movimiento_id'] ?? null)
+            'allowed'=>(bool) $this->queryBus->ask(new CheckEnoughBalanceQuery(cuenta_id: $validate['cuenta_id'], monto: $validate['monto'])),
         ]);
     }
 }

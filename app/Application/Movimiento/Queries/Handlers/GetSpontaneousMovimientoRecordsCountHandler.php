@@ -2,7 +2,7 @@
 
 namespace App\Application\Movimiento\Queries\Handlers;
 
-use App\Application\Movimiento\Queries\GetEspontaneoMovimientoRecordsCountQuery;
+use App\Application\Movimiento\Queries\GetSpontaneousMovimientoRecordsCountQuery;
 use App\Application\Movimiento\Contracts\Queries\Executors\GetMovimientoRecordsCountQueryExecutorContract;
 
 /**
@@ -11,13 +11,13 @@ use App\Application\Movimiento\Contracts\Queries\Executors\GetMovimientoRecordsC
  * @since 1.0.0
  * @version 1.0.0
  */
-final readonly class GetEspontaneoMovimientoRecordsCountHandler
+final readonly class GetSpontaneousMovimientoRecordsCountHandler
 {
     public function __construct(
         private GetMovimientoRecordsCountQueryExecutorContract $executor
     ){}
 
-    public function __invoke(GetEspontaneoMovimientoRecordsCountQuery $query): int
+    public function __invoke(GetSpontaneousMovimientoRecordsCountQuery $query): int
     {
         return $this->executor->execute();
     }

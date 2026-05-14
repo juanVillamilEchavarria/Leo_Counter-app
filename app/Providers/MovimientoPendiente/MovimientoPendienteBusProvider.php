@@ -6,8 +6,10 @@ use App\Application\MovimientoPendiente\Commands\DestroyMovimientoPendienteComma
 use App\Application\MovimientoPendiente\Commands\Handlers\DestroyMovimientoPendienteHandler;
 use App\Application\MovimientoPendiente\Commands\Handlers\StoreMovimientoPendienteHandler;
 use App\Application\MovimientoPendiente\Commands\Handlers\UpdateMovimientoPendienteHandler;
+use App\Application\MovimientoPendiente\Commands\MarkAsDoneMovimientoPendienteCommand;
 use App\Application\MovimientoPendiente\Commands\StoreMovimientoPendienteCommand;
 use App\Application\MovimientoPendiente\Commands\UpdateMovimientoPendienteCommand;
+use App\Application\MovimientoPendiente\Commands\Handlers\MarkAsDoneMovimientoPendienteHandler;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\ServiceProvider;
 
@@ -36,6 +38,7 @@ final class MovimientoPendienteBusProvider extends ServiceProvider
             StoreMovimientoPendienteCommand::class => StoreMovimientoPendienteHandler::class,
             UpdateMovimientoPendienteCommand::class => UpdateMovimientoPendienteHandler::class,
             DestroyMovimientoPendienteCommand::class => DestroyMovimientoPendienteHandler::class,
+            MarkAsDoneMovimientoPendienteCommand::class=> MarkAsDoneMovimientoPendienteHandler::class
         ]);
     }
 }

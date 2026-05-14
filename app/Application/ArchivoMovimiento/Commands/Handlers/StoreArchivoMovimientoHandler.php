@@ -40,7 +40,7 @@ final readonly class StoreArchivoMovimientoHandler
             tamano_bytes: $command->file->size()
         );
         $uploadDto= new UploadFileDTO(
-            disk: $archivoMovimiento->getDisk(),
+            disk: $archivoMovimiento->getDisk()->value,
             path: $archivoMovimiento->getPath(),
             name: $archivoMovimiento->getNombreGuardado(),
             file: $command->file

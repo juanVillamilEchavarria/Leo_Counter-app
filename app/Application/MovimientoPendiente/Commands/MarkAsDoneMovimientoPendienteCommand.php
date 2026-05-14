@@ -12,7 +12,8 @@ namespace App\Application\MovimientoPendiente\Commands;
 final readonly class MarkAsDoneMovimientoPendienteCommand
 {
     public function __construct(
-        public string $movimiento_pendiente_id
+        public string $id,
+        public ?array $comprobantes
     )
     {
     }

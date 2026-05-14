@@ -7,7 +7,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Movimiento\MovimientoResource;
 use App\Http\Resources\ArchivoMovimiento\ComprobanteResource;
 
-class ShowMovimientoResource extends MovimientoResource
+class ShowMovimientoResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,8 +16,17 @@ class ShowMovimientoResource extends MovimientoResource
      */
     public function toArray(Request $request): array
     {
-        return array_merge(parent::toArray($request), [
-            'comprobantes'=> $this->archivoMovimientos ? ComprobanteResource::collection($this->archivoMovimientos) : [],
-        ]);
+        return [
+            'id'=>$this->id,
+            'nombre'=>$this->nombre,
+            'cuenta'=> $this->cuenta,
+            'categoria'=> $this->categoria ,
+            'tipo_movimiento'=> $this->tipo_movimiento,
+            'monto'=>$this->monto,
+            'fecha'=>$this->fecha,
+            'descripcion'=>$this->descripcion,
+            'movimiento_pendiente'=> $this->movimiento_pendiente,
+            'comprobantes'=> $this->comprobantes ? ComprobanteResource::collection($this->comprobantes) : [],
+        ];
     }
 }

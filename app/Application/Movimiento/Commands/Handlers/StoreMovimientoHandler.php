@@ -14,10 +14,12 @@ use App\Shared\Domain\Contracts\IdGeneratorContract;
 use App\Domains\Cuenta\Aggregates\Cuenta;
 use App\Domains\Categoria\ValueObjects\CategoriaId;
 use App\Domains\Movimiento\Contracts\Repositories\MovimientoRepositoryContract;
-use App\Application\ArchivoMovimiento\Commands\Handlers\StoreArchivoMovimientoHandler;
 use App\Application\ArchivoMovimiento\Commands\StoreArchivoMovimientoCommand;
 use App\Domains\Categoria\Contracts\Repositories\CategoriaRepositoryContract;
+use App\Shared\Domain\ValueObjects\Date;
+use App\Domains\Categoria\Aggregates\Categoria;
 use DateTimeImmutable;
+use App\Shared\Application\Contracts\Bus\CommandBus;
 
 /**
  * Manejador para el almacenamiento de un movimiento.
@@ -32,7 +34,7 @@ final readonly class StoreMovimientoHandler
         private CuentaRepositoryContract $cuentaRepository,
         private IdGeneratorContract $idGenerator,
         private MovimientoRepositoryContract $movimientoRepository,
-        private StoreArchivoMovimientoHandler $storeArchivoMovimientoHandler,
+        private CommandBus $commandBus,
         private GetTipoMovimientoNameQueryExecutorContract $tipoMovimientoName,
         private CategoriaRepositoryContract $categoriaRepository
     )
@@ -41,10 +43,9 @@ final readonly class StoreMovimientoHandler
 
     public function __invoke(StoreMovimientoCommand $command): void
     {
-        dd('llego');
         /** @var Cuenta $cuenta */
         $cuenta = $this->cuentaRepository->findById(new CuentaId($command->cuenta_id));
-        $now = new DateTimeImmutable();
+        $now = new Date(new DateTimeImmutable());
         $this->transactionValidatorResolver->resolve($cuenta, $command->monto, $command->tipo_movimiento_id);
         $movimiento = Movimiento::create(
             id: MovimientoId::generate($this->idGenerator),
@@ -57,23 +58,25 @@ final readonly class StoreMovimientoHandler
             descripcion: $command->descripcion
         );
         $tipoMovimientoName = $this->tipoMovimientoName->getName(TipoMovimientoEnum::tryFrom($command->tipo_movimiento_id));
+        /** @var Categoria $categoria */
         $categoria = $this->categoriaRepository->findById(new CategoriaId($command->categoria_id));
         $filePath = new FilePath(
             year: $now->format('Y'),
             month: $now->format('m'),
             tipo_movimiento: $tipoMovimientoName,
-            categoria: $categoria,
+            categoria: $categoria->getNombre(),
         );
+        $this->movimientoRepository->store($movimiento);
         foreach($command->comprobantes as $comprobante){
             $archivoCommand= new StoreArchivoMovimientoCommand(
                 movimiento_id: $movimiento->getId(),
                 file: $comprobante,
                 file_path: $filePath
             );
-            $this->storeArchivoMovimientoHandler->__invoke($archivoCommand);
+            $this->commandBus->dispatch($archivoCommand);
 
         }
-        $this->movimientoRepository->store($movimiento);
+
 
     }
 

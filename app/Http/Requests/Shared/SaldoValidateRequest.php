@@ -22,9 +22,9 @@ class SaldoValidateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cuenta_id'=>['required', 'integer', 'exists:cuentas,id'],
+            'cuenta_id'=>['required', 'string', 'exists:cuentas,id'],
             'monto'=>['required', 'numeric', 'min:0'],
-            'movimiento_id'=>['nullable', 'integer', 'exists:movimientos,id']
+            'movimiento_id'=>['nullable', 'string', 'exists:movimientos,id']
         ];
     }
 }

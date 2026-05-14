@@ -24,7 +24,7 @@ final readonly class  Date{
      * @return string
      */
 
-    public function format(string $format): string{
+    public function format(string $format = 'Y-m-d'): string{
         return $this->date->format($format);
     }
 

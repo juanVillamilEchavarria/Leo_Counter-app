@@ -10,6 +10,6 @@ use App\Shared\Application\Contracts\Queries\QueryContract;
  * @since 1.0.0
  * @version 1.0.0
  */
-final readonly class GetEspontaneoMovimientoRecordsCountQuery implements QueryContract
+final readonly class GetSpontaneousMovimientoRecordsCountQuery implements QueryContract
 {
 }

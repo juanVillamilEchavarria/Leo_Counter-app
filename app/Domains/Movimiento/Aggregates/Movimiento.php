@@ -9,7 +9,7 @@ use App\Domains\Movimiento\Exceptions\CannotUpdateMovimientoException;
 use App\Domains\Movimiento\ValueObjects\MovimientoId;
 use App\Domains\MovimientoPendiente\ValueObjects\MovimientoPendienteId;
 use App\Shared\Domain\Contracts\AggregateModelContract;
-use DateTimeImmutable;
+use App\Shared\Domain\ValueObjects\Date;
 use Throwable;
 
 /**
@@ -32,7 +32,7 @@ final readonly class Movimiento implements AggregateModelContract
         private int                    $tipo_movimiento_id,
         private ?MovimientoPendienteId $movimiento_pendiente_id,
         private float                  $monto,
-        private DateTimeImmutable      $fecha,
+        private Date                    $fecha,
         private ?string                $descripcion,
     )
     {
@@ -47,7 +47,7 @@ final readonly class Movimiento implements AggregateModelContract
      * @param CategoriaId $categoria_id Categoría del movimiento.
      * @param int $tipo_movimiento_id Tipo de movimiento (ingreso/gasto).
      * @param float $monto Monto del movimiento.
-     * @param DateTimeImmutable $fecha Fecha en que se realizó el movimiento.
+     * @param Date $fecha Fecha en que se realizó el movimiento.
      * @param string|null $descripcion Descripción opcional.
      * @param MovimientoPendienteId|null $movimiento_pendiente_id Movimiento pendiente de origen, si aplica.
      * @return self
@@ -59,7 +59,7 @@ final readonly class Movimiento implements AggregateModelContract
         CategoriaId            $categoria_id,
         int                    $tipo_movimiento_id,
         float                  $monto,
-        DateTimeImmutable      $fecha,
+        Date      $fecha,
         ?string                $descripcion = null,
         ?MovimientoPendienteId $movimiento_pendiente_id = null,
     ): self
@@ -76,6 +76,7 @@ final readonly class Movimiento implements AggregateModelContract
             fecha: $fecha,
             descripcion: $descripcion,
             movimiento_pendiente_id: $movimiento_pendiente_id,
+
         );
     }
 
@@ -88,7 +89,7 @@ final readonly class Movimiento implements AggregateModelContract
      * @param CategoriaId $categoria_id Categoría persistida.
      * @param int $tipo_movimiento_id Tipo de movimiento persistido.
      * @param float $monto Monto persistido.
-     * @param DateTimeImmutable $fecha Fecha persistida.
+     * @param Date $fecha Fecha persistida.
      * @param string|null $descripcion Descripción persistida.
      * @param MovimientoPendienteId|null $movimiento_pendiente_id Movimiento pendiente de origen persistido.
      * @return self
@@ -100,7 +101,7 @@ final readonly class Movimiento implements AggregateModelContract
         CategoriaId            $categoria_id,
         int                    $tipo_movimiento_id,
         float                  $monto,
-        DateTimeImmutable      $fecha,
+        Date                    $fecha,
         ?string                $descripcion = null,
         ?MovimientoPendienteId $movimiento_pendiente_id = null,
     ): self
@@ -126,7 +127,7 @@ final readonly class Movimiento implements AggregateModelContract
      * @param CategoriaId $categoria_id Nueva categoría.
      * @param int $tipo_movimiento_id Nuevo tipo de movimiento.
      * @param float $monto Nuevo monto.
-     * @param DateTimeImmutable $fecha Nueva fecha.
+     * @param Date $fecha Nueva fecha.
      * @param string|null $descripcion Nueva descripción.
      * @return self
      */
@@ -136,7 +137,7 @@ final readonly class Movimiento implements AggregateModelContract
         CategoriaId       $categoria_id,
         int               $tipo_movimiento_id,
         float             $monto,
-        DateTimeImmutable $fecha,
+        Date $fecha,
         ?string           $descripcion = null,
     ): self
     {
@@ -217,7 +218,7 @@ final readonly class Movimiento implements AggregateModelContract
         return $this->monto;
     }
 
-    public function getFecha(): DateTimeImmutable
+    public function getFecha(): Date
     {
         return $this->fecha;
     }

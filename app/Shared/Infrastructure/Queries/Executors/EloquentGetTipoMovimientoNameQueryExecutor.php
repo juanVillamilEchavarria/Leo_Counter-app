@@ -15,7 +15,8 @@ class EloquentGetTipoMovimientoNameQueryExecutor implements GetTipoMovimientoNam
 {
     public function getName(TipoMovimientoEnum $tipoMovimiento): string
     {
-        return TipoMovimiento::query()->select('tipo_movimiento')->where('id', $tipoMovimiento->value)->get();
+        $record = TipoMovimiento::query()->select('tipo_movimiento')->where('id', $tipoMovimiento->value)->get();
+        return $record->first()->tipo_movimiento;
     }
 
 }
