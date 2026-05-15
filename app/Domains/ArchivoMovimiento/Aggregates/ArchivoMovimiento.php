@@ -12,7 +12,7 @@ use App\Domains\ArchivoMovimiento\ValueObjects\ArchivoMovimientoId;
 final readonly class ArchivoMovimiento implements AggregateModelContract
 {
 
-    public function __construct(
+    private function __construct(
         private ArchivoMovimientoId $id,
         private MovimientoId $movimiento_id,
         private string $nombre_original,
@@ -52,7 +52,7 @@ final readonly class ArchivoMovimiento implements AggregateModelContract
             notas: $notas
         );
     }
-    public  function upateData(
+    public  function updateData(
         MovimientoId $movimiento_id,
         string $nombre_original,
         ArchivoMovimientoDiskEnum $disk,
@@ -97,6 +97,27 @@ final readonly class ArchivoMovimiento implements AggregateModelContract
             extension: $extension,
             tamano_bytes: $tamano_bytes,
             notas: $notas
+        );
+    }
+    /**
+     * Actualiza el path del archivo de movimiento.
+     * @param FilePath $path
+     * @return self
+     */
+    public function updatePath(
+        FilePath $path
+    ): self{
+        return new self(
+            id: $this->id,
+            movimiento_id: $this->movimiento_id,
+            nombre_original: $this->nombre_original,
+            nombre_guardado: $this->id->getValue() .'.'. $this->extension,
+            disk: $this->disk,
+            path: $path,
+            mime_type: $this->mime_type,
+            extension: $this->extension,
+            tamano_bytes: $this->tamano_bytes,
+            notas: $this->notas
         );
     }
 

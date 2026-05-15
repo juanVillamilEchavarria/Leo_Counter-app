@@ -2,6 +2,10 @@
 
 namespace App\Providers\Movimiento;
 
+use App\Application\Movimiento\Commands\Handlers\UpdateMovimientoHandler;
+use App\Application\Movimiento\Commands\UpdateMovimientoCommand;
+use App\Application\Movimiento\Commands\DestroyMovimientoCommand;
+use App\Application\Movimiento\Commands\Handlers\DestroyMovimientoHandler;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\ServiceProvider;
 use App\Application\Movimiento\Commands\StoreMovimientoCommand;
@@ -23,7 +27,13 @@ class MovimientoBusProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Bus::map([StoreMovimientoCommand::class => StoreMovimientoHandler::class]);
+        Bus::map(
+            [
+                StoreMovimientoCommand::class => StoreMovimientoHandler::class,
+                UpdateMovimientoCommand::class => UpdateMovimientoHandler::class,
+                DestroyMovimientoCommand::class => DestroyMovimientoHandler::class,
+            ]
+        );
         Bus::pipeThrough([
             LaravelTransactionMiddleware::class,
         ]);

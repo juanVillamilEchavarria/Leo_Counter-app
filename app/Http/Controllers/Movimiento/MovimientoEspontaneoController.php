@@ -21,6 +21,8 @@ use App\Application\Movimiento\Queries\ListMovimientoFormOptionsQuery;
 use App\Application\Movimiento\Queries\GetMovimientoForEditQuery;
 use App\Shared\Infrastructure\Framework\Laravel\Builders\LaravelUploadedFileBuilder;
 use App\Http\Resources\Movimiento\MovimientoResource;
+use App\Application\Movimiento\Commands\UpdateMovimientoCommand;
+use App\Application\Movimiento\Commands\DestroyMovimientoCommand;
 
 class MovimientoEspontaneoController extends Controller
 {
@@ -95,11 +97,11 @@ class MovimientoEspontaneoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Movimiento $movimientoEspontaneo)
+    public function edit(string $id)
     {
 
         $props = array_merge($this->props('Editar Movimiento Espontaneo'),[
-            'data'=>$this->queryBus->ask(new GetMovimientoForEditQuery($movimientoEspontaneo->id)),
+            'data'=>$this->queryBus->ask(new GetMovimientoForEditQuery($id)),
             'options'=> $this->queryBus->ask(new ListMovimientoFormOptionsQuery())
         ]);
         return Inertia::render('Movimientos/Espontaneos/Edit',$props);
@@ -108,21 +110,41 @@ class MovimientoEspontaneoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-   // public function update(UpdateMovimientoEspontaneoRequest $request, Movimiento $movimientoEspontaneo)
-    //{
+    public function update(UpdateMovimientoEspontaneoRequest $request, string $id)
+    {
 
-     //   $this->movimientoService->update($movimientoEspontaneo, $request->validated());
-    //    Inertia::flash('success','Movimiento actualizado con exito');
-      //  return redirect()->route('movimientosEspontaneos.index');
-    //}
+        $laravelFiles = LaravelUploadedFileBuilder::many($request->file('comprobantes'));
+        $this->dispatcher->dispatch(
+            new UpdateMovimientoCommand(
+                id: $id,
+                nombre: $request->nombre,
+                cuenta_id: $request->cuenta_id,
+                categoria_id: $request->categoria_id,
+                tipo_movimiento_id: $request->tipo_movimiento_id,
+                monto: $request->monto,
+                descripcion: $request->descripcion,
+                comprobantes: $laravelFiles,
+                comprobantes_existing: $request->comprobantes_existing,
+                comprobantes_delete_ids: $request->comprobantes_delete_ids
+
+            )
+        );
+        Inertia::flash('success','Movimiento actualizado con exito');
+        return redirect()->route('movimientosEspontaneos.index');
+    }
 
     /**
      * Remove the specified resource from storage.
      */
-    //public function destroy(DestroyMovimientoEspontaneoRequest $request, Movimiento $movimientoEspontaneo )
-    //{
-     //   $this->movimientoService->destroy($movimientoEspontaneo, $request->validated());
-     //   Inertia::flash('success','Movimiento eliminado con exito');
-      //  return redirect()->route('movimientosEspontaneos.index');
-   // }
+    public function destroy(DestroyMovimientoEspontaneoRequest $request, string $id )
+    {
+        $this->dispatcher->dispatch(
+            new DestroyMovimientoCommand(
+                id: $id,
+                attempt_password: $request->password
+            )
+        );
+        Inertia::flash('success','Movimiento eliminado con exito');
+        return redirect()->route('movimientosEspontaneos.index');
+    }
 }

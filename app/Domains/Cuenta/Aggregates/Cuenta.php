@@ -123,6 +123,26 @@ final readonly class Cuenta implements AggregateModelContract
         );
     }
 
+    /**
+     * Actualiza el saldo actual de la cuenta
+     * @param float $saldo_actual
+     * @return self
+     */
+    public function updateSaldoActual(
+        float $saldo_actual
+    ): self{
+        return new self(
+            id:$this->id,
+            nombre: $this->nombre,
+            notas: $this->notas,
+            saldo_inicial: $this->saldo_inicial,
+            saldo_actual: $saldo_actual,
+            active: $this->active,
+            propietario_id: $this->propietario_id,
+            tipo_cuenta_id: $this->tipo_cuenta_id,
+        );
+    }
+
     public function getId(): CuentaId
     {
         return $this->id;

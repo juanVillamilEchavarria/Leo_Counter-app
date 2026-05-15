@@ -2,10 +2,10 @@
 
 namespace App\Providers\Movimiento;
 
-use Illuminate\Support\ServiceProvider;
 use App\Application\Movimiento\Resolvers\TransactionValidatorResolver;
-use App\Domains\Movimiento\Strategies\Domain\IngresoValidatorStrategy;
-use App\Domains\Movimiento\Strategies\Domain\GastoValidatorStrategy;
+use App\Domains\Movimiento\Strategies\Transaction\Validators\GastoValidatorStrategy;
+use App\Domains\Movimiento\Strategies\Transaction\Validators\IngresoValidatorStrategy;
+use Illuminate\Support\ServiceProvider;
 
 class StrategiesServiceProvider extends ServiceProvider
 {

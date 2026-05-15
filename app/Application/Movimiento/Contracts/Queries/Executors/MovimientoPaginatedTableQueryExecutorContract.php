@@ -2,7 +2,7 @@
 
 namespace App\Application\Movimiento\Contracts\Queries\Executors;
 
-use App\Shared\Contracts\Queries\Executors\PaginatedTableQueryExecutorContract;
+use App\Shared\Application\Contracts\Queries\Executors\PaginatedTableQueryExecutorContract;
 
 /**
  * Contrato que debe implementar el executor de paginación de tablas de movimientos.

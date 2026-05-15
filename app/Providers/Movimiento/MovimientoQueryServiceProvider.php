@@ -2,6 +2,8 @@
 
 namespace App\Providers\Movimiento;
 
+use App\Application\Movimiento\Contracts\Queries\Executors\GetAllArchivoMovimientosIdsForAMovimientoQueryExecutorContract;
+use App\Infrastructure\ArchivoMovimiento\Queries\Executors\Eloquent\EloquentGetAllArchivoMovimientosIdsForAMovimientoQueryExecutorContract;
 use Illuminate\Support\ServiceProvider;
 use App\Application\Movimiento\Queries\Handlers\ListAllSpontaneousMovimientosWithDetailsHandler;
 use App\Application\Movimiento\Contracts\Queries\Executors\MovimientoQueryExecutorContract;
@@ -39,6 +41,7 @@ final class MovimientoQueryServiceProvider extends ServiceProvider
 
         $this->app->singleton(MovimientoPaginatedTableQueryExecutorContract::class, EloquentMovimientoPaginatedTableQueryExecutor::class);
         $this->app->singleton(MovimientoForShowQueryExecutorContract::class, EloquentMovimientoForShowQueryExecutor::class);
+        $this->app->singleton(GetAllArchivoMovimientosIdsForAMovimientoQueryExecutorContract::class, EloquentGetAllArchivoMovimientosIdsForAMovimientoQueryExecutorContract::class);
     }
 
     public function boot(): void

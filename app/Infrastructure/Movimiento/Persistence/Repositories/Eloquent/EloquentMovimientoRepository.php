@@ -26,7 +26,7 @@ class EloquentMovimientoRepository extends EloquentRepository implements Movimie
     {
         assert($aggregate instanceof MovimientoAggregate);
        return [
-            'id'=> $aggregate->getId(),
+            'id'=> $aggregate->getId()->getValue(),
             'nombre'=> $aggregate->getNombre(),
             'cuenta_id'=> $aggregate->getCuentaId()->getValue(),
             'categoria_id'=> $aggregate->getCategoriaId()->getValue(),
