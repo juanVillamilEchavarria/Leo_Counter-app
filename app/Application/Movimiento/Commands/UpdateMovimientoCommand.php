@@ -3,6 +3,8 @@
 namespace App\Application\Movimiento\Commands;
 
 use App\Application\Movimiento\Commands\Abstracts\WriteMovimientoCommand;
+use App\Application\Movimiento\Contracts\Commands\ModifyMovimientoCommandContract;
+use App\Shared\Application\Contracts\ValueObjects\UploadedFileContract;
 
 /**
  * Comando para actualizar un registro de movimiento.
@@ -11,8 +13,22 @@ use App\Application\Movimiento\Commands\Abstracts\WriteMovimientoCommand;
  * @since 1.0.0
  * @version 1.0.0
  */
-final readonly class UpdateMovimientoCommand extends WriteMovimientoCommand
+final readonly class UpdateMovimientoCommand extends WriteMovimientoCommand implements  ModifyMovimientoCommandContract
 {
+    /**
+     * @param string $id
+     * @param string $nombre
+     * @param string $cuenta_id
+     * @param string $categoria_id
+     * @param int $tipo_movimiento_id
+     * @param float $monto
+     * @param string|null $descripcion
+     * @param string|null $movimiento_pendiente_id
+     * @param array<UploadedFileContract> $comprobantes - arreglo de los comprobantes nuevos
+     * @param array|null $comprobantes_existing - arreglo que contiene los ids de los comprobantes existentes para este movimiento
+     * @param array|null $comprobantes_delete_ids - arreglo que contiene los ids de los comprobantes a eliminar
+     *
+     */
     public function __construct(
         public string $id,
         string $nombre,
@@ -22,7 +38,8 @@ final readonly class UpdateMovimientoCommand extends WriteMovimientoCommand
         float $monto,
         ?string $descripcion = null,
         ?string $movimiento_pendiente_id = null,
-        ?array $comprobantes = null,
+        /** @var  */
+        array $comprobantes,
         /**
          * @var array|null $comprobantes_existing - arreglo que contiene los ids de los comprobantes existentes para este movimiento
          */

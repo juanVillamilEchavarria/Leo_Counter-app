@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Shared\Application\Contracts\Services;
+use App\Domains\ArchivoMovimiento\Enums\ArchivoMovimientoDiskEnum;
+use App\Domains\ArchivoMovimiento\ValueObjects\FilePath;
 use App\Shared\Application\DTOs\Files\MoveFileDTO;
 use App\Shared\Application\DTOs\Files\UploadFileDTO;
 
@@ -29,18 +31,18 @@ interface FileServiceContract
 
     /**
      * Elimina un archivo
-     * @param string $path
-     * @param string $disk
+     * @param FilePath $path
+     * @param ArchivoMovimientoDiskEnum $disk
      * @return bool
      */
-    public function destroy(string $path, string $disk): bool;
+    public function destroy(FilePath $path, ArchivoMovimientoDiskEnum $disk): bool;
 
     /**
      * Verifica si un archivo de movimientos existe.
      * @param string $path
-     * @param string $disk
+     * @param ArchivoMovimientoDiskEnum $disk
      * @return bool
      */
-    public function exists(string $path, string $disk): bool;
+    public function exists(string $path, ArchivoMovimientoDiskEnum $disk): bool;
 
 }

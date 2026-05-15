@@ -2,16 +2,16 @@
 
 namespace App\Domains\Movimiento\Services;
 
-use App\Application\ArchivoMovimiento\Services\ArchivoMovimientoService;
-use App\Application\ArchivoMovimiento\Services\FilePathBuilder;
-use App\Domains\Categoria\Contracts\Repositories\CategoriaReadRepositoryContract;
-use App\Application\Movimiento\DTOs\UpdateMovimientoDTO;
-use App\Application\Movimiento\DTOs\StoreMovimientoDTO;
+use App\Application\ArchivoMovimiento\Builders\FilePathBuilder;
 use App\Application\ArchivoMovimiento\DTOs\ArchivoMovimientoTransferDTO;
-use App\Shared\Exceptions\CannotUploadFileException;
-use App\Models\Movimiento\Movimiento;
+use App\Application\ArchivoMovimiento\Services\ArchivoMovimientoService;
+use App\Application\Movimiento\DTOs\StoreMovimientoDTO;
+use App\Application\Movimiento\DTOs\UpdateMovimientoDTO;
+use App\Domains\Categoria\Contracts\Repositories\CategoriaReadRepositoryContract;
 use App\Domains\Movimiento\Specifications\MovimientoLocationChanged;
 use App\Models\Categoria\Categoria;
+use App\Models\Movimiento\Movimiento;
+use App\Shared\Exceptions\CannotUploadFileException;
 use Illuminate\Support\Facades\DB;
 
 class MovimientoAttachmentService{
@@ -74,7 +74,7 @@ class MovimientoAttachmentService{
                         ->when($dto->comprobantes_existing, function($query) use ($dto){
                             $query->whereNotIn('id', $dto->comprobantes_delete_ids ?? []);
                         })->get();
-                        
+
         $filePath = $this->filePathBuilder->buildFromData($categoria->tipoMovimiento->tipo_movimiento, $categoria->nombre);
         $filesToMove->isNotEmpty() && $this->archivoMovimientoService->moveFiles($filesToMove, $filePath);
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Shared\Contracts\Queries\Executors;
+namespace App\Shared\Application\Contracts\Queries\Executors;
 
 use App\Shared\Application\DTOs\PaginatedTableResultDTO;
 use App\Shared\Application\Queries\TableQuery;

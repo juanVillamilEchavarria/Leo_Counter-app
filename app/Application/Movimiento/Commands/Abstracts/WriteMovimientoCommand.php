@@ -18,7 +18,7 @@ abstract readonly class WriteMovimientoCommand{
         public float $monto,
         public ?string $descripcion = null,
         public ?string $movimiento_pendiente_id = null,
-        public  ?array $comprobantes = null
+        public  array $comprobantes
     )
     {
     }

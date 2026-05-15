@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Domains\Movimiento\Strategies\Domain;
+namespace App\Domains\Movimiento\Strategies\Transaction\Validators;
 
 use App\Domains\Movimiento\Contracts\Strategies\TransactionValidatorStrategyContract;
-use App\Shared\Domain\Services\Financial\BalanceCheckerService;
-use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 use App\Domains\Movimiento\Exceptions\CannotExecuteMovimientoTransactionException;
+use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
+use App\Shared\Domain\Services\Financial\BalanceCheckerService;
 
 class GastoValidatorStrategy implements TransactionValidatorStrategyContract {
 
@@ -16,7 +16,7 @@ class GastoValidatorStrategy implements TransactionValidatorStrategyContract {
     }
     public function validate(\App\Domains\Cuenta\Aggregates\Cuenta $cuenta, float $monto): bool
     {
-       return $this->balanceChecker->canAfford($cuenta->getSaldoActual(), $monto) === false ? throw new CannotExecuteMovimientoTransactionException('No se pudo realizar la transacción, saldo insuficiente para hacer un gasto') : true;
+       return $this->balanceChecker->canAfford($cuenta->getSaldoActual(), $monto) === false ? throw new CannotExecuteMovimientoTransactionException(' saldo insuficiente para hacer un gasto') : true;
     }
 
     public function supports(int $tipo_movimiento_id): bool

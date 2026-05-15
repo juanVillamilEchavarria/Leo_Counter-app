@@ -1,11 +1,8 @@
 <?php
 
-namespace App\Domains\Movimiento\Strategies\Domain;
+namespace App\Domains\Movimiento\Strategies\Transaction\Validators;
 use App\Domains\Movimiento\Contracts\Strategies\TransactionValidatorStrategyContract;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
-use App\Domains\Cuenta\Exceptions\CannotFindCuentaException;
-use App\Models\Cuenta\Cuenta;
-use App\Domains\Cuenta\Contracts\Repositories\CuentaRepositoryContract;
 
 class IngresoValidatorStrategy implements TransactionValidatorStrategyContract {
 
