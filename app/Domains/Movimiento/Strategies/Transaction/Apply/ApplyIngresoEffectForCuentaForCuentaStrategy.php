@@ -19,12 +19,12 @@ final readonly class ApplyIngresoEffectForCuentaForCuentaStrategy implements App
 
     public function supports(Movimiento $movimiento): bool
     {
-       return $movimiento->getTipoMovimientoId() === TipoMovimientoEnum::INGRESO->value;
+       return $movimiento->getTipoMovimientoId() === TipoMovimientoEnum::INGRESO;
     }
 
     public function applyTransactionEffectWhenAMovimientoIsWritten(Movimiento $movimiento, Cuenta $cuenta): Cuenta
     {
-        $cuenta = $cuenta->updateSaldoActual($cuenta->getSaldoActual() + $movimiento->getMonto());
+        $cuenta = $cuenta->updateSaldoActual($cuenta->getSaldoActual() + $movimiento->getMonto()->getValue());
         return $cuenta ;
 
     }

@@ -18,7 +18,8 @@ use App\Infrastructure\Movimiento\Queries\Executors\Eloquent\EloquentMovimientoP
 use App\Application\Movimiento\Contracts\Queries\Executors\MovimientoPaginatedTableQueryExecutorContract;
 use App\Application\Movimiento\Contracts\Queries\Executors\MovimientoForShowQueryExecutorContract;
 use App\Infrastructure\Movimiento\Queries\Executors\Eloquent\EloquentMovimientoForShowQueryExecutor;
-
+use App\Application\Movimiento\Contracts\Queries\Executors\GetAllArchivoMovimientosForAMovimientoQueryExecutorContract;
+use App\Infrastructure\ArchivoMovimiento\Queries\Executors\Eloquent\EloquentGetAllArchivoMovimientosForAMovimientoQueryExecutorContract;
 final class MovimientoQueryServiceProvider extends ServiceProvider
 {
     public function register(): void
@@ -42,6 +43,7 @@ final class MovimientoQueryServiceProvider extends ServiceProvider
         $this->app->singleton(MovimientoPaginatedTableQueryExecutorContract::class, EloquentMovimientoPaginatedTableQueryExecutor::class);
         $this->app->singleton(MovimientoForShowQueryExecutorContract::class, EloquentMovimientoForShowQueryExecutor::class);
         $this->app->singleton(GetAllArchivoMovimientosIdsForAMovimientoQueryExecutorContract::class, EloquentGetAllArchivoMovimientosIdsForAMovimientoQueryExecutorContract::class);
+        $this->app->singleton(GetAllArchivoMovimientosForAMovimientoQueryExecutorContract::class, EloquentGetAllArchivoMovimientosForAMovimientoQueryExecutorContract::class);
     }
 
     public function boot(): void

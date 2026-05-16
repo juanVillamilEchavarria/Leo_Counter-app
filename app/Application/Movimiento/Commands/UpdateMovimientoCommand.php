@@ -36,8 +36,7 @@ final readonly class UpdateMovimientoCommand extends WriteMovimientoCommand impl
         string $categoria_id,
         int $tipo_movimiento_id,
         float $monto,
-        ?string $descripcion = null,
-        ?string $movimiento_pendiente_id = null,
+
         /** @var  */
         array $comprobantes,
         /**
@@ -47,9 +46,11 @@ final readonly class UpdateMovimientoCommand extends WriteMovimientoCommand impl
         /**
          * @var array|null $comprobantes_delete_ids - arreglo que contiene los ids de los comprobantes a eliminar
          */
-        public ?array $comprobantes_delete_ids = null
+        public ?array $comprobantes_delete_ids = null ,
+        ?string $descripcion = null,
+        ?string $movimiento_pendiente_id = null,
     )
     {
-        parent::__construct($nombre, $cuenta_id, $categoria_id, $tipo_movimiento_id, $monto, $descripcion, $movimiento_pendiente_id, $comprobantes);
+        parent::__construct($nombre, $cuenta_id, $categoria_id, $tipo_movimiento_id, $monto,$comprobantes, $descripcion, $movimiento_pendiente_id);
     }
 }

@@ -7,6 +7,7 @@ use App\Domains\ArchivoMovimiento\Contracts\Repositories\ArchivoMovimientoReposi
 use App\Domains\ArchivoMovimiento\Exceptions\CannotDeleteArchivoMovimientoException;
 use App\Shared\Application\Contracts\Services\FileServiceContract;
 use App\Domains\ArchivoMovimiento\Aggregates\ArchivoMovimiento;
+use App\Models\ArchivoMovimiento\ArchivoMovimiento as ArchivoMovimientoModel;
 final readonly class DestroyArchivoMovimientoHandler
 {
 
@@ -23,6 +24,7 @@ final readonly class DestroyArchivoMovimientoHandler
 
         /** @var ArchivoMovimiento $archivoMovimiento */
        $archivoMovimiento = $this->archivoMovimientoRepository->findById($command->id);
+       dd($archivoMovimiento, $command->id, ArchivoMovimientoModel::query()->where('id', $command->id->getValue())->toSql(), ArchivoMovimientoModel::query()->where('id', $command->id->getValue())->getBindings());
         try {
             $this->archivoMovimientoRepository->destroy($command->id);
             if($this->fileService->exists($archivoMovimiento->getPath(),$archivoMovimiento->getDisk())){

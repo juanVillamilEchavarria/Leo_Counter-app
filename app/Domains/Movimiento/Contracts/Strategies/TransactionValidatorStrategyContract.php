@@ -3,6 +3,7 @@
 namespace App\Domains\Movimiento\Contracts\Strategies;
 
 use App\Domains\Cuenta\Aggregates\Cuenta;
+use App\Domains\Movimiento\Aggregates\Movimiento;
 
 /**
  * Contrato que define estrategias para resolver validaciones de transacciones con su propia logica.
@@ -11,6 +12,6 @@ use App\Domains\Cuenta\Aggregates\Cuenta;
  */
 interface TransactionValidatorStrategyContract
 {
-    public function validate(Cuenta $cuenta, float $monto): bool;
-    public function supports(int $tipo_movimiento_id): bool;
+    public function validate(Cuenta $cuenta, Movimiento $movimiento): bool;
+    public function supports(Movimiento $movimiento): bool;
 }
