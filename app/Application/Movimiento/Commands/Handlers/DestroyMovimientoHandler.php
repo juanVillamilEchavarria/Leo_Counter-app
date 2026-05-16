@@ -38,13 +38,13 @@ final readonly class DestroyMovimientoHandler
          */
         $movimiento = $this->movimientoRepository->findById(new MovimientoId($command->id));
         $cuenta = $this->cuentaRepository->findById($movimiento->getCuentaId());
-        $this->movimientoRepository->destroy($movimiento->getId());
         $this->eventBus->publish(new MovimientoDeleted(
             movimiento: $movimiento,
             oldMovimiento: $movimiento,
             cuenta: $cuenta,
             comprobantes_delete_ids: $archivoMovimientosIds->toArray(),
         ));
+        $this->movimientoRepository->destroy($movimiento->getId());
     }
 
 }
