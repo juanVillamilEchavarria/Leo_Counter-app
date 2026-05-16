@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Application\Movimiento\Resolvers;
-use App\Application\Movimiento\Contracts\Commands\ModifyMovimientoCommandContract;
 use App\Domains\Cuenta\Aggregates\Cuenta;
+use App\Domains\Cuenta\ValueObjects\CuentaId;
 use App\Domains\Movimiento\Aggregates\Movimiento;
 use App\Domains\Movimiento\Contracts\Strategies\RevertTransactionEffectForCuentaStrategyContract;
+use App\Domains\Movimiento\ValueObjects\RevertTransactionEffectForCuentaResultVO;
+use App\Shared\Domain\ValueObjects\Amount;
+
 final readonly class RevertTransactionEffectForCuentaResolver
 {
     /**
@@ -17,16 +20,16 @@ final readonly class RevertTransactionEffectForCuentaResolver
     }
 
     /**
-     * @param ModifyMovimientoCommandContract $command
-     * @param Movimiento $movimiento - el movimiento ANTES de ser modificado
-     * @param Cuenta $cuenta - la cuenta asociada al comando (o al movimiento si son iguales)
-     * @return Cuenta - la cuenta con la transaccion revertida
+     * @param Movimiento $movimiento - el movimiento modificado
+     * @param Movimiento $old_movimiento - el movimiento antes de ser modificado
+     * @param Cuenta $old_cuenta - la cuenta asociada al movimiento antes de ser modifcado
+     * @return Cuenta - la cuenta "vieja" con el efecto de la transaccion revertido
      * @throws \LogicException si no se encuentra una estrategia para revertir el efecto de la transaccion
      */
-    public function resolve(ModifyMovimientoCommandContract $command, Movimiento $movimiento, Cuenta $cuenta): Cuenta{
+    public function resolve(Movimiento $movimiento, Movimiento $old_movimiento, Cuenta $old_cuenta): Cuenta{
         foreach($this->strategies as $strategy){
-            if($strategy->supports($command,$movimiento)){
-                return $strategy->revertTransactionEffectWhenAMovimientoChanges($command,$movimiento, $cuenta);
+            if($strategy->supports($movimiento)){
+                return $strategy->revertTransactionEffectWhenAMovimientoChanges($old_movimiento, $old_cuenta);
             }
         }
         throw new \LogicException('No se encontro una estrategia para revertir el efecto de la transaccion');

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('archivo_movimientos', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->foreignUuid('movimiento_id')->constrained('movimientos')->onDelete('cascade');
             $table->string('nombre_original');
             $table->string('nombre_guardado');

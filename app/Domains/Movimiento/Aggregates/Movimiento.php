@@ -8,7 +8,9 @@ use App\Domains\Movimiento\Exceptions\CannotExecuteMovimientoTransactionExceptio
 use App\Domains\Movimiento\Exceptions\CannotUpdateMovimientoException;
 use App\Domains\Movimiento\ValueObjects\MovimientoId;
 use App\Domains\MovimientoPendiente\ValueObjects\MovimientoPendienteId;
+use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 use App\Shared\Domain\Contracts\AggregateModelContract;
+use App\Shared\Domain\ValueObjects\Amount;
 use App\Shared\Domain\ValueObjects\Date;
 use Throwable;
 
@@ -29,9 +31,9 @@ final readonly class Movimiento implements AggregateModelContract
         private string                 $nombre,
         private CuentaId               $cuenta_id,
         private CategoriaId            $categoria_id,
-        private int                    $tipo_movimiento_id,
+        private TipoMovimientoEnum                    $tipo_movimiento_id,
         private ?MovimientoPendienteId $movimiento_pendiente_id,
-        private float                  $monto,
+        private Amount                  $monto,
         private Date                    $fecha,
         private ?string                $descripcion,
     )
@@ -45,8 +47,8 @@ final readonly class Movimiento implements AggregateModelContract
      * @param string $nombre Nombre descriptivo.
      * @param CuentaId $cuenta_id Cuenta afectada.
      * @param CategoriaId $categoria_id Categoría del movimiento.
-     * @param int $tipo_movimiento_id Tipo de movimiento (ingreso/gasto).
-     * @param float $monto Monto del movimiento.
+     * @param TipoMovimientoEnum $tipo_movimiento_id Tipo de movimiento (ingreso/gasto).
+     * @param Amount $monto Monto del movimiento.
      * @param Date $fecha Fecha en que se realizó el movimiento.
      * @param string|null $descripcion Descripción opcional.
      * @param MovimientoPendienteId|null $movimiento_pendiente_id Movimiento pendiente de origen, si aplica.
@@ -57,8 +59,8 @@ final readonly class Movimiento implements AggregateModelContract
         string                 $nombre,
         CuentaId               $cuenta_id,
         CategoriaId            $categoria_id,
-        int                    $tipo_movimiento_id,
-        float                  $monto,
+        TipoMovimientoEnum                    $tipo_movimiento_id,
+        Amount                  $monto,
         Date      $fecha,
         ?string                $descripcion = null,
         ?MovimientoPendienteId $movimiento_pendiente_id = null,
@@ -72,10 +74,11 @@ final readonly class Movimiento implements AggregateModelContract
             cuenta_id: $cuenta_id,
             categoria_id: $categoria_id,
             tipo_movimiento_id: $tipo_movimiento_id,
+            movimiento_pendiente_id: $movimiento_pendiente_id,
             monto: $monto,
             fecha: $fecha,
             descripcion: $descripcion,
-            movimiento_pendiente_id: $movimiento_pendiente_id,
+
 
         );
     }
@@ -87,8 +90,8 @@ final readonly class Movimiento implements AggregateModelContract
      * @param string $nombre Nombre persistido.
      * @param CuentaId $cuenta_id Cuenta persistida.
      * @param CategoriaId $categoria_id Categoría persistida.
-     * @param int $tipo_movimiento_id Tipo de movimiento persistido.
-     * @param float $monto Monto persistido.
+     * @param TipoMovimientoEnum $tipo_movimiento_id Tipo de movimiento persistido.
+     * @param Amount $monto Monto persistido.
      * @param Date $fecha Fecha persistida.
      * @param string|null $descripcion Descripción persistida.
      * @param MovimientoPendienteId|null $movimiento_pendiente_id Movimiento pendiente de origen persistido.
@@ -99,8 +102,8 @@ final readonly class Movimiento implements AggregateModelContract
         string                 $nombre,
         CuentaId               $cuenta_id,
         CategoriaId            $categoria_id,
-        int                    $tipo_movimiento_id,
-        float                  $monto,
+        TipoMovimientoEnum                    $tipo_movimiento_id,
+        Amount                  $monto,
         Date                    $fecha,
         ?string                $descripcion = null,
         ?MovimientoPendienteId $movimiento_pendiente_id = null,
@@ -112,10 +115,11 @@ final readonly class Movimiento implements AggregateModelContract
             cuenta_id: $cuenta_id,
             categoria_id: $categoria_id,
             tipo_movimiento_id: $tipo_movimiento_id,
+            movimiento_pendiente_id: $movimiento_pendiente_id,
             monto: $monto,
             fecha: $fecha,
-            descripcion: $descripcion,
-            movimiento_pendiente_id: $movimiento_pendiente_id,
+            descripcion: $descripcion
+
         );
     }
 
@@ -125,18 +129,19 @@ final readonly class Movimiento implements AggregateModelContract
      * @param string $nombre Nuevo nombre.
      * @param CuentaId $cuenta_id Nueva cuenta.
      * @param CategoriaId $categoria_id Nueva categoría.
-     * @param int $tipo_movimiento_id Nuevo tipo de movimiento.
-     * @param float $monto Nuevo monto.
+     * @param TipoMovimientoEnum $tipo_movimiento_id Nuevo tipo de movimiento.
+     * @param Amount $monto Nuevo monto.
      * @param Date $fecha Nueva fecha.
      * @param string|null $descripcion Nueva descripción.
      * @return self
+     * @throws  CannotUpdateMovimientoException
      */
     public function updateData(
         string            $nombre,
         CuentaId          $cuenta_id,
         CategoriaId       $categoria_id,
-        int               $tipo_movimiento_id,
-        float             $monto,
+        TipoMovimientoEnum               $tipo_movimiento_id,
+        Amount             $monto,
         Date $fecha,
         ?string           $descripcion = null,
     ): self
@@ -149,10 +154,11 @@ final readonly class Movimiento implements AggregateModelContract
             cuenta_id: $cuenta_id,
             categoria_id: $categoria_id,
             tipo_movimiento_id: $tipo_movimiento_id,
+            movimiento_pendiente_id: $this->movimiento_pendiente_id,
             monto: $monto,
             fecha: $fecha,
             descripcion: $descripcion,
-            movimiento_pendiente_id: $this->movimiento_pendiente_id,
+
         );
     }
 
@@ -161,11 +167,12 @@ final readonly class Movimiento implements AggregateModelContract
      * Valida los datos obligatorios del movimiento.
      *
      * @param class-string<Throwable> $exceptionClass Excepción específica del caso de uso.
+     * @throws
      */
     private static function validateData(
         string $nombre,
-        float  $monto,
-        int    $tipo_movimiento_id,
+        Amount  $monto,
+        TipoMovimientoEnum    $tipo_movimiento_id,
         string $exceptionClass,
     ): void
     {
@@ -173,7 +180,7 @@ final readonly class Movimiento implements AggregateModelContract
             throw new $exceptionClass('El nombre del movimiento es obligatorio.');
         }
 
-        if ($monto < 0) {
+        if ($monto->getValue() < 0) {
             throw new $exceptionClass('El monto del movimiento no puede ser negativo.');
         }
 
@@ -203,7 +210,7 @@ final readonly class Movimiento implements AggregateModelContract
         return $this->categoria_id;
     }
 
-    public function getTipoMovimientoId(): int
+    public function getTipoMovimientoId(): TipoMovimientoEnum
     {
         return $this->tipo_movimiento_id;
     }
@@ -213,7 +220,7 @@ final readonly class Movimiento implements AggregateModelContract
         return $this->movimiento_pendiente_id;
     }
 
-    public function getMonto(): float
+    public function getMonto(): Amount
     {
         return $this->monto;
     }

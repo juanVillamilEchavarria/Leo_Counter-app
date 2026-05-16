@@ -15,7 +15,6 @@ class MovimientoRepositoryProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(MovimientoReadRepositoryContract::class, EloquentMovimientoReadRepository::class);
         $this->app->singleton(MovimientoRepositoryContract::class, EloquentMovimientoRepository::class);
     }
 

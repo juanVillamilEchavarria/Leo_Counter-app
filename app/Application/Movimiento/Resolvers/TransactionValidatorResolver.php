@@ -2,6 +2,7 @@
 
 namespace App\Application\Movimiento\Resolvers;
 use App\Domains\Cuenta\Aggregates\Cuenta;
+use App\Domains\Movimiento\Aggregates\Movimiento;
 use App\Domains\Movimiento\Contracts\Strategies\TransactionValidatorStrategyContract;
 
 final readonly class TransactionValidatorResolver{
@@ -16,11 +17,11 @@ final readonly class TransactionValidatorResolver{
     }
 
 
-    public function resolve(Cuenta $cuenta, float $monto, int $tipo_movimiento_id) : bool{
+    public function resolve(Cuenta $cuenta,Movimiento $movimiento) : bool{
         foreach($this->strategies as $strategy){
-            if($strategy->supports($tipo_movimiento_id)){
+            if($strategy->supports($movimiento)){
 
-                return $strategy->validate($cuenta, $monto);
+                return $strategy->validate($cuenta, $movimiento);
             }
         }
         throw new \InvalidArgumentException("Tipo de movimiento no soportado");

@@ -1,18 +1,25 @@
 <?php
 
 namespace App\Domains\Movimiento\Strategies\Transaction\Validators;
+use App\Domains\Movimiento\Aggregates\Movimiento;
 use App\Domains\Movimiento\Contracts\Strategies\TransactionValidatorStrategyContract;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 
-class IngresoValidatorStrategy implements TransactionValidatorStrategyContract {
+/**
+ * Estrategia de validacion para transacciones de tipo ingreso.
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ *  @since 1.0.0
+ *  @version 1.0.0
+ */
+final readonly class IngresoValidatorStrategy implements TransactionValidatorStrategyContract {
 
-    public function validate(\App\Domains\Cuenta\Aggregates\Cuenta $cuenta, float $monto): bool
+    public function validate(\App\Domains\Cuenta\Aggregates\Cuenta $cuenta,Movimiento $movimiento): bool
     {
         return true; // un movimiento de tipo ingreso siempre se permite para cualquier cuenta.
     }
 
-    public function supports(int $tipo_movimiento_id): bool
+    public function supports(Movimiento $movimiento): bool
     {
-        return $tipo_movimiento_id === TipoMovimientoEnum::INGRESO->value;
+        return $movimiento->getTipoMovimientoId() === TipoMovimientoEnum::INGRESO;
     }
 }

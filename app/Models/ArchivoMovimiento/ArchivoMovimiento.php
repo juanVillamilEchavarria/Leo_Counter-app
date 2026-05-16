@@ -8,8 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class ArchivoMovimiento extends Model
 {
     use HasFactory;
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = [
+        'id',
         'movimiento_id',
         'nombre_original',
         'nombre_guardado',

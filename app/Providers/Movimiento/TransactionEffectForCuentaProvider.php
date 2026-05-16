@@ -3,12 +3,8 @@
 namespace App\Providers\Movimiento;
 
 use Illuminate\Support\ServiceProvider;
-use App\Domains\Movimiento\Strategies\Transaction\Revert\RevertGastoEffectForCuentaWhenMovimientoIsDeletedStrategy;
-use App\Domains\Movimiento\Strategies\Transaction\Revert\RevertGastoEffectForCuentaWhenMovimientoIsUpdatedAndCuentaChangesStrategy;
-use App\Domains\Movimiento\Strategies\Transaction\Revert\RevertGastoEffectForCuentaWhenMovimientoIsUpdatedAndSameCuentaStrategy;
-use App\Domains\Movimiento\Strategies\Transaction\Revert\RevertIngresoEffectForCuentaWhenMovimientoIsDeletedStrategy;
-use App\Domains\Movimiento\Strategies\Transaction\Revert\RevertIngresoEffectForCuentaWhenMovimientoIsUpdatedAndCuentaChangedStrategy;
-use App\Domains\Movimiento\Strategies\Transaction\Revert\RevertIngresoEffectForCuentaWhenMovimientoIsUpdatedAndSameCuentaStrategy;
+use App\Domains\Movimiento\Strategies\Transaction\Revert\RevertGastoEffectForCuentaWhenMovimientoIsChangedStrategy;
+use App\Domains\Movimiento\Strategies\Transaction\Revert\RevertIngresoEffectForCuentaWhenMovimientoIsChanged;
 use App\Domains\Movimiento\Strategies\Transaction\Apply\ApplyGastoEffectForCuentaStrategy;
 use App\Domains\Movimiento\Strategies\Transaction\Apply\ApplyIngresoEffectForCuentaForCuentaStrategy;
 use App\Application\Movimiento\Resolvers\ApplyTransactionEffectForCuentaResolver;
@@ -22,12 +18,8 @@ class TransactionEffectForCuentaProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->tag([
-            RevertIngresoEffectForCuentaWhenMovimientoIsUpdatedAndSameCuentaStrategy::class,
-            RevertIngresoEffectForCuentaWhenMovimientoIsUpdatedAndCuentaChangedStrategy::class,
-            RevertIngresoEffectForCuentaWhenMovimientoIsDeletedStrategy::class,
-            RevertGastoEffectForCuentaWhenMovimientoIsUpdatedAndSameCuentaStrategy::class,
-            RevertGastoEffectForCuentaWhenMovimientoIsUpdatedAndCuentaChangesStrategy::class,
-            RevertGastoEffectForCuentaWhenMovimientoIsDeletedStrategy::class
+          RevertIngresoEffectForCuentaWhenMovimientoIsChanged::class,
+            RevertGastoEffectForCuentaWhenMovimientoIsChangedStrategy::class,
         ], 'movimiento.revert.transaction.strategies');
         $this->app->tag([
             ApplyIngresoEffectForCuentaForCuentaStrategy::class,

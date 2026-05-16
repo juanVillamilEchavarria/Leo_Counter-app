@@ -2,6 +2,8 @@
 
 namespace App\Application\Movimiento\DTOs;
 
+use App\Shared\Domain\Contracts\CollectionContract;
+
 /**
  * DTO que encapsula los datos necesarios de un movimiento para la capa de presentación (edición).
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
@@ -19,6 +21,6 @@ final readonly class MovimientoEditDTO
         public float $monto,
         public string $fecha,
         public ?string $descripcion = null,
-        public array $comprobantes_existing = []
+        public CollectionContract $comprobantes_existing
     ){}
 }

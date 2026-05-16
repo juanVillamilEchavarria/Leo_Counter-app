@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Movimiento;
 
+use App\Http\Resources\Movimiento\EditMovimientoResource;
 use App\Models\Movimiento\Movimiento;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Bus\Dispatcher;
@@ -100,8 +101,9 @@ class MovimientoEspontaneoController extends Controller
     public function edit(string $id)
     {
 
+        $data = $this->queryBus->ask(new GetMovimientoForEditQuery($id));
         $props = array_merge($this->props('Editar Movimiento Espontaneo'),[
-            'data'=>$this->queryBus->ask(new GetMovimientoForEditQuery($id)),
+            'data'=> EditMovimientoResource::make($data),
             'options'=> $this->queryBus->ask(new ListMovimientoFormOptionsQuery())
         ]);
         return Inertia::render('Movimientos/Espontaneos/Edit',$props);
@@ -114,6 +116,7 @@ class MovimientoEspontaneoController extends Controller
     {
 
         $laravelFiles = LaravelUploadedFileBuilder::many($request->file('comprobantes'));
+
         $this->dispatcher->dispatch(
             new UpdateMovimientoCommand(
                 id: $id,

@@ -4,7 +4,9 @@ namespace App\Infrastructure\Movimiento\Persistence\Repositories\Eloquent;
 use App\Domains\Categoria\ValueObjects\CategoriaId;
 use App\Domains\Cuenta\ValueObjects\CuentaId;
 use App\Domains\Movimiento\ValueObjects\MovimientoId;
+use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 use App\Shared\Domain\Contracts\AggregateModelContract;
+use App\Shared\Domain\ValueObjects\Amount;
 use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentRepository;
 use App\Domains\Movimiento\Contracts\Repositories\MovimientoRepositoryContract;
 use App\Models\Movimiento\Movimiento;
@@ -30,9 +32,9 @@ class EloquentMovimientoRepository extends EloquentRepository implements Movimie
             'nombre'=> $aggregate->getNombre(),
             'cuenta_id'=> $aggregate->getCuentaId()->getValue(),
             'categoria_id'=> $aggregate->getCategoriaId()->getValue(),
-            'tipo_movimiento_id'=> $aggregate->getTipoMovimientoId(),
+            'tipo_movimiento_id'=> $aggregate->getTipoMovimientoId()->value,
             'movimiento_pendiente_id'=> $aggregate->getMovimientoPendienteId()?->getValue(),
-            'monto'=> $aggregate->getMonto(),
+            'monto'=> $aggregate->getMonto()->getValue(),
             'fecha'=> $aggregate->getFecha()->format(),
             'descripcion'=> $aggregate->getDescripcion(),
         ];
@@ -44,8 +46,8 @@ class EloquentMovimientoRepository extends EloquentRepository implements Movimie
            nombre: $model->nombre,
            cuenta_id: new CuentaId($model->cuenta_id),
            categoria_id: new CategoriaId($model->categoria_id),
-           tipo_movimiento_id: $model->tipo_movimiento_id,
-           monto: $model->monto,
+           tipo_movimiento_id: TipoMovimientoEnum::try($model->tipo_movimiento_id),
+           monto: new Amount($model->monto),
            movimiento_pendiente_id: $model->movimiento_pendiente_id,
            descripcion: $model->descripcion,
            fecha: new Date(new \DateTimeImmutable($model->fecha))

@@ -18,11 +18,11 @@ use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
  */
 final readonly class ApplyGastoEffectForCuentaStrategy implements ApplyTransactionEffectForCuentaStrategyContract
 {
-    
+
 
     public function supports(Movimiento $movimiento): bool
     {
-        return $movimiento->getTipoMovimientoId()=== TipoMovimientoEnum::GASTO->value;
+        return $movimiento->getTipoMovimientoId()=== TipoMovimientoEnum::GASTO;
     }
 
     /**
@@ -30,7 +30,7 @@ final readonly class ApplyGastoEffectForCuentaStrategy implements ApplyTransacti
      */
     public function applyTransactionEffectWhenAMovimientoIsWritten(Movimiento $movimiento, Cuenta $cuenta): Cuenta
     {
-        $cuenta = $cuenta->updateSaldoActual($cuenta->getSaldoActual() - $movimiento->getMonto());
+        $cuenta = $cuenta->updateSaldoActual($cuenta->getSaldoActual() - $movimiento->getMonto()->getValue());
         return $cuenta ;
     }
 }
