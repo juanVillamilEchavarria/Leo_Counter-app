@@ -17,7 +17,23 @@ interface UpdateAttachmentsForMovimientoEventContract extends EventContract
      * @return array|null
      */
     public function getComprobantesExisting(): ?array;
+
+    /**
+     * Obtiene la categoria del movimiento
+     * @return Categoria
+     */
     public function getCategoria(): Categoria;
+
+    /**
+     * Obtiene el nombre del tipo de movimiento
+     * @return string
+     */
     public function getTipoMovimientoName(): string;
+
+    /**
+     * Obtiene si el path del archivo ha cambiado
+     * @return bool
+     */
+    public function pathChanged(): bool;
 
 }

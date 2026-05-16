@@ -19,9 +19,9 @@ final readonly class RevertIngresoEffectForCuentaWhenMovimientoIsChanged impleme
     /**
      * @inheritDoc
      */
-    public function supports(Movimiento $movimiento): bool
+    public function supports(Movimiento $old_movimiento): bool
     {
-        return $movimiento->getTipoMovimientoId() === TipoMovimientoEnum::GASTO;
+        return $old_movimiento->getTipoMovimientoId() === TipoMovimientoEnum::INGRESO;
     }
 
     /**

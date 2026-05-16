@@ -13,15 +13,28 @@ services:
     volumes:
       # Código de la aplicación
       - .:/var/www/html
-      
+
       #  VOLUMEN PARA ARCHIVOS SUBIDOS DE MOVIMIENTOS
       - movimientos_data:/var/www/html/storage/app/data/movimientos
-      
-      # Storage completo en volumen 
+
+      # Storage completo en volumen
       - app_storage:/var/www/html/storage
-      
+
       #  LOGS en volumen separado
       - app_logs:/var/www/html/storage/logs
+    env_file:
+      - .env
+    depends_on:
+      - db
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: leo_counter_worker
+    restart: unless-stopped
+    command: php artisan queue:work --sleep=3 --tries=3 --max-time=3600
+    volumes:
+      - .:/var/www/html
     env_file:
       - .env
     depends_on:
@@ -58,7 +71,7 @@ services:
     container_name: mailhog
     ports:
       - "1025:1025"   # SMTP
-      - "8025:8025"   # Web 
+      - "8025:8025"   # Web
     restart: unless-stopped
 
 volumes:
@@ -68,7 +81,7 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: ./storage/app/data/movimientos 
+      device: ./storage/app/data/movimientos
 
   # Storage completo
   app_storage:
@@ -76,7 +89,7 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: ./storage 
+      device: ./storage
 
   # Logs separados
   app_logs:

@@ -21,7 +21,6 @@ final readonly  class UpdateArchivoMovimientoHandler
          * @var ArchivoMovimiento $archivoMovimiento
          */
         $archivoMovimiento = $this->archivoMovimientoRepository->findById($command->id);
-        if($archivoMovimiento->getPath()->equals($command->filePath))return; // si la ruta es la misma, no se actualiza
         $moveDto = new MoveFileDto(
             disk: $archivoMovimiento->getDisk(),
             oldPath: $archivoMovimiento->getPath(),

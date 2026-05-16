@@ -72,6 +72,10 @@ final readonly class MovimientoUpdated implements UploadAttachmentsForMovimiento
     {
         return $this->comprobantes_existing;
     }
+    public function pathChanged(): bool
+    {
+      return $this->oldMovimiento->getTipoMovimientoId() !== $this->movimiento->getTipoMovimientoId() || $this->oldMovimiento->getCategoriaId() !== $this->movimiento->getCategoriaId();
+    }
 
     public function getTipoMovimientoName(): string
     {
