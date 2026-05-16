@@ -8,6 +8,7 @@ use App\Domains\ArchivoMovimiento\Exceptions\CannotDeleteArchivoMovimientoExcept
 use App\Shared\Application\Contracts\Services\FileServiceContract;
 use App\Domains\ArchivoMovimiento\Aggregates\ArchivoMovimiento;
 use App\Models\ArchivoMovimiento\ArchivoMovimiento as ArchivoMovimientoModel;
+use Illuminate\Support\Facades\DB;
 final readonly class DestroyArchivoMovimientoHandler
 {
 
@@ -19,15 +20,19 @@ final readonly class DestroyArchivoMovimientoHandler
     }
     public function __invoke(
         DestroyArchivoMovimientoCommand $command
-    )
+    ) : void
     {
 
+
+
         /** @var ArchivoMovimiento $archivoMovimiento */
+
        $archivoMovimiento = $this->archivoMovimientoRepository->findById($command->id);
-       dd($archivoMovimiento, $command->id, ArchivoMovimientoModel::query()->where('id', $command->id->getValue())->toSql(), ArchivoMovimientoModel::query()->where('id', $command->id->getValue())->getBindings());
+
         try {
             $this->archivoMovimientoRepository->destroy($command->id);
             if($this->fileService->exists($archivoMovimiento->getPath(),$archivoMovimiento->getDisk())){
+
                 $this->fileService->destroy($archivoMovimiento->getPath(), $archivoMovimiento->getDisk());
             }
         } catch (\Throwable $th) {

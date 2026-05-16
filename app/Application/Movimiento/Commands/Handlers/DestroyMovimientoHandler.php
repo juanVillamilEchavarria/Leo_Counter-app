@@ -49,7 +49,3 @@ final readonly class DestroyMovimientoHandler
 
 }
 
-///** @var ArchivoMovimientoId $archivoMovimientoId */
-//foreach ($archivoMovimientosIds as $archivoMovimientoId) {
-//    $this->commandBus->dispatch(new DestroyArchivoMovimientoCommand($archivoMovimientoId));
-//}

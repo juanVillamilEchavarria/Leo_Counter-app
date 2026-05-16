@@ -23,7 +23,7 @@ final readonly class MovimientoDeletedFinancialImpactEventHandler
     }
     public function __invoke(MovimientoDeleted $event): void
     {
-       $cuenta = $this->revertResolver->resolve($event->getMovimiento(), $event->getOldMovimiento(), $event->getCuenta());
+       $cuenta = $this->revertResolver->resolve($event->getOldMovimiento(), $event->getCuenta());
        $this->cuentaRepository->update($cuenta);
     }
 

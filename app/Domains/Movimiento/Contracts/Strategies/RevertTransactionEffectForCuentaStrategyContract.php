@@ -19,10 +19,10 @@ interface RevertTransactionEffectForCuentaStrategyContract
 {
     /**
      * Determina si la estrategia es compatible con el comando de modificacion de movimiento
-     * @param Movimiento $movimiento - el movimiento ya actualizado
+     * @param Movimiento $old_movimiento - el movimiento ya actualizado
      * @return bool
      */
-    public function supports( Movimiento $movimiento):bool;
+    public function supports( Movimiento $old_movimiento):bool;
 
     /**
      * revierte el efecto de la transaccion cuando un movimiento cambia a sus relaciones y a sus propias propiedades, garantizando la integridad de los datos
