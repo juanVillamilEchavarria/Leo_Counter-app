@@ -23,13 +23,31 @@ class LaravelFileService implements FileServiceContract{
 
     public function move(MoveFileDTO $dto): bool{
 
-        $old_archivo = Storage::disk($dto->disk)->exists($dto->oldPath);
-        return dd(Storage::disk($dto->disk->value)->move($dto->oldPath, $dto->newPath), $dto, $old_archivo);
+        $disk = Storage::disk($dto->disk->value);
+
+        if (!$disk->exists($dto->oldPath)) {
+            return false;
+        }
+
+        // Intentar mover primero
+        $moved = $disk->move($dto->oldPath, $dto->newPath);
+
+        // Si falla, copiar y eliminar manualmente
+        if (!$moved) {
+            $copied = $disk->copy($dto->oldPath, $dto->newPath);
+            if ($copied) {
+                $disk->delete($dto->oldPath);
+                return true;
+            }
+            return false;
+        }
+
+        return $moved;
     }
 
 
-    public function destroy(FilePath $path, ArchivoMovimientoDiskEnum $disk): bool{
-        return Storage::disk($disk->value)->delete($path->toString());
+    public function destroy(string $path, ArchivoMovimientoDiskEnum $disk): bool{
+        return Storage::disk($disk->value)->delete($path);
     }
 
     public function exists(string $path, ArchivoMovimientoDiskEnum $disk): bool{

@@ -31,11 +31,11 @@ interface FileServiceContract
 
     /**
      * Elimina un archivo
-     * @param FilePath $path
+     * @param string $path
      * @param ArchivoMovimientoDiskEnum $disk
      * @return bool
      */
-    public function destroy(FilePath $path, ArchivoMovimientoDiskEnum $disk): bool;
+    public function destroy(string $path, ArchivoMovimientoDiskEnum $disk): bool;
 
     /**
      * Verifica si un archivo de movimientos existe.

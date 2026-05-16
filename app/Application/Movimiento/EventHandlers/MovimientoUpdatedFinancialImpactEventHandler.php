@@ -25,16 +25,18 @@ final readonly class MovimientoUpdatedFinancialImpactEventHandler
     public function __invoke( MovimientoUpdated $event):void
     {
 
-            $oldCuenta = $event->getOldCuenta();
-            $oldCuenta = $this->revertResolver->resolve($event->getOldMovimiento(), $oldCuenta);
-            $cuenta = $oldCuenta;
-            if($event->cuentaChanged()){
-                $cuenta = $this->cuentaRepository->findById($event->getMovimiento()->getCuentaId());
-                $this->cuentaRepository->update($oldCuenta);
-            };
-            $this->transactionValidatorResolver->resolve($cuenta, $event->getMovimiento());
-            $cuenta = $this->applyResolver->resolve($event->getMovimiento(), $cuenta);
+        // la cuenta vieja
+        $cuenta = $this->revertResolver->resolve($event->getOldMovimiento(), $event->getOldCuenta());
+        $saldo = $cuenta->getSaldoActual();
+
+        if ($event->cuentaChanged()) {
+            $cuentaNueva = $this->cuentaRepository->findById($event->getMovimiento()->getCuentaId());
             $this->cuentaRepository->update($cuenta);
+            $cuenta = $cuentaNueva;
+        }
+        $this->transactionValidatorResolver->resolve($cuenta, $event->getMovimiento());
+        $cuenta = $this->applyResolver->resolve($event->getMovimiento(), $cuenta);
+        $this->cuentaRepository->update($cuenta);
 
     }
 

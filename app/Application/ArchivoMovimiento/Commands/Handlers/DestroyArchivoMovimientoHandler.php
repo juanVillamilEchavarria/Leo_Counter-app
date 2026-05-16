@@ -29,11 +29,12 @@ final readonly class DestroyArchivoMovimientoHandler
 
        $archivoMovimiento = $this->archivoMovimientoRepository->findById($command->id);
 
+     $name =  $archivoMovimiento->getPath()->toString() . $archivoMovimiento->getNombreGuardado();
         try {
             $this->archivoMovimientoRepository->destroy($command->id);
-            if($this->fileService->exists($archivoMovimiento->getPath(),$archivoMovimiento->getDisk())){
+            if($this->fileService->exists($name,$archivoMovimiento->getDisk())){
 
-                $this->fileService->destroy($archivoMovimiento->getPath(), $archivoMovimiento->getDisk());
+                $this->fileService->destroy($name, $archivoMovimiento->getDisk());
             }
         } catch (\Throwable $th) {
             throw new CannotDeleteArchivoMovimientoException("No se pudo eliminar el archivo del movimiento. Error: " . $th->getMessage());

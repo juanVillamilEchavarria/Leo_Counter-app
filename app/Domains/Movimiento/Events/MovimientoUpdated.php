@@ -36,7 +36,7 @@ final readonly class MovimientoUpdated implements UploadAttachmentsForMovimiento
         return $this->movimiento->getTipoMovimientoId() !== $this->oldMovimiento->getTipoMovimientoId();
     }
     public function cuentaChanged(): bool{
-        return $this->movimiento->getCuentaId() !== $this->oldMovimiento->getCuentaId();
+        return !$this->movimiento->getCuentaId()->equals($this->oldMovimiento->getCuentaId());
     }
 
     public function getMovimiento(): Movimiento
