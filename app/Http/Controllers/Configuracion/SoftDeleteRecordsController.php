@@ -51,7 +51,7 @@ class SoftDeleteRecordsController{
         return match($type){
             SoftDeleteManagerTypes::CUENTAS =>  $baseUrl.'Cuentas',
             SoftDeleteManagerTypes::CATEGORIAS => $baseUrl. 'Categorias',
-            SoftDeleteManagerTypes::MOVIMIENTOS_PENDIENTES => $baseUrl. 'Movimientos Pendientes',
+            SoftDeleteManagerTypes::MOVIMIENTOS_PENDIENTES => $baseUrl. 'MovimientosPendientes',
             SoftDeleteManagerTypes::PRESUPUESTOS => $baseUrl. 'Presupuestos',
         };
     }

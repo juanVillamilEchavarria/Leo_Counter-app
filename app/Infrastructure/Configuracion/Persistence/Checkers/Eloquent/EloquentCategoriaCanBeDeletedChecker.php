@@ -28,8 +28,8 @@ final readonly class EloquentCategoriaCanBeDeletedChecker extends EloquentDomain
     {
         return [
             'movimientos',
-            'movimientosFijos',
-            'movimientosPendientes'
+            'movimientos_fijos',
+            'movimientos_pendientes'
         ];
     }
 }

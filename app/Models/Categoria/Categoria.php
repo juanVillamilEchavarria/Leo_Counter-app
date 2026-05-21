@@ -29,18 +29,18 @@ class Categoria extends Model
         'descripcion'
     ];
 
-    public function tipoMovimiento()
+    public function tipo_movimiento()
     {
         return $this->belongsTo(TipoMovimiento::class, 'tipo_movimiento_id');
     }
     public function movimientos(){
         return $this->hasMany(Movimiento::class, 'categoria_id');
     }
-    public function movimientosFijos(){
+    public function movimientos_fijos(){
         return $this->hasMany(MovimientoFijo::class, 'categoria_id');
     }
 
-    public function movimientosPendientes(){
+    public function movimientos_pendientes(){
         return $this->hasMany(MovimientoPendiente::class, 'categoria_id');
     }
 }
