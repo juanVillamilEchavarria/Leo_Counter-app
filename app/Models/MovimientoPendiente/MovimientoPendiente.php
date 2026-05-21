@@ -9,6 +9,7 @@ use App\Models\Categoria\Categoria;
 use App\Models\TipoMovimiento\TipoMovimiento;
 use App\Models\MovimientoFijo\MovimientoFijo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Movimiento\Movimiento;
 
 class MovimientoPendiente extends Model
 {
@@ -49,5 +50,8 @@ class MovimientoPendiente extends Model
     public function movimiento_fijo()
     {
         return $this->belongsTo(MovimientoFijo::class);
+    }
+    public function movimientos(){
+        return $this->hasMany(Movimiento::class);
     }
 }

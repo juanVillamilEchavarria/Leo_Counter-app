@@ -7,6 +7,7 @@ use App\Domains\Configuracion\Strategies\Abstracts\SoftDeleteManager;
 use App\Domains\Cuenta\Contracts\Repositories\CuentaRepositoryContract;
 use App\Domains\Cuenta\ValueObjects\CuentaId;
 use App\Shared\Domain\Contracts\AggregateModelIdContract;
+use App\Domains\Configuracion\Contracts\Checkers\DomainRecordCanBeDeletedCheckerContract;
 
 /**
  * Manager de persistencia para registros eliminados de Cuenta.
@@ -18,6 +19,7 @@ use App\Shared\Domain\Contracts\AggregateModelIdContract;
  */
 final readonly class SoftDeleteCuentaManager extends SoftDeleteManager implements SoftDeleteManagerContract{
     public function __construct(
+        private DomainRecordCanBeDeletedCheckerContract $checker,
         CuentaRepositoryContract $writeRepository)
     {
          parent::__construct($writeRepository);
@@ -35,6 +37,6 @@ final readonly class SoftDeleteCuentaManager extends SoftDeleteManager implement
 
     public function canDelete(AggregateModelIdContract $id): bool
     {
-        return true;
+        return $this->checker->canBeDeleted($id);
     }
 }
