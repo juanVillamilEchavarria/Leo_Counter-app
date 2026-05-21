@@ -16,8 +16,7 @@ use App\Http\Controllers\Presupuesto\PresupuestoHistoricoController;
 use App\Http\Controllers\Presupuesto\PresupuestoMesActualController;
 use App\Http\Controllers\PagoPendiente\PagoPendienteController;
 use App\Http\Controllers\Historial\HistorialController;
-use App\Http\Controllers\Profile\ProfileController;
-use App\Http\Controllers\Profile\ProfilePasswordController;
+use App\Http\Controllers\Usuario\UsuarioController;
 use App\Http\Controllers\Configuracion\ConfiguracionController;
 use App\Http\Controllers\Configuracion\SoftDeleteRecordsController;
 // GUEST ROUTES
@@ -67,11 +66,11 @@ Route::middleware('auth')->group( function () {
     Route::resource('pagos-pendientes',PagoPendienteController::class)->names('pagosPendientes');
     Route::get('/historial', [HistorialController::class, 'index'])->name('historial.index');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-    // PERFIL
-    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
-    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::get('/profile/password', [ProfilePasswordController::class, 'index'])->name('profile.password.index');
-    Route::put('/profile/password', [ProfilePasswordController::class, 'update'])->name('profile.password.update');
+    // USUARIO
+    Route::get('/usuario', [UsuarioController::class, 'edit'])->name('usuario.edit');
+    Route::put('/usuario', [UsuarioController::class, 'updateDatosPublicos'])->name('usuario.updateDatosPublicos');
+    Route::get('/usuario/password', [UsuarioController::class, 'editPassword'])->name('usuario.password.edit');
+    Route::put('/usuario/password', [UsuarioController::class, 'cambiarPassword'])->name('usuario.password.cambiar');
     //CONFIGURACION
     Route::get('/configuracion', [ConfiguracionController::class, 'index'])->name('configuracion.index');
     Route::get('/configuracion/deleted/{domain}', [SoftDeleteRecordsController::class, 'index'])->name('configuracion.deleted.index');

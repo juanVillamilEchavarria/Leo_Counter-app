@@ -1,6 +1,6 @@
 import { Link } from "@inertiajs/react"
 import { useLogout } from "../../auth"
-import { ProfileRoutes } from "../../profile"
+import { UsuarioRoutes } from "../../usuario"
 export default function SelfOptionsCard() {
     const {form, handleSubmit} = useLogout()
   return (
@@ -12,42 +12,42 @@ export default function SelfOptionsCard() {
         border
         border-border
         shadow-[0_20px_50px_rgba(0,0,0,0.6)]
-        rounded-2xl 
+        rounded-2xl
         gap-2
         p-5
-        w-56    
+        w-56
         origin-bottom-left
         "
     >
         <div className="border-b border-border">
-            <Link 
-            href={ProfileRoutes.index} 
+            <Link
+            href={UsuarioRoutes.edit}
             className="
                 text-foreground
                 text-sm
-                mb-4 
-                flex 
+                mb-4
+                flex
                 items-center
                 gap-2
-                hover:bg-foreground/10 
+                hover:bg-foreground/10
                 p-2 rounded-xl
                 "
             >
             <i className="fa-solid fa-user fa-md"></i>
-            <span>Profile</span>
+            <span>Perfil</span>
             </Link>
         </div>
         <form onSubmit={handleSubmit} className="w-full">
-            <button 
-                type="submit" 
+            <button
+                type="submit"
                 className="
                   text-red-400
                   hover:bg-red-500/10
-                    text-sm 
-                    flex 
-                    items-center 
-                    gap-2 
-                    p-2 
+                    text-sm
+                    flex
+                    items-center
+                    gap-2
+                    p-2
                     rounded-xl
                     cursor-pointer
                     w-full
@@ -57,7 +57,7 @@ export default function SelfOptionsCard() {
             <span>Logout</span>
             </button>
         </form>
-        
+
     </div>
   )
 }
