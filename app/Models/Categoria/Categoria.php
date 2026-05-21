@@ -2,10 +2,13 @@
 
 namespace App\Models\Categoria;
 
+use App\Models\MovimientoFijo\MovimientoFijo;
+use App\Models\MovimientoPendiente\MovimientoPendiente;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\TipoMovimiento\TipoMovimiento;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Movimiento\Movimiento;
 
 class Categoria extends Model
 {
@@ -29,5 +32,15 @@ class Categoria extends Model
     public function tipoMovimiento()
     {
         return $this->belongsTo(TipoMovimiento::class, 'tipo_movimiento_id');
+    }
+    public function movimientos(){
+        return $this->hasMany(Movimiento::class, 'categoria_id');
+    }
+    public function movimientosFijos(){
+        return $this->hasMany(MovimientoFijo::class, 'categoria_id');
+    }
+
+    public function movimientosPendientes(){
+        return $this->hasMany(MovimientoPendiente::class, 'categoria_id');
     }
 }

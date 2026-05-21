@@ -39,13 +39,13 @@ abstract class EloquentRepository {
     }
 
     /**
-     * Convierte un agregado de dominio en un array asociativo de atributos para ser persistidos en la base de datos. 
+     * Convierte un agregado de dominio en un array asociativo de atributos para ser persistidos en la base de datos.
      * @param object $aggregate
      * @return array
      */
     abstract protected function mapAggregateToAttributes(object $aggregate): array;
     /**
-     * Convierte un modelo de Eloquent en un agregado de dominio. 
+     * Convierte un modelo de Eloquent en un agregado de dominio.
      * @param Model $model
      * @return AggregateModelContract
      */
@@ -54,8 +54,8 @@ abstract class EloquentRepository {
 
     /**
      * Funcion que se encarga de crear un nuevo registro en la base de datos, recibe un DTO con los datos necesarios para crear el registro, y devuelve el modelo creado
-      * @param DTOContract $dto
-     * @return Model
+      * @param AggregateModelContract $aggregate
+     * @return AggregateModelContract
      */
     public function store ( AggregateModelContract $aggregate): AggregateModelContract{
         $record = $this->create($this->mapAggregateToAttributes($aggregate));
@@ -63,8 +63,7 @@ abstract class EloquentRepository {
     }
     /**
      * Funcion que se encarga de actualizar un registro en la base de datos, recibe el modelo a actualizar y un DTO con los datos necesarios para actualizar el registro, devuelve un booleano indicando si la actualizacion fue exitosa o no
-      * @param Model $model
-      * @param DTOContract $dto
+      * @param AggregateModelContract $aggregate
      * @return bool
      */
 
@@ -77,7 +76,7 @@ abstract class EloquentRepository {
     }
     /**
      * Funcion que se encarga de cambiar el valor de un atributo booleano en la base de datos
-      * @param int $id El ID de la categoría a la que se le va a alternar el valor del atributo
+      * @param AggregateModelIdContract $id El ID de la categoría a la que se le va a alternar el valor del atributo
       * @param string $attribute
      * @return bool
      */
@@ -92,7 +91,7 @@ abstract class EloquentRepository {
 
     /**
      * Funcion que se encarga de eliminar un registro en la base de datos, o si esta declarado como soft delete, recibe el modelo a eliminar, devuelve un booleano indicando si la eliminacion fue exitosa o no
-      * @param Model $model
+      * @param AggregateModelIdContract $id
      * @return bool
      */
     public function destroy(AggregateModelIdContract $id): bool{
@@ -100,13 +99,28 @@ abstract class EloquentRepository {
         return $model ? $model->delete() : false;
     }
 
+    /**
+     * Obtiene un registro por ID
+     * @param AggregateModelIdContract $id
+     * @return AggregateModelContract|null
+     */
     public function findById(AggregateModelIdContract $id): ?AggregateModelContract{
         $model = ($this->model)::find($this->normalizeId($id));
         return $model ? $this->mapDatabaseRecordToAggregate($model) : null;
     }
+
+    /**
+     * Obtiene un registro eliminado por ID
+     * @param AggregateModelIdContract $id
+     * @return AggregateModelContract|null
+     */
+    public function findByIdWithTrashed(AggregateModelIdContract $id): ?AggregateModelContract{
+        $model = ($this->model)::withTrashed()->find($this->normalizeId($id));
+        return $model ? $this->mapDatabaseRecordToAggregate($model) : null;
+    }
     /**
      * Funcion para restaurar un registro eliminado de la base de datos
-     * @param Model $model
+     * @param AggregateModelIdContract $id
      * @return bool
      */
 
@@ -117,7 +131,7 @@ abstract class EloquentRepository {
 
     /**
      * Funcion que se encarga de eliminar un registro de forma permanente en la base de datos, recibe el modelo a eliminar, devuelve un booleano indicando si la eliminacion fue exitosa o no
-      * @param Model $model
+      * @param AggregateModelIdContract $id
      * @return bool
      */
     public function hardDelete(AggregateModelIdContract $id): bool{

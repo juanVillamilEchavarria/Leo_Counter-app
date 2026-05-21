@@ -28,4 +28,9 @@ enum SoftDeleteManagerTypes : string{
             self::PRESUPUESTOS => 'Presupuestos',
         };
     }
+
+    public static function try(string $type): ?self{
+        return self::tryFrom($type) ?? throw new \LogicException('No se encontro un manager para el dominio especificado');
+
+    }
 }

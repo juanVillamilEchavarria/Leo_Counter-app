@@ -27,7 +27,7 @@ class DeletedCuentasResource extends SoftDeleteResource
             'saldo_inicial'=> $this->saldo_inicial,
             'saldo_actual'=> $this->saldo_actual,
             'deleted_at'=> $this->deleted_at,
-            'can_hard_delete'=> $this->manager->canDelete($this->resource),
+            'can_hard_delete'=> $this->can_hard_delete,
         ];
     }
 }

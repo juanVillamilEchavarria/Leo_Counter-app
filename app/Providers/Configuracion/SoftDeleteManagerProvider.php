@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Providers\Configuracion;
-use App\Infrastructure\Persistence\Resolvers\SoftDeleteManagerResolver;
-use App\Infrastructure\Persistence\Strategies\SoftDeleteManagers\Categoria\SoftDeleteCategoriaManager;
-use App\Infrastructure\Persistence\Strategies\SoftDeleteManagers\Cuenta\SoftDeleteCuentaManager;
-use App\Infrastructure\Persistence\Strategies\SoftDeleteManagers\MovimientoPendiente\SoftDeleteMovimientoPendienteManager;
-use App\Infrastructure\Persistence\Strategies\SoftDeleteManagers\Presupuesto\SoftDeletePresupuestoManager;
+use App\Application\Configuracion\Resolvers\SoftDeleteManagerResolver;
+use App\Domains\Configuracion\Strategies\SoftDeleteCategoriaManager;
+use App\Domains\Configuracion\Strategies\SoftDeleteCuentaManager;
+use App\Domains\Configuracion\Strategies\SoftDeleteMovimientoPendienteManager;
+use App\Domains\Configuracion\Strategies\SoftDeletePresupuestoManager;
 use Illuminate\Support\ServiceProvider;
 
 class SoftDeleteManagerProvider extends ServiceProvider

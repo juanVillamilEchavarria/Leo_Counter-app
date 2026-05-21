@@ -1,6 +1,7 @@
 <?php
 namespace App\Shared\Contracts\Repositories;
 
+use App\Shared\Domain\Contracts\AggregateModelContract;
 use App\Shared\Domain\Contracts\AggregateModelIdContract;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,12 +16,19 @@ interface SoftDeleteRepositoryContract
 {
     /**
      * Recupera un registro eliminado
-     * @param int $id
+     * @param AggregateModelIdContract $id
      */
     public function restore(AggregateModelIdContract $id): bool;
     /**
      * Elimina un registro de forma permanente
-     * @param int $id
+     * @param AggregateModelIdContract $id
      */
     public function hardDelete(AggregateModelIdContract $id): bool;
+
+    /**
+     * Obtiene un registro eliminado por ID
+     * @param AggregateModelIdContract $id
+     * @return Model|null
+     */
+    public function findByIdWithTrashed(AggregateModelIdContract $id): ?AggregateModelContract;
 }

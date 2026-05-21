@@ -11,7 +11,7 @@ use App\Shared\Domain\Contracts\AggregateModelContract;
 /**
  * Repository contract for Cuenta domain
  */
-interface CuentaRepositoryContract
+interface CuentaRepositoryContract extends SoftDeleteRepositoryContract
 {
     /**
      * Store a new Cuenta

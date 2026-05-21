@@ -27,7 +27,7 @@ class DeletedCategoriaResource extends SoftDeleteResource
             'descripcion'=> $this->descripcion,
             'es_fijo'=> $this->es_fijo,
             'deleted_at'=> $this->deleted_at,
-            'can_hard_delete'=> $this->manager->canDelete($this->resource),
+            'can_hard_delete'=> $this->can_hard_delete,
         ];
     }
 }

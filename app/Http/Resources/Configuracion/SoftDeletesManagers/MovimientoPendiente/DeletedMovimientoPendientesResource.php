@@ -28,7 +28,7 @@ class DeletedMovimientoPendientesResource extends SoftDeleteResource
             'fecha_programada'=> $this->fecha_programada,
             'estado'=> $this->estado,
             'deleted_at'=> $this->deleted_at,
-            'can_hard_delete'=> $this->manager->canDelete($this->resource),
+            'can_hard_delete'=> $this->can_hard_delete,
         ];
     }
 }

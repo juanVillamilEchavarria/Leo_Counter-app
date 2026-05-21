@@ -27,7 +27,7 @@ class DeletedPresupuestosResource extends SoftDeleteResource
             'descripcion'=> $this->descripcion,
             'periodo'=> $this->periodo,
             'deleted_at'=> $this->deleted_at,
-            'can_hard_delete'=> $this->manager->canDelete($this->resource),
+            'can_hard_delete'=> $this->can_hard_delete,
         ];
     }
 }
