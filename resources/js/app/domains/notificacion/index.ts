@@ -1,0 +1,6 @@
+export * from './types/notificacion.types'
+export { default as CanalNotificacionTable } from './components/CanalNotificacionTable'
+export { default as SuscriptorNotificacionTable } from './components/SuscriptorNotificacionTable'
+export { default as SuscriptorNotificacionForm } from './components/SuscriptorNotificacionForm'
+export { default as CreateSuscriptorModal } from './components/CreateSuscriptorModal'
+export { default as EditSuscriptorModal } from './components/EditSuscriptorModal'

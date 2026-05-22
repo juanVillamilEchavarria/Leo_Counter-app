@@ -3,7 +3,7 @@ export function useModalItem<T>() {
   const [item, setItem] = useState<T | null>(null)
   const [modal, setModal] = useState<string | null>(null)
 
-  const open = useCallback((item: T, modal: string) => {
+  const open = useCallback((item: T | null, modal: string) => {
     setItem(item)
     setModal(modal)
   }, [])

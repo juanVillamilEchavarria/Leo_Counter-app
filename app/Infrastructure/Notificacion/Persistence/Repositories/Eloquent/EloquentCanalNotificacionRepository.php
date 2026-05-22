@@ -21,7 +21,7 @@ final class EloquentCanalNotificacionRepository extends EloquentRepository imple
         return [
             'id' => $aggregate->getId()->getValue(),
             'nombre' => $aggregate->getNombre(),
-            'activo' => $aggregate->isActivo()
+            'activo' => $aggregate->isActive()
         ];
     }
 

@@ -9,6 +9,7 @@ class SuscriptorNotificacion extends Model
 {
     use HasFactory;
 
+    protected $table = 'suscriptores_notificaciones';
     public $incrementing = false;
     protected $keyType = 'string';
 
