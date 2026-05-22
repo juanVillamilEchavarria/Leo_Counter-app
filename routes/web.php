@@ -19,6 +19,8 @@ use App\Http\Controllers\Historial\HistorialController;
 use App\Http\Controllers\Usuario\UsuarioController;
 use App\Http\Controllers\Configuracion\ConfiguracionController;
 use App\Http\Controllers\Configuracion\SoftDeleteRecordsController;
+use App\Http\Controllers\Notificacion\CanalNotificacionController;
+use App\Http\Controllers\Notificacion\SuscriptorNotificacionController;
 use Illuminate\Support\Facades\Mail;
 
 Route::get('/test-email', function () {
@@ -82,6 +84,11 @@ Route::middleware('auth')->group( function () {
     Route::put('/usuario/password', [UsuarioController::class, 'cambiarPassword'])->name('usuario.password.cambiar');
     //CONFIGURACION
     Route::get('/configuracion', [ConfiguracionController::class, 'index'])->name('configuracion.index');
+    Route::resource('canal-notificaciones', CanalNotificacionController::class)->names('configuracion.notificaciones.canales');
+    Route::patch('canal-notificaciones/{canal}/{attribute}/toggle', [CanalNotificacionController::class, 'toggle'])->name('configuracion.notificaciones.canales.toggle');
+    Route::resource('suscriptor-notificaciones', SuscriptorNotificacionController::class)->names('configuracion.notificaciones.suscriptores');
+    Route::patch('suscriptor-notificaciones/{suscriptor}/{attribute}/toggle', [SuscriptorNotificacionController::class, 'toggle'])->name('configuracion.notificaciones.suscriptores.toggle');
+    // SOFT DELETES
     Route::get('/configuracion/deleted/{domain}', [SoftDeleteRecordsController::class, 'index'])->name('configuracion.deleted.index');
     Route::put('/configuracion/deleted/{domain}/restore/{id}', [SoftDeleteRecordsController::class, 'restore'])->name('configuracion.deleted.restore');
     Route::delete('/configuracion/deleted/{domain}/hard-delete/{id}', [SoftDeleteRecordsController::class, 'hardDelete'])->name('configuracion.deleted.hardDelete');

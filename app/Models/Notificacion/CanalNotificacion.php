@@ -9,6 +9,7 @@ class CanalNotificacion extends Model
 {
     use HasFactory;
 
+    protected $table = 'canales_notificacion';
     public $incrementing = false;
     protected $keyType = 'string';
 

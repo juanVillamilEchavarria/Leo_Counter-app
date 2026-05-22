@@ -52,7 +52,7 @@
     @apply table p-3 h-full w-full 
   }
   .table-thead{
-    @apply bg-muted text-muted-foreground text-left rounded-2xl
+    @apply bg-background text-muted-foreground text-left rounded-2xl
   }
   .table-tbody{
     @apply text-left

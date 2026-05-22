@@ -19,7 +19,7 @@ final readonly class CanalNotificacion implements AggregateModelContract
     private function __construct(
         private CanalNotificacionId $id,
         private string $nombre,
-        private bool $activo = true
+        private bool $active = true
     ) {
     }
 
@@ -31,7 +31,7 @@ final readonly class CanalNotificacion implements AggregateModelContract
         string $nombre,
         bool $activo
     ): self {
-        return new self(id: $id, nombre: $nombre, activo: $activo);
+        return new self(id: $id, nombre: $nombre, active: $activo);
     }
 
     /**
@@ -39,7 +39,7 @@ final readonly class CanalNotificacion implements AggregateModelContract
      */
     public function toggleActive(): self
     {
-        return new self(id: $this->id, nombre: $this->nombre, activo: !$this->activo);
+        return new self(id: $this->id, nombre: $this->nombre, active: !$this->active);
     }
 
     public function getId(): CanalNotificacionId
@@ -52,9 +52,9 @@ final readonly class CanalNotificacion implements AggregateModelContract
         return $this->nombre;
     }
 
-    public function isActivo(): bool
+    public function isActive(): bool
     {
-        return $this->activo;
+        return $this->active;
     }
 }
 
