@@ -16,7 +16,6 @@ use Throwable;
  */
 final class WrongPasswordException extends DomainException
 {
-    #[Override]
     public function __construct(string $message = 'La contraseña actual es incorrecta', int $code = 0, ?Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);

@@ -19,6 +19,15 @@ use App\Http\Controllers\Historial\HistorialController;
 use App\Http\Controllers\Usuario\UsuarioController;
 use App\Http\Controllers\Configuracion\ConfiguracionController;
 use App\Http\Controllers\Configuracion\SoftDeleteRecordsController;
+use Illuminate\Support\Facades\Mail;
+
+Route::get('/test-email', function () {
+    Mail::raw('¡Hola desde Leo Counter!', function ($message) {
+        $message->to('juan@example.com')
+            ->subject('Prueba de envío');
+    });
+    return 'Correo enviado';
+});
 // GUEST ROUTES
 Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.store');
@@ -45,7 +54,7 @@ Route::middleware('auth')->group( function () {
     Route::resource('movimientos-fijos',MovimientoFijoController::class)->names('movimientosFijos')->parameters([
         'movimientos-fijos'=> 'id'
     ]);
-    // ARCHIVOS_MOVIMIENTOS 
+    // ARCHIVOS_MOVIMIENTOS
     Route::get('movimientos/archivos/{archivoMovimiento}', [ArchivoMovimientoController::class, 'show'])->name('movimientos.archivos.show');
     Route::get('movimientos/archivos/{archivoMovimiento}/download', [ArchivoMovimientoController::class, 'download'])->name('movimientos.archivos.download');
 
@@ -53,7 +62,7 @@ Route::middleware('auth')->group( function () {
     // CATEGORIAS
     Route::resource('categorias',CategoriaController::class)->names('categorias')->except('patch');
     Route::patch('categorias/{categoria}/{attribute}/toggle', [CategoriaController::class, 'toggleEsFijo'])->name('categorias.toggle');
-    
+
     Route::get('/reportes', [ReporteController::class, 'index'])->name('reportes.index');
     // PRESUPUESTOS
     Route::get('/presupuestos/historicos', [PresupuestoHistoricoController::class, 'index'])->name('presupuestosHistoricos.index');

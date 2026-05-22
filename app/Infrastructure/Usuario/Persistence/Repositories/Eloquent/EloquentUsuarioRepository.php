@@ -60,7 +60,7 @@ final class EloquentUsuarioRepository extends EloquentRepository implements Usua
             name: $model->name,
             email: new Email($model->email),
             password: $model->password,
-            role: Roles::tryFrom($model->role) ?? Roles::MEMBER,
+            role: Roles::try($model->role),
         );
     }
 
