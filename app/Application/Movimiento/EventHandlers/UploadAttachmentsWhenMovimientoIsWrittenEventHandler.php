@@ -4,6 +4,7 @@ namespace App\Application\Movimiento\EventHandlers;
 
 use App\Application\ArchivoMovimiento\Builders\FilePathBuilder;
 use App\Application\ArchivoMovimiento\Commands\StoreArchivoMovimientoCommand;
+use App\Application\Movimiento\Validators\MovimientoAttachmentValidator;
 use App\Domains\Movimiento\Contracts\Events\UploadAttachmentsForMovimientoEventContract;
 use App\Shared\Application\Contracts\Bus\CommandBus;
 
@@ -16,7 +17,8 @@ use App\Shared\Application\Contracts\Bus\CommandBus;
 final readonly class UploadAttachmentsWhenMovimientoIsWrittenEventHandler
 {
     public function __construct(
-        private CommandBus $commandBus
+        private CommandBus $commandBus,
+        private MovimientoAttachmentValidator $movimientoAttachmentValidator
     )
     {
     }
@@ -27,6 +29,7 @@ final readonly class UploadAttachmentsWhenMovimientoIsWrittenEventHandler
             $event->getTipoMovimientoName(),
             $event->getCategoria()->getNombre()
         );
+        $this->movimientoAttachmentValidator->validateNumberOfFiles(count($event->getComprobantes()));
         foreach($event->getComprobantes() as $comprobante){
             $archivoCommand= new StoreArchivoMovimientoCommand(
                 movimiento_id: $event->getMovimiento()->getId(),

@@ -21,8 +21,7 @@ final class EloquentCanalNotificacionRepository extends EloquentRepository imple
         return [
             'id' => $aggregate->getId()->getValue(),
             'nombre' => $aggregate->getNombre(),
-            'activo' => $aggregate->isActivo(),
-            'configuracion' => $aggregate->getConfiguracion()
+            'activo' => $aggregate->isActivo()
         ];
     }
 
@@ -31,8 +30,7 @@ final class EloquentCanalNotificacionRepository extends EloquentRepository imple
         return CanalAggregate::reconstitute(
             id: new CanalNotificacionId($model->id),
             nombre: $model->nombre,
-            activo: $model->activo ?? true,
-            configuracion: $model->configuracion ?? null
+            activo: $model->activo ?? true
         );
     }
 
