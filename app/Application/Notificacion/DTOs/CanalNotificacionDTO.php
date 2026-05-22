@@ -15,7 +15,6 @@ final readonly class CanalNotificacionDTO
     public function __construct(
         public string $id,
         public string $nombre,
-        public bool $activo,
-        public ?array $configuracion = null
+        public bool $activo
     ){}
 }

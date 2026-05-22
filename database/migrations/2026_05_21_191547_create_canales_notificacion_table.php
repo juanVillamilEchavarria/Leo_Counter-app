@@ -12,7 +12,6 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('nombre')->unique();
             $table->boolean('activo')->default(true);
-            $table->json('configuracion')->nullable();
             $table->timestamps();
         });
     }
