@@ -69,5 +69,7 @@ return [
     App\Providers\TipoMovimiento\TipoMovimientoRepositoryProvider::class,
     App\Providers\TipoPresupuesto\TipoPresupuestoRepositoryProvider::class,
     App\Providers\Usuario\UsuarioBusProvider::class,
+    App\Providers\Notificacion\NotificacionBusProvider::class,
+    App\Providers\Notificacion\NotificacionServiceProvider::class,
     App\Providers\Usuario\UsuarioServiceProvider::class,
 ];

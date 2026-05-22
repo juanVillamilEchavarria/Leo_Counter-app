@@ -14,4 +14,11 @@ enum Roles: string
 {
     case ADMIN = 'admin';
     case MEMBER = 'member';
+    public static function try(string $role){
+        return match($role){
+            'admin' => self::ADMIN,
+            'member' => self::MEMBER,
+            default => throw new \InvalidArgumentException('rol no encontrado')
+        };
+    }
 }
