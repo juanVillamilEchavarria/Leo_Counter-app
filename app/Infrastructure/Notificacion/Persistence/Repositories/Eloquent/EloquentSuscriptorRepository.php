@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 
 final class EloquentSuscriptorRepository extends EloquentRepository implements SuscriptorRepositoryContract
 {
-    protected array $toggeable = ['activo'];
+    protected array $toggeable = ['active'];
 
     protected function mapAggregateToAttributes(object $aggregate): array
     {

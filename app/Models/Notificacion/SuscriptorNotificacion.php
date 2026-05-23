@@ -14,14 +14,14 @@ class SuscriptorNotificacion extends Model
     protected $keyType = 'string';
 
     protected $casts = [
-        'activo' => 'boolean'
+        'active' => 'boolean'
     ];
 
     protected $fillable = [
         'id',
         'user_id',
         'canal_notificacion_id',
-        'activo',
+        'active',
         'verified_at'
     ];
 
