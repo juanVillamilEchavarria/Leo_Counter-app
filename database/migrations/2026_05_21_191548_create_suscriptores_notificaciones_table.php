@@ -12,7 +12,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('user_id')->constrained('users');
             $table->foreignUuid('canal_notificacion_id')->constrained('canales_notificacion');
-            $table->boolean('activo')->default(true);
+            $table->boolean('active')->default(true);
             $table->timestamp('verified_at')->nullable();
             $table->timestamps();
             $table->unique(['user_id','canal_notificacion_id']);

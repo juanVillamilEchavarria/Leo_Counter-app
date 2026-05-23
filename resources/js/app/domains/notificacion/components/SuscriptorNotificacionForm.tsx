@@ -4,6 +4,7 @@ import TransitionMotion from "@/app/shared/components/transitions/TransitionMoti
 import AlertMessage from "@/app/shared/components/common/AlertMessage"
 import { type SuscriptorFormProps } from "../types/notificacion.types"
 import useSuscriptorNotificacionFormOptionsApi from "../hooks/api/useSuscriptorNotificacionFormOptionsApi"
+import SelectModel from "@/app/shared/components/form/SelectModel"
 
 /**
  * Formulario para crear/editar un Suscriptor de Notificación.
@@ -22,7 +23,6 @@ export default function SuscriptorNotificacionForm({
   options,
   processing,
 }: SuscriptorFormProps) {
-
   return (
 
       <form onSubmit={submit} className="formulario-general">
@@ -31,18 +31,17 @@ export default function SuscriptorNotificacionForm({
         {/* Campo: Usuario */}
         <div className="formulario-campo">
           <label htmlFor="user_id">Usuario</label>
-          <select
-            className={`select ${errors.user_id && 'border-red-500! text-red-500!'}`}
+          <SelectModel
             name="user_id"
             id="user_id"
             value={data?.user_id ?? ''}
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setData('user_id', e.target.value)}
-          >
-            <option value="">--Seleccione--</option>
-            {options?.usuarios?.map((usuario) => (
-              <option key={usuario.id} value={usuario.id}>{usuario.name}</option>
-            ))}
-          </select>
+            iterable={options?.usuarios ?? []}
+            iterableOutput="name"
+            placeholder="Seleccione un usuario"
+            className={`select ${errors.user_id && 'border-red-500! text-red-500!'}`}
+          />
+         
           <TransitionMotion active={errors?.user_id}>
             <AlertMessage message={errors?.user_id} />
           </TransitionMotion>
@@ -51,18 +50,15 @@ export default function SuscriptorNotificacionForm({
         {/* Campo: Canal */}
         <div className="formulario-campo">
           <label htmlFor="canal_notificacion_id">Canal</label>
-          <select
-            className={`select ${errors.canal_notificacion_id && 'border-red-500! text-red-500!'}`}
+          <SelectModel
             name="canal_notificacion_id"
             id="canal_notificacion_id"
             value={data?.canal_notificacion_id ?? ''}
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setData('canal_notificacion_id', e.target.value)}
-          >
-            <option value="">--Seleccione--</option>
-            {options?.canales?.map((canal) => (
-              <option key={canal.id} value={canal.id}>{canal.nombre}</option>
-            ))}
-          </select>
+            iterable={options?.canales ?? []}
+            placeholder="Seleccione un canal"
+            className={`select ${errors.canal_notificacion_id && 'border-red-500! text-red-500!'}`}
+          />
           <TransitionMotion active={errors?.canal_notificacion_id}>
             <AlertMessage message={errors?.canal_notificacion_id} />
           </TransitionMotion>

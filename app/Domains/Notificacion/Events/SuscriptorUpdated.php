@@ -7,13 +7,7 @@ use App\Domains\Notificacion\Contracts\Events\SendVerificationToSuscriptorEventC
 use App\Domains\Usuario\Aggregates\Usuario;
 use App\Shared\Domain\ValueObjects\Date;
 
-/**
- * Evento de creación de suscriptor de notificación
- * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
- * @since 1.0.0
- * @version 1.0.0
- */
-final readonly class SuscriptorCreated implements SendVerificationToSuscriptorEventContract
+class SuscriptorUpdated implements SendVerificationToSuscriptorEventContract
 {
     public function __construct(
         private Suscriptor $suscriptor,
@@ -24,17 +18,7 @@ final readonly class SuscriptorCreated implements SendVerificationToSuscriptorEv
     }
     public function needsVerification(): bool
     {
-        return true;
-    }
-
-    public function getUsuario(): Usuario
-    {
-        return $this->usuario;
-    }
-
-    public function getSuscriptor(): Suscriptor
-    {
-        return $this->suscriptor;
+        return $this->oldSuscriptor->getVerifiedAt() === null;
     }
 
     /**
@@ -42,6 +26,16 @@ final readonly class SuscriptorCreated implements SendVerificationToSuscriptorEv
      */
     public function ocurredOn(): Date
     {
-       return $this->date;
+        // TODO: Implement ocurredOn() method.
+    }
+
+    public function getSuscriptor(): Suscriptor
+    {
+        // TODO: Implement getSuscriptor() method.
+    }
+
+    public function getUsuario(): Usuario
+    {
+        // TODO: Implement getUsuario() method.
     }
 }

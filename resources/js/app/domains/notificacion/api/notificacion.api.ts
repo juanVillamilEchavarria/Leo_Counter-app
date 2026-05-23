@@ -31,14 +31,6 @@ export const createSuscriptorApi = async (data: SuscriptorFormData): Promise<Sus
     });
 };
 
-/** Actualizar suscriptor */
-export const updateSuscriptorApi = async (id: string, data: Partial<SuscriptorFormData>): Promise<void> => {
-    return apiRequest<void, any>({
-        method: 'put',
-        url: `notificacion/suscriptores/${id}`,
-        data
-    });
-};
 
 /** Eliminar suscriptor */
 export const deleteSuscriptorApi = async (id: string): Promise<void> => {

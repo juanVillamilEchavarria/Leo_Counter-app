@@ -37,9 +37,6 @@ onError
         switch (action) {
             case 'create':
                 return SuscriptorApiActions.create(data);
-            case 'update':
-                if (!id) throw new Error('ID requerido para actualizar');
-                return SuscriptorApiActions.update(id, data);
             case 'delete':
                 if (!id) throw new Error('ID requerido para eliminar');
                 return SuscriptorApiActions.delete(id);

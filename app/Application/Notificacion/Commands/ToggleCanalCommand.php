@@ -13,6 +13,6 @@ final readonly class ToggleCanalCommand
 {
     public function __construct(
         public string $id,
-        public string $attribute = 'activo'
+        public string $attribute = 'active'
     ) {}
 }

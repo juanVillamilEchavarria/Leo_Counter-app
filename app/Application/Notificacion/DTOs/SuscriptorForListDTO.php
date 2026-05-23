@@ -10,12 +10,13 @@ namespace App\Application\Notificacion\DTOs;
  * @since 1.0.0
  * @version 1.0.0
  */
-final readonly class SuscriptorNotificacionForListDTO
+final readonly class SuscriptorForListDTO
 {
     public function __construct(
         public string $id,
-        public string $user_id,
-        public string $canal_notificacion_id,
-        public bool $activo
+        public string $usuario,
+        public string $canal,
+        public bool $active,
+        public bool $verified
     ){}
 }

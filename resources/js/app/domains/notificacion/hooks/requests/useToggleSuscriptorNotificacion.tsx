@@ -1,5 +1,5 @@
 import { router } from '@inertiajs/react'
-import { NotificacionToggleActions, NotificacionToggleTypes } from '../../types/notificacion.types'
+import { CanalNotificacionActions, NotificacionToggleTypes } from '../../types/notificacion.types'
 
 /**
  * Hook simple para alternar el estado activo de un suscriptor de notificación.
@@ -11,7 +11,7 @@ import { NotificacionToggleActions, NotificacionToggleTypes } from '../../types/
  */
 export default function useToggleSuscriptorNotificacion() {
   const toggle = (id: string) => {
-    router.patch(NotificacionToggleActions.toggleSuscriptor(id, NotificacionToggleTypes.activo), {}, {
+    router.patch(CanalNotificacionActions.toggleSuscriptor(id, NotificacionToggleTypes.activo), {}, {
       preserveState: true,
       preserveScroll: true
     })

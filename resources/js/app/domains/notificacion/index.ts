@@ -3,4 +3,3 @@ export { default as CanalNotificacionTable } from './components/CanalNotificacio
 export { default as SuscriptorNotificacionTable } from './components/SuscriptorNotificacionTable'
 export { default as SuscriptorNotificacionForm } from './components/SuscriptorNotificacionForm'
 export { default as CreateSuscriptorModal } from './components/CreateSuscriptorModal'
-export { default as EditSuscriptorModal } from './components/EditSuscriptorModal'

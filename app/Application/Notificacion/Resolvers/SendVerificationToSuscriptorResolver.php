@@ -7,7 +7,7 @@ use App\Domains\Notificacion\Contracts\Events\SendVerificationToSuscriptorEventC
 use App\Domains\Notificacion\Events\SuscriptorCreated;
 
 /**
- * Resuelve la estrategia para el envio de verificacion de correo electronico al suscriptor
+ * Resuelve la estrategia para el envio de verificacion de canal al suscriptor
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  * @since 1.0.0
  * @version 1.0.0

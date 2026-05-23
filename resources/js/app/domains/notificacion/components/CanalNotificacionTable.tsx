@@ -1,8 +1,9 @@
 import SimpleTable from '@/app/shared/components/table/simple/SimpleTable'
 import ModelToggle from '@/app/shared/components/table/actions/ModelToggle'
-import { NotificacionToggleActions, NotificacionToggleTypes, type CanalNotificacion } from '../types/notificacion.types'
+import { CanalNotificacionActions, NotificacionToggleTypes, type CanalNotificacion } from '../types/notificacion.types'
 import type { SimpleTableColumn } from '@/app/shared/types/components'
 import { useMemo } from 'react'
+import {CanalesColumns} from "@/app/domains/notificacion/components/columns/canales.columns";
 
 /**
  * Tabla de canales de notificación (solo toggle activo).
@@ -21,21 +22,7 @@ export default function CanalNotificacionTable({
   data: CanalNotificacion[]
   pageSize?: number
 }) {
-  const columns = useMemo((): SimpleTableColumn<CanalNotificacion>[] => [
-    { key: 'id', label: 'ID' },
-    { key: 'nombre', label: 'Nombre' },
-    {
-      key: 'activo',
-      label: 'Activo',
-      className: 'w-40',
-      render: (row: CanalNotificacion) => (
-        <ModelToggle
-          active={row.activo}
-          route={NotificacionToggleActions.toggleCanal(row.id, NotificacionToggleTypes.activo)}
-        />
-      )
-    }
-  ], [])
+  const columns = useMemo((): SimpleTableColumn<CanalNotificacion>[] => CanalesColumns(), [])
 
   return (
     <SimpleTable

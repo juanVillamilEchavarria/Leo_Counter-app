@@ -8,14 +8,12 @@ use Illuminate\Support\Facades\Bus;
 
 use App\Application\Notificacion\Commands\ToggleCanalCommand;
 use App\Application\Notificacion\Commands\StoreSuscriptorCommand;
-use App\Application\Notificacion\Commands\UpdateSuscriptorCommand;
 use App\Application\Notificacion\Commands\DestroySuscriptorCommand;
 use App\Application\Notificacion\Commands\ToggleSuscriptorCommand;
 use App\Application\Notificacion\Commands\VerifySuscriptorCommand;
 
 use App\Application\Notificacion\Commands\Handlers\ToggleCanalHandler;
 use App\Application\Notificacion\Commands\Handlers\StoreSuscriptorHandler;
-use App\Application\Notificacion\Commands\Handlers\UpdateSuscriptorHandler;
 use App\Application\Notificacion\Commands\Handlers\DestroySuscriptorHandler;
 use App\Application\Notificacion\Commands\Handlers\ToggleSuscriptorHandler;
 use App\Application\Notificacion\Commands\Handlers\VerifySuscriptorHandler;
@@ -32,7 +30,6 @@ class NotificacionBusProvider extends ServiceProvider
         Bus::map([
             ToggleCanalCommand::class => ToggleCanalHandler::class,
             StoreSuscriptorCommand::class => StoreSuscriptorHandler::class,
-            UpdateSuscriptorCommand::class => UpdateSuscriptorHandler::class,
             DestroySuscriptorCommand::class => DestroySuscriptorHandler::class,
             ToggleSuscriptorCommand::class => ToggleSuscriptorHandler::class,
             VerifySuscriptorCommand::class => VerifySuscriptorHandler::class,

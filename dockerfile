@@ -1,4 +1,4 @@
-# 
+#
 FROM php:8.5-apache
 
 # 1. Argumentos para manejar permisos
@@ -56,14 +56,19 @@ RUN useradd -G www-data,root -u $UID -d /home/$USER $USER \
     && mkdir -p /home/$USER/.composer && \
     chown -R $USER:$USER /home/$USER
 
-# 7. Directorio de trabajo
-WORKDIR /var/www/html
 
-# 8. Copiar archivos de dependencias primero
+
+# 8. Directorio de trabajo
+WORKDIR /var/www/html
+# 8.2. Copiar archivos de dependencias primero
 COPY composer.json composer.lock* package.json package-lock.json* ./
+
+# 8.5 Crear entrypoint como root ANTES de cambiar de usuario
+USER root
 
 # 9. Cambiar a nuestro nuevo usuario para instalar cosas
 USER $USER
+
 
 # Instalar dependencias (Sin scripts para que no falle si falta algo de código)
 RUN composer install --no-scripts --no-autoloader --no-dev || true
@@ -74,6 +79,7 @@ COPY --chown=$USER:$USER . .
 
 # Finalizar autoload de composer
 RUN composer dump-autoload --optimize
+
 
 # Exponer puerto
 EXPOSE 80

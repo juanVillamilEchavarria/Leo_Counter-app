@@ -10,10 +10,15 @@ import type {SuscriptorNotificacionFormOptions} from "@/app/domains/notificacion
  * @since 1.0.0
  * @version 1.0.0
  */
-export default function useSuscriptorNotificacionFormOptionsApi() :UseQueryResult<SuscriptorNotificacionFormOptions> {
+export default function useSuscriptorNotificacionFormOptionsApi({
+    enabled
+}:{
+    enabled: boolean
+}) :UseQueryResult<SuscriptorNotificacionFormOptions> {
     return useQuery({
         queryKey: ['suscriptor-notificaciones-form-options'],
         queryFn: () => suscriptorNotificacionFormOptionsApi(),
+        enabled: enabled,
         staleTime: 0,
         retry : false,
 

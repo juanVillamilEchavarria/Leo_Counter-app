@@ -19,5 +19,5 @@ interface CategoriaQueryExecutorContract{
      * @param ListCategoriesQueryContract $query El query que contiene los parámetros de la consulta.
      * @return CollectionContract Resultado de la consulta, que puede ser una colección de categorías
      */
-    public function execute(ListCategoriesQueryContract $query): CollectionContract;
+    public function execute(ListCategoriesQueryContract $query): CollectionContract ;
 }

@@ -3,9 +3,9 @@
 namespace App\Providers\Notificacion;
 
 use Illuminate\Support\ServiceProvider;
-use App\Domains\Notificacion\Contracts\Repositories\CanalNotificacionRepositoryContract;
+use App\Domains\Notificacion\Contracts\Repositories\CanalRepositoryContract;
 use App\Infrastructure\Notificacion\Persistence\Repositories\Eloquent\EloquentCanalRepository;
-use App\Domains\Notificacion\Contracts\Repositories\SuscriptorNotificacionRepositoryContract;
+use App\Domains\Notificacion\Contracts\Repositories\SuscriptorRepositoryContract;
 use App\Infrastructure\Notificacion\Persistence\Repositories\Eloquent\EloquentSuscriptorRepository;
 use App\Domains\Notificacion\Contracts\SuscriptorUniquenessCheckerContract;
 use App\Infrastructure\Notificacion\Persistence\Checkers\Eloquent\EloquentSuscriptorUniquenessChecker;
@@ -18,8 +18,8 @@ class NotificacionServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->app->singleton(CanalNotificacionRepositoryContract::class, EloquentCanalRepository::class);
-        $this->app->singleton(SuscriptorNotificacionRepositoryContract::class, EloquentSuscriptorRepository::class);
+        $this->app->singleton(CanalRepositoryContract::class, EloquentCanalRepository::class);
+        $this->app->singleton(SuscriptorRepositoryContract::class, EloquentSuscriptorRepository::class);
         $this->app->singleton(SuscriptorUniquenessCheckerContract::class, EloquentSuscriptorUniquenessChecker::class);
 
         $this->app->singleton(CanalNotificacionQueryExecutorContract::class, EloquentListAllCanalesNotificacionExecutor::class);

@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Notificacion\Framework\Laravel\Broadcasting;
 
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Broadcasting\PrivateChannel;
 
