@@ -22,26 +22,9 @@ final class SuscriptorController extends Controller
 {
     public function __construct( private Dispatcher $dispatcher){}
 
-    public function store(StoreAndUpdateSuscriptorRequest $request)
+    public function toggle(string $id, string $attribute)
     {
-        $this->dispatcher->dispatch(new StoreSuscriptorCommand(
-            user_id: $request->user_id,
-            canal_notificacion_id: $request->canal_notificacion_id
-        ));
-        Inertia::flash('success', 'Suscripción creada');
-        return redirect()->route('configuracion.index');
-    }
-
-    public function destroy(string $id)
-    {
-        $this->dispatcher->dispatch(new DestroySuscriptorCommand(id: $id));
-        Inertia::flash('success', 'Suscripción eliminada');
-        return redirect()->route('configuracion.index');
-    }
-
-    public function toggleActive(string $id)
-    {
-        $this->dispatcher->dispatch(new ToggleSuscriptorCommand(id: $id));
+        $this->dispatcher->dispatch(new ToggleSuscriptorCommand(id: $id, attribute: $attribute));
         Inertia::flash('success', 'Suscripción actualizada');
         return redirect()->route('configuracion.index');
     }
