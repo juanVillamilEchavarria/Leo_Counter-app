@@ -7,6 +7,7 @@ use App\Application\Notificacion\Queries\ListAllSuscriptoresWithDetailsQuery;
 use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 use App\Shared\Application\Contracts\Bus\QueryBus;
+use App\Application\Notificacion\Queries\ListSuscriptoresFormOptionsQuery;
 
 class ConfiguracionController extends Controller
 {
@@ -15,6 +16,7 @@ class ConfiguracionController extends Controller
     )
     {
     }
+
 
     public function index(){
         $suscriptores = $this->queryBus->ask(new ListAllSuscriptoresWithDetailsQuery());

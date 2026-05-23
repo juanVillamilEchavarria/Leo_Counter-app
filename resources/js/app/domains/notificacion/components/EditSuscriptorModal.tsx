@@ -1,7 +1,9 @@
 import Modal from '@/app/shared/components/modal/Modal'
 import SuscriptorNotificacionForm from './SuscriptorNotificacionForm'
-import useSuscriptorNotificacion from '../hooks/useSuscriptorNotificacion'
+import useSuscriptorNotificacion from '../hooks/requests/useSuscriptorNotificacion'
 import type { SuscriptorNotificacion, SuscriptorNotificacionFormOptions } from '../types/notificacion.types'
+import useSuscriptorNotificacionFormOptionsApi
+    from "@/app/domains/notificacion/hooks/api/useSuscriptorNotificacionFormOptionsApi";
 
 /**
  * Modal para editar un suscriptor de notificación.
@@ -19,21 +21,22 @@ import type { SuscriptorNotificacion, SuscriptorNotificacionFormOptions } from '
 export default function EditSuscriptorModal({
   open,
   onClose,
-  options,
-  data
+  data,
+  options
 }: {
   open: boolean
   onClose: () => void
-  options: SuscriptorNotificacionFormOptions
   data: SuscriptorNotificacion | null
+  options : SuscriptorNotificacionFormOptions
 }) {
+    if(!open)return
   const { form, handleSubmit } = useSuscriptorNotificacion({
     method: 'put',
     id: data?.id ?? null,
     data: data ?? undefined
   })
 
-  return (
+    return (
     <Modal open={open} onClose={onClose} title="Editar suscriptor">
       <SuscriptorNotificacionForm
         data={form.data}

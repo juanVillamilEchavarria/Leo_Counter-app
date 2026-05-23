@@ -7,7 +7,8 @@ use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListCuentaFor
 use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListCategoriaForFormContract;
 use App\Infrastructure\Cuenta\Queries\Executors\Eloquent\EloquentListCuentaForFormQueryExecutor;
 use App\Infrastructure\Categoria\Queries\Executors\Eloquent\EloquentListCategoriaForFormQueryExecutor;
-
+use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListUsuarioForFormContract;
+use App\Infrastructure\Usuario\Queries\Executors\Eloquent\EloquentListUsuarioForFormQueryExecutor;
 class ListForFormProvider extends ServiceProvider
 {
     /**
@@ -17,6 +18,7 @@ class ListForFormProvider extends ServiceProvider
     {
         $this->app->singleton(ListCuentaForFormContract::class, EloquentListCuentaForFormQueryExecutor::class);
         $this->app->singleton(ListCategoriaForFormContract::class, EloquentListCategoriaForFormQueryExecutor::class);
+        $this->app->singleton(ListUsuarioForFormContract::class, EloquentListUsuarioForFormQueryExecutor::class);
     }
 
     /**

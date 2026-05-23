@@ -21,7 +21,8 @@ class SuscriptorNotificacion extends Model
         'id',
         'user_id',
         'canal_notificacion_id',
-        'activo'
+        'activo',
+        'verified_at'
     ];
 
     public function user()

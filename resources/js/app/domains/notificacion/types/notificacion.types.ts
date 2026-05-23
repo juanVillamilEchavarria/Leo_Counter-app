@@ -1,6 +1,8 @@
 import { type FormCommonProps } from "@/app/shared/types/components"
 import { useRoute } from "ziggy-js"
 import type { User } from "../../user"
+import type {UsuarioForForm} from "@/app/domains/user/types/user.types";
+import {createSuscriptorApi, updateSuscriptorApi, deleteSuscriptorApi} from "@/app/domains/notificacion/api/notificacion.api";
 
 /**
  * Tipos, rutas y acciones para el dominio Notificación (frontend)
@@ -18,11 +20,12 @@ const route = useRoute()
 /**
  * Modelo de Canal de Notificación
  */
-export type CanalNotificacion = {
+export interface CanalNotificacion {
   id: string
   nombre: string
   activo: boolean
 }
+
 
 /**
  * Modelo de Suscriptor de Notificación
@@ -35,6 +38,15 @@ export type SuscriptorNotificacion = {
   user?: { id: string; name: string }
   canal?: CanalNotificacion
 }
+/** Posibles acciones de la API de suscriptores */
+export type SuscriptorApiAction = 'create' | 'update' | 'delete';
+
+/** Mapa de acciones a funciones API */
+export const SuscriptorApiActions = {
+    create: (data: SuscriptorFormData) => createSuscriptorApi(data),
+    update: (id: string, data: Partial<SuscriptorFormData>) => updateSuscriptorApi(id, data),
+    delete: (id: string) => deleteSuscriptorApi(id),
+} as const;
 
 // ─── Form Data ──────────────────────────────────────────────
 
@@ -49,8 +61,8 @@ export type SuscriptorNotificacionFormData = Pick<
 /**
  * Opciones seleccionables del formulario de suscriptor
  */
-export type SuscriptorNotificacionFormOptions = {
-  usuarios: User[]
+export interface SuscriptorNotificacionFormOptions {
+  usuarios: UsuarioForForm[]
   canales: CanalNotificacion[]
 }
 
@@ -88,9 +100,6 @@ export const NotificacionToggleActions = {
   toggleSuscriptor: (id: string, attribute: string) => route('configuracion.notificaciones.suscriptores.toggle', { suscriptor: id, attribute }),
   toggleCanal: (id: string, attribute: string) => route('configuracion.notificaciones.canales.toggle', { canal: id, attribute }),
 } as const
-
-// ─── Props de componentes ───────────────────────────────────
-
 /**
  * Props del formulario de suscriptor.
  * Extiende FormCommonProps (data, setData, errors, submit, processing)
@@ -98,4 +107,12 @@ export const NotificacionToggleActions = {
  */
 export type SuscriptorFormProps = FormCommonProps<SuscriptorNotificacionFormData> & {
   options: SuscriptorNotificacionFormOptions
+}
+
+/**
+ * La data que debe manejar el formulario
+ */
+export interface SuscriptorFormData {
+    user_id: string;
+    canal_notificacion_id: string;
 }

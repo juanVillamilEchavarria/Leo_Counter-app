@@ -9,33 +9,30 @@ import Title from "@/app/shared/components/common/Title";
 
 export default function Index({
    canales ,
-    suscriptores,
-    usuarios 
-}: { 
-      canales?: CanalNotificacion[], 
+    suscriptores
+}: {
+      canales?: CanalNotificacion[],
     suscriptores?: SuscriptorNotificacion[],
-     usuarios?:User[] 
     }) {
   const options = {
-    usuarios: usuarios || [],
     canales: canales || []
   }
 
   return (
     <SectionTransition>
       <ConfiguracionNavBar />
-      
+
       <div className="mt-6">
         <Title
         title="Notificaciones"
         className="text-left text-4xl mb-10"
         />
         <div className="flex flex-col gap-10">
-          <CanalNotificationSection canales={options.canales} />
-        <SuscriptorNotificacionSection suscriptores={suscriptores || []} options={options}/>
+          <CanalNotificationSection canales={canales || []} />
+        <SuscriptorNotificacionSection suscriptores={suscriptores || []} canales={canales || []}/>
 
         </div>
-        
+
 
       </div>
     </SectionTransition>
