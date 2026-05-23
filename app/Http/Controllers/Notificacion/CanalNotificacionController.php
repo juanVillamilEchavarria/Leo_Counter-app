@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Shared\Application\Contracts\Bus\QueryBus;
 use Illuminate\Contracts\Bus\Dispatcher;
 use App\Application\Notificacion\Queries\ListAllCanalesNotificacionQuery;
-use App\Application\Notificacion\Commands\ToggleCanalNotificacionCommand;
+use App\Application\Notificacion\Commands\ToggleCanalCommand;
 use Inertia\Inertia;
 
 final class CanalNotificacionController extends Controller
@@ -15,7 +15,7 @@ final class CanalNotificacionController extends Controller
 
     public function toggleActive(string $id)
     {
-        $this->dispatcher->dispatch(new ToggleCanalNotificacionCommand(id: $id));
+        $this->dispatcher->dispatch(new ToggleCanalCommand(id: $id));
         Inertia::flash('success', 'Canal actualizado');
         return redirect()->route('configuracion.index');
     }

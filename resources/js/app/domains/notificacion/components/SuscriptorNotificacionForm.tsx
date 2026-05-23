@@ -3,6 +3,7 @@ import Button from "@/app/shared/components/common/Button"
 import TransitionMotion from "@/app/shared/components/transitions/TransitionMotion"
 import AlertMessage from "@/app/shared/components/common/AlertMessage"
 import { type SuscriptorFormProps } from "../types/notificacion.types"
+import useSuscriptorNotificacionFormOptionsApi from "../hooks/api/useSuscriptorNotificacionFormOptionsApi"
 
 /**
  * Formulario para crear/editar un Suscriptor de Notificación.
@@ -18,12 +19,12 @@ export default function SuscriptorNotificacionForm({
   setData,
   errors,
   submit,
+  options,
   processing,
-  options
 }: SuscriptorFormProps) {
 
   return (
-  
+
       <form onSubmit={submit} className="formulario-general">
         <legend className="legend mt-5">Información del Suscriptor</legend>
 

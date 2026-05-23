@@ -10,6 +10,13 @@ export type User = {
     updated_at?: string
 }
 
+export interface UsuarioForForm{
+    id: string,
+    name: string,
+    email: string,
+    role: keyof typeof Roles
+}
+
 export const Roles = {
     admin: 'admin',
     member: 'member',

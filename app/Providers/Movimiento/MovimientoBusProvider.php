@@ -27,15 +27,10 @@ class MovimientoBusProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Bus::map(
-            [
-                StoreMovimientoCommand::class => StoreMovimientoHandler::class,
-                UpdateMovimientoCommand::class => UpdateMovimientoHandler::class,
-                DestroyMovimientoCommand::class => DestroyMovimientoHandler::class,
-            ]
-        );
-        Bus::pipeThrough([
-            LaravelTransactionMiddleware::class,
+        Bus::map([
+            StoreMovimientoCommand::class   => [StoreMovimientoHandler::class,   ['middleware' => [LaravelTransactionMiddleware::class]]],
+            UpdateMovimientoCommand::class  => [UpdateMovimientoHandler::class,  ['middleware' => [LaravelTransactionMiddleware::class]]],
+            DestroyMovimientoCommand::class => [DestroyMovimientoHandler::class, ['middleware' => [LaravelTransactionMiddleware::class]]],
         ]);
     }
 }

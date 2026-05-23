@@ -25,8 +25,30 @@ services:
     env_file:
       - .env
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
+  queue-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - USER=juanvillamil
+        - UID=1000
+    image: leo_counter_app
+    container_name: leo_counter_queue
+    restart: unless-stopped
+    command: php artisan queue:work --sleep=3 --tries=3 --max-time=3600
+    volumes:
+      - .:/var/www/html
+      - movimientos_data:/var/www/html/storage/app/data/movimientos
+      - app_storage:/var/www/html/storage
+      - app_logs:/var/www/html/storage/logs
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
 
   db:
     image: mariadb:latest
@@ -41,6 +63,12 @@ services:
       - "3306:3306"
     volumes:
       - mariadb_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mariadb-admin", "ping", "-h", "localhost" ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 15s
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
@@ -61,6 +89,31 @@ services:
       - "1025:1025"   # SMTP
       - "8025:8025"   # Web
     restart: unless-stopped
+  reverb:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - USER=juanvillamil
+        - UID=1000
+    image: leo_counter_app
+    container_name: leo_counter_reverb
+    restart: unless-stopped
+    command: php artisan reverb:start --host=0.0.0.0 --port=8080
+    ports:
+      - "8085:8080"   # Mapea el puerto 8085 del host al 8080 del contenedor (donde escucha Reverb)
+    volumes:
+      - .:/var/www/html
+      - movimientos_data:/var/www/html/storage/app/data/movimientos
+      - app_storage:/var/www/html/storage
+      - app_logs:/var/www/html/storage/logs
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    mem_limit: 256m
+    mem_reservation: 128m
 
 volumes:
   # Archivos de movimientos (PDFs, comprobantes)

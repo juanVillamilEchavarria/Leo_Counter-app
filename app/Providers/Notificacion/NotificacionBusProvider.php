@@ -2,20 +2,23 @@
 
 namespace App\Providers\Notificacion;
 
+use App\Shared\Infrastructure\Framework\Laravel\Middlewares\LaravelTransactionMiddleware;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Bus;
 
-use App\Application\Notificacion\Commands\ToggleCanalNotificacionCommand;
-use App\Application\Notificacion\Commands\StoreSuscriptorNotificacionCommand;
-use App\Application\Notificacion\Commands\UpdateSuscriptorNotificacionCommand;
-use App\Application\Notificacion\Commands\DestroySuscriptorNotificacionCommand;
-use App\Application\Notificacion\Commands\ToggleSuscriptorNotificacionCommand;
+use App\Application\Notificacion\Commands\ToggleCanalCommand;
+use App\Application\Notificacion\Commands\StoreSuscriptorCommand;
+use App\Application\Notificacion\Commands\UpdateSuscriptorCommand;
+use App\Application\Notificacion\Commands\DestroySuscriptorCommand;
+use App\Application\Notificacion\Commands\ToggleSuscriptorCommand;
+use App\Application\Notificacion\Commands\VerifySuscriptorCommand;
 
-use App\Application\Notificacion\Commands\Handlers\ToggleCanalNotificacionHandler;
-use App\Application\Notificacion\Commands\Handlers\StoreSuscriptorNotificacionHandler;
-use App\Application\Notificacion\Commands\Handlers\UpdateSuscriptorNotificacionHandler;
-use App\Application\Notificacion\Commands\Handlers\DestroySuscriptorNotificacionHandler;
-use App\Application\Notificacion\Commands\Handlers\ToggleSuscriptorNotificacionHandler;
+use App\Application\Notificacion\Commands\Handlers\ToggleCanalHandler;
+use App\Application\Notificacion\Commands\Handlers\StoreSuscriptorHandler;
+use App\Application\Notificacion\Commands\Handlers\UpdateSuscriptorHandler;
+use App\Application\Notificacion\Commands\Handlers\DestroySuscriptorHandler;
+use App\Application\Notificacion\Commands\Handlers\ToggleSuscriptorHandler;
+use App\Application\Notificacion\Commands\Handlers\VerifySuscriptorHandler;
 
 class NotificacionBusProvider extends ServiceProvider
 {
@@ -27,11 +30,12 @@ class NotificacionBusProvider extends ServiceProvider
     public function boot(): void
     {
         Bus::map([
-            ToggleCanalNotificacionCommand::class => ToggleCanalNotificacionHandler::class,
-            StoreSuscriptorNotificacionCommand::class => StoreSuscriptorNotificacionHandler::class,
-            UpdateSuscriptorNotificacionCommand::class => UpdateSuscriptorNotificacionHandler::class,
-            DestroySuscriptorNotificacionCommand::class => DestroySuscriptorNotificacionHandler::class,
-            ToggleSuscriptorNotificacionCommand::class => ToggleSuscriptorNotificacionHandler::class,
+            ToggleCanalCommand::class => ToggleCanalHandler::class,
+            StoreSuscriptorCommand::class => StoreSuscriptorHandler::class,
+            UpdateSuscriptorCommand::class => UpdateSuscriptorHandler::class,
+            DestroySuscriptorCommand::class => DestroySuscriptorHandler::class,
+            ToggleSuscriptorCommand::class => ToggleSuscriptorHandler::class,
+            VerifySuscriptorCommand::class => VerifySuscriptorHandler::class,
         ]);
     }
 }
