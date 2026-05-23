@@ -3,7 +3,7 @@
 namespace App\Application\Notificacion\Commands\Handlers;
 
 use App\Application\Notificacion\Commands\StoreSuscriptorCommand;
-use App\Domains\Notificacion\Contracts\Repositories\SuscriptorNotificacionRepositoryContract;
+use App\Domains\Notificacion\Contracts\Repositories\SuscriptorRepositoryContract;
 use App\Domains\Notificacion\Contracts\SuscriptorUniquenessCheckerContract;
 use App\Domains\Notificacion\ValueObjects\SuscriptorId;
 use App\Domains\Usuario\Contracts\Repositories\UsuarioRepositoryContract;
@@ -18,11 +18,11 @@ use DateTimeImmutable;
 final readonly class StoreSuscriptorHandler
 {
     public function __construct(
-        private SuscriptorNotificacionRepositoryContract $repository,
-        private UsuarioRepositoryContract $usuarioRepositoryContract,
+        private SuscriptorRepositoryContract        $repository,
+        private UsuarioRepositoryContract           $usuarioRepositoryContract,
         private SuscriptorUniquenessCheckerContract $checker,
-        private EventBus $eventBus,
-        private IdGeneratorContract $idGenerator
+        private EventBus                            $eventBus,
+        private IdGeneratorContract                 $idGenerator
     ){}
 
     public function __invoke(StoreSuscriptorCommand $command) : string

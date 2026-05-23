@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('canales_notificacion', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('nombre')->unique();
-            $table->boolean('active')->default(true);
+            $table->boolean('active')->default(false);
             $table->timestamps();
         });
     }

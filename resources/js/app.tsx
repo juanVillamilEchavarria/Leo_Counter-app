@@ -1,5 +1,4 @@
 import "./bootstrap";
-import "./echo";
 import "../css/app.css"
 import AppLayout from "./Layouts/AppLayout";
 import { createInertiaApp } from '@inertiajs/react'
@@ -10,6 +9,8 @@ import { configureEcho } from '@laravel/echo-react';
 configureEcho({
     broadcaster: 'reverb',
 });
+
+
 
 restorePageMode()
 createInertiaApp({

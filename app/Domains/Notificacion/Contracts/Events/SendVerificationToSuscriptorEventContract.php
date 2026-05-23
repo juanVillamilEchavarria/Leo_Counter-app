@@ -16,6 +16,11 @@ use App\Domains\Usuario\Aggregates\Usuario;
  */
 interface SendVerificationToSuscriptorEventContract extends EventContract
 {
+    /**
+     * Indica si el suscriptor necesita una verificación.
+     * @return bool
+     */
+    public function needsVerification(): bool;
     public function getSuscriptor(): Suscriptor;
     public function getUsuario(): Usuario;
 

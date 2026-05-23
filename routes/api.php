@@ -19,6 +19,6 @@ Route::middleware(['auth'])->group( function () {
     Route::get('reportes/form-options', [ReporteApiController::class, 'formOptions'])->name('api.reportes.form-options');
     Route::get('home', [HomeApiController::class, 'index'])->name('api.home.index');
     Route::get('notificacion/suscriptores/form-options', [SuscriptorApiController::class, 'formOptions'])->name('api.notificaciones.suscriptor.form-options');
-    Route::apiResource('notificacion/suscriptores', SuscriptorApiController::class)->only(['store', 'update', 'destroy']);
+    Route::apiResource('notificacion/suscriptores', SuscriptorApiController::class)->only(['store', 'destroy']);
 
 });

@@ -156,6 +156,7 @@ abstract class EloquentRepository {
         if(!in_array($attribute, $this->toggeable)){
             throw new InvalidToggleAttributeException("El atributo $attribute no es togggeable");
         }
+
         if(!is_bool($model->$attribute)){
             throw new InvalidToggleAttributeException("El atributo $attribute no es booleano");
         }

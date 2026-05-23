@@ -91,7 +91,7 @@ Route::middleware('auth')->group( function () {
     Route::get('/configuracion', [ConfiguracionController::class, 'index'])->name('configuracion.index');
     Route::resource('canal-notificaciones', CanalNotificacionController::class)->names('configuracion.notificaciones.canales');
     Route::patch('canal-notificaciones/{canal}/{attribute}/toggle', [CanalNotificacionController::class, 'toggle'])->name('configuracion.notificaciones.canales.toggle');
-    Route::resource('suscriptor-notificaciones', SuscriptorController::class)->names('configuracion.notificaciones.suscriptores');
+    Route::resource('suscriptor-notificaciones', SuscriptorController::class)->names('configuracion.notificaciones.suscriptores')->except(['edit','update']);
     Route::patch('suscriptor-notificaciones/{suscriptor}/{attribute}/toggle', [SuscriptorController::class, 'toggle'])->name('configuracion.notificaciones.suscriptores.toggle');
     // SOFT DELETES
     Route::get('/configuracion/deleted/{domain}', [SoftDeleteRecordsController::class, 'index'])->name('configuracion.deleted.index');

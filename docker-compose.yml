@@ -46,6 +46,32 @@ services:
       - app_logs:/var/www/html/storage/logs
     env_file:
       - .env
+    environment:
+      - REVERB_HOST=reverb
+      - REVERB_PORT=8081
+    depends_on:
+      db:
+        condition: service_healthy
+  reverb:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - USER=juanvillamil
+        - UID=1000
+    image: leo_counter_app
+    container_name: leo_counter_reverb
+    restart: unless-stopped
+    command: php artisan reverb:start --port=8081 --host=0.0.0.0
+    ports:
+      - "8085:8081"  # Mapea el puerto 8081 del contenedor al 8085 del host
+    volumes:
+      - .:/var/www/html
+      - movimientos_data:/var/www/html/storage/app/data/movimientos
+      - app_storage:/var/www/html/storage
+      - app_logs:/var/www/html/storage/logs
+    env_file:
+      - .env
     depends_on:
       db:
         condition: service_healthy
@@ -89,31 +115,6 @@ services:
       - "1025:1025"   # SMTP
       - "8025:8025"   # Web
     restart: unless-stopped
-  reverb:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        - USER=juanvillamil
-        - UID=1000
-    image: leo_counter_app
-    container_name: leo_counter_reverb
-    restart: unless-stopped
-    command: php artisan reverb:start --host=0.0.0.0 --port=8080
-    ports:
-      - "8085:8080"   # Mapea el puerto 8085 del host al 8080 del contenedor (donde escucha Reverb)
-    volumes:
-      - .:/var/www/html
-      - movimientos_data:/var/www/html/storage/app/data/movimientos
-      - app_storage:/var/www/html/storage
-      - app_logs:/var/www/html/storage/logs
-    env_file:
-      - .env
-    depends_on:
-      db:
-        condition: service_healthy
-    mem_limit: 256m
-    mem_reservation: 128m
 
 volumes:
   # Archivos de movimientos (PDFs, comprobantes)

@@ -28,7 +28,7 @@ final readonly class Suscriptor implements AggregateModelContract
         private CanalId      $canalNotificacionId,
         private UsuarioId    $userId,
         private ?Date        $verified_at = null,
-        private bool         $activo = true
+        private bool $active = true
     ) {
     }
 
@@ -51,7 +51,24 @@ final readonly class Suscriptor implements AggregateModelContract
             canalNotificacionId: $canalNotificacionId,
             userId: $userId,
             verified_at: null,
-            activo: true
+            active: true
+        );
+    }
+    public function updateData(
+        SuscriptorId                        $id,
+        UsuarioId                           $userId,
+        CanalId                             $canalNotificacionId,
+        SuscriptorUniquenessCheckerContract $checker
+    ): self{
+        if ($checker->exists($userId->getValue(), $canalNotificacionId->getValue())) {
+            throw new CannotStoreSuscriptorNotificacionException(message: 'El usuario ya está suscrito a este canal.');
+        }
+        return new self(
+            id: $id,
+            canalNotificacionId: $canalNotificacionId,
+            userId: $userId,
+            verified_at: $this->verified_at,
+            active: $this->active
         );
     }
 
@@ -70,7 +87,7 @@ final readonly class Suscriptor implements AggregateModelContract
             canalNotificacionId: $canalNotificacionId,
             userId: $userId,
             verified_at: $verified_at,
-            activo: $activo
+            active: $activo
         );
     }
 
@@ -84,7 +101,7 @@ final readonly class Suscriptor implements AggregateModelContract
             canalNotificacionId: $this->canalNotificacionId,
             userId: $this->userId,
             verified_at: $this->verified_at,
-            activo: !$this->activo
+            active: !$this->active
         );
     }
 
@@ -99,7 +116,7 @@ final readonly class Suscriptor implements AggregateModelContract
             canalNotificacionId: $this->canalNotificacionId,
             userId: $this->userId,
             verified_at: new Date(new DateTimeImmutable()),
-            activo: $this->activo
+            active: $this->active
         );
     }
 
@@ -125,8 +142,8 @@ final readonly class Suscriptor implements AggregateModelContract
         return $this->verified_at;
     }
 
-    public function isActivo(): bool
+    public function isActive(): bool
     {
-        return $this->activo;
+        return $this->active;
     }
 }

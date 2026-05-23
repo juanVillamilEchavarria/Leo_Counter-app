@@ -6,7 +6,6 @@ use App\Domains\Notificacion\Aggregates\Canal;
 use App\Domains\Notificacion\ValueObjects\CanalId;
 use App\Shared\Domain\Contracts\AggregateModelIdContract;
 use App\Shared\Domain\Contracts\AggregateModelContract;
-
 /**
  * Contrato del repositorio de escritura para Canales de Notificación.
  * Solo expone las operaciones necesarias: findById y update (y toggle si es requerido por infraestructura).
@@ -16,13 +15,13 @@ use App\Shared\Domain\Contracts\AggregateModelContract;
  * @since 1.0.0
  * @version 1.0.0
  */
-interface CanalNotificacionRepositoryContract
+interface CanalRepositoryContract
 {
     /**
      * @param CanalId $id
      * @return Canal|null
      */
-    public function findById(AggregateModelIdContract $id): ?Canal;
+    public function findById(AggregateModelIdContract $id): ?AggregateModelContract;
 
     /**
      * @param Canal $canal

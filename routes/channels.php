@@ -1,14 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Broadcast;
-use App\Domains\Notificacion\Contracts\Repositories\SuscriptorNotificacionRepositoryContract;
-use App\Domains\Notificacion\ValueObjects\SuscriptorId;
+
+use App\Models\Notificacion\SuscriptorNotificacion;
 
 Broadcast::channel('suscriptor.{suscriptorId}', function ($user, $suscriptorId) {
-    $repository = app(SuscriptorNotificacionRepositoryContract::class);
-    $suscriptor = $repository->findById(new SuscriptorId($suscriptorId));
-    return $suscriptor && $user->id === $suscriptor->getUserId()->getValue();
+    $suscriptor = SuscriptorNotificacion::find($suscriptorId);
+    return $suscriptor !== null;
 });
+
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });

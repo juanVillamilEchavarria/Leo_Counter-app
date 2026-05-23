@@ -3,16 +3,16 @@
 namespace App\Infrastructure\Notificacion\Persistence\Repositories\Eloquent;
 
 use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentRepository;
-use App\Domains\Notificacion\Contracts\Repositories\CanalNotificacionRepositoryContract;
+use App\Domains\Notificacion\Contracts\Repositories\CanalRepositoryContract;
 use App\Models\Notificacion\CanalNotificacion as CanalModel;
 use App\Domains\Notificacion\Aggregates\Canal as CanalAggregate;
 use App\Domains\Notificacion\ValueObjects\CanalId;
 use App\Shared\Domain\Contracts\AggregateModelContract;
 use Illuminate\Database\Eloquent\Model;
 
-final class EloquentCanalRepository extends EloquentRepository implements CanalNotificacionRepositoryContract
+final  class EloquentCanalRepository extends EloquentRepository implements CanalRepositoryContract
 {
-    protected array $toggeable = ['activo'];
+    protected array $toggeable = ['active'];
 
     protected function mapAggregateToAttributes(object $aggregate): array
     {
@@ -21,7 +21,7 @@ final class EloquentCanalRepository extends EloquentRepository implements CanalN
         return [
             'id' => $aggregate->getId()->getValue(),
             'nombre' => $aggregate->getNombre(),
-            'activo' => $aggregate->isActive()
+            'active' => $aggregate->isActive()
         ];
     }
 
@@ -30,7 +30,7 @@ final class EloquentCanalRepository extends EloquentRepository implements CanalN
         return CanalAggregate::reconstitute(
             id: new CanalId($model->id),
             nombre: $model->nombre,
-            activo: $model->activo ?? true
+            activo: $model->active ?? true
         );
     }
 

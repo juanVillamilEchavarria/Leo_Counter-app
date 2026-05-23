@@ -14,13 +14,13 @@ class CanalNotificacion extends Model
     protected $keyType = 'string';
 
     protected $casts = [
-        'activo' => 'boolean'
+        'active' => 'boolean'
     ];
 
     protected $fillable = [
         'id',
         'nombre',
-        'activo'
+        'active'
     ];
 
     public function suscriptores()

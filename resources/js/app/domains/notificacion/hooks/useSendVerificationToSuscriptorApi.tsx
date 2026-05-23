@@ -1,34 +1,33 @@
 import React from 'react'
 import { useSuscriptorMutation } from './api/useSuscriptorMutation'
-import type { InertiaForm } from 'node_modules/@inertiajs/react/types/useForm'
-import type { SuscriptorApiResponse } from '../api/notificacion.api'
 import type { AxiosError } from 'axios'
 import type { ApiErrorResponse } from '@/app/shared/types/api'
 import { toastHelper } from '@/app/shared/helpers'
+import type {SuscriptorApiAction, SuscriptorFormData} from "@/app/domains/notificacion";
 
-interface UseCreateSuscriptorApiReturn {
+interface useSendVerificationToSuscriptorApiReturn {
     setVerifyingId: React.Dispatch<React.SetStateAction<string | null>>,
     setVerified: React.Dispatch<React.SetStateAction<boolean>>,
-    form: InertiaForm<SuscriptorApiResponse>,
+    action?: SuscriptorApiAction
 }
 
-export default function useCreateSuscriptorApi({
+export default function useSendVerificationToSuscriptorApi({
     setVerifyingId,
     setVerified,
-    form,
-}: UseCreateSuscriptorApiReturn) {
+    action = 'create',
+}: useSendVerificationToSuscriptorApiReturn) {
   return useSuscriptorMutation({
-    action: 'create',
+    action: action,
     onSuccess: (data) => {
       if (data && 'id' in data) {
         setVerifyingId(data.id)
-        const channel = window.Echo.private(`suscriptor.${data.id}`)
-
-        channel.listen('.SuscriptorVerified', () => {
-          setVerified(true)
-          channel.stopListening('.SuscriptorVerified')
-          window.Echo.leaveChannel(`suscriptor.${data.id}`)
-        })
+          const channel = window.Echo.private(`suscriptor.${data.id}`);
+          channel.listen('.SuscriptorVerified', () => {
+              setVerified(true);
+              channel.stopListening('.SuscriptorVerified');
+              window.Echo.leaveChannel(`suscriptor.${data.id}`);
+              toastHelper.success('Suscriptor verificado')
+          });
         toastHelper.success('Suscriptor creado. Esperando verificación...')
       }
     },
@@ -37,7 +36,7 @@ export default function useCreateSuscriptorApi({
       if (typeof err === 'object' && 'response' in err && err.response?.data?.errors) {
           console.log(err.response);
       }else{
-          toastHelper.error('Error al crear suscriptor. Por favor, revisa los errores e intenta de nuevo.')
+          if(err.response?.data.message) toastHelper.error(err.response.data.message)
       }
 
     },

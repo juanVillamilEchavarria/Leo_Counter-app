@@ -2,7 +2,7 @@
 
 namespace App\Application\Notificacion\Commands\Handlers;
 
-use App\Domains\Notificacion\Contracts\Repositories\SuscriptorNotificacionRepositoryContract;
+use App\Domains\Notificacion\Contracts\Repositories\SuscriptorRepositoryContract;
 use App\Domains\Notificacion\ValueObjects\SuscriptorId;
 use App\Application\Notificacion\Commands\VerifySuscriptorCommand;
 use App\Domains\Notificacion\Events\SuscriptorVerified;
@@ -12,8 +12,8 @@ use App\Shared\Domain\ValueObjects\Date;
 final readonly class VerifySuscriptorHandler
 {
     public function __construct(
-        private SuscriptorNotificacionRepositoryContract $repository,
-        private EventBus $eventBus
+        private SuscriptorRepositoryContract $repository,
+        private EventBus                     $eventBus
     )
     {
     }

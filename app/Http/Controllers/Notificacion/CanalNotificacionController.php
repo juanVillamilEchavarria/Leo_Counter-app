@@ -13,9 +13,9 @@ final class CanalNotificacionController extends Controller
 {
     public function __construct( private Dispatcher $dispatcher){}
 
-    public function toggleActive(string $id)
+    public function toggle(string $id, string $atribute)
     {
-        $this->dispatcher->dispatch(new ToggleCanalCommand(id: $id));
+        $this->dispatcher->dispatch(new ToggleCanalCommand(id: $id, attribute: $atribute));
         Inertia::flash('success', 'Canal actualizado');
         return redirect()->route('configuracion.index');
     }

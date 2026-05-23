@@ -14,7 +14,7 @@ use App\Shared\Domain\Contracts\RepositoryContract;
  * @since 1.0.0
  * @version 1.0.0
  */
-interface SuscriptorNotificacionRepositoryContract extends RepositoryContract
+interface SuscriptorRepositoryContract extends RepositoryContract
 {
 
 }
