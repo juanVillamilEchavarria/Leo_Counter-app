@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Application\Usuario\Commands\Handlers;
-
 use App\Application\Usuario\Commands\UpdatePublicDataCommand;
 use App\Application\Usuario\Exceptions\CannotFindUsuarioException;
 use App\Domains\Usuario\Contracts\Repositories\UsuarioRepositoryContract;
 use App\Domains\Usuario\ValueObjects\UsuarioId;
 use App\Shared\Domain\ValueObjects\Email;
+use App\Domains\Usuario\Contracts\Checkers\UsuarioCanUpdatePublicDataCheckerContract;
 
 /**
  * Handler del comando de actualización de datos públicos del usuario.
@@ -20,6 +20,7 @@ final readonly class UpdatePublicDataHandler
 {
     public function __construct(
         private UsuarioRepositoryContract $repository,
+        private UsuarioCanUpdatePublicDataCheckerContract $checker
     ) {
     }
 
@@ -31,11 +32,12 @@ final readonly class UpdatePublicDataHandler
             throw new CannotFindUsuarioException();
         }
 
-        $usuario = $usuario->updatePublicData(
+        $new = $usuario->updatePublicData(
             name: $command->name,
             email: new Email($command->email),
+            checker: $this->checker
         );
 
-        return $this->repository->update($usuario);
+        return $this->repository->update($new);
     }
 }

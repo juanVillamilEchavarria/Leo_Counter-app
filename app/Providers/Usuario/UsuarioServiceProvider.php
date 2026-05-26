@@ -2,9 +2,12 @@
 
 namespace App\Providers\Usuario;
 
+use App\Application\Usuario\Contracts\Queries\Executors\UsuarioQueryExecutorContract;
+use App\Application\Usuario\Queries\Handlers\ListAllUsuariosHandler;
 use App\Domains\Usuario\Contracts\Repositories\UsuarioRepositoryContract;
 use App\Domains\Usuario\Contracts\Services\PasswordHasherContract;
 use App\Infrastructure\Usuario\Persistence\Repositories\Eloquent\EloquentUsuarioRepository;
+use App\Infrastructure\Usuario\Queries\Executors\Eloquent\EloquentListAllUsuariosExecutor;
 use App\Infrastructure\Usuario\Services\LaravelPasswordHasher;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,5 +25,8 @@ final class UsuarioServiceProvider extends ServiceProvider
     {
         $this->app->singleton(UsuarioRepositoryContract::class, EloquentUsuarioRepository::class);
         $this->app->singleton(PasswordHasherContract::class, LaravelPasswordHasher::class);
+        $this->app->when(ListAllUsuariosHandler::class)
+            ->needs(UsuarioQueryExecutorContract::class)
+            ->give(EloquentListAllUsuariosExecutor::class);
     }
 }

@@ -1,4 +1,3 @@
-import SectionDescription from "@/app/shared/components/common/SectionDescription"
 import CreateButtonSection from "@/app/shared/components/common/CreateButtonSection"
 import CrudButton from "@/app/shared/components/common/CrudButton"
 import DeleteModal from "@/app/shared/components/modal/DeleteModal"
@@ -6,10 +5,8 @@ import SuscriptorNotificacionTable from './SuscriptorNotificacionTable'
 import CreateSuscriptorModal from './CreateSuscriptorModal'
 import { useModalItem } from "@/app/shared/hooks"
 import SecundaryDescription from "@/app/shared/components/common/SecundaryDescription";
-
-import type { CanalNotificacion, SuscriptorNotificacion, SuscriptorNotificacionFormOptions } from '../types/notificacion.types'
-import type { UsuarioForForm } from "../../user/types/user.types"
-
+import { type SuscriptorTableData } from "../types/notificacion.types"
+import useDeleteSuscriptor from "../hooks/useDeleteSuscriptor"
 /**
  * Section de Suscriptores de Notificación.
  * contiene la tabla, la descripcion y sus modales
@@ -24,9 +21,13 @@ export default function SuscriptorNotificacionSection(
     {
         suscriptores,
     }: {
-        suscriptores: SuscriptorNotificacion[]
+        suscriptores: SuscriptorTableData[]
     }) {
-    const { item, modal, open, close, setItem } = useModalItem<SuscriptorNotificacion>()
+    const { item, modal, open, close, setItem } = useModalItem<SuscriptorTableData>()
+    const {handleDelete} = useDeleteSuscriptor({
+        id: item?.id || ''
+    })
+    
 
   return <div>
       {/* ── Suscriptores de Notificación ── */}
@@ -55,6 +56,21 @@ export default function SuscriptorNotificacionSection(
           open={modal === 'create'}
           onClose={close}
       />
+      <DeleteModal
+          open={modal === 'delete' && item !== null}
+          onClose={close}
+          title="Suscriptor"
+          paragraph={
+            <div>
+                <p>¿Estás seguro de eliminar La suscripcion de <span className="font-bold">{item?.usuario}</span> para el canal <span className="font-bold">{item?.canal}</span> ?</p>
+            </div>
+          }
+          onSubmit={(e) => {
+                handleDelete(e)
+                close()
+          }}
+      >
+      </DeleteModal>
 
   </div>
 }

@@ -13,6 +13,7 @@ use App\Application\Movimiento\EventHandlers\MovimientoDeletedFinancialImpactEve
 use App\Application\Movimiento\EventHandlers\UploadAttachmentsWhenMovimientoIsWrittenEventHandler;
 use App\Application\Movimiento\EventHandlers\UpdateAttachmentsWhenMovimientoIsWrittenEventHandler;
 use App\Application\Movimiento\EventHandlers\DestroyAttachmentsWhenMovimientoIsWrittenEventHandler;
+use App\Infrastructure\Reporte\EventHandlers\Laravel\LaravelInvalidateReportCacheWhenMovimientoIsWritten;
 
 class EventHandlersProvider extends ServiceProvider
 {
@@ -31,13 +32,16 @@ class EventHandlersProvider extends ServiceProvider
     {
        Event::listen(MovimientoCreated::class, MovimientoCreatedFinancialImpactEventHandler::class);
         Event::listen(MovimientoCreated::class, UploadAttachmentsWhenMovimientoIsWrittenEventHandler::class);
+       Event::listen(MovimientoCreated::class, LaravelInvalidateReportCacheWhenMovimientoIsWritten::class);
 
         Event::listen(MovimientoUpdated::class, MovimientoUpdatedFinancialImpactEventHandler::class);
         Event::listen(MovimientoUpdated::class, UploadAttachmentsWhenMovimientoIsWrittenEventHandler::class);
+       Event::listen(MovimientoUpdated::class, LaravelInvalidateReportCacheWhenMovimientoIsWritten::class);
         Event::listen(MovimientoUpdated::class, UpdateAttachmentsWhenMovimientoIsWrittenEventHandler::class);
         Event::listen(MovimientoUpdated::class, DestroyAttachmentsWhenMovimientoIsWrittenEventHandler::class);
 
         Event::listen(MovimientoDeleted::class, MovimientoDeletedFinancialImpactEventHandler::class);
         Event::listen(MovimientoDeleted::class, DestroyAttachmentsWhenMovimientoIsWrittenEventHandler::class);
+       Event::listen(MovimientoDeleted::class, LaravelInvalidateReportCacheWhenMovimientoIsWritten::class);
     }
 }

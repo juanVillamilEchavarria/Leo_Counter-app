@@ -3,16 +3,15 @@ import InputFillable from "@/app/shared/components/form/InputFillable"
 import Button from "@/app/shared/components/common/Button"
 import TransitionMotion from "@/app/shared/components/transitions/TransitionMotion"
 import AlertMessage from "@/app/shared/components/common/AlertMessage"
-import useUsuario from "../hooks/useUsuario"
+import useChangePassword from "../hooks/useChangePassword"
 
 export default function PasswordForm() {
-  const { form, handleSubmit } = useUsuario({
+  const { form, handleSubmit } = useChangePassword({
     data: {
         current_password: '',
         password: '',
         password_confirmation: ''
-    },
-    action: 'cambiarPassword'
+    }
   });
 
   return (

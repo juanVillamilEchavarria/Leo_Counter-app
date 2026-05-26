@@ -18,6 +18,7 @@
 /public/storage
 /storage/*.key
 /storage/pail
+/storage/redis
 /vendor
 docker/mysql/**/**
 Homestead.json

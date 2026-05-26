@@ -76,6 +76,7 @@ return [
     App\Providers\TipoCuenta\TipoCuentaRepositoryProvider::class,
     App\Providers\TipoMovimiento\TipoMovimientoRepositoryProvider::class,
     App\Providers\TipoPresupuesto\TipoPresupuestoRepositoryProvider::class,
+    App\Providers\Usuario\UsuarioCheckersProvider::class,
     App\Providers\Usuario\UsuarioBusProvider::class,
     App\Providers\Usuario\UsuarioServiceProvider::class,
 ];

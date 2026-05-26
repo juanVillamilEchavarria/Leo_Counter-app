@@ -11,6 +11,7 @@ use App\Shared\Domain\Contracts\AggregateModelContract;
 use App\Shared\Domain\Contracts\AggregateModelIdContract;
 use App\Shared\Domain\ValueObjects\Email;
 use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentRepository;
+use App\Shared\ValueObjects\Password;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -42,7 +43,7 @@ final class EloquentUsuarioRepository extends EloquentRepository implements Usua
             'id' => $aggregate->getId()->getValue(),
             'name' => $aggregate->getName(),
             'email' => $aggregate->getEmail()->__toString(),
-            'password' => $aggregate->getPassword(),
+            'password' => $aggregate->getPassword()->__toString(),
             'role' => $aggregate->getRole()->value,
         ];
     }
@@ -59,36 +60,9 @@ final class EloquentUsuarioRepository extends EloquentRepository implements Usua
             id: new UsuarioId($model->id),
             name: $model->name,
             email: new Email($model->email),
-            password: $model->password,
+            password:  Password::fromHash($model->password),
             role: Roles::try($model->role),
         );
     }
 
-    /**
-     * Busca un usuario por su identidad y lo reconstituye como agregado.
-     *
-     * @param AggregateModelIdContract $id Identificador del usuario.
-     * @return UsuarioAggregate|null
-     */
-    public function findById(AggregateModelIdContract $id): ?UsuarioAggregate
-    {
-        $usuario = parent::findById($id);
-
-        assert($usuario instanceof UsuarioAggregate || $usuario === null);
-
-        return $usuario;
-    }
-
-    /**
-     * Persiste los cambios de un usuario existente.
-     *
-     * @param AggregateModelContract $usuario Agregado Usuario.
-     * @return bool
-     */
-    public function update(AggregateModelContract $usuario): bool
-    {
-        assert($usuario instanceof UsuarioAggregate, 'El agregado debe ser una instancia de UsuarioAggregate');
-
-        return parent::update($usuario);
-    }
 }

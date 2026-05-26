@@ -2,9 +2,15 @@
 
 namespace App\Providers\Usuario;
 
-use App\Application\Usuario\Commands\ChangePasswordCommand;
-use App\Application\Usuario\Commands\Handlers\ChangePasswordHandler;
+use App\Application\Usuario\Commands\ChangeUserPasswordCommand;
+use App\Application\Usuario\Commands\ChangeOwnPasswordCommand;
+use App\Application\Usuario\Commands\DestroyUsuarioCommand;
+use App\Application\Usuario\Commands\Handlers\ChangeUserPasswordHandler;
+use App\Application\Usuario\Commands\Handlers\ChangeOwnPasswordHandler;
+use App\Application\Usuario\Commands\Handlers\DestroyUsuarioHandler;
+use App\Application\Usuario\Commands\Handlers\StoreUsuarioHandler;
 use App\Application\Usuario\Commands\Handlers\UpdatePublicDataHandler;
+use App\Application\Usuario\Commands\StoreUsuarioCommand;
 use App\Application\Usuario\Commands\UpdatePublicDataCommand;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\ServiceProvider;
@@ -26,8 +32,11 @@ final class UsuarioBusProvider extends ServiceProvider
     public function boot(): void
     {
         Bus::map([
+            StoreUsuarioCommand::class => StoreUsuarioHandler::class,
             UpdatePublicDataCommand::class => UpdatePublicDataHandler::class,
-            ChangePasswordCommand::class => ChangePasswordHandler::class,
+            ChangeOwnPasswordCommand::class => ChangeOwnPasswordHandler::class,
+            ChangeUserPasswordCommand::class => ChangeUserPasswordHandler::class,
+            DestroyUsuarioCommand::class => DestroyUsuarioHandler::class,
         ]);
     }
 }

@@ -33,9 +33,10 @@ onError
      * Función que maneja la mutación de suscriptores de notificación
      * @param data
      */
-    const mutationFn = async (data: SuscriptorFormData) => {
+    const mutationFn = async (data?: SuscriptorFormData) => {
         switch (action) {
             case 'create':
+                if (!data) throw new Error('Data requerida para crear');
                 return SuscriptorApiActions.create(data);
             case 'delete':
                 if (!id) throw new Error('ID requerido para eliminar');
@@ -56,7 +57,7 @@ onError
     const { getErrorMessage, getValidationErrors } = useMutationApiErrors(mutation as any);
 
     return {
-        mutate: async (formData: SuscriptorFormData) => {
+        mutate: async (formData?: SuscriptorFormData) => {
             try {
                 return await mutation.mutateAsync(formData);
             } catch {}

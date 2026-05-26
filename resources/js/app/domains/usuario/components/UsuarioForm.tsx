@@ -4,19 +4,17 @@ import Button from "@/app/shared/components/common/Button"
 import TransitionMotion from "@/app/shared/components/transitions/TransitionMotion"
 import AlertMessage from "@/app/shared/components/common/AlertMessage"
 import { useMessageRedirect } from "@/app/shared/hooks"
-import useUsuario from "../hooks/useUsuario"
 import { type UsuarioData } from "../types/usuario.types"
+import useProfile from "../hooks/useProfile"
 
 interface UsuarioFormProps {
-  data?: UsuarioData
+  data: UsuarioData
 }
 
 export default function UsuarioForm({ data }: UsuarioFormProps) {
       const { props } = useMessageRedirect()
-      const usuario = data ?? props.auth?.user
-      const { form, handleSubmit } = useUsuario({
-        data: usuario,
-        action: 'updateDatosPublicos'
+      const { form, handleSubmit } = useProfile({
+        data: data,
       });
 
   return (
@@ -43,10 +41,17 @@ export default function UsuarioForm({ data }: UsuarioFormProps) {
                  placeholder="Mi E-mail"
                  value={form.data.email}
                  onChange={(e)=>form.setData('email', e.target.value)}
+                disabled={form.data.isSuscribed}
+                className={`${form.data.isSuscribed ? 'bg-muted cursor-not-allowed' : ''}`}
+                icon={form.data.isSuscribed ? 'fa-solid fa-lock text-2xl' : ''}
                 />
                 <TransitionMotion active={form.errors.email} initial={{opacity:0, y: -20}}>
                     <AlertMessage type="error" message={form.errors.email} />
                 </TransitionMotion>
+
+                {form.data.isSuscribed && (
+                    <p className="text-red-400 dark:text-red-200 mt-2 text-xs">No puedes actualizar este campo, ya que estas suscrito a un canal de notificacion que lo implementa, si quieres actualizarlo, dile al administrador que te quite de la lista de suscritos a notificaciones</p>
+                )}
             </div>
             <div className="w-[20%] mt-5 mx-auto">
                 <Button variant="secondary" type="submit">Guardar</Button>
