@@ -9,11 +9,42 @@ use App\Infrastructure\Reporte\Queries\Executors\Movimientos\Eloquent\EloquentKP
 use App\Infrastructure\Reporte\Queries\Executors\Movimientos\Eloquent\EloquentIngresosVsGastosQueryExecutor;
 use App\Infrastructure\Reporte\Queries\Executors\Movimientos\Eloquent\EloquentCategoryDistributionQueryExecutor;
 use App\Infrastructure\Reporte\Queries\Executors\Movimientos\Eloquent\EloquentBalanceNetoQueryExecutor;
+use App\Infrastructure\Reporte\Queries\Executors\Movimientos\Cache\CachedKPIsQueryExecutor;
+use App\Infrastructure\Reporte\Queries\Executors\Movimientos\Cache\CachedIngresosVsGastosQueryExecutor;
+use App\Infrastructure\Reporte\Queries\Executors\Movimientos\Cache\CachedBalanceNetoQueryExecutor;
+use App\Infrastructure\Reporte\Queries\Executors\Movimientos\Cache\CachedCategoryDistributionQueryExecutor;
+use App\Infrastructure\Reporte\Resolvers\Queries\Handlers\MovimientoQueryRelationResolver;
 
 final class MovimientoQueryExecutorServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        // Bind decorated executors for caching
+        $this->app->bind(EloquentKPIsQueryExecutor::class, function ($app) {
+            return new CachedKPIsQueryExecutor(
+                new EloquentKPIsQueryExecutor($app->make(MovimientoQueryRelationResolver::class))
+            );
+        });
+
+        $this->app->bind(EloquentIngresosVsGastosQueryExecutor::class, function ($app) {
+            return new CachedIngresosVsGastosQueryExecutor(
+                new EloquentIngresosVsGastosQueryExecutor($app->make(MovimientoQueryRelationResolver::class))
+            );
+        });
+
+        $this->app->bind(EloquentBalanceNetoQueryExecutor::class, function ($app) {
+            return new CachedBalanceNetoQueryExecutor(
+                new EloquentBalanceNetoQueryExecutor($app->make(MovimientoQueryRelationResolver::class))
+            );
+        });
+
+        $this->app->bind(EloquentCategoryDistributionQueryExecutor::class, function ($app) {
+            return new CachedCategoryDistributionQueryExecutor(
+                new EloquentCategoryDistributionQueryExecutor($app->make(MovimientoQueryRelationResolver::class))
+            );
+        });
+
+        // Register tag (including other executors left as-is)
         $this->app->tag([
             EloquentGastosQueryExecutor::class,
             EloquentIngresosQueryExecutor::class,

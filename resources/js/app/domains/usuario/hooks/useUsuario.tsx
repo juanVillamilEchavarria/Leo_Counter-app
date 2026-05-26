@@ -1,30 +1,38 @@
 import { useFormNormal } from "@/app/shared/hooks"
-import { type InertiaFormProps } from "@inertiajs/react";
-import { type UsuarioData, type UsuarioPasswordData, UsuarioActions } from "../types/usuario.types";
+import { type Usuario, UsuarioActions } from "../types/usuario.types"
+import { FormMethods } from "@/app/shared/types/components"
 
-interface UseUsuarioProps<T extends UsuarioData | UsuarioPasswordData> {
-    data?: T
-    action?: keyof typeof UsuarioActions
-}
-
-interface UseUsuarioReturn<T extends UsuarioData | UsuarioPasswordData> {
-    form: InertiaFormProps<T>,
-    submit: ReturnType<typeof useFormNormal>['submit'],
-    handleSubmit: ReturnType<typeof useFormNormal>['handleSubmit']
-}
-
-export default function useUsuario(props: { data: UsuarioPasswordData | undefined, action: 'cambiarPassword' }): UseUsuarioReturn<UsuarioPasswordData>;
-export default function useUsuario(props: { data: UsuarioData | undefined, action: 'updateDatosPublicos' }): UseUsuarioReturn<UsuarioData>;
-
+/**
+ * Hook personalizado para manejar la lógica CRUD de usuarios en administración.
+ * Resuelve la acción correspondiente según el método HTTP y el ID del usuario,
+ * utilizando las acciones definidas en UsuarioActions.
+ * @param method - Método HTTP del formulario ('post', 'put', 'delete').
+ * @param id - ID del usuario (requerido para put y delete).
+ * @param data - Datos iniciales del formulario.
+ * @returns form, submit, handleSubmit para el manejo del formulario.
+ */
 export default function useUsuario({
-    data,
-    action = 'updateDatosPublicos'
-}: UseUsuarioProps<UsuarioData | UsuarioPasswordData>) {
-  const { form, submit, handleSubmit } = useFormNormal({
-    action: UsuarioActions[action],
-    method: 'put',
-    data
-  });
+  method = 'post',
+  id,
+  data
+}: {
+  method?: keyof typeof FormMethods,
+  id?: string | null
+  data?: Usuario
+}) {
+  const action = (() => {
+    const current = UsuarioActions[method]
+    if (typeof current === 'function') {
+      return id ? current(id) : ''
+    }
+    return current
+  })()
+
+  const { form, handleSubmit, submit } = useFormNormal<Usuario>({
+    action,
+    data: data ?? {} as Usuario,
+    method
+  })
 
   return {
     form,

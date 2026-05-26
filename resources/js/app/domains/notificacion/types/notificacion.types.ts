@@ -39,8 +39,8 @@ export interface SuscriptorNotificacion {
 
 export interface SuscriptorTableData extends SuscriptorNotificacion{
     verified: boolean
-    user?: { id: string; name: string }
-    canal?: CanalNotificacion
+    usuario?: string
+    canal?: string
 }
 /** Posibles acciones de la API de suscriptores */
 export type SuscriptorApiAction = 'create' | 'delete';

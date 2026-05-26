@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers\Usuario;
 
-use App\Application\Usuario\Commands\ChangePasswordCommand;
+use App\Application\Usuario\Commands\ChangeUserPasswordCommand;
+use App\Application\Usuario\Commands\DestroyUsuarioCommand;
+use App\Application\Usuario\Commands\StoreUsuarioCommand;
 use App\Application\Usuario\Commands\UpdatePublicDataCommand;
 use App\Application\Usuario\Queries\GetUsuarioForEditQuery;
+use App\Application\Usuario\Queries\ListAllUsuariosQuery;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Usuario\ChangePasswordRequest;
-use App\Http\Requests\Usuario\UpdatePublicDataRequest;
+use App\Http\Requests\Usuario\ChangeUserPasswordRequest;
+use App\Http\Requests\Usuario\StoreUsuarioRequest;
+use App\Http\Requests\Usuario\UpdateUsuarioRequest;
 use App\Shared\Application\Contracts\Bus\QueryBus;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Inertia\Inertia;
 
 /**
- * Controlador de presentación para la edición del usuario autenticado.
+ * Controlador resource para la administración de usuarios.
  *
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  * @package App\Http\Controllers\Usuario
@@ -28,48 +32,81 @@ final class UsuarioController extends Controller
     ) {
     }
 
-    public function edit()
+    public function index()
     {
-        $usuario = $this->queryBus->ask(new GetUsuarioForEditQuery(
-            id: (string) auth()->id(),
+        $usuarios = $this->queryBus->ask(new ListAllUsuariosQuery());
+
+        return Inertia::render('Usuarios/Index', [
+            'title' => 'Usuarios',
+            'NoRegistros' => $usuarios->count(),
+            'usuarios' => $usuarios,
+        ]);
+    }
+
+    public function create()
+    {
+        return Inertia::render('Usuarios/Create', [
+            'title' => 'Crear Usuario',
+            'NoRegistros' => $this->queryBus->ask(new ListAllUsuariosQuery())->count(),
+        ]);
+    }
+
+    public function store(StoreUsuarioRequest $request)
+    {
+        $this->dispatcher->dispatch(new StoreUsuarioCommand(
+            name: $request->name,
+            email: $request->email,
+            password: $request->password,
         ));
 
-        return Inertia::render('Usuario/Perfil', [
-            'title' => 'Usuario',
+        Inertia::flash('success', 'Usuario creado con exito');
+        return redirect()->route('usuarios.index');
+    }
+
+    public function show(string $id)
+    {
+        return redirect()->route('usuarios.edit', $id);
+    }
+
+    public function edit(string $id)
+    {
+        $usuario = $this->queryBus->ask(new GetUsuarioForEditQuery(id: $id));
+
+        return Inertia::render('Usuarios/Edit', [
+            'title' => 'Editar Usuario',
+            'NoRegistros' => $this->queryBus->ask(new ListAllUsuariosQuery())->count(),
             'data' => $usuario,
         ]);
     }
 
-    public function updateDatosPublicos(UpdatePublicDataRequest $request)
+    public function update(UpdateUsuarioRequest $request, string $id)
     {
         $this->dispatcher->dispatch(new UpdatePublicDataCommand(
-            id: (string) auth()->id(),
+            id: $id,
             name: $request->name,
             email: $request->email,
         ));
 
-        Inertia::flash('success', 'Usuario actualizado correctamente');
-
-        return redirect()->route('usuario.edit');
+        Inertia::flash('success', 'Usuario actualizado con exito');
+        return redirect()->route('usuarios.index');
     }
 
-    public function editPassword()
+    public function changePassword(ChangeUserPasswordRequest $request, string $id)
     {
-        return Inertia::render('Usuario/Password', [
-            'title' => 'Contraseña',
-        ]);
-    }
-
-    public function cambiarPassword(ChangePasswordRequest $request)
-    {
-        $this->dispatcher->dispatch(new ChangePasswordCommand(
-            id: (string) auth()->id(),
-            currentPassword: $request->current_password,
+        $this->dispatcher->dispatch(new ChangeUserPasswordCommand(
+            id: $id,
             newPassword: $request->password,
         ));
 
-        Inertia::flash('success', 'Contraseña actualizada correctamente');
+        Inertia::flash('success', 'Contraseña actualizada con exito');
+        return redirect()->route('usuarios.index');
+    }
 
-        return redirect()->route('usuario.password.edit');
+    public function destroy(string $id)
+    {
+        $this->dispatcher->dispatch(new DestroyUsuarioCommand(id: $id));
+
+        Inertia::flash('success', 'Usuario eliminado con exito');
+        return redirect()->route('usuarios.index');
     }
 }

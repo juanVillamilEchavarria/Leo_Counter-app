@@ -2,20 +2,20 @@ import { useRoute } from "ziggy-js"
 const route = useRoute()
 export const NavItemCurrentStyles = 'bg-gray-100 dark:bg-cyan-500/20'
 export const NavItemStyles = `
-        flex 
+        flex
         px-3
         h-15
         justify-start
         gap-3
         items-center
-        w-full 
+        w-full
         rounded-2xl
         rounded-l-none
         transition-colors
         transition-transform
-        ease-in-out 
-        duration-400 
-        text-gray-900 
+        ease-in-out
+        duration-400
+        text-gray-900
     `;
 export const NavItemHoverStyles = `
         hover:bg-gray-100
@@ -143,17 +143,19 @@ export const NavItems: NavItemConfig[] = [
         ],
     },
     {
-        key: 'historial',
-        title: 'Historial',
-        icon: 'fa-solid fa-history fa-lg',
-        routeName: 'historial.*',
-        href: route('historial.index'),
+        key: 'usuarios',
+        title: 'Usuarios',
+        icon: 'fa-solid fa-users-gear fa-lg',
+        routeName: 'usuarios.*',
+        roles: ['admin'],
+        href: route('usuarios.index'),
     },
     {
         key: 'configuracion',
         title: 'Configuracion',
         icon: 'fa-solid fa-gear fa-lg',
         routeName: 'configuracion.index',
+        roles: ['admin'],
         href: route('configuracion.index'),
     }
 

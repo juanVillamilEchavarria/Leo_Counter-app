@@ -15,7 +15,6 @@ export default function Index({
 }:{
   cuentas : {data: Cuenta[]}
 }) {
-  console.log(cuentas.data)
   const {item, modal, open, close, setItem}= useModalItem<Cuenta>()
   const {handleSubmit}= useCuenta({method: 'delete', id: item?.id})
 
@@ -29,7 +28,7 @@ export default function Index({
             icon="fa-solid fa-wallet "
             />
         </CreateButtonSection>
-        
+
         <div className="overflow-scroll scrollbar-modern">
             <CuentaTable data={cuentas.data} onSelect={(item, modalType)=>open(item,modalType)} />
         </div>

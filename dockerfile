@@ -37,6 +37,8 @@ RUN docker-php-ext-configure gd \
         bcmath \
         zip
 
+RUN pecl install redis && docker-php-ext-enable redis
+
 # 3. Instalar Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs
@@ -72,7 +74,7 @@ USER $USER
 
 # Instalar dependencias (Sin scripts para que no falle si falta algo de código)
 RUN composer install --no-scripts --no-autoloader --no-dev || true
-RUN npm install || true
+RUN npm install -g pnpm && pnpm install || true
 
 # 10. Copiar el resto del código como el usuario creado
 COPY --chown=$USER:$USER . .

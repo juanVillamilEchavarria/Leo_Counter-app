@@ -18,6 +18,7 @@ final class UsuarioEditDTO extends DTO
         public string $id,
         public string $name,
         public string $email,
+        public bool $isSuscribed
     ) {
     }
 }

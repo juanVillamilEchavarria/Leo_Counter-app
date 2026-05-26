@@ -24,13 +24,6 @@ use App\Http\Controllers\Notificacion\SuscriptorController;
 use App\Http\Controllers\Notificacion\SuscriptorVerificationController;
 use Illuminate\Support\Facades\Mail;
 
-Route::get('/test-email', function () {
-    Mail::raw('¡Hola desde Leo Counter!', function ($message) {
-        $message->to('juan@example.com')
-            ->subject('Prueba de envío');
-    });
-    return 'Correo enviado';
-});
 // GUEST ROUTES
 Route::get('/', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.store');
@@ -80,21 +73,26 @@ Route::middleware('auth')->group( function () {
     Route::post('presupuestos/mes-actual/{presupuesto}/duplicate', [PresupuestoMesActualController::class, 'duplicate'])->name('presupuestosMesActual.duplicate');
     // PAGOS PENDIENTES
     Route::resource('pagos-pendientes',PagoPendienteController::class)->names('pagosPendientes');
-    Route::get('/historial', [HistorialController::class, 'index'])->name('historial.index');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     // USUARIO
-    Route::get('/usuario', [UsuarioController::class, 'edit'])->name('usuario.edit');
-    Route::put('/usuario', [UsuarioController::class, 'updateDatosPublicos'])->name('usuario.updateDatosPublicos');
-    Route::get('/usuario/password', [UsuarioController::class, 'editPassword'])->name('usuario.password.edit');
-    Route::put('/usuario/password', [UsuarioController::class, 'cambiarPassword'])->name('usuario.password.cambiar');
-    //CONFIGURACION
-    Route::get('/configuracion', [ConfiguracionController::class, 'index'])->name('configuracion.index');
-    Route::resource('canal-notificaciones', CanalNotificacionController::class)->names('configuracion.notificaciones.canales');
-    Route::patch('canal-notificaciones/{canal}/{attribute}/toggle', [CanalNotificacionController::class, 'toggle'])->name('configuracion.notificaciones.canales.toggle');
-    Route::resource('suscriptor-notificaciones', SuscriptorController::class)->names('configuracion.notificaciones.suscriptores')->except(['edit','update']);
-    Route::patch('suscriptor-notificaciones/{suscriptor}/{attribute}/toggle', [SuscriptorController::class, 'toggle'])->name('configuracion.notificaciones.suscriptores.toggle');
-    // SOFT DELETES
-    Route::get('/configuracion/deleted/{domain}', [SoftDeleteRecordsController::class, 'index'])->name('configuracion.deleted.index');
-    Route::put('/configuracion/deleted/{domain}/restore/{id}', [SoftDeleteRecordsController::class, 'restore'])->name('configuracion.deleted.restore');
-    Route::delete('/configuracion/deleted/{domain}/hard-delete/{id}', [SoftDeleteRecordsController::class, 'hardDelete'])->name('configuracion.deleted.hardDelete');
+    Route::get('/profile', [\App\Http\Controllers\Usuario\ProfileController::class, 'index'])->name('profile.index');
+    Route::put('/profile', [\App\Http\Controllers\Usuario\ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile/password', [\App\Http\Controllers\Usuario\PasswordController::class, 'index'])->name('password.index');
+    Route::put('/profile/password', [\App\Http\Controllers\Usuario\PasswordController::class, 'update'])->name('password.update');
+    Route::middleware(\App\Http\Middleware\AdminMiddleware::class)->group( function(){
+        Route::resource('usuarios', UsuarioController::class)->names('usuarios');
+        Route::put('usuarios/{usuario}/password', [UsuarioController::class, 'changePassword'])->name('usuarios.changePassword');
+        //CONFIGURACION
+        Route::get('/configuracion', [ConfiguracionController::class, 'index'])->name('configuracion.index');
+        Route::resource('canal-notificaciones', CanalNotificacionController::class)->names('configuracion.notificaciones.canales');
+        Route::patch('canal-notificaciones/{canal}/{attribute}/toggle', [CanalNotificacionController::class, 'toggle'])->name('configuracion.notificaciones.canales.toggle');
+        Route::resource('suscriptor-notificaciones', SuscriptorController::class)->names('configuracion.notificaciones.suscriptores')->except(['edit','update']);
+        Route::patch('suscriptor-notificaciones/{suscriptor}/{attribute}/toggle', [SuscriptorController::class, 'toggle'])->name('configuracion.notificaciones.suscriptores.toggle');
+        // SOFT DELETES
+        Route::get('/configuracion/deleted/{domain}', [SoftDeleteRecordsController::class, 'index'])->name('configuracion.deleted.index');
+        Route::put('/configuracion/deleted/{domain}/restore/{id}', [SoftDeleteRecordsController::class, 'restore'])->name('configuracion.deleted.restore');
+        Route::delete('/configuracion/deleted/{domain}/hard-delete/{id}', [SoftDeleteRecordsController::class, 'hardDelete'])->name('configuracion.deleted.hardDelete');
+
+    });
+
 });

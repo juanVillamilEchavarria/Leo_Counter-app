@@ -4,6 +4,7 @@ namespace App\Domains\Movimiento\Events;
 
 use App\Domains\Cuenta\Aggregates\Cuenta;
 use App\Domains\Movimiento\Contracts\Events\DestroyAttachmentsForMovimientoEventContract;
+use App\Domains\Movimiento\Contracts\Events\MovimientoEventContract;
 use App\Shared\Domain\ValueObjects\Date;
 use App\Domains\Movimiento\Aggregates\Movimiento;
 
@@ -13,7 +14,7 @@ use App\Domains\Movimiento\Aggregates\Movimiento;
  * @package App\Domains\Movimiento\Events
  * @version 1.0.0
  */
-final readonly class MovimientoDeleted implements DestroyAttachmentsForMovimientoEventContract
+final readonly class MovimientoDeleted implements DestroyAttachmentsForMovimientoEventContract, MovimientoEventContract
 {
     public function __construct(
         private Movimiento $movimiento,

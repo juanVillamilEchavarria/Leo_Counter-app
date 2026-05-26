@@ -1,6 +1,6 @@
 import { Link } from "@inertiajs/react"
 import { useLogout } from "../../auth"
-import { UsuarioRoutes } from "../../usuario"
+import { ProfileRoutes } from "../../usuario/types/usuario.types"
 export default function SelfOptionsCard() {
     const {form, handleSubmit} = useLogout()
   return (
@@ -21,7 +21,7 @@ export default function SelfOptionsCard() {
     >
         <div className="border-b border-border">
             <Link
-            href={UsuarioRoutes.edit}
+            href={ProfileRoutes.index}
             className="
                 text-foreground
                 text-sm

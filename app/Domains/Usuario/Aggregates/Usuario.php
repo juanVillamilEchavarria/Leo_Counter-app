@@ -2,13 +2,15 @@
 
 namespace App\Domains\Usuario\Aggregates;
 
+use App\Domains\Usuario\Contracts\Checkers\UsuarioCanUpdatePublicDataCheckerContract;
 use App\Domains\Usuario\Contracts\Services\PasswordHasherContract;
 use App\Domains\Usuario\Enums\Roles;
+use App\Domains\Usuario\Exceptions\CannotUpdateUserDataRelatedToANotificationChannel;
 use App\Domains\Usuario\Exceptions\WrongPasswordException;
 use App\Domains\Usuario\ValueObjects\UsuarioId;
 use App\Shared\Domain\Contracts\AggregateModelContract;
 use App\Shared\Domain\ValueObjects\Email;
-use DateTimeInterface;
+use App\Shared\ValueObjects\Password;
 use InvalidArgumentException;
 
 /**
@@ -28,7 +30,7 @@ final readonly class Usuario implements AggregateModelContract
         private UsuarioId $id,
         private string    $name,
         private Email     $email,
-        private string    $password,
+        private Password  $password,
         private Roles     $role,
     ) {
     }
@@ -39,7 +41,7 @@ final readonly class Usuario implements AggregateModelContract
      * @param UsuarioId $id Identificador del usuario.
      * @param string $name Nombre del usuario.
      * @param Email $email Correo electrónico del usuario.
-     * @param string $password Hash de contraseña persistido.
+     * @param Password $password Hash de contraseña persistido.
      * @param Roles $role Rol del usuario.
      * @return self
      */
@@ -47,7 +49,7 @@ final readonly class Usuario implements AggregateModelContract
         UsuarioId $id,
         string    $name,
         Email     $email,
-        string    $password,
+        Password  $password,
         Roles     $role,
     ): self {
         return new self(
@@ -60,20 +62,51 @@ final readonly class Usuario implements AggregateModelContract
     }
 
     /**
+     * Crea un nuevo usuario member desde los datos del caso de uso administrativo.
+     *
+     * @param UsuarioId $id Identificador del usuario.
+     * @param string $name Nombre del usuario.
+     * @param Email $email Correo electrónico del usuario.
+     * @param Password $password Contraseña hasheada mediante Value Object.
+     * @return self
+     */
+    public static function create(
+        UsuarioId $id,
+        string $name,
+        Email $email,
+        Password $password,
+    ): self {
+        return new self(
+            id: $id,
+            name: trim($name),
+            email: $email,
+            password: $password,
+            role: Roles::MEMBER,
+        );
+    }
+
+    /**
      * Actualiza los datos públicos del usuario.
      *
      * @param string $name Nombre público.
      * @param Email $email Correo electrónico.
      * @return self
      */
-    public function updatePublicData(string $name, Email $email): self
+    public function updatePublicData(
+        string $name,
+        Email $email,
+        UsuarioCanUpdatePublicDataCheckerContract $checker
+    ): self
     {
         $name = trim($name);
-
         if ($name === '') {
             throw new InvalidArgumentException('El nombre del usuario no puede estar vacío.');
         }
-
+        if($this->email->__toString() !== $email->__toString()){
+            if(!$checker->userCanUpdateHisPublicDataRelatedToANotificationChannel($this->id)){
+                throw new CannotUpdateUserDataRelatedToANotificationChannel();
+            }
+        }
 
         return new self(
             id: $this->id,
@@ -88,25 +121,40 @@ final readonly class Usuario implements AggregateModelContract
      * Cambia la contraseña del usuario verificando primero la contraseña actual.
      *
      * @param string $currentPassword Contraseña actual plana.
-     * @param string $newPassword Nueva contraseña plana.
+     * @param Password $newPassword Nueva contraseña plana.
      * @param PasswordHasherContract $hasher Servicio de hash.
      * @return self
      */
-    public function changePassword(string $currentPassword, string $newPassword, PasswordHasherContract $hasher): self
+    public function changeOwnPassword(string $currentPassword, Password $newPassword, PasswordHasherContract $hasher): self
     {
-        if (!$hasher->check($currentPassword, $this->password)) {
+        if (!$hasher->check($currentPassword, $this->password->__toString())) {
             throw new WrongPasswordException();
         }
 
-        if (strlen($newPassword) < self::PASSWORD_MIN_LENGTH) {
-            throw new InvalidArgumentException('La contraseña debe tener al menos 8 caracteres.');
-        }
 
         return new self(
             id: $this->id,
             name: $this->name,
             email: $this->email,
-            password: $hasher->make($newPassword),
+            password: $newPassword,
+            role: $this->role,
+        );
+    }
+
+    /**
+     * Cambia la contraseña de un usuario por acción administrativa.
+     *
+     * @param Password $newPassword Nueva contraseña ya normalizada por el Value Object.
+     * @param PasswordHasherContract|null $hasher Servicio opcional para mantener compatibilidad de caso de uso.
+     * @return self
+     */
+    public function changePassword(Password $newPassword, ?PasswordHasherContract $hasher = null): self
+    {
+        return new self(
+            id: $this->id,
+            name: $this->name,
+            email: $this->email,
+            password: $newPassword,
             role: $this->role,
         );
     }
@@ -126,7 +174,7 @@ final readonly class Usuario implements AggregateModelContract
         return $this->email;
     }
 
-    public function getPassword(): string
+    public function getPassword(): Password
     {
         return $this->password;
     }

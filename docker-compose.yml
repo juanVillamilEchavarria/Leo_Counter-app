@@ -24,9 +24,14 @@ services:
       - app_logs:/var/www/html/storage/logs
     env_file:
       - .env
+    networks:
+      - leo_network
     depends_on:
       db:
         condition: service_healthy
+      redis:
+        condition: service_healthy
+
 
   queue-worker:
     build:
@@ -46,11 +51,15 @@ services:
       - app_logs:/var/www/html/storage/logs
     env_file:
       - .env
+    networks:
+      - leo_network
     environment:
       - REVERB_HOST=reverb
       - REVERB_PORT=8081
     depends_on:
       db:
+        condition: service_healthy
+      redis:
         condition: service_healthy
   reverb:
     build:
@@ -72,9 +81,33 @@ services:
       - app_logs:/var/www/html/storage/logs
     env_file:
       - .env
+    networks:
+      - leo_network
     depends_on:
       db:
         condition: service_healthy
+      redis:
+        condition: service_healthy
+  redis:
+    image: redis:alpine
+    container_name: leo_counter_redis
+    restart: unless-stopped
+    command: >
+      redis-server
+      --maxmemory 256mb
+      --maxmemory-policy allkeys-lru
+      --save 900 1
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+    networks:
+      - leo_network
 
   db:
     image: mariadb:latest
@@ -95,6 +128,8 @@ services:
       timeout: 3s
       retries: 10
       start_period: 15s
+    networks:
+      - leo_network
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
@@ -108,6 +143,8 @@ services:
       PMA_PASSWORD: ${DB_PASSWORD}
     depends_on:
       - db
+    networks:
+      - leo_network
   mailhog:
     image: mailhog/mailhog
     container_name: mailhog
@@ -115,6 +152,8 @@ services:
       - "1025:1025"   # SMTP
       - "8025:8025"   # Web
     restart: unless-stopped
+    networks:
+      - leo_network
 
 volumes:
   # Archivos de movimientos (PDFs, comprobantes)
@@ -148,6 +187,13 @@ volumes:
       type: none
       o: bind
       device: ../Leo_Counter_Docker/docker/mysql/data
+  # Cache con redis
+  redis_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./storage/redis
 
 networks:
   leo_network:
