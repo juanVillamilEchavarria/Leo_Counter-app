@@ -41,6 +41,31 @@ final readonly class  Date{
     }
 
     /**
+     * Añade un numero de semanas a la fecha
+     * @param string $weeks
+     * @return self
+     * @throws \Exception
+     */
+    public function addWeeks(string $weeks = '1'): self{
+        return new self (
+            date: $this->date->add(new \DateInterval('P' . $weeks . 'W'))
+        );
+    }
+
+    /**
+     * Añade un numero de años a la fecha
+     * @param string $years
+     * @return self
+     * @throws \Exception
+     */
+
+    public function addYears(string $years = '1'): self{
+        return new self (
+            date: $this->date->add(new \DateInterval('P' . $years . 'Y'))
+        );
+    }
+
+    /**
      * Suma un numero de dias a la fecha
      * @param string $days - Cantidad de dias a sumar
      * @return self - fecha resultante

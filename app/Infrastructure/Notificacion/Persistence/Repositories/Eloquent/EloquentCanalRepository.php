@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Notificacion\Persistence\Repositories\Eloquent;
 
+use App\Models\Notificacion\CanalNotificacion;
 use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentRepository;
 use App\Domains\Notificacion\Contracts\Repositories\CanalRepositoryContract;
 use App\Models\Notificacion\CanalNotificacion as CanalModel;
@@ -25,6 +26,10 @@ final  class EloquentCanalRepository extends EloquentRepository implements Canal
         ];
     }
 
+    /**
+     * @param Model $model
+     * @return CanalAggregate
+     */
     protected function mapDatabaseRecordToAggregate(Model $model): AggregateModelContract
     {
         return CanalAggregate::reconstitute(
@@ -32,6 +37,11 @@ final  class EloquentCanalRepository extends EloquentRepository implements Canal
             nombre: $model->nombre,
             activo: $model->active ?? true
         );
+    }
+    public function findByName(string $name): ?CanalAggregate
+    {
+        $model = CanalNotificacion::where('nombre', $name)->first();
+        return $model ? $this->mapDatabaseRecordToAggregate($model) : null;
     }
 
     public function __construct()

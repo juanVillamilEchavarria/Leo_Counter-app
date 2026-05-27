@@ -3,6 +3,7 @@
 namespace App\Application\Movimiento\EventHandlers;
 use App\Application\Movimiento\Resolvers\ApplyTransactionEffectForCuentaResolver;
 use App\Domains\Cuenta\Contracts\Repositories\CuentaRepositoryContract;
+use App\Domains\Movimiento\Contracts\Events\FinancialMovimientoRegisteredEventContract;
 use App\Domains\Movimiento\Events\MovimientoCreated;
 use App\Application\Movimiento\Resolvers\TransactionValidatorResolver;
 /**
@@ -21,7 +22,7 @@ final readonly class MovimientoCreatedFinancialImpactEventHandler
     )
     {
     }
-    public function __invoke( MovimientoCreated $event): void
+    public function __invoke( FinancialMovimientoRegisteredEventContract $event): void
     {
         $this->transactionValidatorResolver->resolve($event->getCuenta(), $event->getMovimiento());
        $cuenta = $this->applyTransactionEffectForCuentaResolver->resolve($event->getMovimiento(), $event->getCuenta());

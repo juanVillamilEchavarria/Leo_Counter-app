@@ -1,0 +1,38 @@
+<?php
+
+namespace App\Infrastructure\MovimientoFijo\Framework\Laravel\Builders;
+
+use App\Domains\MovimientoFijo\Events\MovimientoFijoCreatedAMovimientoPendiente;
+use App\Domains\Usuario\Aggregates\Usuario;
+use App\Shared\Application\Contracts\Builders\EmailFormatBuilderContract;
+use App\Shared\Application\DTOs\EmailMessageDTO;
+use App\Shared\Domain\Contracts\EventContract;
+
+class LaravelMovimientoPendienteCreatedFromAMovimientoFijoEmailFormatBuilder implements EmailFormatBuilderContract
+{
+
+    /**
+     * @param MovimientoFijoCreatedAMovimientoPendiente $event
+     * @param Usuario $usuario
+     * @return EmailMessageDTO
+     */
+    public function build(EventContract $event, Usuario $usuario): EmailMessageDTO
+    {
+        $svgPath = public_path('favicon.svg');
+        $logoSvg = '';
+        if (file_exists($svgPath)) {
+            $logoSvg = file_get_contents($svgPath);
+        }
+        $body = view('movimientos_fijos.notifications.emails.movimiento_pendiente_created', [
+            'name'=> $usuario->getName(),
+            'movimiento_pendiente'=>$event->getMovimientoPendiente(),
+            'movimiento_fijo'=>$event->getMovimientoFijo(),
+            'logoSvg' => $logoSvg
+        ]);
+        return new EmailMessageDTO(
+            to: $usuario->getEmail(),
+            subject: 'Movimiento creado automaticamente a partir de un movimiento fijo',
+            htmlBody: $body
+        );
+    }
+}

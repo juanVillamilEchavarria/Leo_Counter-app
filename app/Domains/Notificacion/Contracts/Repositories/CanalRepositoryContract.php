@@ -35,4 +35,11 @@ interface CanalRepositoryContract
      * @return bool
      */
     public function toggle(AggregateModelIdContract $id, string $attribute): bool;
+
+    /**
+     * Busca un canal por su nombre
+     * @param string $name
+     * @return Canal
+     */
+    public function findByName(string $name): ?Canal;
 }

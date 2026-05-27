@@ -4,10 +4,14 @@ namespace App\Domains\MovimientoFijo\Aggregates;
 
 use App\Domains\Categoria\ValueObjects\CategoriaId;
 use App\Domains\Cuenta\ValueObjects\CuentaId;
+use App\Domains\MovimientoFijo\Enums\FrecuenciaMovimientoEnum;
 use App\Domains\MovimientoFijo\Exceptions\CannotStoreMovimientoFijoException;
 use App\Domains\MovimientoFijo\Exceptions\CannotUpdateMovimientoFijoException;
+use App\Domains\MovimientoFijo\Resolvers\RecalculateNextDateResolver;
 use App\Domains\MovimientoFijo\ValueObjects\MovimientoFijoId;
+use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 use App\Shared\Domain\Contracts\AggregateModelContract;
+use App\Shared\Domain\ValueObjects\Amount;
 use App\Shared\Domain\ValueObjects\Date;
 
 /**
@@ -23,18 +27,18 @@ use App\Shared\Domain\ValueObjects\Date;
 final readonly class MovimientoFijo implements AggregateModelContract
 {
     private function __construct(
-        private MovimientoFijoId $id,
-        private CategoriaId $categoria_id,
-        private CuentaId $cuenta_id,
-        private int $tipo_movimiento_id,
-        private int $frecuencia_movimiento_id,
-        private string $nombre,
-        private float $monto,
-        private Date $fecha_proximo,
-        private ?int $dias_aviso,
-        private ?string $descripcion,
-        private bool $active,
-        private bool $registrar_automatico,
+        private MovimientoFijoId         $id,
+        private CategoriaId              $categoria_id,
+        private CuentaId                 $cuenta_id,
+        private TipoMovimientoEnum       $tipo_movimiento_id,
+        private FrecuenciaMovimientoEnum $frecuencia_movimiento_id,
+        private string                   $nombre,
+        private Amount                   $monto,
+        private Date                     $fecha_proximo,
+        private ?int                     $dias_aviso,
+        private ?string                  $descripcion,
+        private bool                     $active,
+        private bool                     $registrar_automatico,
     ) {
     }
 
@@ -44,26 +48,26 @@ final readonly class MovimientoFijo implements AggregateModelContract
      * @param MovimientoFijoId $id Identidad del movimiento fijo.
      * @param CategoriaId $categoria_id Identidad de la categoria asociada.
      * @param CuentaId $cuenta_id Identidad de la cuenta asociada.
-     * @param int $tipo_movimiento_id Identificador del tipo de movimiento.
-     * @param int $frecuencia_movimiento_id Identificador de la frecuencia.
+     * @param TipoMovimientoEnum $tipo_movimiento_id Identificador del tipo de movimiento.
+     * @param FrecuenciaMovimientoEnum $frecuencia_movimiento_id Identificador de la frecuencia.
      * @param string $nombre Nombre descriptivo del movimiento fijo.
-     * @param float $monto Monto programado del movimiento fijo.
+     * @param Amount $monto Monto programado del movimiento fijo.
      * @param Date $fecha_proximo Fecha del proximo registro.
      * @param int|null $dias_aviso Dias de aviso configurados.
      * @param string|null $descripcion Descripcion opcional.
      * @return self
      */
     public static function create(
-        MovimientoFijoId $id,
-        CategoriaId $categoria_id,
-        CuentaId $cuenta_id,
-        int $tipo_movimiento_id,
-        int $frecuencia_movimiento_id,
-        string $nombre,
-        float $monto,
-        Date $fecha_proximo,
-        ?int $dias_aviso,
-        ?string $descripcion,
+        MovimientoFijoId         $id,
+        CategoriaId              $categoria_id,
+        CuentaId                 $cuenta_id,
+        TipoMovimientoEnum       $tipo_movimiento_id,
+        FrecuenciaMovimientoEnum $frecuencia_movimiento_id,
+        string                   $nombre,
+        Amount                   $monto,
+        Date                     $fecha_proximo,
+        ?int                     $dias_aviso,
+        ?string                  $descripcion,
     ): self {
         self::validateData($nombre, $monto, $tipo_movimiento_id, $frecuencia_movimiento_id, $dias_aviso, CannotStoreMovimientoFijoException::class);
 
@@ -89,10 +93,10 @@ final readonly class MovimientoFijo implements AggregateModelContract
      * @param MovimientoFijoId $id Identidad persistida.
      * @param CategoriaId $categoria_id Identidad de categoria persistida.
      * @param CuentaId $cuenta_id Identidad de cuenta persistida.
-     * @param int $tipo_movimiento_id Identificador de tipo persistido.
+     * @param TipoMovimientoEnum $tipo_movimiento_id Identificador de tipo persistido.
      * @param int $frecuencia_movimiento_id Identificador de frecuencia persistido.
      * @param string $nombre Nombre persistido.
-     * @param float $monto Monto persistido.
+     * @param Amount $monto Monto persistido.
      * @param Date $fecha_proximo Fecha persistida.
      * @param int|null $dias_aviso Dias de aviso persistidos.
      * @param string|null $descripcion Descripcion persistida.
@@ -101,18 +105,18 @@ final readonly class MovimientoFijo implements AggregateModelContract
      * @return self
      */
     public static function reconstitute(
-        MovimientoFijoId $id,
-        CategoriaId $categoria_id,
-        CuentaId $cuenta_id,
-        int $tipo_movimiento_id,
-        int $frecuencia_movimiento_id,
-        string $nombre,
-        float $monto,
-        Date $fecha_proximo,
-        ?int $dias_aviso,
-        ?string $descripcion,
-        bool $active,
-        bool $registrar_automatico,
+        MovimientoFijoId   $id,
+        CategoriaId        $categoria_id,
+        CuentaId           $cuenta_id,
+        TipoMovimientoEnum $tipo_movimiento_id,
+        int                $frecuencia_movimiento_id,
+        string             $nombre,
+        Amount             $monto,
+        Date               $fecha_proximo,
+        ?int               $dias_aviso,
+        ?string            $descripcion,
+        bool               $active,
+        bool               $registrar_automatico,
     ): self {
         return new self(
             id: $id,
@@ -135,25 +139,26 @@ final readonly class MovimientoFijo implements AggregateModelContract
      *
      * @param CategoriaId $categoria_id Nueva categoria asociada.
      * @param CuentaId $cuenta_id Nueva cuenta asociada.
-     * @param int $tipo_movimiento_id Nuevo tipo de movimiento.
-     * @param int $frecuencia_movimiento_id Nueva frecuencia.
+     * @param TipoMovimientoEnum $tipo_movimiento_id Nuevo tipo de movimiento.
+     * @param FrecuenciaMovimientoEnum $frecuencia_movimiento_id Nueva frecuencia.
      * @param string $nombre Nuevo nombre.
-     * @param float $monto Nuevo monto.
+     * @param Amount $monto Nuevo monto.
      * @param Date $fecha_proximo Nueva fecha del proximo registro.
      * @param int|null $dias_aviso Nuevos dias de aviso.
      * @param string|null $descripcion Nueva descripcion.
      * @return self
+     * @throws
      */
     public function updateData(
-        CategoriaId $categoria_id,
-        CuentaId $cuenta_id,
-        int $tipo_movimiento_id,
-        int $frecuencia_movimiento_id,
-        string $nombre,
-        float $monto,
-        Date $fecha_proximo,
-        ?int $dias_aviso,
-        ?string $descripcion,
+        CategoriaId              $categoria_id,
+        CuentaId                 $cuenta_id,
+        TipoMovimientoEnum       $tipo_movimiento_id,
+        FrecuenciaMovimientoEnum $frecuencia_movimiento_id,
+        string                   $nombre,
+        Amount                   $monto,
+        Date                     $fecha_proximo,
+        ?int                     $dias_aviso,
+        ?string                  $descripcion,
     ): self {
         self::validateData($nombre, $monto, $tipo_movimiento_id, $frecuencia_movimiento_id, $dias_aviso, CannotUpdateMovimientoFijoException::class);
 
@@ -174,27 +179,68 @@ final readonly class MovimientoFijo implements AggregateModelContract
     }
 
     /**
+     * Verifica si el dia actual es el dia de aviso para el movimiento fijo.
+     *
+     * @return bool
+     * @throws \DateInvalidOperationException
+     */
+    public function isWariningDay(): bool{
+       $fecha_proimo = $this->fecha_proximo->getPeriod();
+        $today = new \DateTimeImmutable();
+        $fecha_aviso = $fecha_proimo->sub(new \DateInterval('P' . $this->dias_aviso . 'D'));
+        return $today->format('Y-m-d') === $fecha_aviso->format('Y-m-d');
+    }
+
+    /**
+     * Verifica si el dia actual es el dia de la fecha del proximo registro para el movimiento fijo.
+     * @return bool
+     */
+    public function isDueToday(): bool{
+        $today = new \DateTimeImmutable();
+        return $this->fecha_proximo->format()=== $today->format('Y-m-d');
+
+    }
+
+    public function recalculateNextDate( RecalculateNextDateResolver $resolver):self{
+        $newDate = $resolver->resolve($this);
+        return new self(
+            id: $this->id,
+            categoria_id: $this->categoria_id,
+            cuenta_id: $this->cuenta_id,
+            tipo_movimiento_id: $this->tipo_movimiento_id,
+            frecuencia_movimiento_id: $this->frecuencia_movimiento_id,
+            nombre: $this->nombre,
+            monto: $this->monto,
+            fecha_proximo: $newDate,
+            dias_aviso: $this->dias_aviso,
+            descripcion: $this->descripcion,
+            active: $this->active,
+            registrar_automatico: $this->registrar_automatico,
+        );
+    }
+
+    /**
      * Valida los datos esenciales del movimiento fijo antes de crear o actualizar.
      *
      * @param class-string<\Throwable> $exceptionClass Excepcion especifica del caso de uso.
      */
     private static function validateData(
-        string $nombre,
-        float $monto,
-        int $tipo_movimiento_id,
-        int $frecuencia_movimiento_id,
-        ?int $dias_aviso,
-        string $exceptionClass,
+        string                   $nombre,
+        Amount                   $monto,
+        TipoMovimientoEnum       $tipo_movimiento_id,
+        FrecuenciaMovimientoEnum $frecuencia_movimiento_id,
+        ?int                     $dias_aviso,
+        string                   $exceptionClass,
     ): void {
         if (trim($nombre) === '') {
             throw new $exceptionClass('El nombre del movimiento fijo es obligatorio.');
         }
 
-        if ($monto < 0) {
+        if ($monto->getValue() < 0) {
             throw new $exceptionClass('El monto del movimiento fijo no puede ser negativo.');
         }
 
-        if ($tipo_movimiento_id <= 0) {
+        if ($tipo_movimiento_id->value <= 0) {
             throw new $exceptionClass('El tipo de movimiento es obligatorio.');
         }
 
@@ -222,12 +268,12 @@ final readonly class MovimientoFijo implements AggregateModelContract
         return $this->cuenta_id;
     }
 
-    public function getTipoMovimientoId(): int
+    public function getTipoMovimientoId(): TipoMovimientoEnum
     {
         return $this->tipo_movimiento_id;
     }
 
-    public function getFrecuenciaMovimientoId(): int
+    public function getFrecuenciaMovimientoId(): FrecuenciaMovimientoEnum
     {
         return $this->frecuencia_movimiento_id;
     }
@@ -237,7 +283,7 @@ final readonly class MovimientoFijo implements AggregateModelContract
         return $this->nombre;
     }
 
-    public function getMonto(): float
+    public function getMonto(): Amount
     {
         return $this->monto;
     }

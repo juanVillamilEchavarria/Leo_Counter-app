@@ -5,6 +5,7 @@ namespace App\Domains\Movimiento\Events;
 use App\Domains\Categoria\Aggregates\Categoria;
 use App\Domains\Movimiento\Aggregates\Movimiento;
 use App\Domains\Cuenta\Aggregates\Cuenta;
+use App\Domains\Movimiento\Contracts\Events\FinancialMovimientoRegisteredEventContract;
 use App\Domains\Movimiento\Contracts\Events\UploadAttachmentsForMovimientoEventContract;
 use App\Shared\Domain\ValueObjects\Date;
 use App\Domains\Movimiento\Contracts\Events\MovimientoEventContract;
@@ -16,7 +17,7 @@ use App\Domains\Movimiento\Contracts\Events\MovimientoEventContract;
  * @package App\Domains\Movimiento\Events
  * @version 1.0.0
  */
-final readonly class MovimientoCreated implements UploadAttachmentsForMovimientoEventContract, MovimientoEventContract
+final readonly class MovimientoCreated implements UploadAttachmentsForMovimientoEventContract, MovimientoEventContract, FinancialMovimientoRegisteredEventContract
 {
     public function __construct(
         private Movimiento $movimiento,
