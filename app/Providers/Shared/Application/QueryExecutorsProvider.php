@@ -5,6 +5,8 @@ namespace App\Providers\Shared\Application;
 use Illuminate\Support\ServiceProvider;
 use App\Shared\Application\Contracts\Queries\Executors\GetTipoMovimientoNameQueryExecutorContract;
 use App\Shared\Infrastructure\Queries\Executors\EloquentGetTipoMovimientoNameQueryExecutor;
+use App\Shared\Application\Contracts\Queries\Executors\GetUsersWhoCanBeNotifiedQueryExecutorContract;
+use App\Infrastructure\Usuario\Queries\Executors\Eloquent\EloquentGetUsersWhoCanBeNotifiedQueryExecutor;
 
 
 class QueryExecutorsProvider extends ServiceProvider
@@ -15,6 +17,7 @@ class QueryExecutorsProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(GetTipoMovimientoNameQueryExecutorContract::class, EloquentGetTipoMovimientoNameQueryExecutor::class);
+        $this->app->singleton(GetUsersWhoCanBeNotifiedQueryExecutorContract::class, EloquentGetUsersWhoCanBeNotifiedQueryExecutor::class);
     }
 
     /**
