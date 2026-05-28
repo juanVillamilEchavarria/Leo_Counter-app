@@ -2,6 +2,7 @@
 
 namespace App\Domains\MovimientoPendiente\Events;
 
+use App\Domains\MovimientoFijo\Aggregates\MovimientoFijo;
 use App\Shared\Domain\Contracts\EventContract;
 use App\Shared\Domain\ValueObjects\Date;
 use App\Domains\MovimientoPendiente\Aggregates\MovimientoPendiente;
@@ -19,9 +20,15 @@ final readonly class MovimientoPendienteCreatedFromMovimientoFijo implements Eve
 {
     public function __construct(
         private MovimientoPendiente $movimientoPendiente,
+        private MovimientoFijo $movimientoFijo,
         private Date $ocurredOn = new Date(new \DateTimeImmutable())
     )
     {
+    }
+
+    public function getMovimientoFijo(): MovimientoFijo
+    {
+        return $this->movimientoFijo;
     }
 
     public function getMovimientoPendiente(): MovimientoPendiente

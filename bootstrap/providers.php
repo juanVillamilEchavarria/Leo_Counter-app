@@ -28,6 +28,7 @@ return [
     App\Providers\MovimientoFijo\MovimientoFijoQueryExecutorServiceProvider::class,
     App\Providers\MovimientoFijo\MovimientoFijoServiceProvider::class,
     App\Providers\MovimientoPendiente\EnricherProvider::class,
+    App\Providers\MovimientoPendiente\MovimientoPendienteEventHandlersProvider::class,
     App\Providers\MovimientoPendiente\MovimientoPendienteBusProvider::class,
     App\Providers\MovimientoPendiente\MovimientoPendienteQueryExecutorServiceProvider::class,
     App\Providers\MovimientoPendiente\MovimientoPendienteServiceProvider::class,

@@ -10,6 +10,12 @@ use App\Application\MovimientoPendiente\Commands\MarkAsDoneMovimientoPendienteCo
 use App\Application\MovimientoPendiente\Commands\StoreMovimientoPendienteCommand;
 use App\Application\MovimientoPendiente\Commands\UpdateMovimientoPendienteCommand;
 use App\Application\MovimientoPendiente\Commands\Handlers\MarkAsDoneMovimientoPendienteHandler;
+use App\Application\MovimientoPendiente\Commands\RegisterMovimientoPendienteFromMovimientoFijoCommand;
+use App\Application\MovimientoPendiente\Commands\MarkMovimientoPendienteAsExpiredCommand;
+use App\Application\MovimientoPendiente\Commands\ProcessFinancialTasksForMovimientoPendienteCommand;
+use App\Application\MovimientoPendiente\Commands\Handlers\RegisterMovimientoPendienteFromMovimientoFijoHandler;
+use App\Application\MovimientoPendiente\Commands\Handlers\MarkMovimientoPendienteAsExpiredHandler;
+use App\Application\MovimientoPendiente\Commands\Handlers\ProcessFinancialTasksForMovimientoPendienteHandler;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\ServiceProvider;
 
@@ -38,7 +44,12 @@ final class MovimientoPendienteBusProvider extends ServiceProvider
             StoreMovimientoPendienteCommand::class => StoreMovimientoPendienteHandler::class,
             UpdateMovimientoPendienteCommand::class => UpdateMovimientoPendienteHandler::class,
             DestroyMovimientoPendienteCommand::class => DestroyMovimientoPendienteHandler::class,
-            MarkAsDoneMovimientoPendienteCommand::class=> MarkAsDoneMovimientoPendienteHandler::class
+            MarkAsDoneMovimientoPendienteCommand::class=> MarkAsDoneMovimientoPendienteHandler::class,
+
+            // Automatizaciones diarias: comandos relacionados
+            RegisterMovimientoPendienteFromMovimientoFijoCommand::class => RegisterMovimientoPendienteFromMovimientoFijoHandler::class,
+            MarkMovimientoPendienteAsExpiredCommand::class => MarkMovimientoPendienteAsExpiredHandler::class,
+            ProcessFinancialTasksForMovimientoPendienteCommand::class => ProcessFinancialTasksForMovimientoPendienteHandler::class,
         ]);
     }
 }

@@ -8,7 +8,10 @@ use App\Domains\Categoria\ValueObjects\CategoriaId;
 use App\Domains\Cuenta\ValueObjects\CuentaId;
 use App\Domains\MovimientoFijo\Aggregates\MovimientoFijo;
 use App\Domains\MovimientoFijo\Contracts\Repositories\MovimientoFijoRepositoryContract;
+use App\Domains\MovimientoFijo\Enums\FrecuenciaMovimientoEnum;
 use App\Domains\MovimientoFijo\ValueObjects\MovimientoFijoId;
+use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
+use App\Shared\Domain\ValueObjects\Amount;
 use App\Shared\Domain\ValueObjects\Date;
 use DateTimeImmutable;
 
@@ -39,10 +42,10 @@ final readonly class UpdateMovimientoFijoHandler
         $updated = $aggregate->updateData(
             categoria_id: new CategoriaId($command->categoria_id),
             cuenta_id: new CuentaId($command->cuenta_id),
-            tipo_movimiento_id: $command->tipo_movimiento_id,
-            frecuencia_movimiento_id: $command->frecuencia_movimiento_id,
+            tipo_movimiento_id: TipoMovimientoEnum::try($command->tipo_movimiento_id),
+            frecuencia_movimiento_id: FrecuenciaMovimientoEnum::from($command->frecuencia_movimiento_id),
             nombre: $command->nombre,
-            monto: $command->monto,
+            monto: new Amount($command->monto),
             fecha_proximo: new Date(new DateTimeImmutable($command->fecha_proximo)),
             dias_aviso: $command->dias_aviso,
             descripcion: $command->descripcion,

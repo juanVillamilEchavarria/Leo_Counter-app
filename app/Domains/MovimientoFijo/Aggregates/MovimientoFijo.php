@@ -94,7 +94,7 @@ final readonly class MovimientoFijo implements AggregateModelContract
      * @param CategoriaId $categoria_id Identidad de categoria persistida.
      * @param CuentaId $cuenta_id Identidad de cuenta persistida.
      * @param TipoMovimientoEnum $tipo_movimiento_id Identificador de tipo persistido.
-     * @param int $frecuencia_movimiento_id Identificador de frecuencia persistido.
+     * @param FrecuenciaMovimientoEnum $frecuencia_movimiento_id Identificador de frecuencia persistido.
      * @param string $nombre Nombre persistido.
      * @param Amount $monto Monto persistido.
      * @param Date $fecha_proximo Fecha persistida.
@@ -109,7 +109,7 @@ final readonly class MovimientoFijo implements AggregateModelContract
         CategoriaId        $categoria_id,
         CuentaId           $cuenta_id,
         TipoMovimientoEnum $tipo_movimiento_id,
-        int                $frecuencia_movimiento_id,
+        FrecuenciaMovimientoEnum $frecuencia_movimiento_id,
         string             $nombre,
         Amount             $monto,
         Date               $fecha_proximo,
@@ -184,7 +184,10 @@ final readonly class MovimientoFijo implements AggregateModelContract
      * @return bool
      * @throws \DateInvalidOperationException
      */
-    public function isWariningDay(): bool{
+    public function isWarningDay(): bool{
+        if ($this->dias_aviso === null || $this->dias_aviso <= 0) {
+            return false;
+        }
        $fecha_proimo = $this->fecha_proximo->getPeriod();
         $today = new \DateTimeImmutable();
         $fecha_aviso = $fecha_proimo->sub(new \DateInterval('P' . $this->dias_aviso . 'D'));

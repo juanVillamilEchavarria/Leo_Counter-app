@@ -38,11 +38,9 @@ final readonly class RegisterMovimientoPendienteFromMovimientoFijoHandler
         );
         $this->movimientoPendienteRepositoryContract->store($movimientoPendiente);
         $this->eventBus->publish(new MovimientoPendienteCreatedFromMovimientoFijo(
-            movimientoPendiente: $movimientoPendiente
-        ));
-        $this->eventBus->publish(new MovimientoFijoCreatedAMovimientoPendiente(
-            movimientoFijo: $movimientoFijo,
-            movimientoPendiente: $movimientoPendiente
+            movimientoPendiente: $movimientoPendiente,
+            movimientoFijo: $movimientoFijo
+
         ));
     }
 

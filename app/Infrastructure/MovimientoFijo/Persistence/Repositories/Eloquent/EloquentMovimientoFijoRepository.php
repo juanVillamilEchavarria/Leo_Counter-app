@@ -6,9 +6,12 @@ use App\Domains\Categoria\ValueObjects\CategoriaId;
 use App\Domains\Cuenta\ValueObjects\CuentaId;
 use App\Domains\MovimientoFijo\Aggregates\MovimientoFijo as MovimientoFijoAggregate;
 use App\Domains\MovimientoFijo\Contracts\Repositories\MovimientoFijoRepositoryContract;
+use App\Domains\MovimientoFijo\Enums\FrecuenciaMovimientoEnum;
 use App\Domains\MovimientoFijo\ValueObjects\MovimientoFijoId;
+use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 use App\Models\MovimientoFijo\MovimientoFijo;
 use App\Shared\Domain\Contracts\AggregateModelContract;
+use App\Shared\Domain\ValueObjects\Amount;
 use App\Shared\Domain\ValueObjects\Date;
 use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentRepository;
 use DateTimeImmutable;
@@ -38,11 +41,11 @@ final class EloquentMovimientoFijoRepository extends EloquentRepository implemen
             'id' => $aggregate->getId()->getValue(),
             'nombre' => $aggregate->getNombre(),
             'descripcion' => $aggregate->getDescripcion(),
-            'tipo_movimiento_id' => $aggregate->getTipoMovimientoId(),
+            'tipo_movimiento_id' => $aggregate->getTipoMovimientoId()->value,
             'categoria_id' => $aggregate->getCategoriaId()->getValue(),
             'cuenta_id' => $aggregate->getCuentaId()->getValue(),
-            'frecuencia_movimiento_id' => $aggregate->getFrecuenciaMovimientoId(),
-            'monto' => $aggregate->getMonto(),
+            'frecuencia_movimiento_id' => $aggregate->getFrecuenciaMovimientoId()->value,
+            'monto' => $aggregate->getMonto()->getValue(),
             'fecha_proximo' => $aggregate->getFechaProximo()->format('Y-m-d'),
             'dias_aviso' => $aggregate->getDiasAviso(),
             'active' => $aggregate->getActive(),
@@ -56,10 +59,10 @@ final class EloquentMovimientoFijoRepository extends EloquentRepository implemen
             id: new MovimientoFijoId($model->id),
             categoria_id: new CategoriaId($model->categoria_id),
             cuenta_id: new CuentaId($model->cuenta_id),
-            tipo_movimiento_id: (int) $model->tipo_movimiento_id,
-            frecuencia_movimiento_id: (int) $model->frecuencia_movimiento_id,
+            tipo_movimiento_id: TipoMovimientoEnum::try((int) $model->tipo_movimiento_id),
+            frecuencia_movimiento_id: FrecuenciaMovimientoEnum::from((int) $model->frecuencia_movimiento_id),
             nombre: $model->nombre,
-            monto: (float) $model->monto,
+            monto: new Amount((float) $model->monto),
             fecha_proximo: new Date(new DateTimeImmutable((string) $model->fecha_proximo)),
             dias_aviso: $model->dias_aviso !== null ? (int) $model->dias_aviso : null,
             descripcion: $model->descripcion,

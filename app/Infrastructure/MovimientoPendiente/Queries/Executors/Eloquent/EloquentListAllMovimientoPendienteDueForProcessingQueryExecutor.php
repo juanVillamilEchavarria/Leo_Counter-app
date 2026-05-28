@@ -17,6 +17,7 @@ use App\Shared\Infrastructure\Framework\Laravel\Collections\LaravelCollection;
 use App\Domains\MovimientoPendiente\Enums\EstadosMovimientoPendiente;
 use App\Shared\Domain\ValueObjects\Date;
 use Carbon\Carbon;
+use DateTimeImmutable;
 
 /**
  * Ejecutor de la query para obtener los movimientos pendientes que deben ser procesados.
@@ -36,17 +37,20 @@ final readonly class EloquentListAllMovimientoPendienteDueForProcessingQueryExec
        $models = Model::where('estado', '=', EstadosMovimientoPendiente::PENDIENTE->value)
            ->whereDate('fecha_programada','<=', Carbon::now()->format('Y-m-d'))->get();
        $aggregates = $models->map(function (Model $movimientoPendiente) {
-           return MovimientoPendiente::create(
+           return MovimientoPendiente::reconstitute(
                id: new MovimientoPendienteId($movimientoPendiente->id),
                categoria_id: new CategoriaId($movimientoPendiente->categoria_id),
                cuenta_id: new CuentaId($movimientoPendiente->cuenta_id),
                tipo_movimiento_id: TipoMovimientoEnum::try($movimientoPendiente->tipo_movimiento_id),
                nombre: $movimientoPendiente->nombre,
                monto: new Amount($movimientoPendiente->monto),
-               fecha_programada: new Date($movimientoPendiente->fecha_programada),
+               fecha_programada: new Date(new DateTimeImmutable((string) $movimientoPendiente->fecha_programada)),
+               dias_aviso: $movimientoPendiente->dias_aviso,
                descripcion: $movimientoPendiente->descripcion,
                estado: EstadosMovimientoPendiente::try($movimientoPendiente->estado),
-               movimiento_fijo_id: new MovimientoFijoId($movimientoPendiente->movimiento_fijo_id)
+               movimiento_fijo_id: $movimientoPendiente->movimiento_fijo_id !== null
+                   ? new MovimientoFijoId($movimientoPendiente->movimiento_fijo_id)
+                   : null
            );
        });
 

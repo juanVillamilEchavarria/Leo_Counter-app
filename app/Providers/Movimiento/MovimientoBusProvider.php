@@ -11,7 +11,18 @@ use Illuminate\Support\ServiceProvider;
 use App\Application\Movimiento\Commands\StoreMovimientoCommand;
 use App\Application\Movimiento\Commands\Handlers\StoreMovimientoHandler;
 use App\Shared\Infrastructure\Framework\Laravel\Middlewares\LaravelTransactionMiddleware;
+use App\Application\Movimiento\Commands\RegisterMovimientoFromMovimientoFijoCommand;
+use App\Application\Movimiento\Commands\Handlers\RegisterMovimientoFromMovimientoFijoHandler;
 
+/**
+ * Bus provider del módulo Movimiento.
+ * Registra el mapeo explicito entre comandos de aplicacion y sus handlers correspondientes.
+ *
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @package App\Providers\Movimiento
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 class MovimientoBusProvider extends ServiceProvider
 {
     /**
@@ -31,6 +42,7 @@ class MovimientoBusProvider extends ServiceProvider
             StoreMovimientoCommand::class   => StoreMovimientoHandler::class,
             UpdateMovimientoCommand::class  => UpdateMovimientoHandler::class,
             DestroyMovimientoCommand::class => DestroyMovimientoHandler::class,
+            RegisterMovimientoFromMovimientoFijoCommand::class => RegisterMovimientoFromMovimientoFijoHandler::class,
         ]);
     }
 }

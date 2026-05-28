@@ -26,6 +26,7 @@ final readonly class LaravelWarningDayOfMovimientoFijoEmailFormatBuilder impleme
         $body = view('movimientos.alerts.emails.warning_day', [
             'name'=> $usuario->getName(),
             'tipo'=> 'movimiento fijo',
+            'movimiento'=> $event->getMovimientoFijo(),
             'logoSvg' => $logoSvg
 
         ]);

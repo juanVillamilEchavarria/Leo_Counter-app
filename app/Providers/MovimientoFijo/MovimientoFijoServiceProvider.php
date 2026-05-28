@@ -13,6 +13,15 @@ use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListCuentaFor
 use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListFrecuenciaMovimientoForFormContract;
 use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListTipoMovimientoForFormContract;
 use Illuminate\Support\ServiceProvider;
+use App\Domains\MovimientoFijo\Resolvers\RecalculateNextDateResolver;
+use App\Domains\MovimientoFijo\Strategies\DailyRecalculateForNextDateStrategy;
+use App\Domains\MovimientoFijo\Strategies\WeeklyRecalculateForNextDateStrategy;
+use App\Domains\MovimientoFijo\Strategies\BiWeeklyRecalculateForNextDateStrategy;
+use App\Domains\MovimientoFijo\Strategies\MonthlyRecalculateForNextDateStrategy;
+use App\Domains\MovimientoFijo\Strategies\BiMonthlyRecalculateForNextDateStrategy;
+use App\Domains\MovimientoFijo\Strategies\QuarterlyRecalculateForNextDateStrategy;
+use App\Domains\MovimientoFijo\Strategies\SemiannualRecalculateForNextDateStrategy;
+use App\Domains\MovimientoFijo\Strategies\AnnualRecalculateForNextDateStrategy;
 
 /**
  * Service provider del modulo MovimientoFijo.
@@ -30,6 +39,20 @@ final class MovimientoFijoServiceProvider extends ServiceProvider
         $this->app->singleton(MovimientoFijoRepositoryContract::class, EloquentMovimientoFijoRepository::class);
         $this->app->singleton(ListFrecuenciaMovimientoForFormContract::class, EloquentListFrecuenciaMovimientoForForm::class);
         $this->app->singleton(ListTipoMovimientoForFormContract::class, EloquentListTipoMovimientoForFormQueryExecutor::class);
+
+        // RecalculateNextDateResolver: registra las estrategias disponibles para la recalculacion de la fecha proxima
+        $this->app->bind(RecalculateNextDateResolver::class, function(){
+            return new RecalculateNextDateResolver([
+                app(DailyRecalculateForNextDateStrategy::class),
+                app(WeeklyRecalculateForNextDateStrategy::class),
+                app(BiWeeklyRecalculateForNextDateStrategy::class),
+                app(MonthlyRecalculateForNextDateStrategy::class),
+                app(BiMonthlyRecalculateForNextDateStrategy::class),
+                app(QuarterlyRecalculateForNextDateStrategy::class),
+                app(SemiannualRecalculateForNextDateStrategy::class),
+                app(AnnualRecalculateForNextDateStrategy::class),
+            ]);
+        });
     }
 
     public function boot(): void

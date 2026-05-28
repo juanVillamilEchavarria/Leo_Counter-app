@@ -9,8 +9,10 @@ use App\Domains\MovimientoPendiente\Aggregates\MovimientoPendiente as Movimiento
 use App\Domains\MovimientoPendiente\Contracts\Repositories\MovimientoPendienteRepositoryContract;
 use App\Domains\MovimientoPendiente\Enums\EstadosMovimientoPendiente;
 use App\Domains\MovimientoPendiente\ValueObjects\MovimientoPendienteId;
+use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 use App\Models\MovimientoPendiente\MovimientoPendiente;
 use App\Shared\Domain\Contracts\AggregateModelContract;
+use App\Shared\Domain\ValueObjects\Amount;
 use App\Shared\Domain\ValueObjects\Date;
 use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentRepository;
 use DateTimeImmutable;
@@ -47,11 +49,11 @@ final class EloquentMovimientoPendienteRepository extends EloquentRepository imp
             'id' => $aggregate->getId()->getValue(),
             'nombre' => $aggregate->getNombre(),
             'descripcion' => $aggregate->getDescripcion(),
-            'tipo_movimiento_id' => $aggregate->getTipoMovimientoId(),
+            'tipo_movimiento_id' => $aggregate->getTipoMovimientoId()->value,
             'categoria_id' => $aggregate->getCategoriaId()->getValue(),
             'cuenta_id' => $aggregate->getCuentaId()->getValue(),
             'movimiento_fijo_id' => $aggregate->getMovimientoFijoId()?->getValue(),
-            'monto' => $aggregate->getMonto(),
+            'monto' => $aggregate->getMonto()->getValue(),
             'fecha_programada' => $aggregate->getFechaProgramada()->format('Y-m-d'),
             'dias_aviso' => $aggregate->getDiasAviso(),
             'estado' => $aggregate->getEstado()->value,
@@ -71,9 +73,9 @@ final class EloquentMovimientoPendienteRepository extends EloquentRepository imp
             categoria_id: new CategoriaId($model->categoria_id),
             cuenta_id: new CuentaId($model->cuenta_id),
             movimiento_fijo_id: $model->movimiento_fijo_id !== null ? new MovimientoFijoId($model->movimiento_fijo_id) : null,
-            tipo_movimiento_id: (int) $model->tipo_movimiento_id,
+            tipo_movimiento_id: TipoMovimientoEnum::try((int) $model->tipo_movimiento_id),
             nombre: $model->nombre,
-            monto: (float) $model->monto,
+            monto: new Amount((float) $model->monto),
             fecha_programada: new Date(new DateTimeImmutable((string) $model->fecha_programada)),
             dias_aviso: $model->dias_aviso !== null ? (int) $model->dias_aviso : null,
             descripcion: $model->descripcion,

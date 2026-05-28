@@ -10,6 +10,8 @@ use App\Application\MovimientoFijo\Commands\Handlers\UpdateMovimientoFijoHandler
 use App\Application\MovimientoFijo\Commands\StoreMovimientoFijoCommand;
 use App\Application\MovimientoFijo\Commands\ToggleMovimientoFijoCommand;
 use App\Application\MovimientoFijo\Commands\UpdateMovimientoFijoCommand;
+use App\Application\MovimientoFijo\Commands\ProcessFinancialTaskForMovimientoFijoCommand;
+use App\Application\MovimientoFijo\Commands\Handlers\ProcessFinancialTasksForMovimientoFijoHandler;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\ServiceProvider;
 
@@ -36,6 +38,7 @@ final class MovimientoFijoBusProvider extends ServiceProvider
             UpdateMovimientoFijoCommand::class => UpdateMovimientoFijoHandler::class,
             DestroyMovimientoFijoCommand::class => DestroyMovimientoFijoHandler::class,
             ToggleMovimientoFijoCommand::class => ToggleMovimientoFijoHandler::class,
+            ProcessFinancialTaskForMovimientoFijoCommand::class => ProcessFinancialTasksForMovimientoFijoHandler::class,
         ]);
     }
 }

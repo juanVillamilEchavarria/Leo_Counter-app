@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Application\MovimientoFijo\EventHandlers;
+namespace App\Application\MovimientoPendiente\EventHandlers;
 
-use App\Domains\MovimientoFijo\Events\MovimientoFijoWarningDayArrived;
+use App\Domains\MovimientoPendiente\Events\MovimientoPendienteWarningDayArrived;
 use App\Shared\Application\Resolvers\SendMessageToUsersByChannelsResolver;
 
 /**
- * manejador de evento para enviar un mensaje al usuario cuando el dia de aviso de un movimiento fijo ha llegado
+ * Manejador del evento cuando un movimiento pendiente llego a su dia de aviso.
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  * @since 1.0.0
  * @version 1.0.0
  */
-final readonly class SendMessageToUserWhenMovimientoFijoWarningDayArrivedEventHandler
+final readonly class SendMessageToUsersWhenMovimientoPendienteWarningDayArrivedEventHandler
 {
     public function __construct(
         private  SendMessageToUsersByChannelsResolver $sendMessageToUserByChannelResolver
     )
     {
     }
-    public function __invoke( MovimientoFijoWarningDayArrived $event): void
+    public function __invoke(MovimientoPendienteWarningDayArrived $event): void
     {
         $this->sendMessageToUserByChannelResolver->resolve($event);
     }

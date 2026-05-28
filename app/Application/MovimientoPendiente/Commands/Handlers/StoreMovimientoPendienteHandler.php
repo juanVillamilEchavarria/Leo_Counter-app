@@ -8,6 +8,8 @@ use App\Domains\MovimientoPendiente\Aggregates\MovimientoPendiente;
 use App\Application\MovimientoPendiente\Commands\StoreMovimientoPendienteCommand;
 use App\Domains\MovimientoPendiente\Contracts\Repositories\MovimientoPendienteRepositoryContract;
 use App\Domains\MovimientoPendiente\ValueObjects\MovimientoPendienteId;
+use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
+use App\Shared\Domain\ValueObjects\Amount;
 use App\Shared\Domain\ValueObjects\Date;
 use App\Shared\Domain\Contracts\IdGeneratorContract;
 use DateTimeImmutable;
@@ -36,9 +38,9 @@ final readonly class StoreMovimientoPendienteHandler
             id: MovimientoPendienteId::generate($this->idGenerator),
             categoria_id: new CategoriaId($command->categoria_id),
             cuenta_id: new CuentaId($command->cuenta_id),
-            tipo_movimiento_id: $command->tipo_movimiento_id,
+            tipo_movimiento_id: TipoMovimientoEnum::try($command->tipo_movimiento_id),
             nombre: $command->nombre,
-            monto: $command->monto,
+            monto: new Amount($command->monto),
             fecha_programada: new Date(new DateTimeImmutable($command->fecha_programada)),
             dias_aviso: $command->dias_aviso,
             descripcion: $command->descripcion

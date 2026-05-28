@@ -18,6 +18,7 @@ use App\Shared\Domain\ValueObjects\Date;
 use App\Domains\Categoria\Aggregates\Categoria;
 use DateTimeImmutable;
 use App\Shared\Application\Contracts\Bus\EventBus;
+use App\Domains\Movimiento\Events\AttachmentsForMovimientoCreated;
 use App\Domains\Movimiento\Events\MovimientoCreated;
 /**
  * Manejador para el almacenamiento de un movimiento.
@@ -55,7 +56,8 @@ final readonly class StoreMovimientoHandler
         /** @var Categoria $categoria */
         $categoria = $this->categoriaRepository->findById(new CategoriaId($command->categoria_id));
         $this->movimientoRepository->store($movimiento);
-        $this->eventBus->publish(new MovimientoCreated($movimiento, $cuenta, $categoria, $command->comprobantes, $tipoMovimientoName));
+        $this->eventBus->publish(new MovimientoCreated($movimiento, $cuenta));
+        $this->eventBus->publish(new AttachmentsForMovimientoCreated($movimiento, $categoria, $command->comprobantes, $tipoMovimientoName));
 
 //
 

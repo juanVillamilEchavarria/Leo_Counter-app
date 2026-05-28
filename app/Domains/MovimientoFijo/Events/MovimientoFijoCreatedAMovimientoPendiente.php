@@ -40,6 +40,6 @@ final readonly class MovimientoFijoCreatedAMovimientoPendiente implements EventC
      */
     public function ocurredOn(): Date
     {
-        // TODO: Implement ocurredOn() method.
+       return $this->ocurredOn;
     }
 }
