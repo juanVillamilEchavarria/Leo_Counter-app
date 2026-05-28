@@ -32,7 +32,7 @@ final readonly class LaravelMovimientoPendienteCreatedFromAMovimientoFijoEmailFo
         ]);
         return new EmailMessageDTO(
             to: $usuario->getEmail(),
-            subject: 'Movimiento creado automaticamente a partir de un movimiento fijo',
+            subject: 'Movimiento Pendiente creado automaticamente a partir de un movimiento fijo',
             htmlBody: $body
         );
     }

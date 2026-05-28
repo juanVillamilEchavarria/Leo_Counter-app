@@ -4,11 +4,10 @@ namespace App\Application\Notificacion\Strategies;
 
 use App\Application\Notificacion\Contracts\Strategies\SendVerificationToSuscriptorStrategyContract;
 use App\Domains\Notificacion\Contracts\Events\SendVerificationToSuscriptorEventContract;
-use App\Domains\Notificacion\Events\SuscriptorCreated;
 use App\Shared\Application\Contracts\Services\EmailServiceContract;
 use App\Application\Notificacion\Contracts\Builders\SendVerificationToSuscriptorFormatBuilderContract;
 use App\Domains\Notificacion\Enums\CanalesNotificacionEnum;
-use App\Domains\Usuario\Contracts\Repositories\UsuarioRepositoryContract;
+use App\Domains\Notificacion\Contracts\Repositories\CanalRepositoryContract;
 use App\Application\Notificacion\Exceptions\CannotSendEmailVerificationToSuscriptorException;
 
 /**
@@ -22,6 +21,7 @@ final readonly class SendEmailVerificationToSuscriptorStrategy implements SendVe
     public function __construct(
         private EmailServiceContract                              $emailService,
         private SendVerificationToSuscriptorFormatBuilderContract $builder,
+        private CanalRepositoryContract $canalRepository
 
     )
     {
@@ -32,7 +32,8 @@ final readonly class SendEmailVerificationToSuscriptorStrategy implements SendVe
      */
     public function supports(SendVerificationToSuscriptorEventContract $event): bool
     {
-        return $event->getSuscriptor()->getCanalNotificacionId()->getValue() === CanalesNotificacionEnum::EMAIL->value;
+        $canal = $this->canalRepository->findById($event->getSuscriptor()->getCanalNotificacionId());
+        return $canal !== null && $canal->getNombre() === CanalesNotificacionEnum::EMAIL->value;
     }
 
     /**

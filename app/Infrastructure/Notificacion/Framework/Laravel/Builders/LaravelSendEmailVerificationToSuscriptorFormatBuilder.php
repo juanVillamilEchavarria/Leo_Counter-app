@@ -38,11 +38,17 @@ final readonly class LaravelSendEmailVerificationToSuscriptorFormatBuilder imple
             'logoSvg' => $logoSvg
 
         ]);
-        return new EmailMessageDTO(
+
+        $emailMessage= new EmailMessageDTO(
             to: $event->getUsuario()->getEmail(),
             subject: 'Verificacion de correo electronico para recibir notificaciones por email',
             htmlBody: $body
         );
+        \Log::info('EmailMessageDTO creado para verificación', [
+            'to' => $emailMessage->to->__toString(),
+            'subject' => $emailMessage->subject,
+        ]);
+        return $emailMessage;
 
     }
 }

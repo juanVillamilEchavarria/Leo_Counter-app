@@ -191,6 +191,11 @@ final readonly class MovimientoFijo implements AggregateModelContract
        $fecha_proimo = $this->fecha_proximo->getPeriod();
         $today = new \DateTimeImmutable();
         $fecha_aviso = $fecha_proimo->sub(new \DateInterval('P' . $this->dias_aviso . 'D'));
+        \Log::info('Comparando warning day', [
+            'hoy'=>$today->format('Y-m-d'),
+            'fecha_aviso'=>$fecha_aviso->format('Y-m-d'),
+            'son_iguales'=>$today->format('Y-m-d') === $fecha_aviso->format('Y-m-d')
+        ]);
         return $today->format('Y-m-d') === $fecha_aviso->format('Y-m-d');
     }
 

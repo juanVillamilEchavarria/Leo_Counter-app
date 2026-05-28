@@ -11,9 +11,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
  * @since 1.0.0
  * @version 1.0.0
  */
-final  class LaravelSendVerificationToSuscriptorEventHandler implements ShouldQueue
+final readonly  class LaravelSendVerificationToSuscriptorEventHandler implements ShouldQueue
 {
-    public $afterCommit = true;
     public function __construct(
         private SendVerificationToSuscriptorResolver $resolver
     )

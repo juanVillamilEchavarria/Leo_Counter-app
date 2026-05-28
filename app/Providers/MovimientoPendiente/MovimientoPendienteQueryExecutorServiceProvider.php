@@ -6,6 +6,7 @@ use App\Application\MovimientoPendiente\Commands\Handlers\ProcessFinancialTasksF
 use App\Application\MovimientoPendiente\Contracts\Queries\Executors\GetMovimientoPendienteRecordsCountQueryExecutorContract;
 use App\Application\MovimientoPendiente\Contracts\Queries\Executors\MovimientoPendienteQueryExecutorContract;
 use App\Application\MovimientoPendiente\Queries\Handlers\GetMovimientoPendienteRecordsCountHandler;
+use App\Application\MovimientoPendiente\Queries\Handlers\ListAllMovimientoPendienteDueForProcessingHandler;
 use App\Application\MovimientoPendiente\Queries\Handlers\ListAllMovimientoPendienteHandler;
 use App\Application\MovimientoPendiente\Queries\ListAllMovimientoPendienteDueForProcessingQuery;
 use App\Infrastructure\MovimientoPendiente\Queries\Executors\Eloquent\EloquentGetMovimientoPendienteRecordsCountExecutor;
@@ -37,7 +38,7 @@ final class MovimientoPendienteQueryExecutorServiceProvider extends ServiceProvi
         $this->app->when(GetMovimientoPendienteRecordsCountHandler::class)
             ->needs(GetMovimientoPendienteRecordsCountQueryExecutorContract::class)
             ->give(EloquentGetMovimientoPendienteRecordsCountExecutor::class);
-        $this->app->when(ListAllMovimientoPendienteDueForProcessingQuery::class)
+        $this->app->when(ListAllMovimientoPendienteDueForProcessingHandler::class)
             ->needs(MovimientoPendienteQueryExecutorContract::class)
             ->give( EloquentListAllMovimientoPendienteDueForProcessingQueryExecutor::class);
 

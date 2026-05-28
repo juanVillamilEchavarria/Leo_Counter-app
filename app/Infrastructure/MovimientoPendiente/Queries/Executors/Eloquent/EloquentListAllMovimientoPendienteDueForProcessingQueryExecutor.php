@@ -35,7 +35,7 @@ final readonly class EloquentListAllMovimientoPendienteDueForProcessingQueryExec
     public function execute(ListMovimientoPendienteQueryContract $query): CollectionContract
     {
        $models = Model::where('estado', '=', EstadosMovimientoPendiente::PENDIENTE->value)
-           ->whereDate('fecha_programada','<=', Carbon::now()->format('Y-m-d'))->get();
+         ->get();
        $aggregates = $models->map(function (Model $movimientoPendiente) {
            return MovimientoPendiente::reconstitute(
                id: new MovimientoPendienteId($movimientoPendiente->id),

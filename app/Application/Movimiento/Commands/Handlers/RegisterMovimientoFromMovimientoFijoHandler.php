@@ -14,6 +14,7 @@ use App\Domains\Cuenta\Contracts\Repositories\CuentaRepositoryContract;
 use App\Domains\Categoria\Contracts\Repositories\CategoriaRepositoryContract;
 use App\Shared\Application\Contracts\Queries\Executors\GetTipoMovimientoNameQueryExecutorContract;
 use App\Domains\MovimientoFijo\Events\AutomatedMovimientoFijoProcessed;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Manejador del comando para registrar un movimiento desde un movimiento fijo.
@@ -31,8 +32,6 @@ final readonly class RegisterMovimientoFromMovimientoFijoHandler
         private EventBus $eventBus,
         private IdGeneratorContract $idGenerator,
         private CuentaRepositoryContract $cuentaRepository,
-        private CategoriaRepositoryContract $categoriaRepository,
-        private GetTipoMovimientoNameQueryExecutorContract $tipoMovimientoName
 
     )
     {
