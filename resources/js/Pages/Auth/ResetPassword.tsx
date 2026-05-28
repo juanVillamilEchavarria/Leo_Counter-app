@@ -10,7 +10,7 @@ function ResetPassword({ email, token }: ResetPasswordProps) {
     const { form, handleSubmit } = useResetPassword({ email, token })
 
     return (
-        <div className="w-1/4 mx-auto">
+        <div className="w-full max-w-md mx-auto">
             <Card className="rounded-2xl!">
                 <Logo className="w-1/3 mx-auto" />
                 <Title title="Nueva contraseña" size="md" className="text-center text-gray-200 my-4" />

@@ -32,8 +32,8 @@ export default function SimpleTable<T>({
        })
   return (
     <div>
-         <div className="table-container min-w-200">
-            <table className="table-general">
+         <div className="overflow-x-auto w-full table-container">
+            <table className="table-general min-w-[640px]">
                 <thead className="table-thead">
                     <tr>
                         {columns.map((col)=>(
@@ -76,7 +76,7 @@ export default function SimpleTable<T>({
             
         </div>
         {pagination&&(
-                 <div className=" mt-10 w-full flex justify-between">
+                 <div className="mt-10 w-full flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                         <TablePagination
                         controller={controller}        
                         />

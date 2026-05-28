@@ -17,7 +17,7 @@ export default function CategoriaForm({
     <Card>
     <form onSubmit={submit} className="formulario-general">
         <legend className="legend mt-5">Información de la categoría</legend>
-        <div className="flex w-full gap-4">
+        <div className="flex w-full flex-col gap-4 md:flex-row">
           <div className="formulario-campo w-full">
               <label htmlFor="nombre">Nombre de la categoría</label>
               <InputFillable 
@@ -85,7 +85,7 @@ export default function CategoriaForm({
 
           </TransitionMotion>
         </div>
-        <div className="w-1/6 my-5 mx-auto">
+        <div className="w-full my-5 mx-auto sm:w-1/2 lg:w-1/6">
             <Button
             variant="secondary"
                 type="submit"

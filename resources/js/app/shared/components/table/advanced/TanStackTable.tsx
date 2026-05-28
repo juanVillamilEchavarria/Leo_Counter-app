@@ -24,8 +24,8 @@ export default function TanStackTable<T extends Record<string,any>>({
   return (
     <div>
         <Search value={filtering} setValue={setFiltering} />
-        <div className="table-container">
-        <table className="table-general">
+        <div className="overflow-x-auto w-full table-container">
+        <table className="table-general min-w-[640px]">
             <thead className="table-thead">
                 {table.getHeaderGroups().map((headerGroup) => (
                     <tr  key={headerGroup.id} >
@@ -78,7 +78,7 @@ export default function TanStackTable<T extends Record<string,any>>({
             </tbody>
         </table>
     </div>
-    <div className=" w-[80%] my-4 flex justify-start">
+    <div className="w-full my-4 flex justify-start overflow-x-auto">
         <TablePagination
         controller={controller}        
         />

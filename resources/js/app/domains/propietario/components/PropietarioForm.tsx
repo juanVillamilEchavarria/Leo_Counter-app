@@ -17,7 +17,7 @@ export default function PropietarioForm({
     <Card>
         <form onSubmit={submit}className="formulario-general">
             <legend className="legend">Informacion del propietario</legend>
-            <div className="flex w-full gap-3">
+            <div className="flex w-full flex-col gap-3 md:flex-row">
                 <div className="formulario-campo w-full">
                         <label htmlFor="nombre">Nombre</label>
                         <InputFillable 
@@ -95,7 +95,7 @@ export default function PropietarioForm({
                                 <AlertMessage message={errors?.telefono} />
                         </TransitionMotion>
             </div>
-             <div className="w-1/6 my-5 mx-auto">
+             <div className="w-full my-5 mx-auto sm:w-1/2 lg:w-1/6">
                 <Button
                 variant="secondary"
                     type="submit"

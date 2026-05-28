@@ -1,9 +1,9 @@
 export const ModalSizes={
-        sm : 'w-1/6 h-1/6',
-        md : 'w-1/4 h-1/4',
-        lg : 'w-1/3 h-1/3',
-        xl : 'w-1/2 h-1/2',
-        '2xl' : 'w-2/3 h-2/3'
+        sm : 'w-11/12 sm:w-1/2 lg:w-1/6 min-h-40',
+        md : 'w-11/12 sm:w-2/3 lg:w-1/4 min-h-64',
+        lg : 'w-11/12 sm:w-2/3 lg:w-1/3 min-h-80',
+        xl : 'w-11/12 sm:w-3/4 lg:w-1/2 min-h-[50vh]',
+        '2xl' : 'w-11/12 sm:w-5/6 lg:w-2/3 min-h-[66vh]'
     }
 export const ModalVariants={
     primary : 'bg-background backdrop-blur-sm text-foreground',

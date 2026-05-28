@@ -35,7 +35,7 @@ export default function DeleteModal({
             <p>{paragraph}</p>
                 {children}
             <form onSubmit={handleSubmit}>
-              <div className="flex w-2/3 mx-auto mt-7 gap-2">
+              <div className="flex w-full flex-col mx-auto mt-7 gap-2 sm:w-2/3 sm:flex-row">
                 <Button
                 type="button"
                 variant="gray"

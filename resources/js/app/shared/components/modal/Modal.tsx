@@ -26,7 +26,7 @@ export default function Modal({
           <div className="fixed inset-0 bg-black/40 backdrop-blur-sm" />
         </TransitionChild>
 
-        <div className="fixed inset-0 flex items-center justify-center">
+        <div className="fixed inset-0 flex items-center justify-center px-4 py-6">
           {/* Panel */}
           <TransitionChild
             enter="ease-out duration-300"
@@ -37,7 +37,7 @@ export default function Modal({
             leaveTo="opacity-0 scale-95 translate-y-4"
           >
             <DialogPanel
-              className={`${ModalVariants[variant]} ${ModalSizes[size]} ${className} rounded-2xl p-6 shadow-xl flex flex-col justify-between`}
+              className={`${ModalVariants[variant]} ${ModalSizes[size]} ${className} max-h-[90vh] max-w-[calc(100vw-2rem)] rounded-2xl p-4 sm:p-6 shadow-xl flex flex-col justify-between`}
             >
               <div className="flex justify-end">
                 <button onClick={onClose} className='cursor-pointer'>

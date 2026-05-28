@@ -13,7 +13,7 @@ export default function CreateOrEditFormSection({
     className ?: string
 }) {
   return (
-     <div className={`w-1/2 mt-10 mx-auto ${className ?? ''}`}>
+     <div className={`w-full px-4 sm:px-6 lg:w-1/2 lg:px-0 mt-10 mx-auto ${className ?? ''}`}>
          <Button
             as={Link} 
             variant="primaryPagination" 

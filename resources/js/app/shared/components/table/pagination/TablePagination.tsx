@@ -15,7 +15,7 @@ export default function TablePagination({
     }, [controller.totalPages, controller.page, maxVisible]) // se actualiza cuando la pagina cambia, o el total de paginas cambia
     const {pages, start, end}= Pagination 
   return (
-            <ul className="w-1/4 flex rounded-2xl">
+            <ul className="w-full sm:w-auto flex flex-wrap gap-y-2 rounded-2xl overflow-x-auto">
                 <li className="mr-3">
                     <Button 
                         variant="primaryPagination" 

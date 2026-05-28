@@ -56,7 +56,7 @@ export default function PasswordForm() {
                         <AlertMessage type="error" message={form.errors.password_confirmation} />
                     </TransitionMotion>
                 </div>
-                <div className="w-[20%] mt-5 mx-auto">
+                <div className="w-full mt-5 mx-auto sm:w-1/2 lg:w-[20%]">
                     <Button variant="secondary" type="submit">Guardar</Button>
                 </div>
             </form>

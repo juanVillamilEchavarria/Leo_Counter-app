@@ -1,19 +1,49 @@
 import SideBar from "@/app/shared/components/sidebar/SideBar"
 import Logo from "@/app/shared/components/common/Logo"
 import SideBarToggle from "@/app/shared/components/sidebar/SideBarToggle"
-import useOpen from "@/app/shared/hooks/open/useOpen"
 import Title from "@/app/shared/components/common/Title"
 import TransitionMotion from "../transitions/TransitionMotion"
 import NavBar from "../navBar/NavBar"
 import SelfUserCard from "@/app/domains/user/components/SelfUserCard"
 import { useMessageRedirect } from "../../hooks"
-export default function SideBarApp() {
-        const {isOpen, setIsOpen} = useOpen(true)
+
+interface SideBarAppProps {
+    isOpen: boolean
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+    isMobileOpen: boolean
+    setIsMobileOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+/**
+ * Sidebar principal de la aplicación.
+ * En escritorio conserva el colapso lateral; en móvil/tablet se muestra como
+ * panel superpuesto con overlay para no alterar el layout del contenido.
+ */
+export default function SideBarApp({
+    isOpen,
+    setIsOpen,
+    isMobileOpen,
+    setIsMobileOpen,
+}: SideBarAppProps) {
         const {props}= useMessageRedirect()
         const user = props?.auth?.user
         const TrasitionStyle = 'transition-all  duration-400'
   return (
-    <SideBar className={`${isOpen ? 'w-80 min-w-80 ' : 'w-20 min-w-15'} h-full scrollbar-none relative ${TrasitionStyle} grid grid-rows-[1fr_auto]`}>
+    <>
+    {isMobileOpen && (
+        <div
+            className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+            onClick={() => setIsMobileOpen(false)}
+            aria-hidden="true"
+        />
+    )}
+    <SideBar className={`
+        fixed top-0 left-0 z-50 h-full w-3/4 max-w-xs -translate-x-full scrollbar-none
+        ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'}
+        lg:relative lg:z-auto lg:max-w-none lg:translate-x-0
+        ${isOpen ? 'lg:w-80 lg:min-w-80' : 'lg:w-20 lg:min-w-15'}
+        ${TrasitionStyle} grid grid-rows-[1fr_auto]
+    `}>
         <SideBarToggle isOpen={isOpen} setIsOpen={setIsOpen} />
             <div className={` grid grid-rows-[auto_1fr] overflow-hidden`}>
                     
@@ -46,8 +76,9 @@ export default function SideBarApp() {
             
            
                 
-
+                
             
         </SideBar>
+    </>
   )
 }
