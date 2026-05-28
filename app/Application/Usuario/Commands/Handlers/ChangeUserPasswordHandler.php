@@ -3,6 +3,8 @@
 namespace App\Application\Usuario\Commands\Handlers;
 
 use App\Application\Usuario\Commands\ChangeUserPasswordCommand;
+use App\Application\Usuario\Exceptions\CannotChangeAdminPasswordException;
+use App\Application\Usuario\Exceptions\CannotDeleteUsuarioException;
 use App\Application\Usuario\Exceptions\CannotFindUsuarioException;
 use App\Domains\Usuario\Contracts\Repositories\UsuarioRepositoryContract;
 use App\Domains\Usuario\Contracts\Services\PasswordHasherContract;
@@ -32,7 +34,9 @@ final readonly class ChangeUserPasswordHandler
         if (!$usuario) {
             throw new CannotFindUsuarioException();
         }
-
+        if($usuario->isAdmin()){
+            throw new CannotChangeAdminPasswordException('No se puede cambiar la contraseña del administrador');
+        }
         $usuario = $usuario->changePassword(
             newPassword: Password::create($command->newPassword),
             hasher: $this->hasher,

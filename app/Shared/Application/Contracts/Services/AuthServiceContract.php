@@ -11,6 +11,19 @@ namespace App\Shared\Application\Contracts\Services;
 interface AuthServiceContract
 {
     /**
+     * Inicia sesión del usuario.
+     * @param array $credentials
+     * @param bool $remember
+     * @return bool
+     */
+    public function login ( array $credentials, bool $remember = false ): bool;
+
+    /**
+     * Cierra sesión del usuario.
+     * @return void
+     */
+    public function logout (): void;
+    /**
      * Verifica si la contraseña es correcta comparandola con la del usuario logueado.
      * @param string $password
      * @return bool

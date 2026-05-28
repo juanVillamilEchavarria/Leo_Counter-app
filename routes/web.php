@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\SendPasswordResetUrlController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Cuenta\CuentaController;
 use App\Http\Controllers\Propietario\PropietarioController;
@@ -22,11 +24,28 @@ use App\Http\Controllers\Configuracion\SoftDeleteRecordsController;
 use App\Http\Controllers\Notificacion\CanalNotificacionController;
 use App\Http\Controllers\Notificacion\SuscriptorController;
 use App\Http\Controllers\Notificacion\SuscriptorVerificationController;
+use App\Http\Middleware\RedirectIfUserExistsMiddleware;
+use App\Http\Middleware\RedirectIfUsersAreEmptyMiddleware;
+use Inertia\Inertia;
 use Illuminate\Support\Facades\Mail;
 
 // GUEST ROUTES
-Route::get('/', [LoginController::class, 'index'])->name('login');
-Route::post('/login', [LoginController::class, 'login'])->name('login.store');
+// redirige a registrar el usuario administrador si no hay usuarios en la base de datos
+Route::middleware(RedirectIfUsersAreEmptyMiddleware::class)->group(function () {
+    Route::get('/', [LoginController::class, 'index'])->name('login');
+    Route::post('/login', [LoginController::class, 'login'])->name('login.store');
+    Route::get('/forgot-password', [SendPasswordResetUrlController::class, 'index'])->name('password.request');
+    Route::post('/forgot-password', [SendPasswordResetUrlController::class, 'send'])->name('password.email');
+    Route::get('/reset-password/{email}/{token}', [ResetPasswordController::class, 'index'])->name('password.reset')->middleware('signed');
+    Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
+});
+// hace un back() si ya hay usuarios registrados
+Route::middleware(RedirectIfUserExistsMiddleware::class)->group(function () {
+    Route::get('/register', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'index'])->name('register');
+    Route::post('/register', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'store'])->name('register.store');
+});
+
+
 // SUSCRIPCIÓN de notificaciones
 Route::get('/suscriptores/verificar/{suscriptorId}', [SuscriptorVerificationController::class, 'verify'])
     ->name('configuracion.notificaciones.suscriptores.verify')
@@ -77,8 +96,8 @@ Route::middleware('auth')->group( function () {
     // USUARIO
     Route::get('/profile', [\App\Http\Controllers\Usuario\ProfileController::class, 'index'])->name('profile.index');
     Route::put('/profile', [\App\Http\Controllers\Usuario\ProfileController::class, 'update'])->name('profile.update');
-    Route::get('/profile/password', [\App\Http\Controllers\Usuario\PasswordController::class, 'index'])->name('password.index');
-    Route::put('/profile/password', [\App\Http\Controllers\Usuario\PasswordController::class, 'update'])->name('password.update');
+    Route::get('/profile/password', [\App\Http\Controllers\Usuario\PasswordController::class, 'index'])->name('profile.password.index');
+    Route::put('/profile/password', [\App\Http\Controllers\Usuario\PasswordController::class, 'update'])->name('profile.password.update');
     Route::middleware(\App\Http\Middleware\AdminMiddleware::class)->group( function(){
         Route::resource('usuarios', UsuarioController::class)->names('usuarios');
         Route::put('usuarios/{usuario}/password', [UsuarioController::class, 'changePassword'])->name('usuarios.changePassword');

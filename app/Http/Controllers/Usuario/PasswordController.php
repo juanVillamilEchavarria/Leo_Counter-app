@@ -37,7 +37,7 @@ class PasswordController extends Controller
 
         Inertia::flash('success', 'Contraseña actualizada correctamente');
 
-        return redirect()->route('usuario.password.edit');
+        return redirect()->route('profile.password.index');
     }
 
     //

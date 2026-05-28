@@ -2,6 +2,7 @@
 
 namespace App\Providers\Shared;
 
+use App\Infrastructure\Auth\Framework\Laravel\Builders\LaravelPasswordResetEmailFormatBuilder;
 use Illuminate\Support\ServiceProvider;
 use App\Shared\Application\Resolvers\SendMessageToUsersByChannelsResolver;
 use App\Shared\Application\Strategies\SendEmailMessageToUserStrategy;
@@ -18,6 +19,7 @@ class SharedResolverProvider extends ServiceProvider
             \App\Infrastructure\MovimientoFijo\Framework\Laravel\Builders\LaravelMovimientoPendienteCreatedFromAMovimientoFijoEmailFormatBuilder::class,
             \App\Infrastructure\MovimientoPendiente\Framework\Laravel\Builders\LaravelWarningDayOfMovimientoPendienteEmailFormatBuilder::class,
             \App\Infrastructure\MovimientoPendiente\Framework\Laravel\Builders\LaravelMovimientoPendienteExpiredEmailFormatBuilder::class,
+            LaravelPasswordResetEmailFormatBuilder::class
         ], 'email.format.builders');
 
         $this->app->when(SendEmailMessageToUserStrategy::class)
