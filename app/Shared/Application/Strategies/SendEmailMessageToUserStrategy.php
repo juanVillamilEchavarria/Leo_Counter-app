@@ -38,7 +38,11 @@ final readonly class SendEmailMessageToUserStrategy implements SendMessageToUser
     public function supports(Usuario $usuario): bool
     {
 
-       return  $this->usuarioCanBeNotifiedByAChannelCheckerContract->checkIfUsuarioCanBeNotifiedByAChannel($usuario, $canal);
+        $canal = $this->getChanel();
+        if (!$canal) {
+            return false;
+        }
+        return $this->usuarioCanBeNotifiedByAChannelCheckerContract->checkIfUsuarioCanBeNotifiedByAChannel($usuario, $canal);
     }
 
     /**

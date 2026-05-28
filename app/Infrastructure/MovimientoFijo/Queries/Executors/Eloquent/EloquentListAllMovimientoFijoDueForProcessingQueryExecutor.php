@@ -33,8 +33,7 @@ final readonly class EloquentListAllMovimientoFijoDueForProcessingQueryExecutor 
      */
     public function execute(ListMovimientoFijoQueryContract $query): CollectionContract
     {
-        $records = MovimientoFijo::where('fecha_proximo', '<=', Carbon::now()->format('Y-m-d'))
-            ->where('active','=', true)
+        $records = MovimientoFijo::where('active','=', true)
             ->get();
         $aggregates = $records->map(function (MovimientoFijo $record) {
             return MovimientoFijoAggregate::reconstitute(

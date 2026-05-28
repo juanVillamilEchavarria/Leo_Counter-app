@@ -22,7 +22,7 @@ final readonly class MovimientoPendienteForListDTO
         public string $fecha_programada,
         public float $monto,
         public string $estado,
-        public int $dias_aviso,
+        public ?int $dias_aviso,
         public ?bool $enough_balance
     )
     {

@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Domains\Usuario\Aggregates\Usuario;
 use App\Shared\Domain\ValueObjects\Email;
 use App\Shared\Infrastructure\Framework\Laravel\Collections\LaravelCollection;
+use App\Shared\ValueObjects\Password;
 
 final readonly class EloquentGetUsersWhoCanBeNotifiedQueryExecutor implements GetUsersWhoCanBeNotifiedQueryExecutorContract
 {
@@ -20,7 +21,9 @@ final readonly class EloquentGetUsersWhoCanBeNotifiedQueryExecutor implements Ge
      */
     public function execute(): CollectionContract
     {
-        $suscriptores = SuscriptorNotificacion::all();
+        $suscriptores = SuscriptorNotificacion::where('active', '=', true)
+            ->where('verified_at', '!=', null)
+            ->get();
         $suscriptoresIds = $suscriptores->pluck('user_id')->toArray();
         $users = User::whereIn('id',$suscriptoresIds)->get();
         $aggregates = $users->map(function (User $user) {
@@ -28,7 +31,7 @@ final readonly class EloquentGetUsersWhoCanBeNotifiedQueryExecutor implements Ge
                 id: new UsuarioId($user->id),
                 name: $user->name,
                 email: new Email($user->email),
-                password: $user->password,
+                password: Password::fromHash($user->password),
                 role: Roles::try($user->role)
             );
         });
