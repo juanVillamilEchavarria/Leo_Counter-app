@@ -36,4 +36,15 @@ final readonly class LaravelMovimientoPendienteCreatedFromAMovimientoFijoEmailFo
             htmlBody: $body
         );
     }
+
+    /**
+     * Indica si este builder soporta el evento proporcionado.
+     *
+     * @param EventContract $event
+     * @return bool
+     */
+    public function supports(EventContract $event): bool
+    {
+        return $event instanceof MovimientoPendienteCreatedFromMovimientoFijo;
+    }
 }

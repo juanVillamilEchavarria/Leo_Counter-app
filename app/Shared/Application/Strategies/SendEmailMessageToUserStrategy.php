@@ -23,7 +23,7 @@ use App\Domains\Notificacion\Contracts\Repositories\CanalRepositoryContract;
 final readonly class SendEmailMessageToUserStrategy implements SendMessageToUserByChannelStrategyContract
 {
     public function __construct(
-        private  EmailFormatBuilderContract $emailFormatBuilderContract,
+        private iterable $emailFormatBuilders,
         private  UsuarioCanBeNotifiedByAChannelCheckerContract $usuarioCanBeNotifiedByAChannelCheckerContract,
         private  CanalRepositoryContract $canalRepositoryContract,
         private  EmailServiceContract $emailServiceContract
@@ -46,13 +46,32 @@ final readonly class SendEmailMessageToUserStrategy implements SendMessageToUser
      */
     public function sendMessage(EventContract $event, Usuario $usuario): void
     {
-        $emailMessage = $this->emailFormatBuilderContract->build($event, $usuario);
+        $builder = $this->resolveBuilder($event);
+        $emailMessage = $builder->build($event, $usuario);
         try {
             $this->emailServiceContract->sendEmail($emailMessage);
-        }catch (\Throwable $throwable){
+        } catch (\Throwable $throwable) {
 
             throw new CannotSendEmailMessageToUserException('no se pudo enviar el correo al usuario: '. $throwable->getMessage());
         }
 
+    }
+
+    /**
+     * Resuelve el builder adecuado para un evento dado.
+     *
+     * @param EventContract $event
+     * @return EmailFormatBuilderContract
+     * @throws \RuntimeException Si no se encuentra un builder soportado para el evento.
+     */
+    private function resolveBuilder(EventContract $event): EmailFormatBuilderContract
+    {
+        foreach ($this->emailFormatBuilders as $builder) {
+            if ($builder instanceof EmailFormatBuilderContract && $builder->supports($event)) {
+                return $builder;
+            }
+        }
+
+        throw new \RuntimeException('No builder found for event: ' . get_class($event));
     }
 }
