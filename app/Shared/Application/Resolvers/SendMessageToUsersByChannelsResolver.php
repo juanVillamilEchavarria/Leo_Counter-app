@@ -23,13 +23,16 @@ final readonly class SendMessageToUsersByChannelsResolver
     }
     public function resolve(EventContract $event): void{
         $usuarios = $this->getUsersWhoCanBeNotifiedQueryExecutor->execute();
-        foreach($usuarios as $usuario){
+
             foreach($this->strategies as $strategy){
-                if($strategy->supports($usuario)){
-                    $strategy->sendMessage($event, $usuario);
+                if(!$strategy->getChanel()->isActive())continue;
+                foreach($usuarios as $usuario) {
+                    if ($strategy->supports($usuario)) {
+                        $strategy->sendMessage($event, $usuario);
+                    }
                 }
             }
-        }
+
     }
 
 }

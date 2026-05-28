@@ -193,6 +193,26 @@ final readonly class MovimientoPendiente implements AggregateModelContract
         );
     }
 
+    public function isWarningDay():bool{
+        if ($this->dias_aviso === null || $this->dias_aviso <= 0) {
+            return false;
+        }
+        $fecha_proimo = $this->fecha_programada->getPeriod();
+        $today = new \DateTimeImmutable();
+        $fecha_aviso = $fecha_proimo->sub(new \DateInterval('P' . $this->dias_aviso . 'D'));
+        return $today->format('Y-m-d') === $fecha_aviso->format('Y-m-d');
+    }
+
+    /**
+     * Verifica si el movimiento pendiente vencio ayer.
+     * @return bool
+     * @throws \DateInvalidOperationException
+     */
+    public function wasExpiredYesterday(): bool{
+        $yesterday = (new \DateTimeImmutable())->sub(new \DateInterval('P1D'));
+        return $yesterday->format('Y-m-d') === $this->fecha_programada->getPeriod()->format('Y-m-d');
+    }
+
     private static function validateData(
         string             $nombre,
         Amount             $monto,
@@ -205,11 +225,11 @@ final readonly class MovimientoPendiente implements AggregateModelContract
             throw new $exceptionClass('El nombre del movimiento pendiente es obligatorio.');
         }
 
-        if ($monto < 0) {
+        if ($monto->getValue() < 0) {
             throw new $exceptionClass('El monto del movimiento pendiente no puede ser negativo.');
         }
 
-        if ($tipo_movimiento_id <= 0) {
+        if ($tipo_movimiento_id->value <= 0) {
             throw new $exceptionClass('El tipo de movimiento es obligatorio.');
         }
 

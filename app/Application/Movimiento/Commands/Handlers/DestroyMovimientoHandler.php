@@ -5,6 +5,7 @@ use App\Domains\Movimiento\Contracts\Repositories\MovimientoRepositoryContract;
 use App\Domains\Movimiento\Aggregates\Movimiento;
 use App\Application\Movimiento\Commands\DestroyMovimientoCommand;
 use App\Application\Movimiento\Contracts\Queries\Executors\GetAllArchivoMovimientosIdsForAMovimientoQueryExecutorContract;
+use App\Domains\Movimiento\Events\AttachmentsForMovimientoDeleted;
 use App\Domains\Movimiento\Events\MovimientoDeleted;
 use App\Domains\Movimiento\ValueObjects\MovimientoId;
 use App\Shared\Application\Contracts\Services\AuthServiceContract;
@@ -41,11 +42,13 @@ final readonly class DestroyMovimientoHandler
         $this->eventBus->publish(new MovimientoDeleted(
             movimiento: $movimiento,
             oldMovimiento: $movimiento,
-            cuenta: $cuenta,
+            cuenta: $cuenta
+        ));
+        $this->eventBus->publish(new AttachmentsForMovimientoDeleted(
+            movimiento: $movimiento,
             comprobantes_delete_ids: $archivoMovimientosIds->toArray(),
         ));
         $this->movimientoRepository->destroy($movimiento->getId());
     }
 
 }
-

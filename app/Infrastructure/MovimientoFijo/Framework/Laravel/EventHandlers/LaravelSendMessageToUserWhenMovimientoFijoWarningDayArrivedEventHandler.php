@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Application\MovimientoFijo\EventHandlers;
+namespace App\Infrastructure\MovimientoFijo\Framework\Laravel\EventHandlers;
 
 use App\Domains\MovimientoFijo\Events\MovimientoFijoWarningDayArrived;
 use App\Shared\Application\Resolvers\SendMessageToUsersByChannelsResolver;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 /**
- * manejador de evento para enviar un mensaje al usuario cuando un movimiento fue creado a partir de un movimiento fijo
+ * manejador de evento para enviar un mensaje al usuario cuando el dia de aviso de un movimiento fijo ha llegado
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  * @since 1.0.0
  * @version 1.0.0
  */
-final readonly class SendMessageToUserWhenMovimientoIsCreatedAutomatedFromAMovimientoFijoEventHandler
+final readonly class LaravelSendMessageToUserWhenMovimientoFijoWarningDayArrivedEventHandler implements ShouldQueue
 {
     public function __construct(
         private  SendMessageToUsersByChannelsResolver $sendMessageToUserByChannelResolver

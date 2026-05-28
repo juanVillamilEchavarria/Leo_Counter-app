@@ -15,6 +15,7 @@ use App\Domains\Cuenta\Contracts\Repositories\CuentaRepositoryContract;
 use App\Domains\Movimiento\Aggregates\Movimiento;
 use App\Domains\Cuenta\Aggregates\Cuenta;
 use App\Domains\Categoria\Aggregates\Categoria;
+use App\Domains\Movimiento\Events\AttachmentsForMovimientoUpdated;
 use App\Domains\Movimiento\Events\MovimientoUpdated;
 use App\Domains\Movimiento\Exceptions\CannotExecuteMovimientoTransactionException;
 use App\Domains\Movimiento\ValueObjects\MovimientoId;
@@ -72,11 +73,15 @@ final readonly class UpdateMovimientoHandler
            movimiento: $movimiento,
            cuenta: $cuenta,
            oldMovimiento: $oldMovimiento,
-           oldCuenta: $oldCuenta,
+           oldCuenta: $oldCuenta
+       ));
+       $this->eventBus->publish(new AttachmentsForMovimientoUpdated(
+           movimiento: $movimiento,
+           oldMovimiento: $oldMovimiento,
            categoria: $categoria,
-           comprobantes_delete_ids: $command->comprobantes_delete_ids,
-           comprobantes_existing: $command->comprobantes_existing,
            comprobantes: $command->comprobantes,
+           comprobantes_existing: $command->comprobantes_existing,
+           comprobantes_delete_ids: $command->comprobantes_delete_ids,
            tipo_movimiento_name: $tipoMovimientoName
        ));
 

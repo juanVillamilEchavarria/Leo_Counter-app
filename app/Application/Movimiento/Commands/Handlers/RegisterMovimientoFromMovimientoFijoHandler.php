@@ -53,9 +53,6 @@ final readonly class RegisterMovimientoFromMovimientoFijoHandler
             descripcion: $movimientoFijo->getDescripcion(),
         );
         $cuenta = $this->cuentaRepository->findById($movimiento->getCuentaId());
-        $tipoMovimientoName = $this->tipoMovimientoName->getName($movimiento->getTipoMovimientoId());
-        /** @var Categoria $categoria */
-        $categoria = $this->categoriaRepository->findById($movimiento->getCategoriaId());
         $this->movimientoRepositoryContract->store($movimiento);
         $this->eventBus->publish(new AutomatedMovimientoRegistered(
             movimiento: $movimiento,

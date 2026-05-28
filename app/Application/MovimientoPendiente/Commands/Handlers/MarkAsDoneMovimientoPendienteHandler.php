@@ -29,8 +29,8 @@ final readonly class MarkAsDoneMovimientoPendienteHandler
             nombre: $movimientoPendiente->getNombre(),
             cuenta_id: $movimientoPendiente->getCuentaId()->getValue(),
             categoria_id: $movimientoPendiente->getCategoriaId()->getValue(),
-            tipo_movimiento_id: $movimientoPendiente->getTipoMovimientoId(),
-            monto: $movimientoPendiente->getMonto(),
+            tipo_movimiento_id: $movimientoPendiente->getTipoMovimientoId()->value,
+            monto: $movimientoPendiente->getMonto()->getValue(),
             descripcion: $movimientoPendiente->getDescripcion(),
             movimiento_pendiente_id: $movimientoPendiente->getId()->getValue(),
             comprobantes: $command->comprobantes

@@ -2,6 +2,7 @@
 
 namespace App\Shared\Domain\Contracts;
 
+use App\Domains\Notificacion\Aggregates\Canal;
 use App\Domains\Usuario\Aggregates\Usuario;
 
 /**
@@ -15,6 +16,12 @@ use App\Domains\Usuario\Aggregates\Usuario;
  */
 interface SendMessageToUserByChannelStrategyContract
 {
+    /**
+     * Retorna el canal de notificacion
+     * @return Canal
+     */
+
+    public function getChanel(): Canal;
     /**
      * Verifica si el usuario puede ser notificado via el canal
      * @param Usuario $usuario

@@ -2,6 +2,7 @@
 
 namespace App\Shared\Application\Strategies;
 
+use App\Domains\Notificacion\Aggregates\Canal;
 use App\Domains\Notificacion\Enums\CanalesNotificacionEnum;
 use App\Domains\Usuario\Aggregates\Usuario;
 use App\Shared\Application\Exceptions\CannotSendEmailMessageToUserException;
@@ -29,10 +30,15 @@ final readonly class SendEmailMessageToUserStrategy implements SendMessageToUser
     )
     {
     }
+    public function getChanel(): Canal
+    {
+       return $this->canalRepositoryContract->findByName(CanalesNotificacionEnum::EMAIL->value);
+    }
+
     public function supports(Usuario $usuario): bool
     {
-       $canal = $this->canalRepositoryContract->findByName(CanalesNotificacionEnum::EMAIL->value);
-       return $canal->isActive() && $this->usuarioCanBeNotifiedByAChannelCheckerContract->checkIfUsuarioCanBeNotifiedByAChannel($usuario, $canal);
+
+       return  $this->usuarioCanBeNotifiedByAChannelCheckerContract->checkIfUsuarioCanBeNotifiedByAChannel($usuario, $canal);
     }
 
     /**

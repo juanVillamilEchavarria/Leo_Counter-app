@@ -32,7 +32,7 @@ services:
       redis:
         condition: service_healthy
 
-
+  # SERVICIO PARA LOS EVENTOS ENCOLADOS
   queue-worker:
     build:
       context: .
@@ -61,6 +61,33 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+  #SERVICIO PARA LAS AUTOMATIZACIONES
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - USER=juanvillamil
+        - UID=1000
+    image: leo_counter_app
+    container_name: leo_counter_scheduler
+    restart: unless-stopped
+    command: /bin/sh -c "while :; do php artisan schedule:run --no-interaction & sleep 60; done"
+    volumes:
+      - .:/var/www/html
+      - movimientos_data:/var/www/html/storage/app/data/movimientos
+      - app_storage:/var/www/html/storage
+      - app_logs:/var/www/html/storage/logs
+    env_file:
+      - .env
+    networks:
+      - leo_network
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+  # SERVICIO PARA HACER WEBSOCKETS
   reverb:
     build:
       context: .
@@ -88,6 +115,7 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+  # SERVICIO PARA ALMACENAR EL CACHE EN REDIS
   redis:
     image: redis:alpine
     container_name: leo_counter_redis
@@ -108,7 +136,7 @@ services:
       retries: 3
     networks:
       - leo_network
-
+ # BASE DE DATOS
   db:
     image: mariadb:latest
     container_name: mariadb_server
@@ -130,6 +158,7 @@ services:
       start_period: 15s
     networks:
       - leo_network
+  # SERVICIO PARA EL ADMINISTRADOR DE BASE DE DATOS
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
@@ -145,6 +174,7 @@ services:
       - db
     networks:
       - leo_network
+  # SERVICIO PARA EL ENVIO DE CORREOS EN DESARROLLO
   mailhog:
     image: mailhog/mailhog
     container_name: mailhog
