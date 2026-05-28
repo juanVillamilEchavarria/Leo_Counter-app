@@ -54,7 +54,7 @@ export default function MovimientoPendienteForm({
                 <AlertMessage message={errors?.nombre} />
             </TransitionMotion>
         </div>
-        <div className="flex w-full gap-4">
+        <div className="flex w-full flex-col gap-4 md:flex-row">
             <div className="formulario-campo w-full">
                 <label htmlFor="tipo_movimiento_id">Tipo de movimiento</label>
 
@@ -92,7 +92,7 @@ export default function MovimientoPendienteForm({
                 </TransitionMotion>
             </div>
         </div>
-        <div className="flex w-full gap-4">
+        <div className="flex w-full flex-col gap-4 md:flex-row">
             <div className="formulario-campo w-full">
                 <label htmlFor="cuenta_id">Cuenta</label>
 
@@ -110,7 +110,7 @@ export default function MovimientoPendienteForm({
                 </TransitionMotion>
             </div>
         </div>
-        <div className="flex w-full gap-4">
+        <div className="flex w-full flex-col gap-4 md:flex-row">
             <div className="formulario-campo w-full">
                 <label htmlFor="monto">Monto</label>
                 <InputFillable
@@ -176,7 +176,7 @@ export default function MovimientoPendienteForm({
             </TransitionMotion>
         </div>
 
-          <div className="w-1/6 my-5 mx-auto">
+          <div className="w-full my-5 mx-auto sm:w-1/2 lg:w-1/6">
             <Button
             variant="secondary"
                 type="submit"

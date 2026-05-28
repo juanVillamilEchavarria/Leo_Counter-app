@@ -7,7 +7,7 @@ export default function Password() {
   return (
     <SectionTransition>
         <UsuarioNavBar />
-        <div className="w-[50%] mx-auto mt-10 flex flex-col justify-center">
+        <div className="w-full px-4 sm:px-6 lg:w-[50%] lg:px-0 mx-auto mt-10 flex flex-col justify-center">
             <div className="flex flex-col text-foreground gap-5">
                 <Title
                 title={

@@ -67,7 +67,7 @@ export default function CuentaForm({
 
                 </TransitionMotion>
             </div>
-            <div className="flex w-full gap-2">
+            <div className="flex w-full flex-col gap-2 md:flex-row">
                 <div className="formulario-campo w-full">
                     <label htmlFor="tipo_cuenta_id">Tipo De Cuentas</label>
                     <select
@@ -127,7 +127,7 @@ export default function CuentaForm({
             </div>
 
 
-            <div className="w-1/6 my-5 mx-auto">
+            <div className="w-full my-5 mx-auto sm:w-1/2 lg:w-1/6">
                 <Button
                 variant="secondary"
                     type="submit"

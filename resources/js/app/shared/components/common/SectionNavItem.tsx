@@ -3,7 +3,7 @@ import { type NavItemProps } from "@/app/shared/types/components"
 import { isRouteActive } from "@/app/shared/helpers"
 import SectionNavItemGroup from "./SectionNavItemGroup"
 
-export const SectionNavItemBaseStyle = `flex items-center gap-2 p-4 text-foreground border-b border-transparent`
+export const SectionNavItemBaseStyle = `flex shrink-0 items-center gap-2 p-4 text-foreground border-b border-transparent whitespace-nowrap`
 export const SectionNavItemHoverStyle = `hover:text-gray-400  hover:border-gray-400 transition-all`
 export const SectionNavItemActiveStyle = `text-cyan-600! border-cyan-600!`
 interface SectionNavItemProps extends Pick<NavItemProps, 'icon' | 'routeName' | 'title' | 'href' | 'childrenNav'> {

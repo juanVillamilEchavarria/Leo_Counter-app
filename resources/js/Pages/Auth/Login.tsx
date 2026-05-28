@@ -11,7 +11,7 @@
   
 
   return (
-    <div className="w-1/4 mx-auto">
+    <div className="w-full max-w-md mx-auto">
         <Card
         className="rounded-2xl!"
         >

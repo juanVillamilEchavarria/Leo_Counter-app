@@ -39,7 +39,7 @@ export default function DuplicateModal({
               <small><i className="fa-solid fa-circle-exclamation text-amber-400"></i> Si lo duplicas, para modificarlo deberas esperar a que aparezca el mes siguiente</small>
               <small>El presupuesto duplicado se creara con el mismo monto. Esta accion esta pensada para casos extraordinarios donde sepas que el proximo mes seguramente tendras el mismo presupuesto</small>
               <form onSubmit={handleDuplicate}>
-                 <div className="flex w-2/3 mx-auto mt-7 gap-2">
+                 <div className="flex w-full flex-col mx-auto mt-7 gap-2 sm:w-2/3 sm:flex-row">
                                 <Button
                                 type="button"
                                 variant="gray"

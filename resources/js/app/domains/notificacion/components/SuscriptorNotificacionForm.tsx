@@ -66,7 +66,7 @@ export default function SuscriptorNotificacionForm({
 
 
         {/* Botón de envío */}
-        <div className="w-1/2 my-5 mx-auto">
+        <div className="w-full my-5 mx-auto sm:w-1/2">
           <Button
             variant="secondary"
             type="submit"

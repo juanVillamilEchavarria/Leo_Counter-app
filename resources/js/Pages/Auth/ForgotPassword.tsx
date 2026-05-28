@@ -12,7 +12,7 @@ function ForgotPassword() {
     const { form, handleSubmit } = useForgotPassword()
 
     return (
-        <div className="w-1/4 mx-auto">
+        <div className="w-full max-w-md mx-auto">
             <Card className="rounded-2xl!">
                 <Logo className="w-1/3 mx-auto" />
                 <Title title="Restablecer contraseña" size="md" className="text-center text-gray-200 my-4" />

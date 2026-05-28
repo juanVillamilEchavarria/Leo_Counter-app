@@ -53,7 +53,7 @@ export default function UsuarioForm({ data }: UsuarioFormProps) {
                     <p className="text-red-400 dark:text-red-200 mt-2 text-xs">No puedes actualizar este campo, ya que estas suscrito a un canal de notificacion que lo implementa, si quieres actualizarlo, dile al administrador que te quite de la lista de suscritos a notificaciones</p>
                 )}
             </div>
-            <div className="w-[20%] mt-5 mx-auto">
+            <div className="w-full mt-5 mx-auto sm:w-1/2 lg:w-[20%]">
                 <Button variant="secondary" type="submit">Guardar</Button>
             </div>
         </form>

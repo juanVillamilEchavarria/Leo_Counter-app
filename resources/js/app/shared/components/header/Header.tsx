@@ -3,13 +3,38 @@ import { Head } from "@inertiajs/react"
 import PageModeSelect from "../mode/PageModeSelect"
 import GithubLink from "./GithubLink"
 import { useMessageRedirect } from "../../hooks"
-export default function Header() {
+
+interface HeaderProps {
+    isOpen: boolean
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+    isMobileOpen: boolean
+    setIsMobileOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+/**
+ * Header principal.
+ * Expone el botón hamburguesa solo en móvil/tablet para abrir o cerrar el
+ * sidebar superpuesto sin afectar el colapso de escritorio.
+ */
+export default function Header({
+    isMobileOpen,
+    setIsMobileOpen,
+}: HeaderProps) {
     const { props } = useMessageRedirect()
   return (
-    <div className="w-full h-20 flex lg:flex-row flex-col justify-between bg-background shadow-xl items-center border-b border-border ">
+    <div className="w-full min-h-20 flex flex-row justify-between gap-3 bg-background shadow-xl items-center border-b border-border px-4 sm:px-6 lg:px-0">
         <Head>
           <title>{props.title}</title>
        </Head>
+        <button
+          type="button"
+          className="lg:hidden inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-background text-foreground shadow-sm transition-colors hover:bg-accent"
+          onClick={() => setIsMobileOpen(prev => !prev)}
+          aria-label={isMobileOpen ? "Cerrar menú lateral" : "Abrir menú lateral"}
+          aria-expanded={isMobileOpen}
+        >
+          <i className="fa-solid fa-bars" />
+        </button>
         <Title title={
                   props.NoRegistros ? (
                     <>
@@ -24,9 +49,9 @@ export default function Header() {
                   )
               }    
               size="md" 
-              className=" text-foreground ml-10 font-principal whitespace-nowrap" 
+              className="min-w-0 flex-1 truncate text-foreground lg:ml-10 font-principal whitespace-nowrap" 
               />
-              <div className="flex gap-4 items-center">
+              <div className="flex shrink-0 gap-2 sm:gap-4 items-center">
                   <PageModeSelect />
                   <GithubLink />
               </div>

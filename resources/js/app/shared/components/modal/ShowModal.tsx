@@ -26,7 +26,7 @@ export default function ShowModal({
     className="overflow-y-scroll scrollbar-modern"
     title={
         <div className="w-full flex justify-start">
-            <p className="text-4xl">
+            <p className="text-2xl sm:text-4xl">
                  <span className="text-blue-400 border-b-2 border-blue-500 rounded-lg">{spanTittle} ~ </span>
               {tittle}
             </p>
@@ -35,14 +35,14 @@ export default function ShowModal({
     }
     >
       <div className="flex flex-col h-full w-full my-2">  
-            <ul className=" relative grid grid-cols-2 gap-4 my-6 border-y-2 py-4 border-blue-200/10">
-            <span className="pointer-events-none absolute top-4 bottom-4 left-1/2  w-px bg-blue-200/10" />
+            <ul className="relative grid grid-cols-1 sm:grid-cols-2 gap-4 my-6 border-y-2 py-4 border-blue-200/10">
+            <span className="pointer-events-none absolute top-4 bottom-4 left-1/2 hidden w-px bg-blue-200/10 sm:block" />
             {item &&
                 Object.entries(item).map(([key, value]) => { 
             
                 const icon = icons[key] ?? 'fa-solid fa-circle-question' 
                 return (
-                <li key={key} className="ml-2 text-lg flex gap-2 items-center ">
+                <li key={key} className="ml-2 text-base sm:text-lg flex gap-2 items-center break-words">
                     
                     {!Array.isArray(value)&&(
                     <>

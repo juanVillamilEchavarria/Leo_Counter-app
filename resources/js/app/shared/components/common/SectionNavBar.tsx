@@ -15,7 +15,7 @@ export default function SectionNavBar({
     className
 }: SectionNavBarProps) {
   return (
-    <div className={`w-[80%] mx-auto flex gap-3 border-b border-border items-center ${className}`}>
+    <div className={`w-full lg:w-[80%] mx-auto flex gap-3 overflow-x-auto border-b border-border items-center px-4 lg:px-0 ${className}`}>
            {navItems.map((item) => (
             <SectionNavItem  icon={item.icon} routeName={item.routeName} title={item.title} href={item.href} key={item.key} childrenNav={item.childrenNav}/>
           ))}

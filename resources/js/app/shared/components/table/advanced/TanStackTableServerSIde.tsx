@@ -50,7 +50,7 @@ export default function TanStackTableServerSide<T extends Record<string, any>>({
 
     return (
         <div>
-            <div className="flex w-full justify-start gap-3">
+            <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:justify-start">
                   <Search value={globalFilter} setValue={setGlobalFilter} />
             {/* Indicador de carga */}
             {isFetching && (
@@ -64,8 +64,8 @@ export default function TanStackTableServerSide<T extends Record<string, any>>({
           
 
             {/* Tabla */}
-            <div className="table-container">
-                <table className="table-general">
+            <div className="overflow-x-auto w-full table-container">
+                <table className="table-general min-w-[640px]">
                     <thead className="table-thead">
                         {table.getHeaderGroups().map((headerGroup) => (
                             <tr key={headerGroup.id}>
@@ -129,7 +129,7 @@ export default function TanStackTableServerSide<T extends Record<string, any>>({
             </div>
 
             {/* Pagination */}
-            <div className="w-full flex justify-between mt-5">
+            <div className="w-full flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between mt-5">
                 <TablePagination controller={controller} />
                 <TableEntries entries={entries} setEntries={(value) => {
                     setEntries(value);

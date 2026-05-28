@@ -17,7 +17,7 @@ export default function SideBarToggle({
                         rounded-full
                         bg-background
                         border-2 border-border
-                        flex items-center justify-center
+                        hidden lg:flex items-center justify-center
                         shadow-lg
                         cursor-pointer
                         hover:bg-accent

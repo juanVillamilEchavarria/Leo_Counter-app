@@ -63,7 +63,7 @@ export default function MovimientoEspontaneoForm({
                     <AlertMessage message={errors?.nombre} />
                 </TransitionMotion>
             </div>
-            <div className="flex w-full gap-4">
+            <div className="flex w-full flex-col gap-4 md:flex-row">
                 <div className="formulario-campo w-full">
                     <label htmlFor="tipo_movimiento_id">Tipo de movimiento</label>
 
@@ -101,7 +101,7 @@ export default function MovimientoEspontaneoForm({
                     </TransitionMotion>
                 </div>
             </div>
-            <div className="flex w-full gap-4">
+            <div className="flex w-full flex-col gap-4 md:flex-row">
                 <div className="formulario-campo w-full">
                     <label htmlFor="cuenta_id">Cuenta</label>
 
@@ -169,7 +169,7 @@ export default function MovimientoEspontaneoForm({
                 )}
 
                     <ErrorList rejectedFiles={rejectedFiles}/>
-                    <div className={`${hasExistingFiles ? ' grid grid-cols-2' : 'flex flex-col gap-4'} mt-5`}>
+                    <div className={`${hasExistingFiles ? 'grid grid-cols-1 md:grid-cols-2 gap-4' : 'flex flex-col gap-4'} mt-5`}>
 
                             { data?.comprobantes_existing && data?.comprobantes_existing?.length>0  &&(
 
@@ -198,7 +198,7 @@ export default function MovimientoEspontaneoForm({
                     </div>
             </div>
 
-            <div className="w-1/6 my-5 mx-auto">
+            <div className="w-full my-5 mx-auto sm:w-1/2 lg:w-1/6">
                 <Button
                 variant="secondary"
                     type="submit"
