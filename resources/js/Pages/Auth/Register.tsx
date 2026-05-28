@@ -27,8 +27,8 @@ export default function Register() {
         className="rounded-2xl!"
       >
         <Logo className="w-1/3 mx-auto" />
-        <Title title="Crear Cuenta Administrador" className="text-center text-gray-200 font-cursiva my-4" />
-        <Title title="Registro" size="md" className="text-center text-gray-200"></Title>
+        <Title title="Bienvenido a Leo Counter" className="text-center text-gray-200 font-cursiva my-4" />
+        <p className='text-sm text-gray-200 text-center mb-7'>Para empezar debes crear el administrador del sistema</p>
         <AnimatePresence>
           {flash.error && (
             <motion.div

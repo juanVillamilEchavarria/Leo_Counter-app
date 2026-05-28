@@ -2,7 +2,13 @@
 
 namespace App\Domains\Usuario\Exceptions;
 
-class CannotCreateTheAdminUserException
+use App\Shared\Abstracts\Exceptions\DomainException;
+
+class CannotCreateTheAdminUserException extends DomainException
 {
+    public function __construct(string $message = "No se pudo crear el usuario administrador", int $code = 0, ?Throwable $previous = null)
+    {
+        parent::__construct($message, $code, $previous);
+    }
 
 }

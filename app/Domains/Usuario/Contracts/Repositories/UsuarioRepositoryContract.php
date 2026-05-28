@@ -7,6 +7,7 @@ use App\Domains\Usuario\ValueObjects\UsuarioId;
 use App\Shared\Domain\Contracts\AggregateModelContract;
 use App\Shared\Domain\Contracts\AggregateModelIdContract;
 use App\Shared\Domain\Contracts\RepositoryContract;
+use App\Shared\Domain\ValueObjects\Email;
 
 /**
  * Contrato del repositorio de escritura para el agregado Usuario.
@@ -18,4 +19,11 @@ use App\Shared\Domain\Contracts\RepositoryContract;
  */
 interface UsuarioRepositoryContract extends RepositoryContract
 {
+    /**
+     * Busca un usuario por correo electronico y lo reconstituye como agregado.
+     *
+     * @param Email $email Correo electronico del usuario.
+     * @return Usuario|null Usuario encontrado o null.
+     */
+    public function findByEmail(Email $email): ?Usuario;
 }

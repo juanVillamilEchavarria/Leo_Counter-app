@@ -70,7 +70,7 @@ export default function LoginForm() {
                 </div>
                 <div className="flex w-full  justify-between">
                     <Link 
-                        href="#"
+                        href="/forgot-password"
                         className="text-gray-200 text-sm hover:underline"
                      >
                     ¿Olvidaste tu contraseña?

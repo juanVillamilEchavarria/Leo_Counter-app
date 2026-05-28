@@ -4,9 +4,11 @@ namespace App\Providers\Usuario;
 
 use App\Application\Usuario\Commands\ChangeUserPasswordCommand;
 use App\Application\Usuario\Commands\ChangeOwnPasswordCommand;
+use App\Application\Usuario\Commands\CreateTheAdminUserCommand;
 use App\Application\Usuario\Commands\DestroyUsuarioCommand;
 use App\Application\Usuario\Commands\Handlers\ChangeUserPasswordHandler;
 use App\Application\Usuario\Commands\Handlers\ChangeOwnPasswordHandler;
+use App\Application\Usuario\Commands\Handlers\CreateTheAdminUserHandler;
 use App\Application\Usuario\Commands\Handlers\DestroyUsuarioHandler;
 use App\Application\Usuario\Commands\Handlers\StoreUsuarioHandler;
 use App\Application\Usuario\Commands\Handlers\UpdatePublicDataHandler;
@@ -37,6 +39,7 @@ final class UsuarioBusProvider extends ServiceProvider
             ChangeOwnPasswordCommand::class => ChangeOwnPasswordHandler::class,
             ChangeUserPasswordCommand::class => ChangeUserPasswordHandler::class,
             DestroyUsuarioCommand::class => DestroyUsuarioHandler::class,
+            CreateTheAdminUserCommand::class => CreateTheAdminUserHandler::class
         ]);
     }
 }

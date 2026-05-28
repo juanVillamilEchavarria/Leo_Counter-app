@@ -5,12 +5,14 @@ namespace App\Domains\Usuario\Aggregates;
 use App\Domains\Usuario\Contracts\Checkers\UsuarioCanUpdatePublicDataCheckerContract;
 use App\Domains\Usuario\Contracts\Services\PasswordHasherContract;
 use App\Domains\Usuario\Enums\Roles;
+use App\Domains\Usuario\Exceptions\CannotCreateTheAdminUserException;
 use App\Domains\Usuario\Exceptions\CannotUpdateUserDataRelatedToANotificationChannel;
 use App\Domains\Usuario\Exceptions\WrongPasswordException;
 use App\Domains\Usuario\ValueObjects\UsuarioId;
 use App\Shared\Domain\Contracts\AggregateModelContract;
 use App\Shared\Domain\ValueObjects\Email;
 use App\Shared\ValueObjects\Password;
+use App\Domains\Usuario\Contracts\Checkers\UsuarioUniquinessCheckerContract;
 use InvalidArgumentException;
 
 /**
@@ -86,6 +88,36 @@ final readonly class Usuario implements AggregateModelContract
     }
 
     /**
+     * Crea el unico usuario administrador.
+     *
+     * @param UsuarioId $id Identificador del usuario.
+     * @param string $name Nombre del usuario.
+     * @param Email $email Correo electrónico del usuario.
+     * @param Password $password Contraseña hasheada mediante Value Object.
+     * @param UsuarioUniquinessCheckerContract $checker - checker para verificar si el usuario administrador ya ha sido creado.
+     *
+     * @return self
+     */
+    public static function createAdmin(
+        UsuarioId $id,
+        string $name,
+        Email $email,
+        Password $password,
+        UsuarioUniquinessCheckerContract $checker
+    ): self {
+        if($checker->checkIfAdminWasAlreadyCreated()){
+            throw new CannotCreateTheAdminUserException('No se pudo crear el usuario administrador, ya existe uno');
+        }
+        return new self(
+            id: $id,
+            name: trim($name),
+            email: $email,
+            password: $password,
+            role: Roles::ADMIN
+        );
+    }
+
+    /**
      * Actualiza los datos públicos del usuario.
      *
      * @param string $name Nombre público.
@@ -157,6 +189,10 @@ final readonly class Usuario implements AggregateModelContract
             password: $newPassword,
             role: $this->role,
         );
+    }
+
+    public function isAdmin():bool{
+        return $this->role === Roles::ADMIN;
     }
 
     public function getId(): UsuarioId

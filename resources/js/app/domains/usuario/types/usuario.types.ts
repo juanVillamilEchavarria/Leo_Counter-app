@@ -17,10 +17,10 @@ export const ProfileActions = {
 } as const
 
 export const PasswordRoutes = {
-    index: myRoute('password.index'),
+    index: myRoute('profile.password.index'),
 } as const
 export const PasswordActions = {
-    update: myRoute('password.update'),
+    update: myRoute('profile.password.update'),
 } as const
 
 
@@ -47,7 +47,7 @@ export const ProfileNavItems: NavItemConfig[] = [
         icon: 'fa-solid fa-fingerprint',
         title: 'Mi Contraseña',
         href: PasswordRoutes.index,
-        routeName: 'password.index',
+        routeName: 'profile.password.index',
     },
 ]
 

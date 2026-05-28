@@ -65,4 +65,17 @@ final class EloquentUsuarioRepository extends EloquentRepository implements Usua
         );
     }
 
+    /**
+     * Busca un usuario por correo electronico y lo reconstituye como agregado.
+     *
+     * @param Email $email Correo electronico del usuario.
+     * @return UsuarioAggregate|null Usuario encontrado o null.
+     */
+    public function findByEmail(Email $email): ?UsuarioAggregate
+    {
+        $model = User::where('email', $email->__toString())->first();
+
+        return $model ? $this->mapDatabaseRecordToAggregate($model) : null;
+    }
+
 }
