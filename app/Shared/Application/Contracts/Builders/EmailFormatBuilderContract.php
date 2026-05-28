@@ -23,4 +23,11 @@ interface EmailFormatBuilderContract
      */
     public function build(EventContract $event, Usuario $usuario): EmailMessageDTO;
 
+    /**
+     * Indica si el builder soporta el evento proporcionado.
+     *
+     * @param EventContract $event
+     * @return bool
+     */
+    public function supports(EventContract $event): bool;
 }

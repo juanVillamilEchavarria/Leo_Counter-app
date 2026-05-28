@@ -2,6 +2,9 @@
 
 namespace App\Providers\MovimientoPendiente;
 
+use App\Infrastructure\MovimientoFijo\Framework\Laravel\Builders\LaravelMovimientoPendienteCreatedFromAMovimientoFijoEmailFormatBuilder;
+use App\Infrastructure\MovimientoFijo\Framework\Laravel\EventHandlers\LaravelSendMessageToUserWhenMovimientoPendienteIsCreatedFromAMovimientoFijoEventHandler;
+use App\Shared\Application\Contracts\Builders\EmailFormatBuilderContract;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Event;
 use App\Domains\MovimientoPendiente\Events\MovimientoPendienteWarningDayArrived;
@@ -22,7 +25,7 @@ final class MovimientoPendienteEventHandlersProvider extends ServiceProvider
 {
     public function register(): void
     {
-        // No se requieren bindings específicos: los handlers son resolvibles por el contenedor.
+        // Bindings removed: builders are now resolved via tagged services in SharedResolverProvider
     }
 
     public function boot(): void

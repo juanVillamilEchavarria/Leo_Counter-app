@@ -29,16 +29,7 @@ class MovimientoFijoEventHandlersProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->when(LaravelSendMessageToUserWhenMovimientoFijoWarningDayArrivedEventHandler::class)
-            ->needs(EmailFormatBuilderContract::class)
-            ->give(LaravelWarningDayOfMovimientoFijoEmailFormatBuilder::class);
-        $this->app->when(LaravelSendMessageToUserWhenMovimientoIsCreatedAutomatedFromAMovimientoFijoEventHandler::class)
-            ->needs(EmailFormatBuilderContract::class)
-            ->give(LaravelMovimientoCreatedAutomatedEmailFormatBuilder::class);
-        $this->app->when(LaravelSendMessageToUserWhenMovimientoPendienteIsCreatedFromAMovimientoFijoEventHandler::class)
-            ->needs(EmailFormatBuilderContract::class)
-            ->give(LaravelMovimientoPendienteCreatedFromAMovimientoFijoEmailFormatBuilder::class);
-
+        // Bindings removed: builders are now resolved via tagged services in SharedResolverProvider
     }
 
     /**

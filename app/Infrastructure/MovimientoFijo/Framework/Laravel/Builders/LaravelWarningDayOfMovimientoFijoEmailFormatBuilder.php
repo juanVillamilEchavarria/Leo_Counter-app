@@ -37,4 +37,15 @@ final readonly class LaravelWarningDayOfMovimientoFijoEmailFormatBuilder impleme
         );
 
     }
+
+    /**
+     * Indica si este builder soporta el evento proporcionado.
+     *
+     * @param EventContract $event
+     * @return bool
+     */
+    public function supports(EventContract $event): bool
+    {
+        return $event instanceof MovimientoFijoWarningDayArrived;
+    }
 }
