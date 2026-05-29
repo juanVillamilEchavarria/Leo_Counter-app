@@ -3,6 +3,14 @@ import SelfOptionsCard from "./SelfOptionsCard"
 import { createPortal } from 'react-dom';
 import useSelfUserCard from "../hooks/useSelfUserCard";
 import { type SelfUserCardProps } from "../types/user.types"
+
+/**
+ * Tarjeta del usuario logueado del sistema con su informacion basica
+ * @param param0
+ * @param param0.isOpen
+ * @param param0.user
+ * @constructor
+ */
 export default function SelfUserCard({
     isOpen = false,
     user
@@ -13,19 +21,19 @@ export default function SelfUserCard({
     if(!portal) return null
   return (
     <div className="flex flex-row items-center justify-between mt-3 w-full p-2 rounded-2xl">
-        <div 
+        <div
             className="
             flex
-            flex-row 
+            flex-row
             items-center
             gap-3
             "
         >
            {/* muestra la imagen del usuario */}
-            <div 
+            <div
                 className="
                 bg-background/80
-                p-2 
+                p-2
                 rounded-full
                 "
             >
@@ -47,14 +55,14 @@ export default function SelfUserCard({
                         <p className="text-xs  whitespace-nowrap">{user.role}</p>
                     </div>
                 </TransitionMotion>
-            
+
         </div>
         <div> {/* este div no tiene estilos porque solo envuelve todo el contenido para que el justify-between del elemento padre no mueva al boton de abrir el card */}
 
-            
+
               {/* muestra el boton para abrir el card de opciones */}
-            <TransitionMotion 
-            active={isOpen} 
+            <TransitionMotion
+            active={isOpen}
             initial={
                     {
                     opacity:0, x: -70
@@ -71,7 +79,7 @@ export default function SelfUserCard({
                                 fa-chevron-right
                                 transition-all
                                 duration-500
-                                ${isOpenCard ? 'fa-rotate-180' : ''} 
+                                ${isOpenCard ? 'fa-rotate-180' : ''}
                                  mx-3
                                 `}
                             >
@@ -79,13 +87,13 @@ export default function SelfUserCard({
                             </i>
                         </button>
                     </div>
-                    
-                
+
+
             </TransitionMotion>
             {/* muestra el card de opciones */}
             {typeof document !== 'undefined' && createPortal(
-                <TransitionMotion 
-                    active={isOpenCard} 
+                <TransitionMotion
+                    active={isOpenCard}
                     initial={
                             {
                             opacity: 0,
@@ -93,15 +101,15 @@ export default function SelfUserCard({
                             scaleX:0,
                             y: -150,
                             x: 100}
-                        } 
+                        }
                     animate={
                             {
                             opacity: 1,
-                            scaleY:1, 
+                            scaleY:1,
                             scaleX:1,
                             y: -250,
                             x: 250}
-                        } 
+                        }
                     exit={
                             {
                             opacity: 0,
@@ -109,7 +117,7 @@ export default function SelfUserCard({
                             scaleX:0,
                             y: -150,
                             x: 100}
-                        } 
+                        }
                     transition={
                         {
                         duration: 0.25}
@@ -127,15 +135,15 @@ export default function SelfUserCard({
                         <SelfOptionsCard />
                 </TransitionMotion>,
                 portal
-                
+
             )}
-            
-        
+
+
 
         </div>
-        
-    
-            
+
+
+
     </div>
   )
 }

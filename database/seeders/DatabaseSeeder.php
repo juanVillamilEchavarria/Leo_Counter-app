@@ -17,16 +17,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'id'=>Uuid::uuid7()->toString(),
-            'name' => 'Juan',
-            'email' => 'juan@example.com',
-            'password'=> Hash::make('password')
-        ]);
         $this->call([
-            PropietarioSeeder::class,
             FrecuenciaMovimientoSeeder::class,
             TipoCuentaSeeder::class,
             TipoMovimientoSeeder::class,

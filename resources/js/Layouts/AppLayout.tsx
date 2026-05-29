@@ -22,7 +22,7 @@ export default function AppLayout({
     restorePageMode()
   return (
     <QueryClientProvider client={queryClient}>
-    <div className="flex h-screen overflow-hidden bg-background">
+    <div className="flex h-screen overflow-hidden bg-background relative">
 
         <ToastContainer className={`mt-20`}  />
         <FlashToastListener />

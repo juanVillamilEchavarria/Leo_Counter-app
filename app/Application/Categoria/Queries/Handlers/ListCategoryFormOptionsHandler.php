@@ -3,7 +3,6 @@
 namespace App\Application\Categoria\Queries\Handlers;
 
 use App\Application\Categoria\Queries\ListCategoryFormOptionsQuery;
-use App\Application\Categoria\Contracts\Queries\Executors\ListCategoryFormOptionQueryExecutorContract;
 use App\Application\Categoria\DTOs\CategoriaFormOptionsDTO;
 use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListTipoMovimientoForFormContract;
 
@@ -19,7 +18,7 @@ final readonly class ListCategoryFormOptionsHandler{
     public function __construct(
         /**
          * @param ListTipoMovimientoForFormContract $executor El ejecutor encargado de manejar la consulta para obtener los tipos de movimiento para mostrar en el formulario.
-         * 
+         *
          */
         private ListTipoMovimientoForFormContract $executor
     )
