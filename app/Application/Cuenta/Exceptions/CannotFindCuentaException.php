@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-namespace App\Domains\Cuenta\Exceptions;
+namespace App\Application\Cuenta\Exceptions;
 
 use App\Shared\Abstracts\Exceptions\DomainException;
 use Throwable;

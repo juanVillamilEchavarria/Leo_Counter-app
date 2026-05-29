@@ -1,13 +1,15 @@
 export default function SideBarToggle({
     isOpen,
-    setIsOpen
+    setIsOpen,
+    className = '',
 }:{
     isOpen : boolean,
     setIsOpen : React.Dispatch<React.SetStateAction<boolean>>
+    className?: string
 }) {
   return (
     <button
-                    className="
+                    className={`
                         absolute
                         top-1/6
                         -right-5
@@ -25,7 +27,8 @@ export default function SideBarToggle({
                         transition-all
                         ease-in-out
                         duration-500
-                        "
+                        ${className}
+                    `}
                     onClick={() => setIsOpen(prev => !prev)}
                     >
                         <i className={`fa-solid fa-chevron-right ${isOpen ? 'rotate-180': ''} text-foreground text-sm transition-all ease-in-out duration-500`} />

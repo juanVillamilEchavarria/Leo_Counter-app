@@ -1,0 +1,13 @@
+node_modules
+.git
+.env
+storage/app/*
+storage/framework/cache/*
+storage/framework/views/*
+storage/framework/sessions/*
+vendor
+*.md
+.editorconfig
+.env.production
+phpunit.xml
+tests
