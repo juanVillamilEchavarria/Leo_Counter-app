@@ -23,3 +23,8 @@ docker/mysql/**/**
 Homestead.json
 Homestead.yaml
 Thumbs.db
+bootstrap/cache/*
+storage/framework/cache/data/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/logs/*
