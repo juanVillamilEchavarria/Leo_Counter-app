@@ -32,14 +32,14 @@ final readonly class DestroyMovimientoHandler
         $archivoMovimientosIds = $this->getAllArchivoMovimientosIdsForAMovimientoQueryExecutor->execute(new MovimientoId($command->id));
         /** @var Movimiento $movimiento */
         $movimiento = $this->movimientoRepository->findById(new MovimientoId($command->id));
-
-        // El repositorio se encarga de publicar el evento de dominio MovimientoDeleted
-        $this->movimientoRepository->destroy($movimiento->getId());
-
-        // Publicar evento de aplicación para eliminar comprobantes asociados
+        // Publicar evento de aplicación ANTES para eliminar comprobantes asociados, pues la tabla de archivo movimientos tiene onDelete cascade
         $this->eventBus->publish(new AttachmentsForMovimientoDeleted(
             movimiento: $movimiento,
             comprobantes_delete_ids: $archivoMovimientosIds->toArray(),
         ));
+        // El repositorio se encarga de publicar el evento de dominio MovimientoDeleted
+        $this->movimientoRepository->destroy($movimiento->getId());
+
+
     }
 }

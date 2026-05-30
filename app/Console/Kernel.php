@@ -17,7 +17,12 @@ class Kernel extends ConsoleKernel
 {
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('leo:process-daily-financial-tasks')->dailyAt('00:01');
+
+        $schedule->command('leo:process-daily-financial-tasks')->everyMinute();
+    }
+    protected function scheduleTimezone(): string
+    {
+        return 'America/Bogota';
     }
 
     protected function commands(): void

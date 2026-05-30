@@ -61,9 +61,12 @@ Route::middleware('auth')->group( function () {
     Route::get('/movimientos/historicos', [MovimientoController::class, 'index'])->name('movimientos.index');
     Route::get('/movimientos/historicos/{movimiento}', [MovimientoController::class, 'show'])->name('movimientos.show');
     //MOVIMIENTOS ESPONTANEOS
-    Route::resource('movimientos-espontaneos',MovimientoEspontaneoController::class)->names('movimientosEspontaneos')->parameters([
-        'movimientos-espontaneos'=> 'movimientoEspontaneo'
-    ])->except(['update']);
+    Route::middleware(\App\Http\Middleware\IdempotencyMiddleware::class)->group(function () {
+        Route::resource('movimientos-espontaneos',MovimientoEspontaneoController::class)->names('movimientosEspontaneos')->parameters([
+            'movimientos-espontaneos'=> 'movimientoEspontaneo'
+        ])->except(['update']);
+    });
+
     // MOVIMIENTOS PENDIENTES
     Route::resource('movimientos-pendientes',MovimientoPendienteController::class)->names('movimientosPendientes')->parameters([
         'movimientos-pendientes'=> 'movimientoPendiente'

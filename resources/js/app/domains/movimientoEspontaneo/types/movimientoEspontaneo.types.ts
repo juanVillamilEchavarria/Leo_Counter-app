@@ -15,7 +15,7 @@ const route = useRoute()
 export type MovimientoEspontaneo =Omit<Movimiento, 'movimiento_pendiente_id'>
 export type MovimientoEspontaneoTableData = Omit<MovimientoTableData , 'fecha'| 'movimiento_pendiente_id'>
 
-export type MovimientoEspontaneoFormData = MovimientoEspontaneo  &{
+export type MovimientoEspontaneoFormData =  Omit<MovimientoEspontaneo, 'id'>  &{
     comprobantes ? : FileWithPreview[],
     comprobantes_existing ? : FileWithPreview[],
     comprobantes_delete_ids ? : number[],
@@ -33,9 +33,9 @@ export const MovimientoEspontaneoRoutes = {
 
 export const MovimientoEspontaneoActions ={
     post  :route('movimientosEspontaneos.store'),
-    put : (id: number) => route('movimientosEspontaneos.update', {id}),
-    patch : (id: number) => route('movimientosEspontaneos.update', {id}),
-    delete : (id: number) => route('movimientosEspontaneos.destroy', {id})
+    put : (id: string) => route('movimientosEspontaneos.update', {id}),
+    patch : (id: string) => route('movimientosEspontaneos.update', {id}),
+    delete : (id: string) => route('movimientosEspontaneos.destroy', {id})
 } as const
 
 export const MovimientoEspontaneoAPIActions={

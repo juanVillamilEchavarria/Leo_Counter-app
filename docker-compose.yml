@@ -48,12 +48,14 @@ services:
     image: leo_counter_app
     container_name: leo_counter_scheduler
     restart: unless-stopped
-    command: /bin/sh -c "while :; do php artisan schedule:run --no-interaction; sleep 60; done"
+    command: /bin/sh -c "printenv | grep -v 'no_proxy' >> /etc/environment && touch /var/www/html/storage/logs/cron.log && chown www-data:www-data /var/www/html/storage/logs/cron.log && cron && tail -f /var/www/html/storage/logs/cron.log"
     volumes:
       - ./.env:/var/www/html/.env:z
       - ./storage:/var/www/html/storage:z
     env_file:
       - .env
+    environment:
+      - TZ=${TZ}
     networks:
       - leo_network
     depends_on:

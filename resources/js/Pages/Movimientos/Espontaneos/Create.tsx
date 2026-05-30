@@ -16,14 +16,14 @@ export default function Create({
 }:{
     options: MovimientoFijoFormOptions
 }) {
-    const {form, handleSubmit}= useMovimientoEspontaneo({})
+    const {handleMovimientoPost, form}= useMovimientoEspontaneo({})
   return (
     <div className="section">
         <CreateOrEditDescription type="create" model="Movimiento Espontaneo" />
         <CreateOrEditFormSection
         buttonHref={MovimientoEspontaneoRoutes.index()}
         >
-            <MovimientoEspontaneoForm {...form} submit={handleSubmit} options={options} />
+            <MovimientoEspontaneoForm {...form} submit={handleMovimientoPost} options={options} />
         </CreateOrEditFormSection>
     </div>
   )

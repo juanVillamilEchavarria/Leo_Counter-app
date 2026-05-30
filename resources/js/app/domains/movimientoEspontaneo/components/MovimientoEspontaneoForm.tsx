@@ -41,6 +41,7 @@ export default function MovimientoEspontaneoForm({
         data,
         onCategoriaInvalid : () => setData('categoria_id', undefined)
    })
+    console.log(data);
 
    const {onDrop,onDropRejected,rejectedFiles,removeFile}= useMovimientoEspontaneoUploadFiles({files: data?.comprobantes, setFiles : (files) => setData('comprobantes', files)})
    const {removeFile: removeExistingFile}= useMovimientoEspontaneoUploadFiles({files: data?.comprobantes_existing, setFiles : (files) => setData('comprobantes_existing', files)})
