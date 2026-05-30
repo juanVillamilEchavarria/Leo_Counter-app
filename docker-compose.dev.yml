@@ -20,6 +20,10 @@ services:
       - ./storage:/var/www/html/storage:z
     env_file:
       - .env
+    environment:
+      - REVERB_HOST=reverb
+      - REVERB_PORT=8081
+      - REVERB_SCHEME=http
     networks:
       - leo_network
     depends_on:

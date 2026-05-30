@@ -81,7 +81,7 @@ export default function CreateSuscriptorModal({
 
 
   return (
-    <Modal className={verifyingId ? 'sm:max-w-md' : 'sm:max-w-2xl'} open={open} onClose={handleClose} size={verifyingId ? 'lg' : '2xl'} title={
+    <Modal className={verifyingId ? 'sm:max-w-md' : 'sm:max-w-2xl'} open={open} onClose={handleClose} size={verifyingId ? 'lg' : 'xl'} title={
     <div>
         <span className="text-blue-400 border-b-2 border-blue-500 rounded-lg">Crear</span>
         <span> Suscriptor</span>

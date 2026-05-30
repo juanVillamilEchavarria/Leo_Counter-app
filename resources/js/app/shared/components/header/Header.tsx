@@ -31,7 +31,7 @@ export default function Header({
     const { props } = useMessageRedirect()
   return (
     <div className="w-full min-h-20 flex flex-row justify-between gap-3 bg-background shadow-xl items-center border-b border-border px-4 sm:px-6 lg:px-0">
-        {props.title && <Head title={props.title} />}
+        {props.title !== undefined && <Head title={props.title} />}
         <button
           type="button"
           className="lg:hidden inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-background text-foreground shadow-sm transition-colors hover:bg-accent"
@@ -53,15 +53,15 @@ export default function Header({
                   ) : (
                     props.title
                   )
-              }    
-              size="md" 
-              className="min-w-0 flex-1 truncate text-foreground lg:ml-10 font-principal whitespace-nowrap" 
+              }
+              size="md"
+              className="min-w-0 flex-1 truncate text-foreground lg:ml-10 font-principal whitespace-nowrap"
               />
               <div className="flex shrink-0 gap-2 sm:gap-4 items-center">
                   <PageModeSelect />
                   <GithubLink />
               </div>
-        
+
 
     </div>
   )

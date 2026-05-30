@@ -6,7 +6,7 @@
  * @since 1.0.0
  * @version 1.0.0
  */
-import EditAndDeleteActions from "@/app/shared/components/table/actions/EditAndDeleteActions"; 
+import EditAndDeleteActions from "@/app/shared/components/table/actions/EditAndDeleteActions";
 import {Link} from "@inertiajs/react";
 import CrudButton from "@/app/shared/components/common/CrudButton";
 import ActionSection from "@/app/shared/components/table/actions/ActionSection";
@@ -31,22 +31,22 @@ export const PropietarioColumns=({
 
   return [
     { key: "id", label: "ID" },
-    { key: "nombre", label: "Nombre", 
+    { key: "nombre", label: "Nombre",
       render : (row: PropietarioTableData) => (
-      <button 
+      <button
           onClick={()=>{
             onSelect(row, 'show')
             router.get(PropietarioRoutes.show(row.id),{},{
                       preserveState: true,
                       preserveScroll: true
                     })}
-  
+
           }
             className="cursor-pointer hover:underline hover:text-blue-500 transition-all">
                   <p>{row.nombre}</p>
           </button>
           )
-      
+
      },
     { key: "apellido", label: "Apellido" },
     { key: "email", label: "Email" },
@@ -55,11 +55,10 @@ export const PropietarioColumns=({
     {
       key: 'actions',
       label: '',
-      className: 'w-20',
       render: (row: PropietarioTableData)=>{
         return row.no_cuentas === 0 ?(
         <EditAndDeleteActions
-         editHref={PropietarioRoutes.edit(row.id)} 
+         editHref={PropietarioRoutes.edit(row.id)}
         deleteOnClick={()=> onSelect(row, 'delete')} // onSelect recibe el registro de la fila
         />
       ):(
