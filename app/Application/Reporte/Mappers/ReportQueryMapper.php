@@ -18,7 +18,7 @@ use DateTimeImmutable;
  * @since 1.0.0
  * @version 1.0.0
  * @package App\Application\Reporte\Mappers
- * @see App\Application\Reporte\Queries\GenerateFinancialReportQuery
+ * @see GenerateFinancialReportQuery
  */
 final class ReportQueryMapper
 {
@@ -32,7 +32,7 @@ final class ReportQueryMapper
      * Instancia el ReportQuery usando el DTO GenerateFinancialReportQuery
      * @param GenerateFinancialReportQuery $dto
      * @return ReporteQuery
-     * 
+     *
      */
     public function map(GenerateFinancialReportQuery $dto): ReporteQuery
     {
@@ -64,13 +64,13 @@ final class ReportQueryMapper
 
     /**
      * Resuelve los ids instanciando Ids mediante la satisfaccion de la especificacion del dominio
-     * @param iterable $property
+     * @param iterable | null $property
      * @return ?Ids
      */
     private function resolveIds(?iterable $property): ?Ids
     {
-        return $this->idsSpec->isSatisfiedBy($property)  
-                  ? Ids::fromArray($property)       
+        return $this->idsSpec->isSatisfiedBy($property)
+                  ? Ids::fromArray($property)
                   : null;
     }
 

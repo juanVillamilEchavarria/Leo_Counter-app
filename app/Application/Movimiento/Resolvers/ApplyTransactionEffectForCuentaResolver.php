@@ -2,7 +2,6 @@
 
 namespace App\Application\Movimiento\Resolvers;
 
-use App\Application\Movimiento\Contracts\Commands\ModifyMovimientoCommandContract;
 use App\Domains\Cuenta\Aggregates\Cuenta;
 use App\Domains\Movimiento\Aggregates\Movimiento;
 use App\Domains\Movimiento\Contracts\Strategies\ApplyTransactionEffectForCuentaStrategyContract;

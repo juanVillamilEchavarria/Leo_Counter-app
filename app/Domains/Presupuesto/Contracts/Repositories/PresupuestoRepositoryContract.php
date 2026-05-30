@@ -4,8 +4,8 @@ namespace App\Domains\Presupuesto\Contracts\Repositories;
 use App\Domains\Presupuesto\Aggregates\Presupuesto;
 use App\Domains\Presupuesto\ValueObjects\PresupuestoId;
 use App\Shared\Domain\Contracts\AggregateModelContract;
-use App\Shared\Contracts\Repositories\SoftDeleteRepositoryContract;
 use App\Shared\Domain\Contracts\AggregateModelIdContract;
+use App\Shared\Domain\Contracts\SoftDeleteRepositoryContract;
 
 /**
  * Contrato para el repositorio de presupuestos.

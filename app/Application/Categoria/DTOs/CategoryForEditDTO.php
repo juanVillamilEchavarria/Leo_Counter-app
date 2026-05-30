@@ -2,8 +2,6 @@
 
 namespace App\Application\Categoria\DTOs;
 
-use App\Shared\Abstracts\DTOs\DTO;
-
 /**
  * DTO que representa los datos necesarios para editar una categoría específica.
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
@@ -11,7 +9,7 @@ use App\Shared\Abstracts\DTOs\DTO;
  * @since 1.0.0
  * @version 1.0.0
  */
-final class CategoryForEditDTO extends DTO
+final readonly class CategoryForEditDTO
 {
     public function __construct(
         public string $id,

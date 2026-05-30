@@ -1,6 +1,6 @@
 <?php
 
 namespace App\Application\Reporte\Exceptions;
-use App\Shared\Abstracts\Exceptions\DomainException;
+use App\Shared\Domain\Exceptions\DomainException;
 
 abstract class ReporteException extends DomainException {}

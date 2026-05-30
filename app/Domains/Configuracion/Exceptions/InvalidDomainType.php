@@ -2,7 +2,7 @@
 
 namespace App\Domains\Configuracion\Exceptions;
 
-use App\Shared\Abstracts\Exceptions\DomainException;
+use App\Shared\Domain\Exceptions\DomainException;
 use Throwable;
 
 class InvalidDomainType extends DomainException

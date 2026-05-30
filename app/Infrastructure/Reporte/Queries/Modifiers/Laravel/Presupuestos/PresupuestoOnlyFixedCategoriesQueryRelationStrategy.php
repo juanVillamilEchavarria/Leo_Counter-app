@@ -2,12 +2,12 @@
 
 namespace App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Presupuestos;
 
-use App\Infrastructure\Reporte\Enums\Queries\Builders\PresupuestoQueryRelationParam;
 use App\Domains\Reporte\ValueObjects\ReporteQuery;
-use App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Abstracts\QueryJoinRelationStrategy;
 use App\Infrastructure\Reporte\Contracts\Enums\QueryRelationParamContract;
+use App\Infrastructure\Reporte\Enums\Queries\Builders\PresupuestoQueryRelationParam;
+use App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Abstracts\QueryJoinRelationStrategy;
+use App\Shared\Domain\Enums\ComparativeOperators;
 use App\Shared\Domain\ValueObjects\WhereFilterQueryDTO;
-use App\Shared\Enums\ComparativeOperators;
 
 final class PresupuestoOnlyFixedCategoriesQueryRelationStrategy extends QueryJoinRelationStrategy
 {

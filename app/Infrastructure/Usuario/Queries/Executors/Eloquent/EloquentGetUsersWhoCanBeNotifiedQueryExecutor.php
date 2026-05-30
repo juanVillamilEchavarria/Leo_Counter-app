@@ -2,16 +2,16 @@
 
 namespace App\Infrastructure\Usuario\Queries\Executors\Eloquent;
 
+use App\Domains\Usuario\Aggregates\Usuario;
 use App\Domains\Usuario\Enums\Roles;
 use App\Domains\Usuario\ValueObjects\UsuarioId;
-use App\Shared\Application\Contracts\Queries\Executors\GetUsersWhoCanBeNotifiedQueryExecutorContract;
-use App\Shared\Domain\Contracts\CollectionContract;
 use App\Models\Notificacion\SuscriptorNotificacion;
 use App\Models\User;
-use App\Domains\Usuario\Aggregates\Usuario;
+use App\Shared\Application\Contracts\Queries\Executors\GetUsersWhoCanBeNotifiedQueryExecutorContract;
+use App\Shared\Domain\Contracts\CollectionContract;
 use App\Shared\Domain\ValueObjects\Email;
+use App\Shared\Domain\ValueObjects\Password;
 use App\Shared\Infrastructure\Framework\Laravel\Collections\LaravelCollection;
-use App\Shared\ValueObjects\Password;
 
 final readonly class EloquentGetUsersWhoCanBeNotifiedQueryExecutor implements GetUsersWhoCanBeNotifiedQueryExecutorContract
 {

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-BLUE='\033[1;34m'
+BLUE='\033[0;34m'
 CYAN='\033[1;36m'
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
@@ -11,7 +11,7 @@ NC='\033[0m'
 clear
 echo -e "${BLUE}"
 cat << 'BANNER'
-    __                ______
+    __               ______                   __
    / /   ___  ____  / ____/___  __  __ ____  / /_ ___  _____
   / /   / _ \/ __ \/ /   / __ \/ / / // __ \/ __// _ \/ ___/
  / /___/  __/ /_/ / /___/ /_/ / /_/ // / / / /_ /  __/ /
@@ -98,10 +98,27 @@ echo -e "${GREEN}>>> Permisos base verificados.${NC}"
 # ================================================================
 # 5. BUILD DE IMAGENES
 # ================================================================
-echo -e "${BLUE}>>> Construyendo imagen Docker (puede tomar varios minutos)...${NC}"
-docker compose build --no-cache
+echo -e "${BLUE}>>> Preparando variables de entorno para el build...${NC}"
 
-echo -e "${GREEN}>>> Imagen construida.${NC}"
+# --- Leer las claves de Reverb del .env  ---
+REVERB_APP_KEY=$(grep -E '^REVERB_APP_KEY=' .env | cut -d= -f2-)
+REVERB_APP_ID=$(grep -E '^REVERB_APP_ID=' .env | cut -d= -f2-)
+REVERB_APP_SECRET=$(grep -E '^REVERB_APP_SECRET=' .env | cut -d= -f2-)
+REVERB_HOST=$(grep -E '^REVERB_HOST=' .env | cut -d= -f2-)
+REVERB_PORT=$(grep -E '^REVERB_PORT=' .env | cut -d= -f2-)
+REVERB_SCHEME=$(grep -E '^REVERB_SCHEME=' .env | cut -d= -f2-)
+# --- Leer las variables para el build de Vite ---
+VITE_API_URL=$(grep -E '^VITE_API_URL=' .env | cut -d= -f2- )
+
+echo -e "${BLUE}>>> Construyendo imagen Docker (puede tomar varios minutos)...${NC}"
+docker compose build --no-cache \
+    --build-arg REVERB_APP_KEY="${REVERB_APP_KEY}" \
+    --build-arg REVERB_APP_ID="${REVERB_APP_ID}" \
+    --build-arg REVERB_APP_SECRET="${REVERB_APP_SECRET}" \
+    --build-arg REVERB_HOST="${REVERB_HOST}" \
+    --build-arg REVERB_PORT="${REVERB_PORT}" \
+    --build-arg REVERB_SCHEME="${REVERB_SCHEME}"\
+     --build-arg VITE_API_URL="${VITE_API_URL}"
 
 # ================================================================
 # 6. LEVANTAR SERVICIOS DE SOPORTE
@@ -148,14 +165,18 @@ echo -e "${GREEN}>>> Aplicacion lista.${NC}"
 # ================================================================
 # 8. SETUP DE LARAVEL
 # ================================================================
+echo -e "${BLUE}>>> Preparando la configuración...${NC}"
+# --- Forzar la lectura del archivo .env eliminando la caché de configuración generada en el build ---
+docker compose exec -T app php artisan config:clear
+
 echo -e "${BLUE}>>> Ejecutando migraciones...${NC}"
 docker compose exec -T app php artisan migrate --force
 
 echo -e "${BLUE}>>> Ejecutando seeders...${NC}"
 docker compose exec -T app php artisan db:seed --force
 
-echo -e "${BLUE}>>> Creando enlace simbolico de storage...${NC}"
-docker compose exec -T app rm -f public/storage
+echo -e "${BLUE}>>> Creando enlace simbólico de storage...${NC}"
+docker compose exec -T app rm -rf public/storage
 docker compose exec -T app php artisan storage:link --force
 
 echo -e "${BLUE}>>> Optimizando Laravel...${NC}"
@@ -163,7 +184,6 @@ docker compose exec -T app php artisan config:cache
 docker compose exec -T app php artisan route:cache
 docker compose exec -T app php artisan view:cache
 docker compose exec -T app php artisan event:cache
-
 echo -e "${GREEN}>>> Laravel configurado.${NC}"
 
 # ================================================================
@@ -182,7 +202,7 @@ else
 fi
 
 # ================================================================
-# 10. SERVICIO SYSTEMD (opcional, solo si systemctl disponible)
+# 10. SERVICIO SYSTEMD (solo si systemctl disponible)
 # ================================================================
 SERVICE_FILE="/etc/systemd/system/leo-counter.service"
 
@@ -191,7 +211,7 @@ if command -v systemctl &>/dev/null && [ ! -f "$SERVICE_FILE" ]; then
     WORKING_DIR="$(pwd)"
     CURRENT_USER="$(whoami)"
 
-    sudo tee "$SERVICE_FILE" > /dev/null << EOF
+    sudo sh -c "cat > $SERVICE_FILE" << 'SYSTEMDEOF'
 [Unit]
 Description=Leo Counter - Sistema de Gestion Financiera
 Requires=docker.service
@@ -200,17 +220,20 @@ After=docker.service network-online.target
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-WorkingDirectory=${WORKING_DIR}
+WorkingDirectory=WORKDIR
 ExecStart=/usr/bin/docker compose up -d
 ExecStop=/usr/bin/docker compose down
 StandardOutput=journal
 StandardError=journal
-User=${CURRENT_USER}
+User=CURRENTUSER
 Group=docker
 
 [Install]
 WantedBy=multi-user.target
-EOF
+SYSTEMDEOF
+
+    sudo sed -i "s|WORKDIR|${WORKING_DIR}|g" "$SERVICE_FILE"
+    sudo sed -i "s|CURRENTUSER|${CURRENT_USER}|g" "$SERVICE_FILE"
 
     sudo systemctl daemon-reload
     sudo systemctl enable leo-counter.service
@@ -218,7 +241,6 @@ EOF
 elif [ -f "$SERVICE_FILE" ]; then
     echo -e "${BLUE}>>> Servicio systemd ya existe.${NC}"
 fi
-
 # ================================================================
 # 11. ARRANQUE FINAL (todos los servicios)
 # ================================================================
@@ -227,14 +249,17 @@ docker compose up -d
 
 echo ""
 echo -e "${GREEN}============================================================${NC}"
-echo -e "${GREEN}  ✅ Instalacion completada con exito!                      ${NC}"
+echo -e "${GREEN}   Instalacion completada con exito!                      ${NC}"
 echo -e "${GREEN}============================================================${NC}"
-echo -e "${GREEN}  🌐 Aplicacion:   http://localhost:8080                    ${NC}"
-echo -e "${GREEN}  📧 Mailhog:      http://localhost:8025                    ${NC}"
-echo -e "${GREEN}  🗄️  PhpMyAdmin:   http://localhost:8082                    ${NC}"
-echo -e "${GREEN}  🔌 Reverb WS:    ws://localhost:8085                      ${NC}"
+echo -e "${GREEN}   Aplicacion:   http://localhost:8080                    ${NC}"
+echo -e "${GREEN}   Mailhog:      http://localhost:8025                    ${NC}"
+echo -e "${GREEN}   PhpMyAdmin:   http://localhost:8082                    ${NC}"
+echo -e "${GREEN}   Reverb WS:    ws://localhost:8085                      ${NC}"
 echo -e "${GREEN}============================================================${NC}"
-echo -e "${CYAN}  Para detener:   docker compose down                       ${NC}"
+echo -e "${CYAN}  Para detener:   systemctl stop leo-counter.service                     ${NC}"
+echo -e "${CYAN}  Para detener si te da error arriba:   docker compose down                  ${NC}"
+echo -e "${CYAN}  Para arrancar nuevamente:   systemctl start leo-counter.service              ${NC}"
+echo -e "${CYAN}  Para arrancar nuevamente si te da error arriba:   docker compose up -d              ${NC}"
 echo -e "${CYAN}  Para los logs:  docker compose logs -f app                ${NC}"
 echo -e "${CYAN}  Para el error:  docker compose exec app cat storage/logs/laravel.log${NC}"
 echo -e "${GREEN}============================================================${NC}"

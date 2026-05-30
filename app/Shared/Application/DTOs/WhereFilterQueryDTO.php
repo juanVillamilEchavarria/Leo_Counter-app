@@ -1,7 +1,8 @@
 <?php
 namespace App\Shared\Application\DTOs;
-use App\Shared\Enums\ComparativeOperators;
+use App\Shared\Domain\Enums\ComparativeOperators;
 use DateTimeImmutable;
+
 /**
  * DTO que se encarga de representar los datos necesarios para realizar una consulta con filtros, recibe el nombre de la columna por la cual se va a filtrar, el operador de comparacion, el valor por el cual se va a filtrar y la logica de la consulta (and o or)
  * @package App\Shared\Domain\ValueObjects

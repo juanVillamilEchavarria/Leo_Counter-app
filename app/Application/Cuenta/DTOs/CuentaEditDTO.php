@@ -1,9 +1,13 @@
 <?php
 namespace App\Application\Cuenta\DTOs;
-
-use App\Shared\Abstracts\DTOs\DTO;
-
-final class CuentaEditDTO extends DTO{
+/**
+ * DTO que representa los datos necesarios para editar una cuenta.
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @package App\Application\Cuenta\DTOs
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+final readonly class CuentaEditDTO{
     public function __construct(
          public string $id,
         public string $nombre,

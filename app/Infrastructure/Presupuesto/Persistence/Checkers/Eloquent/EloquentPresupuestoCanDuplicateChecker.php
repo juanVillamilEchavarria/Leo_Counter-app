@@ -36,7 +36,7 @@ final readonly class EloquentPresupuestoCanDuplicateChecker implements Presupues
     {
         $categoriaIds= $records->pluck('categoria_id')->unique()->toArray();
         if (empty($categoriaIds)) {
-            return [];
+            return LaravelCollection::make([]);
         }
 
 

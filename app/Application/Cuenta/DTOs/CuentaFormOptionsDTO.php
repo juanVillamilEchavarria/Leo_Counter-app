@@ -1,10 +1,16 @@
 <?php
 
 namespace App\Application\Cuenta\DTOs;
-
-use App\Shared\Abstracts\DTOs\DTO;
 use App\Shared\Domain\Contracts\CollectionContract;
-class CuentaFormOptionsDTO extends DTO{
+
+/**
+ * DTO que representa las opciones para el formulario de cuenta.
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @package App\Application\Cuenta\DTOs
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+final readonly class CuentaFormOptionsDTO{
     public function __construct(
         public  CollectionContract $propietarios,
         public CollectionContract $tipo_cuentas

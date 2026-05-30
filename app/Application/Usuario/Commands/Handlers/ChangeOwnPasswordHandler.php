@@ -7,7 +7,7 @@ use App\Application\Usuario\Exceptions\CannotFindUsuarioException;
 use App\Domains\Usuario\Contracts\Repositories\UsuarioRepositoryContract;
 use App\Domains\Usuario\Contracts\Services\PasswordHasherContract;
 use App\Domains\Usuario\ValueObjects\UsuarioId;
-use App\Shared\ValueObjects\Password;
+use App\Shared\Domain\ValueObjects\Password;
 
 /**
  * Handler del comando de cambio de contraseña del usuario.

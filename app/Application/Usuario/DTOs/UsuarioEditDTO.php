@@ -2,7 +2,6 @@
 
 namespace App\Application\Usuario\DTOs;
 
-use App\Shared\Abstracts\DTOs\DTO;
 
 /**
  * DTO con los datos necesarios para editar el perfil del usuario.
@@ -12,7 +11,7 @@ use App\Shared\Abstracts\DTOs\DTO;
  * @since 1.0.0
  * @version 1.0.0
  */
-final class UsuarioEditDTO extends DTO
+final readonly class UsuarioEditDTO
 {
     public function __construct(
         public string $id,

@@ -1,10 +1,14 @@
 <?php
 
 namespace App\Application\Reporte\DTOs\Movimientos\KPI;
-use App\Shared\Abstracts\DTOs\DTO;
-use App\Application\Reporte\DTOs\Movimientos\KPI\VariationsKPIDTO;
-use App\Application\Reporte\DTOs\Movimientos\KPI\TotalsKPIDTO;
-class PeriodKPIDTO extends DTO{
+/**
+ * DTO que representa un periodo de tiempo de key perfomance indicators con sus totales y variaciones.
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @package App\Application\Reporte\DTOs\Movimientos\KPI
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+final readonly class PeriodKPIDTO {
     public function __construct(
         public TotalsKPIDTO $totales,
         public VariationsKPIDTO $variaciones

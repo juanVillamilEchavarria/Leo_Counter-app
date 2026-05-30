@@ -23,9 +23,7 @@ export default function Header({
     const { props } = useMessageRedirect()
   return (
     <div className="w-full min-h-20 flex flex-row justify-between gap-3 bg-background shadow-xl items-center border-b border-border px-4 sm:px-6 lg:px-0">
-        <Head>
-          <title>{props.title}</title>
-       </Head>
+        {props.title && <Head title={props.title} />}
         <button
           type="button"
           className="lg:hidden inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-background text-foreground shadow-sm transition-colors hover:bg-accent"

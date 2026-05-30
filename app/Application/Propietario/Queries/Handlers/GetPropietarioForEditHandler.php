@@ -21,7 +21,7 @@ final readonly class GetPropietarioForEditHandler
 
     ) {}
 
-    public function __invoke(GetPropietarioForEditQuery $query)
+    public function __invoke(GetPropietarioForEditQuery $query) : PropietarioEditDTO 
     {
         $existing= $this->repository->findById(new PropietarioId($query->id));
         if(!$existing){

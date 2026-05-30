@@ -2,15 +2,15 @@
 
 namespace App\Domains\Categoria\Contracts\Repositories;
 
-use App\Shared\Contracts\Repositories\SoftDeleteRepositoryContract;
 use App\Shared\Domain\Contracts\AggregateModelContract;
 use App\Shared\Domain\Contracts\AggregateModelIdContract;
+use App\Shared\Domain\Contracts\SoftDeleteRepositoryContract;
 
 /**
  * Contrato de implementación de repositorio de escritura para el modelo Categoria
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  * @package App\Domains\Categoria\Contracts\Repositories
- * @since 1.0.0 
+ * @since 1.0.0
  * @version 1.0.0
  */
 interface CategoriaRepositoryContract extends SoftDeleteRepositoryContract

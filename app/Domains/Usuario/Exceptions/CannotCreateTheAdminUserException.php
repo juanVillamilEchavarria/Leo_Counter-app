@@ -2,7 +2,7 @@
 
 namespace App\Domains\Usuario\Exceptions;
 
-use App\Shared\Abstracts\Exceptions\DomainException;
+use App\Shared\Domain\Exceptions\DomainException;
 
 class CannotCreateTheAdminUserException extends DomainException
 {

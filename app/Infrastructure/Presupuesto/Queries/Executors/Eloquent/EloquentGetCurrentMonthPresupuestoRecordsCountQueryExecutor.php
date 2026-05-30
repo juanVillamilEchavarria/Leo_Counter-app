@@ -4,7 +4,7 @@ namespace App\Infrastructure\Presupuesto\Queries\Executors\Eloquent;
 
 use App\Application\Presupuesto\Contracts\Queries\Executors\GetPresupuestoRecordsCountQueryExecutorContract;
 use App\Models\Presupuesto\Presupuesto;
-use App\Shared\Enums\ComparativeOperators;
+use App\Shared\Domain\Enums\ComparativeOperators;
 use Carbon\Carbon;
 use Override;
 

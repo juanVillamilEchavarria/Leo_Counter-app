@@ -14,12 +14,12 @@ final readonly class ListReporteFormOptionsHandler{
         private ListCategoriaForFormContract $categoriaForForm
     )
     {
-    }    
+    }
 
     public function __invoke( ListReporteFormOptionsQuery $query ): ReporteFormOptionsDTO
     {
         /**
-         * @var CategoriaForFormCollectionContract
+         * @var CategoriaForFormCollectionContract $categorias
          */
         $categorias = $this->categoriaForForm->execute();
         $cuentas = $this->cuentaForForm->execute();
@@ -27,6 +27,6 @@ final readonly class ListReporteFormOptionsHandler{
             categorias: $categorias,
             cuentas: $cuentas
         );
-        
+
     }
 }

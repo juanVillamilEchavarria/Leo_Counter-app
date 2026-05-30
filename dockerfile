@@ -55,7 +55,22 @@ WORKDIR /var/www/html
 # PNPM GLOBAL
 # ================================
 RUN npm install -g pnpm
+# ================================
+# ARGUMENTOS PARA BUILD DE VITE
+# ================================
+ARG REVERB_APP_KEY=
+ARG REVERB_APP_ID=
+ARG REVERB_APP_SECRET=
+ARG REVERB_HOST=
+ARG REVERB_PORT=
+ARG REVERB_SCHEME=
+ARG VITE_API_URL=
 
+ENV VITE_REVERB_APP_KEY="${REVERB_APP_KEY}"
+ENV VITE_REVERB_HOST="${REVERB_HOST}"
+ENV VITE_REVERB_PORT="${REVERB_PORT}"
+ENV VITE_REVERB_SCHEME="${REVERB_SCHEME}"
+ENV VITE_API_URL="${VITE_API_URL}"
 # ================================
 # COPIAR CÓDIGO Y BUILD
 # ================================
@@ -74,7 +89,7 @@ RUN test -f public/build/manifest.json \
     || (echo "ERROR: manifest.json de Vite no encontrado." && exit 1)
 
 # ================================
-# ESTRUCTURA DE STORAGE (crítico para bind mounts frescos)
+# ESTRUCTURA DE STORAGE
 # ================================
 RUN mkdir -p \
     storage/app/public \

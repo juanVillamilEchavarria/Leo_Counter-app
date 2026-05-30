@@ -1,9 +1,14 @@
 <?php
 namespace App\Application\Reporte\DTOs\Movimientos\Averages;
 
-use App\Shared\Abstracts\DTOs\DTO;
-
-class PromedioDTO extends DTO{
+/**
+ * DTO que representa los promedios de ingresos y gastos por periodo y por movimiento.
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @package App\Application\Reporte\DTOs\Movimientos\Averages
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+final readonly class PromedioDTO {
     public function __construct(
         public ?float $ingresos_por_periodo,
         public ?float $gastos_por_periodo,

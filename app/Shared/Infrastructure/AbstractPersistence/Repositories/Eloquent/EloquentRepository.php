@@ -2,12 +2,11 @@
 
 namespace App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent;
 
-use App\Models\Cuenta\Cuenta;
-use App\Shared\Contracts\DTOs\DTOContract;
 use App\Shared\Domain\Contracts\AggregateModelContract;
 use App\Shared\Domain\Contracts\AggregateModelIdContract;
+use App\Shared\Infrastructure\Exceptions\InvalidToggleAttributeException;
 use Illuminate\Database\Eloquent\Model;
-use App\Shared\Exceptions\InvalidToggleAttributeException;
+
 /**
  * Repositorio base para operaciones de escritura usando Eloquent.
  *

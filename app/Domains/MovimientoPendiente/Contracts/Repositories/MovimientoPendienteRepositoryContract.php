@@ -2,8 +2,8 @@
 
 namespace App\Domains\MovimientoPendiente\Contracts\Repositories;
 
-use App\Shared\Contracts\Repositories\SoftDeleteRepositoryContract;
 use App\Shared\Domain\Contracts\RepositoryContract;
+use App\Shared\Domain\Contracts\SoftDeleteRepositoryContract;
 
 /**
  * Contrato de repositorio para MovimientoPendiente.

@@ -2,9 +2,14 @@
 
 namespace App\Application\Reporte\DTOs\Movimientos\KPI;
 
-use App\Shared\Abstracts\DTOs\DTO;
-
-class TotalsKPIDTO extends DTO{
+/**
+ * DTO que representa los totales de key perfomance indicators.
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @package App\Application\Reporte\DTOs\Movimientos\KPI
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+final readonly class TotalsKPIDTO {
 
     public function __construct(
         public float $ingresos,

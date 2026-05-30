@@ -11,7 +11,7 @@ use App\Domains\Usuario\Aggregates\Usuario;
 use App\Domains\Usuario\Contracts\Repositories\UsuarioRepositoryContract;
 use App\Shared\Application\Contracts\Bus\EventBus;
 use App\Shared\Domain\ValueObjects\Email;
-use App\Shared\ValueObjects\Password;
+use App\Shared\Domain\ValueObjects\Password;
 
 /**
  * Handler del caso de uso para restablecer una contraseña mediante token.
