@@ -1,0 +1,28 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+import { router } from '@inertiajs/react'
+import { CanalNotificacionActions, NotificacionToggleTypes } from '../../types/notificacion.types'
+
+/**
+ * Hook simple para alternar el estado activo de un suscriptor de notificación.
+ * Usa router.patch de Inertia para enviar la solicitud de toggle.
+ * @returns {{ toggle: (id: string) => void }}
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @since 1.0.0
+ * @version 1.1.0
+ */
+export default function useToggleSuscriptorNotificacion() {
+  const toggle = (id: string) => {
+    router.patch(CanalNotificacionActions.toggleSuscriptor(id, NotificacionToggleTypes.activo), {}, {
+      preserveState: true,
+      preserveScroll: true
+    })
+  }
+  return { toggle }
+}

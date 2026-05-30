@@ -1,0 +1,62 @@
+<?php
+
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+namespace App\Infrastructure\Presupuesto\Persistence\Checkers\Eloquent;
+
+use App\Domains\Presupuesto\Contracts\Checkers\PresupuestoCanDuplicateCheckerContract;
+use App\Domains\Categoria\ValueObjects\CategoriaId;
+use App\Models\Presupuesto\Presupuesto;
+use App\Shared\Domain\Contracts\CollectionContract;
+use App\Shared\Domain\ValueObjects\Date;
+use App\Shared\Infrastructure\Framework\Laravel\Collections\LaravelCollection;
+use Carbon\Carbon;
+
+/**
+ * Clase que implementa el chequeo de duplicidad de presupuestos.
+ *
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+final readonly class EloquentPresupuestoCanDuplicateChecker implements PresupuestoCanDuplicateCheckerContract
+{
+    public function canDuplicate(CategoriaId $categoria_id, string $periodo): bool
+    {
+        $nextMonth = Carbon::parse($periodo)->addMonth()->firstOfMonth();
+
+        return !Presupuesto::query()
+            ->where('categoria_id', $categoria_id->getValue())
+            ->whereDate('periodo', $nextMonth)
+            ->exists();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function findDuplicatedCategories(CollectionContract $records, Date $nextPeriodMonth): CollectionContract
+    {
+        $categoriaIds= $records->pluck('categoria_id')->unique()->toArray();
+        if (empty($categoriaIds)) {
+            return LaravelCollection::make([]);
+        }
+
+
+        $nextMonthFirstDay = Carbon::parse($nextPeriodMonth->format('Y-m'))->firstOfMonth()->toDateString();
+
+
+        $rows = Presupuesto::query()
+            ->select('categoria_id')
+            ->whereIn('categoria_id', $categoriaIds)
+            ->whereDate('periodo', $nextMonthFirstDay)
+            ->get();
+
+        return LaravelCollection::make($rows);
+    }
+}

@@ -1,10 +1,20 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 export default function SideBar({
-    children
+    children,
+    className = ''
 }:{
     children : React.ReactNode
+    className ?: string
 }) {
   return (
-    <div className="h-screen  overflow-visible  relative p-2 bg-linear-to-b from-azul-oscuro via-azul-gris to-azul">
+    <div className={`h-screen  overflow-visible  relative  layout-background ${className}`}>
         {children}
     </div> 
   )

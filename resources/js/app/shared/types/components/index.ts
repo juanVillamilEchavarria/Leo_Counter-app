@@ -1,12 +1,24 @@
-import { TextSize, type TittleProps} from './common/text.types';
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+import { TextSize, type TitleProps} from './common/text.types';
 import { type ButtonProps, ButtonVariants } from './common/button.types';
-import { type InputFillableProps } from './common/form.types';
+import { type InputFillableProps,type TextAreaProps ,type FormCommonProps, type SelectModelProps, FormMethods } from './common/form.types';
 import { type CardProps, CardVariants } from './common/card.types';
 import { type AlertMessageProps, AlertMessagesTypes } from './common/alert.types';
 import { type TransitionDuration, type TransitionMotionProps, type TransitionSection } from './common/transition.types';
-import { type NavItemConfig, type NavItemProps,  NavItems } from './common/nav.types';
+import { type NavItemConfig, type NavItemProps,  NavItems, NavItemCurrentStyles, NavItemHoverStyles, NavItemStyles, NavItemTransitionStyle } from './common/nav.types';
+import { type CrudButtonProps, type CrudButtonVariants } from './common/crudButton.types';
+import { type EditAndDeleteActionsProps, type useTanStackTableProps, type TanStackTableProps, type SimpleTableColumn, type SimpleTableProps, type TablePaginationController, type TablePaginationProps, type ModelToggleProps, type useModelToggleProps, type ServerSideTableParams, type ServerSideTableResponse, type UseServerSideTableProps, type UseServerSideTanStackTableProps  } from './common/table.types';
+
+import { ModalSizes, type ModalProps, type DeleteModalProps, ModalVariants } from './common/modal.types';
 export {
-    type TittleProps,
+    type TitleProps,
     type ButtonProps,
     type InputFillableProps,
     type CardProps,
@@ -16,9 +28,36 @@ export {
     type TransitionSection,
     type NavItemConfig,
     type NavItemProps,
+    type CrudButtonProps,
+    type CrudButtonVariants,
+    type EditAndDeleteActionsProps,
+    type useTanStackTableProps,
+    type TanStackTableProps,
+    type SimpleTableColumn,
+    type SimpleTableProps,
+    type TablePaginationController,
+    type TablePaginationProps,
+    type FormCommonProps,
+    type SelectModelProps,
+    type TextAreaProps,
+    type ModelToggleProps,
+    type ModalProps,
+    type DeleteModalProps,
+    type useModelToggleProps,
+    type ServerSideTableParams,
+    type ServerSideTableResponse,
+    type UseServerSideTableProps,
+    type UseServerSideTanStackTableProps,   
+    ModalSizes,
+    ModalVariants,
+    FormMethods,
     NavItems,
     TextSize,
     ButtonVariants,
     CardVariants,
     AlertMessagesTypes,
+    NavItemCurrentStyles,
+    NavItemHoverStyles,
+    NavItemStyles,
+    NavItemTransitionStyle
 }

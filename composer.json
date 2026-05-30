@@ -10,14 +10,17 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "barryvdh/laravel-dompdf": "^3.1",
         "inertiajs/inertia-laravel": "^2.0",
         "laravel/framework": "^12.0",
+        "laravel/reverb": "^1.10",
+        "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
+        "resend/resend-laravel": "^1.4",
         "tightenco/ziggy": "^2.6"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
-        "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.24",
         "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",
@@ -75,7 +78,9 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "Laravel\\Pail\\PailServiceProvider"
+            ]
         }
     },
     "config": {

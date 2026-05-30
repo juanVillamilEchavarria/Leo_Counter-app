@@ -1,81 +1,120 @@
-# 
 FROM php:8.5-apache
 
-# 1. Argumentos para manejar permisos
-ARG USER=juan
+ARG USER=leo
 ARG UID=1000
+
 # ================================
 # DEPENDENCIAS DEL SISTEMA
 # ================================
-RUN apt-get update && apt-get install -y \
-    git \
-    zip \
-    unzip \
-    curl \
-    libpng-dev \
-    libjpeg62-turbo-dev \
-    libfreetype6-dev \
-    libwebp-dev \
-    libzip-dev \
-    libonig-dev \
-    libxml2-dev \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git zip unzip curl \
+    libpng-dev libjpeg62-turbo-dev libfreetype6-dev \
+    libwebp-dev libzip-dev libonig-dev libxml2-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # ================================
 # EXTENSIONES PHP
 # ================================
 RUN docker-php-ext-configure gd \
-        --with-freetype \
-        --with-jpeg \
-        --with-webp \
+        --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-install -j$(nproc) \
-        gd \
-        pdo_mysql \
-        mbstring \
-        exif \
-        pcntl \
-        bcmath \
-        zip
+        gd pdo_mysql mbstring exif pcntl bcmath zip
 
-# 3. Instalar Node.js
+RUN pecl install redis && docker-php-ext-enable redis
+
+# ================================
+# NODE.JS Y COMPOSER
+# ================================
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt-get install -y nodejs
+    && apt-get install -y nodejs \
+    && rm -rf /var/lib/apt/lists/*
 
-# 4. Instalar Composer de forma eficiente
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# 5. Configurar Apache (DocumentRoot y mod_rewrite)
-ENV APACHE_DOCUMENT_ROOT /var/www/html/public
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/000-default.conf \
-    && sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf \
-    && a2enmod rewrite
+# ================================
+# APACHE
+# ================================
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 
-# 6. CREAR USUARIO DE SISTEMA PARA EVITAR PROBLEMAS DE PERMISOS
-# Esto crea un usuario que coincide con el del host
-RUN useradd -G www-data,root -u $UID -d /home/$USER $USER \
-    && mkdir -p /home/$USER/.composer && \
-    chown -R $USER:$USER /home/$USER
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
+        /etc/apache2/sites-available/000-default.conf \
+        /etc/apache2/apache2.conf \
+    && a2enmod rewrite \
+    && echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-# 7. Directorio de trabajo
+# ================================
+# USUARIO DEL SISTEMA
+# ================================
+RUN useradd -G www-data,root -u "${UID}" -d "/home/${USER}" "${USER}" \
+    && mkdir -p "/home/${USER}/.composer" \
+    && chown -R "${USER}:${USER}" "/home/${USER}"
+
 WORKDIR /var/www/html
 
-# 8. Copiar archivos de dependencias primero
-COPY composer.json composer.lock* package.json package-lock.json* ./
+# ================================
+# PNPM GLOBAL
+# ================================
+RUN npm install -g pnpm
+# ================================
+# ARGUMENTOS PARA BUILD DE VITE
+# ================================
+ARG REVERB_APP_KEY=
+ARG REVERB_APP_ID=
+ARG REVERB_APP_SECRET=
+ARG REVERB_HOST=
+ARG REVERB_PORT=
+ARG REVERB_SCHEME=
+ARG VITE_API_URL=
 
-# 9. Cambiar a nuestro nuevo usuario para instalar cosas
-USER $USER
+ENV VITE_REVERB_APP_KEY="${REVERB_APP_KEY}"
+ENV VITE_REVERB_HOST="${REVERB_HOST}"
+ENV VITE_REVERB_PORT="${REVERB_PORT}"
+ENV VITE_REVERB_SCHEME="${REVERB_SCHEME}"
+ENV VITE_API_URL="${VITE_API_URL}"
+# ================================
+# COPIAR CÓDIGO Y BUILD
+# ================================
+COPY . /var/www/html
 
-# Instalar dependencias (Sin scripts para que no falle si falta algo de código)
-RUN composer install --no-scripts --no-autoloader --no-dev || true
-RUN npm install || true
+# Dependencias PHP
+RUN composer install --no-dev --optimize-autoloader --no-scripts
+# Eliminar el manifiesto de paquetes cacheado para forzar su regeneración limpia
+RUN rm -f bootstrap/cache/packages.php && php artisan package:discover
 
-# 10. Copiar el resto del código como el usuario creado
-COPY --chown=$USER:$USER . .
+# Build de assets
+RUN pnpm install && pnpm run build
 
-# Finalizar autoload de composer
-RUN composer dump-autoload --optimize
+# Verificar manifiesto Vite
+RUN test -f public/build/manifest.json \
+    || (echo "ERROR: manifest.json de Vite no encontrado." && exit 1)
 
-# Exponer puerto
+# ================================
+# ESTRUCTURA DE STORAGE
+# ================================
+RUN mkdir -p \
+    storage/app/public \
+    storage/app/data/movimientos \
+    storage/framework/cache/data \
+    storage/framework/sessions \
+    storage/framework/views \
+    storage/logs \
+    bootstrap/cache
+
+# Permisos correctos para www-data
+RUN chown -R www-data:www-data \
+        storage \
+        bootstrap/cache \
+        public/build \
+    && chmod -R 775 \
+        storage \
+        bootstrap/cache
+
+# ================================
+# ENTRYPOINT
+# ================================
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 EXPOSE 80
-
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["apache2-foreground"]

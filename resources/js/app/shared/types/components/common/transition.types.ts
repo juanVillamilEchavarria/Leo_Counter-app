@@ -1,3 +1,11 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 export type TransitionSection={
     opacity: number,
     y?: number,
@@ -8,11 +16,13 @@ export type TransitionSection={
 }
 export type TransitionDuration={
     duration: number
+    ease?: [number, number, number, number]
 }
 export type TransitionMotionProps={
-    active: boolean,
+    active: boolean | string | number| undefined,
     children: React.ReactNode,
     className?: string  
+    style?: React.CSSProperties
     layout?: boolean | "size" | "position" | "preserve-aspect" ,
     initial?: TransitionSection,
     animate?: TransitionSection,

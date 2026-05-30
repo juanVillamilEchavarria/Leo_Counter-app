@@ -1,9 +1,17 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
  import GuestLayout from "@/Layouts/GuestLayout"
- import Card from "@/app/shared/components/Card"
- import Tittle from "@/app/shared/components/Tittle"
- import Logo from "@/app/shared/components/Logo"
+ import Card from "@/app/shared/components/common/Card"
+ import Title from "@/app/shared/components/common/Title"
+ import Logo from "@/app/shared/components/common/Logo"
  import LoginForm from "@/app/domains/auth/components/login/LoginForm"
- import AlertMessage from "@/app/shared/components/AlertMessage"
+ import AlertMessage from "@/app/shared/components/common/AlertMessage"
  import { useMessageRedirect } from "@/app/shared/hooks"
  import { motion, AnimatePresence } from 'framer-motion'
  function Login() {
@@ -11,13 +19,13 @@
   
 
   return (
-    <div className="w-1/4 mx-auto">
+    <div className="w-full max-w-md mx-auto">
         <Card
         className="rounded-2xl!"
         >
             <Logo className="w-1/3 mx-auto" />
-            <Tittle tittle="Hola De Nuevo Familia" className="text-center text-gray-200 font-cursiva my-4" />
-            <Tittle tittle="Inicia Sesion" size="md" className="text-center text-gray-200"></Tittle>
+            <Title title="Hola De Nuevo Familia" className="text-center text-gray-200 font-cursiva my-4" />
+            <Title title="Inicia Sesion" size="md" className="text-center text-gray-200"></Title>
             <AnimatePresence>
                 {flash.error && (
                     <motion.div

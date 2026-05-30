@@ -1,9 +1,38 @@
-import SectionDescription from "@/app/shared/components/SectionDescription"
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+import SectionDescription from "@/app/shared/components/common/SectionDescription"
+import SectionTransition from "@/app/shared/components/common/SectionTransition"
+import ShowMovimientoModal from "@/app/domains/movimiento/components/ShowMovimientoModal"
+import { useEffect } from "react"
+import { useModalItem } from "@/app/shared/hooks"
+import { MovimientoTable, type Movimiento } from "@/app/domains/movimiento"
+import { type MovimientoTableData, type MovimientoShowData } from "@/app/domains/movimiento"
+export default function Index({
+  data
+}:{
+  data?: {data: MovimientoShowData}
+}) {
+  const {item, modal, setItem, open, close}= useModalItem<MovimientoShowData>()
 
-export default function Index() {
+  useEffect(()=>{
+    if(data){
+      setItem(data.data)
+    }
+  },[data])
   return (
-    <div className="mt-10">
-        <SectionDescription tittle="Movimientos Historicos" paragraph="Mira Tus Movimientos Historicos" />
-    </div>
+    <SectionTransition>
+        <SectionDescription title="Movimientos" paragraph="Mira el historial de tus ingresos y gastos" />
+        <MovimientoTable onSelect={(item)=> open(item, 'show')} />
+        <ShowMovimientoModal 
+            movimiento={item}
+            onClose={close}
+            />
+    </SectionTransition>
   )
 }

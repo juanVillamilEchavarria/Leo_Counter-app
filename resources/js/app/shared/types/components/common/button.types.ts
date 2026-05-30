@@ -1,4 +1,17 @@
-const TransitionBaseStyles = `
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+// -----------
+// STYLES DEL BOTON
+// -----------
+
+const ButtonBaseStyles= `w-full p-2 rounded-2xl cursor-pointer`
+const ButtonTransitionBaseStyles = `
                     bg-[length:200%_100%]
                     bg-left
                     text-[shadow:0_1px_2px_rgba(0,0,0,0.2)]
@@ -13,33 +26,113 @@ const TransitionBaseStyles = `
                     px-6
                     py-3
                     font-semibold
-                    text-white
                     cursor-pointer
+                    hover:text-foreground!
                     `
+const TransitionCommonStyles= 'transition-all ease-in-out duration-400 '
+const ButtonBorderedBaseStyles = 'bg-background border hover:text-foreground! '
 export const ButtonVariants = {
-  primary:      'bg-azul hover:bg-azulOscuro text-white',
-  secondary:        'bg-gray-500 hover:bg-gray-700 text-white',
-  danger:       'bg-rojo hover:bg-rojoOscuro text-white',
+    gray: `
+                      bg-gray-300 
+                      hover:bg-gray-400 
+                      text-black
+                      ${TransitionCommonStyles}
+                      ${ButtonBaseStyles}
+                      `,
+  clean: '',
+  primary:      `
+                      bg-azul 
+                      hover:bg-azul-oscuro 
+                      dark:bg-azul-claro
+                      dark:hover:bg-cyan-100
+                      ${TransitionCommonStyles}
+                      ${ButtonBaseStyles}
+                      `,
+  success:       `
+                      bg-green-800 
+                      hover:bg-green-700 
+                      ${TransitionCommonStyles}
+                      ${ButtonBaseStyles}
+                      `,
+  successSecondary: `
+                      ${ButtonBorderedBaseStyles}
+                      border-green-600 
+                      hover:bg-green-800 
+                      darK:text-green-400 
+                      text-green-600
+                      ${TransitionCommonStyles}
+                      ${ButtonBaseStyles}
+                      `,
+secondary:       `
+                      ${ButtonBorderedBaseStyles} 
+                      ${ButtonBaseStyles}
+                      border-azul-claro 
+
+                      dark:hover:bg-cyan-900
+                      hover:bg-azul-claro
+                      hover:text-white! 
+                      text-azul-claro
+                      ${TransitionCommonStyles}
+                      ${ButtonBaseStyles}
+                          `,
+danger:       `
+                      bg-rojo 
+                      hover:bg-rojo-oscuro 
+                      ${TransitionCommonStyles}
+                      ${ButtonBaseStyles}
+                      `,
+  dangerSecondary: `  
+                      ${ButtonBorderedBaseStyles}
+                      ${ButtonBaseStyles}
+                      border-rojo 
+                      hover:bg-rojo
+                      text-rojo
+                      ${TransitionCommonStyles}
+                      ${ButtonBaseStyles}
+                      `,
+  dark:`
+                      bg-slate-900
+                      hover:bg-slate-800 
+                      text-primary-foreground 
+                      ${TransitionCommonStyles}
+                      ${ButtonBaseStyles}
+                      `,
+  primaryPagination: `
+                      bg-background/10 
+                      border-t-2 
+                      border-transparent  
+                      hover:border-gray-400 
+                      text-gray-400
+                      hover:text-foreground
+                      ${TransitionCommonStyles}
+                      ${ButtonBaseStyles}
+                      `,
 'transition-blue': `
-                    bg-linear-to-r 
-                    from-azul-oscuro
-                    via-azul-claro
-                    to-azul-oscuro
-                    ${TransitionBaseStyles}
+                      bg-linear-to-r 
+                      from-azul-oscuro
+                      via-azul-claro
+                      to-azul-oscuro
+                      ${ButtonTransitionBaseStyles}
+                      ${ButtonBaseStyles}
                 `,
  'transition-blue-green': `
-                    bg-linear-to-r 
-                    from-azul-claro
-                    via-verde
-                    to-azul-claro
-                    ${TransitionBaseStyles}
+                      bg-linear-to-r 
+                      from-azul-claro
+                      via-verde
+                      to-azul-claro
+                      ${ButtonTransitionBaseStyles}
+                      ${ButtonBaseStyles}
                 `,               
 
 } as const
+// -----------
 
 export type ButtonTypes = 'button' | 'submit' | 'reset'
 export type ButtonVariant = keyof typeof ButtonVariants
 export type ButtonProps = {
+    as? : React.ElementType
+    href? : string
+    onClick? : () => void | undefined | Promise<void>
      type? : ButtonTypes
     className? : string
     variant? : ButtonVariant

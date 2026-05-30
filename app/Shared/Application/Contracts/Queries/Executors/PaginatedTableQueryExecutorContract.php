@@ -1,0 +1,30 @@
+<?php
+
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+namespace App\Shared\Application\Contracts\Queries\Executors;
+
+use App\Shared\Application\DTOs\PaginatedTableResultDTO;
+use App\Shared\Application\Queries\TableQuery;
+
+/**
+ * Contrato para el executor de paginación de tablas.
+ * cada modulo en la capa de aplicacion, debe implementar su propio contrato que extienda a este.
+ * @author JuanVillamil <juanestebanvillamilechavarria@gmail.com>
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+interface PaginatedTableQueryExecutorContract{
+    /**
+     * Ejecuta el query de paginación de tablas.
+     * devuelve un DTO que contiene los items y la meta data de la paginación.
+     * @return PaginatedTableResultDTO
+     */
+    public function execute(TableQuery $query): PaginatedTableResultDTO;
+}

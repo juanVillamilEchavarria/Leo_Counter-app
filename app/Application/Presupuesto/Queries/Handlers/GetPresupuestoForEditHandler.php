@@ -1,0 +1,38 @@
+<?php
+
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+namespace App\Application\Presupuesto\Queries\Handlers;
+
+use App\Application\Presupuesto\DTOs\PresupuestoEditDTO;
+use App\Application\Presupuesto\Queries\GetPresupuestoForEditQuery;
+use App\Domains\Presupuesto\Contracts\Repositories\PresupuestoRepositoryContract;
+use App\Domains\Presupuesto\ValueObjects\PresupuestoId;
+use App\Application\Presupuesto\Exceptions\CannotFindPresupuestoException;
+
+final readonly class GetPresupuestoForEditHandler{
+
+    public function __construct(
+        private PresupuestoRepositoryContract $repository
+    ){}
+
+    public function __invoke(GetPresupuestoForEditQuery $query): PresupuestoEditDTO
+    {
+        $aggregate = $this->repository->findById(new PresupuestoId($query->id));
+        if(!$aggregate){
+            throw new CannotFindPresupuestoException();
+        }
+        return new PresupuestoEditDTO(
+            id: (string) $aggregate->getId(),
+            categoria_id: $aggregate->getCategoriaId()->getValue(),
+            monto: $aggregate->getMonto(),
+            descripcion: $aggregate->getDescripcion()
+        );
+    }
+}

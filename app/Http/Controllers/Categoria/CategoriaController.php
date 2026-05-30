@@ -1,0 +1,140 @@
+<?php
+
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+namespace App\Http\Controllers\Categoria;
+
+use App\Application\Categoria\Commands\StoreCategoryCommand;
+use App\Application\Categoria\Commands\UpdateCategoryCommand;
+use App\Application\Categoria\Commands\DestroyCategoryCommand;
+use App\Http\Controllers\Controller;
+use App\Application\Categoria\Queries\GetCategoryForEditQuery;
+use App\Shared\Application\Contracts\Bus\QueryBus;
+use App\Application\Categoria\Queries\ListAllCategoriesWithDetailsQuery;
+use App\Application\Categoria\Queries\ListCategoriesRecordsCountQuery;
+use App\Application\Categoria\Queries\ListCategoryFormOptionsQuery;
+use Illuminate\Contracts\Bus\Dispatcher;
+use App\Application\Categoria\Commands\ToggleCategoryCommand;
+use App\Http\Requests\Categoria\StoreAndUpdateCategoriaRequest;
+use App\Http\Resources\Categoria\CategoriaResource;
+use Inertia\Inertia;
+
+class CategoriaController extends Controller
+{
+
+    
+    public function __construct(
+        private QueryBus $queryBus,
+        private Dispatcher $dispatcher
+        )
+    {
+    }   
+
+
+    private function NoRegistros(){
+        return $this->queryBus->ask(new ListCategoriesRecordsCountQuery());
+    }
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $categorias = $this->queryBus->ask(new ListAllCategoriesWithDetailsQuery());
+        return Inertia::render('Categorias/Index',[
+            'title' => 'Categorias',
+            'NoRegistros' => $this->NoRegistros(),
+            'categorias'=>CategoriaResource::collection($categorias)
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $options = $this->queryBus->ask(new ListCategoryFormOptionsQuery());
+        return Inertia::render('Categorias/Create',[
+            'title'=>'Crear Categoria',
+            'NoRegistros'=>$this->NoRegistros(),
+            'options'=>$options
+        ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreAndUpdateCategoriaRequest $request)
+    {
+        $command = new StoreCategoryCommand(
+            nombre: $request->nombre,
+            tipo_movimiento_id: $request->tipo_movimiento_id,
+            descripcion: $request->descripcion
+        );
+        $this->dispatcher->dispatch($command);
+        Inertia::flash('success','Categoria creada con exito');
+        return redirect()->route('categorias.index');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        $categoria = $this->queryBus->ask(new GetCategoryForEditQuery(id: $id));
+        return Inertia::render('Categorias/Edit',[
+            'title'=>'Editar Categoria',
+            'NoRegistros'=>$this->NoRegistros(),
+            'data'=>$categoria,
+            'options'=>$this->queryBus->ask(new ListCategoryFormOptionsQuery())
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(StoreAndUpdateCategoriaRequest $request, string $id)
+    {
+        $command = new UpdateCategoryCommand(
+            id: $id,
+            nombre: $request->nombre,
+            tipo_movimiento_id: $request->tipo_movimiento_id,
+            descripcion: $request->descripcion
+        );
+        $this->dispatcher->dispatch($command);
+        Inertia::flash('success','Categoria actualizada con exito');
+        return redirect()->route('categorias.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        $command = new DestroyCategoryCommand(
+                id: $id
+        );
+        $this->dispatcher->dispatch($command);
+        Inertia::flash('success','Categoria eliminada con exito');
+        return redirect()->route('categorias.index');
+    }
+
+    public function toggleEsFijo(string $id, string $attribute)
+    {
+        $this->dispatcher->dispatch(new ToggleCategoryCommand(id: $id, attribute: $attribute));
+        Inertia::flash('success','Categoria actualizada con exito');
+        return redirect()->route('categorias.index');
+    }
+}
