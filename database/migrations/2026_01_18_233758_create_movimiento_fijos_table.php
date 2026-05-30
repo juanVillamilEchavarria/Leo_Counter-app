@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignUuid('categoria_id')->constrained('categorias');
             $table->foreignUuid('cuenta_id')->constrained('cuentas');
             $table->foreignId('frecuencia_movimiento_id')->constrained('frecuencia_movimientos');
-            $table->decimal('monto', 12, 2);
+            $table->decimal('monto', 15, 2);
             $table->date('fecha_proximo');
             $table->boolean('active')->default(true);
             $table->boolean('registrar_automatico')->default(false);

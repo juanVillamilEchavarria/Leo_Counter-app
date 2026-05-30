@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('cuentas', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('nombre');
-            $table->decimal('saldo_inicial', 12, 2);
-            $table->decimal('saldo_actual', 12, 2)->default(0);
+            $table->decimal('saldo_inicial', 15, 2);
+            $table->decimal('saldo_actual', 15, 2)->default(0);
             $table->foreignId('tipo_cuenta_id')->constrained('tipo_cuentas');
             $table->foreignUuid('propietario_id')->nullable()->constrained('propietarios')->nullOnDelete();
             $table->text('notas')->nullable();
