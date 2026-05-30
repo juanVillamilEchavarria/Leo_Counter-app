@@ -12,7 +12,9 @@ namespace App\Infrastructure\Presupuesto\Persistence\Repositories\Eloquent;
 
 use App\Domains\Presupuesto\Aggregates\Presupuesto as PresupuestoAggregate;
 use App\Domains\Presupuesto\Contracts\Repositories\PresupuestoRepositoryContract;
+use App\Domains\Usuario\ValueObjects\UsuarioId;
 use App\Shared\Domain\Contracts\AggregateModelContract;
+use App\Shared\Domain\ValueObjects\Amount;
 use App\Shared\Domain\ValueObjects\Date;
 use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentRepository;
 use App\Models\Presupuesto\Presupuesto;
@@ -31,10 +33,10 @@ final class EloquentPresupuestoRepository extends EloquentRepository implements 
         return [
             'id' => $aggregate->getId()->getValue(),
             'categoria_id' => $aggregate->getCategoriaId()->getValue(),
-            'monto' => $aggregate->getMonto(),
+            'monto' => $aggregate->getMonto()->getValue(),
             'periodo' => $aggregate->getPeriodo()->format('Y-m'),
             'descripcion' => $aggregate->getDescripcion(),
-            'user_id' => $aggregate->getUserId(),
+            'user_id' => $aggregate->getUserId()->getValue(),
         ];
     }
 
@@ -43,10 +45,10 @@ final class EloquentPresupuestoRepository extends EloquentRepository implements 
         return PresupuestoAggregate::reconstitute(
             id: new PresupuestoId($model->id),
             categoria_id: new CategoriaId($model->categoria_id),
-            monto: (float) $model->monto,
+            monto: new Amount($model->monto),
             periodo: new Date(new DateTimeImmutable($model->periodo)),
             descripcion: $model->descripcion,
-            user_id: $model->user_id,
+            user_id: new UsuarioId($model->user_id),
         );
     }
 

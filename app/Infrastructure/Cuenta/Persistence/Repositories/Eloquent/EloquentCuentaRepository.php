@@ -10,6 +10,8 @@
  */
 namespace App\Infrastructure\Cuenta\Persistence\Repositories\Eloquent;
 
+use App\Domains\Propietario\ValueObjects\PropietarioId;
+use App\Shared\Domain\ValueObjects\Amount;
 use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentRepository;
 use App\Domains\Cuenta\Contracts\Repositories\CuentaRepositoryContract;
 use App\Models\Cuenta\Cuenta;
@@ -35,9 +37,9 @@ class EloquentCuentaRepository extends EloquentRepository implements CuentaRepos
             'id' => $aggregate->getId()->getValue(),
             'nombre' => $aggregate->getNombre(),
             'notas' => $aggregate->getNotas(),
-            'saldo_inicial' => $aggregate->getSaldoInicial(),
-            'saldo_actual' => $aggregate->getSaldoActual(),
-            'propietario_id' => $aggregate->getPropietarioId(),
+            'saldo_inicial' => $aggregate->getSaldoInicial()->getValue(),
+            'saldo_actual' => $aggregate->getSaldoActual()->getValue(),
+            'propietario_id' => $aggregate->getPropietarioId()->getValue(),
             'tipo_cuenta_id' => $aggregate->getTipoCuentaId(),
             'active' => $aggregate->getActive(),
         ];
@@ -53,10 +55,10 @@ class EloquentCuentaRepository extends EloquentRepository implements CuentaRepos
             id: new CuentaId($model->id),
             nombre: $model->nombre,
             notas: $model->notas,
-            saldo_inicial: $model->saldo_inicial,
-            saldo_actual: $model->saldo_actual,
-            active: $model->active,
-            propietario_id: $model->propietario_id,
+            saldo_inicial: new Amount($model->saldo_inicial),
+            saldo_actual: new Amount($model->saldo_actual),
+            active:  $model->active,
+            propietario_id: new PropietarioId($model->propietario_id),
             tipo_cuenta_id: $model->tipo_cuenta_id,
         );
     }

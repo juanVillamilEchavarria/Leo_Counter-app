@@ -10,8 +10,6 @@
  */
 namespace App\Providers\Movimiento;
 
-use App\Application\Movimiento\Commands\Handlers\UpdateMovimientoHandler;
-use App\Application\Movimiento\Commands\UpdateMovimientoCommand;
 use App\Application\Movimiento\Commands\DestroyMovimientoCommand;
 use App\Application\Movimiento\Commands\Handlers\DestroyMovimientoHandler;
 use Illuminate\Support\Facades\Bus;
@@ -48,7 +46,6 @@ class MovimientoBusProvider extends ServiceProvider
     {
         Bus::map([
             StoreMovimientoCommand::class   => StoreMovimientoHandler::class,
-            UpdateMovimientoCommand::class  => UpdateMovimientoHandler::class,
             DestroyMovimientoCommand::class => DestroyMovimientoHandler::class,
             RegisterMovimientoFromMovimientoFijoCommand::class => RegisterMovimientoFromMovimientoFijoHandler::class,
         ]);

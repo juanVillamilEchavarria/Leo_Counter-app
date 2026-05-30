@@ -22,4 +22,10 @@ interface EventBus
 {
     public function publish(EventContract $event): void;
 
+    /**
+     * @param array<EventContract> $events
+     * @return void
+     */
+    public function publishMany(array $events):void;
+
 }

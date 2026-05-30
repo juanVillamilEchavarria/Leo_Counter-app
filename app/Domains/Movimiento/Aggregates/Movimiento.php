@@ -9,19 +9,21 @@
  * @version 1.0.0
  */
 namespace App\Domains\Movimiento\Aggregates;
-
+use App\Domains\Movimiento\Events\MovimientoDeleted;
 use App\Domains\Categoria\ValueObjects\CategoriaId;
 use App\Domains\Cuenta\ValueObjects\CuentaId;
+use App\Domains\Movimiento\Events\MovimientoCreated;
 use App\Domains\Movimiento\Exceptions\CannotExecuteMovimientoTransactionException;
 use App\Domains\Movimiento\Exceptions\CannotUpdateMovimientoException;
 use App\Domains\Movimiento\ValueObjects\MovimientoId;
 use App\Domains\MovimientoPendiente\ValueObjects\MovimientoPendienteId;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 use App\Shared\Domain\Contracts\AggregateModelContract;
+use App\Shared\Domain\Contracts\EventContract;
 use App\Shared\Domain\ValueObjects\Amount;
 use App\Shared\Domain\ValueObjects\Date;
 use Throwable;
-
+use App\Shared\Domain\Traits\RecordsEvents;
 /**
  * Agregado raíz del dominio Movimiento.
  * Representa un ingreso o gasto **ya realizado** en el sistema.
@@ -32,8 +34,9 @@ use Throwable;
  * @since 1.0.0
  * @version 1.0.0
  */
-final readonly class Movimiento implements AggregateModelContract
+final  class Movimiento implements AggregateModelContract
 {
+use RecordsEvents;
     private function __construct(
         private MovimientoId           $id,
         private string                 $nombre,
@@ -76,7 +79,8 @@ final readonly class Movimiento implements AggregateModelContract
     {
         self::validateData($nombre, $monto, $tipo_movimiento_id, CannotExecuteMovimientoTransactionException::class);
 
-        return new self(
+
+        $movimiento= new self(
             id: $id,
             nombre: $nombre,
             cuenta_id: $cuenta_id,
@@ -89,6 +93,23 @@ final readonly class Movimiento implements AggregateModelContract
 
 
         );
+        $movimiento->recordThat(new MovimientoCreated($movimiento));
+        return $movimiento;
+    }
+    public function delete(): self{
+        $copy = new self(
+            id: $this->id,
+            nombre: $this->nombre,
+            cuenta_id: $this->cuenta_id,
+            categoria_id: $this->categoria_id,
+            tipo_movimiento_id: $this->tipo_movimiento_id,
+            movimiento_pendiente_id: $this->movimiento_pendiente_id,
+            monto: $this->monto,
+            fecha: $this->fecha,
+            descripcion: $this->descripcion,
+        );
+        $copy->recordThat(new MovimientoDeleted($copy));
+        return $copy;
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * @package Leo Counter
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
@@ -12,8 +13,11 @@ namespace App\Infrastructure\Movimiento\Persistence\Repositories\Eloquent;
 use App\Domains\Categoria\ValueObjects\CategoriaId;
 use App\Domains\Cuenta\ValueObjects\CuentaId;
 use App\Domains\Movimiento\ValueObjects\MovimientoId;
+use App\Domains\MovimientoPendiente\ValueObjects\MovimientoPendienteId;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
+use App\Shared\Application\Contracts\Bus\EventBus;
 use App\Shared\Domain\Contracts\AggregateModelContract;
+use App\Shared\Domain\Contracts\AggregateModelIdContract;
 use App\Shared\Domain\ValueObjects\Amount;
 use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentRepository;
 use App\Domains\Movimiento\Contracts\Repositories\MovimientoRepositoryContract;
@@ -32,6 +36,44 @@ use App\Shared\Domain\ValueObjects\Date;
  */
 class EloquentMovimientoRepository extends EloquentRepository implements MovimientoRepositoryContract
 {
+    public function __construct(
+        private EventBus $eventBus
+    )
+    {
+        parent::__construct(Movimiento::class);
+    }
+
+    public function store(AggregateModelContract $model): AggregateModelContract
+    {
+        // Capturar eventos registrados por el agregado antes de persistir
+        $events = [];
+        if (method_exists($model, 'releaseEvents')) {
+            $events = $model->releaseEvents();
+        }
+
+        // Persistir y obtener el agregado reconstituido desde la BD
+        $stored = parent::store($model);
+
+        // Publicar los eventos de dominio capturados
+        if (!empty($events)) {
+            $this->eventBus->publishMany(...$events);
+        }
+
+        return $stored;
+    }
+
+    public function destroy(AggregateModelIdContract $id): bool
+    {
+       $model = ($this->model)::find($id->getValue());
+       if(!$model) return false;
+        $aggregate = $this->mapDatabaseRecordToAggregate($model);
+        $deletedAggregate = $aggregate->delete();
+
+        $model->delete();
+        $this->eventBus->publishMany(...$deletedAggregate->releaseEvents());
+        return true;
+    }
+
     protected function mapAggregateToAttributes(object $aggregate): array
     {
         assert($aggregate instanceof MovimientoAggregate);
@@ -56,14 +98,10 @@ class EloquentMovimientoRepository extends EloquentRepository implements Movimie
            categoria_id: new CategoriaId($model->categoria_id),
            tipo_movimiento_id: TipoMovimientoEnum::try($model->tipo_movimiento_id),
            monto: new Amount($model->monto),
-           movimiento_pendiente_id: $model->movimiento_pendiente_id,
+           fecha: new Date(new \DateTimeImmutable($model->fecha)),
            descripcion: $model->descripcion,
-           fecha: new Date(new \DateTimeImmutable($model->fecha))
+           movimiento_pendiente_id: $model->movimiento_pendiente_id ? new MovimientoPendienteId($model->movimiento_pendiente_id) : null
 
        );
-    }
-    public function __construct()
-    {
-        parent::__construct(Movimiento::class);
     }
 }

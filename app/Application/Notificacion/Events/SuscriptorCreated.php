@@ -8,7 +8,7 @@
  * @since 1.0.0
  * @version 1.0.0
  */
-namespace App\Domains\Notificacion\Events;
+namespace App\Application\Notificacion\Events;
 
 use App\Domains\Notificacion\Aggregates\Suscriptor;
 use App\Domains\Notificacion\Contracts\Events\SendVerificationToSuscriptorEventContract;

@@ -9,14 +9,21 @@
  * @version 1.0.0
  */
 namespace App\Domains\Movimiento\Contracts\Repositories;
-use App\Shared\Domain\Contracts\RepositoryContract;
+
+use App\Shared\Domain\Contracts\AggregateModelContract;
+use App\Shared\Domain\Contracts\AggregateModelIdContract;
 
 /**
- * Contrato del repositorio de movimiento
+ * Contrato del repositorio de movimiento (sin operación de actualización porque los movimientos son inmutables)
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  * @since 1.0.0
  * @version 1.0.0
  */
-interface MovimientoRepositoryContract extends RepositoryContract
+interface MovimientoRepositoryContract
 {
+    public function store(AggregateModelContract $model): AggregateModelContract;
+
+    public function destroy(AggregateModelIdContract $id): bool;
+
+    public function findById(AggregateModelIdContract $id): ?AggregateModelContract;
 }

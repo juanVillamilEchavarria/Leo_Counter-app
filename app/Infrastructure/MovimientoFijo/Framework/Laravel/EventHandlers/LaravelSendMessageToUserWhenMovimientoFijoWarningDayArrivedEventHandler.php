@@ -10,7 +10,7 @@
  */
 namespace App\Infrastructure\MovimientoFijo\Framework\Laravel\EventHandlers;
 
-use App\Domains\MovimientoFijo\Events\MovimientoFijoWarningDayArrived;
+use App\Application\MovimientoFijo\Events\MovimientoFijoWarningDayArrived;
 use App\Shared\Application\Resolvers\SendMessageToUsersByChannelsResolver;
 use Illuminate\Contracts\Queue\ShouldQueue;
 

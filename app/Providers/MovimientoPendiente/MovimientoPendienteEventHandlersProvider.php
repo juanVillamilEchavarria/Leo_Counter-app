@@ -10,15 +10,12 @@
  */
 namespace App\Providers\MovimientoPendiente;
 
-use App\Infrastructure\MovimientoFijo\Framework\Laravel\Builders\LaravelMovimientoPendienteCreatedFromAMovimientoFijoEmailFormatBuilder;
-use App\Infrastructure\MovimientoFijo\Framework\Laravel\EventHandlers\LaravelSendMessageToUserWhenMovimientoPendienteIsCreatedFromAMovimientoFijoEventHandler;
-use App\Shared\Application\Contracts\Builders\EmailFormatBuilderContract;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Event;
-use App\Domains\MovimientoPendiente\Events\MovimientoPendienteWarningDayArrived;
-use App\Domains\MovimientoPendiente\Events\MovimientoPendienteExpired;
-use App\Application\MovimientoPendiente\EventHandlers\SendMessageToUsersWhenMovimientoPendienteWarningDayArrivedEventHandler;
 use App\Application\MovimientoPendiente\EventHandlers\SendMessageToUsersWhenMovimientoPendienteExpiredEventHandler;
+use App\Application\MovimientoPendiente\EventHandlers\SendMessageToUsersWhenMovimientoPendienteWarningDayArrivedEventHandler;
+use App\Application\MovimientoPendiente\Events\MovimientoPendienteExpired;
+use App\Application\MovimientoPendiente\Events\MovimientoPendienteWarningDayArrived;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\ServiceProvider;
 
 /**
  * Provider de handlers de eventos del modulo MovimientoPendiente.

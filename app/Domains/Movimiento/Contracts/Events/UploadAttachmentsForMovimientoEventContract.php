@@ -26,7 +26,5 @@ interface UploadAttachmentsForMovimientoEventContract extends EventContract
 {
     public function getMovimiento(): Movimiento;
     public function getComprobantes() : array;
-    public function getCategoria(): Categoria;
-    public function getTipoMovimientoName(): string;
 
 }

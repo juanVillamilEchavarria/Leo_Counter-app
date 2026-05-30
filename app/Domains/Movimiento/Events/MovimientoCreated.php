@@ -31,7 +31,6 @@ final readonly class MovimientoCreated implements FinancialMovimientoRegisteredE
 {
     public function __construct(
         private Movimiento $movimiento,
-        private Cuenta $cuenta,
         private Date $fecha = new Date(new \DateTimeImmutable())
     )
     {
@@ -45,8 +44,5 @@ final readonly class MovimientoCreated implements FinancialMovimientoRegisteredE
     {
         return $this->movimiento;
     }
-    public function getCuenta(): Cuenta
-    {
-        return $this->cuenta;
-    }
+
 }

@@ -10,7 +10,7 @@
  */
 namespace App\Application\MovimientoPendiente\EventHandlers;
 
-use App\Domains\MovimientoPendiente\Events\MovimientoPendienteWarningDayArrived;
+use App\Application\MovimientoPendiente\Events\MovimientoPendienteWarningDayArrived;
 use App\Shared\Application\Resolvers\SendMessageToUsersByChannelsResolver;
 
 /**

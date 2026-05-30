@@ -10,8 +10,8 @@
  */
 namespace App\Application\MovimientoPendiente\Commands\Handlers;
 use App\Application\MovimientoPendiente\Commands\MarkMovimientoPendienteAsExpiredCommand;
+use App\Application\MovimientoPendiente\Events\MovimientoPendienteExpired;
 use App\Domains\MovimientoPendiente\Contracts\Repositories\MovimientoPendienteRepositoryContract;
-use App\Domains\MovimientoPendiente\Events\MovimientoPendienteExpired;
 use App\Shared\Application\Contracts\Bus\EventBus;
 
 /**

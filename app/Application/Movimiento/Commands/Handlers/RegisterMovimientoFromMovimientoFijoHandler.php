@@ -10,19 +10,15 @@
  */
 namespace App\Application\Movimiento\Commands\Handlers;
 use App\Application\Movimiento\Commands\RegisterMovimientoFromMovimientoFijoCommand;
-use App\Domains\Categoria\Aggregates\Categoria;
+use App\Application\MovimientoFijo\Events\AutomatedMovimientoFijoProcessed;
+use App\Domains\Cuenta\Contracts\Repositories\CuentaRepositoryContract;
 use App\Domains\Movimiento\Aggregates\Movimiento;
+use App\Domains\Movimiento\Contracts\Repositories\MovimientoRepositoryContract;
 use App\Domains\Movimiento\Events\AutomatedMovimientoRegistered;
 use App\Domains\Movimiento\ValueObjects\MovimientoId;
 use App\Shared\Application\Contracts\Bus\EventBus;
-use App\Domains\Movimiento\Contracts\Repositories\MovimientoRepositoryContract;
 use App\Shared\Domain\Contracts\IdGeneratorContract;
 use App\Shared\Domain\ValueObjects\Date;
-use App\Domains\Cuenta\Contracts\Repositories\CuentaRepositoryContract;
-use App\Domains\Categoria\Contracts\Repositories\CategoriaRepositoryContract;
-use App\Shared\Application\Contracts\Queries\Executors\GetTipoMovimientoNameQueryExecutorContract;
-use App\Domains\MovimientoFijo\Events\AutomatedMovimientoFijoProcessed;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Manejador del comando para registrar un movimiento desde un movimiento fijo.
@@ -61,10 +57,6 @@ final readonly class RegisterMovimientoFromMovimientoFijoHandler
         );
         $cuenta = $this->cuentaRepository->findById($movimiento->getCuentaId());
         $this->movimientoRepositoryContract->store($movimiento);
-        $this->eventBus->publish(new AutomatedMovimientoRegistered(
-            movimiento: $movimiento,
-            cuenta: $cuenta,
-        ));
         $this->eventBus->publish(new AutomatedMovimientoFijoProcessed(
             movimientoFijo: $movimientoFijo,
             movimiento: $movimiento,

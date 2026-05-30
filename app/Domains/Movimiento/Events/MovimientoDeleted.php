@@ -30,28 +30,17 @@ final readonly class MovimientoDeleted implements MovimientoEventContract
 {
     public function __construct(
         private Movimiento $movimiento,
-        private Movimiento $oldMovimiento,
-        private Cuenta $cuenta,
         private Date $fecha = new Date(new \DateTimeImmutable())
     )
     {
     }
 
-    public function getOldMovimiento(): Movimiento
-    {
-        return $this->oldMovimiento;
-    }
     public function getMovimiento(): Movimiento
     {
         return $this->movimiento;
     }
     /**
-     * @return Cuenta
-     */
-    public function getCuenta(): Cuenta
-    {
-        return $this->cuenta;
-    }
+
 
     /**
      * @inheritDoc

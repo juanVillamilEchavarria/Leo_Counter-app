@@ -8,7 +8,7 @@
  * @since 1.0.0
  * @version 1.0.0
  */
-namespace App\Domains\Movimiento\Events;
+namespace App\Application\Movimiento\Events;
 
 use App\Domains\Categoria\Aggregates\Categoria;
 use App\Domains\Movimiento\Aggregates\Movimiento;

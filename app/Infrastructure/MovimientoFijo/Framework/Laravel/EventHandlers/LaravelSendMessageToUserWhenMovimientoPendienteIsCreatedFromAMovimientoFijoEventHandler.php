@@ -10,7 +10,7 @@
  */
 namespace App\Infrastructure\MovimientoFijo\Framework\Laravel\EventHandlers;
 
-use App\Domains\MovimientoPendiente\Events\MovimientoPendienteCreatedFromMovimientoFijo;
+use App\Application\MovimientoPendiente\Events\MovimientoPendienteCreatedFromMovimientoFijo;
 use App\Shared\Application\Resolvers\SendMessageToUsersByChannelsResolver;
 use Illuminate\Contracts\Queue\ShouldQueue;
 

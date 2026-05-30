@@ -10,7 +10,7 @@
  */
 namespace App\Infrastructure\MovimientoPendiente\Framework\Laravel\Builders;
 
-use App\Domains\MovimientoPendiente\Events\MovimientoPendienteWarningDayArrived;
+use App\Application\MovimientoPendiente\Events\MovimientoPendienteWarningDayArrived;
 use App\Domains\Usuario\Aggregates\Usuario;
 use App\Shared\Application\Contracts\Builders\EmailFormatBuilderContract;
 use App\Shared\Application\DTOs\EmailMessageDTO;

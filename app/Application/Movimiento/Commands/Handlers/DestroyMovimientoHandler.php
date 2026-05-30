@@ -1,38 +1,26 @@
 <?php
 
-/*
- * @package Leo Counter
- * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
- * @license MIT
- * @copyright 2026 Juan Esteban Villamil Echavarria
- * @since 1.0.0
- * @version 1.0.0
- */
 namespace App\Application\Movimiento\Commands\Handlers;
-use App\Domains\Movimiento\Contracts\Repositories\MovimientoRepositoryContract;
-use App\Domains\Movimiento\Aggregates\Movimiento;
+
 use App\Application\Movimiento\Commands\DestroyMovimientoCommand;
 use App\Application\Movimiento\Contracts\Queries\Executors\GetAllArchivoMovimientosIdsForAMovimientoQueryExecutorContract;
-use App\Domains\Movimiento\Events\AttachmentsForMovimientoDeleted;
-use App\Domains\Movimiento\Events\MovimientoDeleted;
-use App\Domains\Movimiento\ValueObjects\MovimientoId;
-use App\Shared\Application\Contracts\Services\AuthServiceContract;
+use App\Application\Movimiento\Events\AttachmentsForMovimientoDeleted;
+use App\Domains\Cuenta\Contracts\CuentaRepositoryContract;
+use App\Domains\Movimiento\Aggregates\Movimiento;
+use App\Domains\Movimiento\Contracts\Repositories\MovimientoRepositoryContract;
 use App\Domains\Movimiento\Exceptions\CannotDeleteMovimientoException;
-use App\Domains\Cuenta\Contracts\Repositories\CuentaRepositoryContract;
+use App\Domains\Movimiento\ValueObjects\MovimientoId;
 use App\Shared\Application\Contracts\Bus\EventBus;
+use App\Shared\Application\Contracts\Services\AuthServiceContract;
 
 /**
  * Manejador del caso de uso de eliminar un movimiento
- * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
- * @package App\Application\Movimiento\Commands\Handlers
- * @version 1.0.0
  */
 final readonly class DestroyMovimientoHandler
 {
     public function __construct(
         private MovimientoRepositoryContract $movimientoRepository,
         private EventBus $eventBus,
-        private CuentaRepositoryContract $cuentaRepository,
         private GetAllArchivoMovimientosIdsForAMovimientoQueryExecutorContract $getAllArchivoMovimientosIdsForAMovimientoQueryExecutor,
         private AuthServiceContract $authService
     )
@@ -42,21 +30,16 @@ final readonly class DestroyMovimientoHandler
     {
         if(!$this->authService->verifyPasswordForLoggedInUser($command->attempt_password)) throw new CannotDeleteMovimientoException("No se pudo eliminar el movimiento. Contraseña incorrecta");
         $archivoMovimientosIds = $this->getAllArchivoMovimientosIdsForAMovimientoQueryExecutor->execute(new MovimientoId($command->id));
-        /**
-         * @var Movimiento $movimiento
-         */
+        /** @var Movimiento $movimiento */
         $movimiento = $this->movimientoRepository->findById(new MovimientoId($command->id));
-        $cuenta = $this->cuentaRepository->findById($movimiento->getCuentaId());
-        $this->eventBus->publish(new MovimientoDeleted(
-            movimiento: $movimiento,
-            oldMovimiento: $movimiento,
-            cuenta: $cuenta
-        ));
+
+        // El repositorio se encarga de publicar el evento de dominio MovimientoDeleted
+        $this->movimientoRepository->destroy($movimiento->getId());
+
+        // Publicar evento de aplicación para eliminar comprobantes asociados
         $this->eventBus->publish(new AttachmentsForMovimientoDeleted(
             movimiento: $movimiento,
             comprobantes_delete_ids: $archivoMovimientosIds->toArray(),
         ));
-        $this->movimientoRepository->destroy($movimiento->getId());
     }
-
 }
