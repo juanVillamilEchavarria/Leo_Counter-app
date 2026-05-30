@@ -14,6 +14,7 @@ use App\Application\Movimiento\Queries\CheckEnoughBalanceQuery;
 use App\Domains\Cuenta\Contracts\Repositories\CuentaRepositoryContract;
 use App\Domains\Cuenta\ValueObjects\CuentaId;
 use App\Shared\Domain\Services\Financial\BalanceCheckerService;
+use App\Shared\Domain\ValueObjects\Amount;
 
 /**
  * Manejador para verificar si hay suficiente saldo en una cuenta.
@@ -32,7 +33,7 @@ final readonly class CheckEnoughBalanceHandler
     public function __invoke(CheckEnoughBalanceQuery $query): bool
     {
         $cuenta = $this->cuentaRepository->findById(new CuentaId($query->cuenta_id));
-        return $this->balanceCheckerService->canAfford($cuenta->getSaldoActual(), $query->monto);
+        return $this->balanceCheckerService->canAfford($cuenta->getSaldoActual(), new Amount((float) $query->monto));
     }
 
 }

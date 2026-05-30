@@ -31,7 +31,7 @@ final readonly class GastoValidatorStrategy implements TransactionValidatorStrat
     }
     public function validate(\App\Domains\Cuenta\Aggregates\Cuenta $cuenta, Movimiento $movimiento): bool
     {
-       return $this->balanceChecker->canAfford($cuenta->getSaldoActual(), $movimiento->getMonto()->getValue()) === false ? throw new CannotExecuteMovimientoTransactionException(' saldo insuficiente para hacer un gasto') : true;
+       return $this->balanceChecker->canAfford($cuenta->getSaldoActual(), $movimiento->getMonto()) === false ? throw new CannotExecuteMovimientoTransactionException(' saldo insuficiente para hacer un gasto') : true;
     }
 
     public function supports(Movimiento $movimiento): bool

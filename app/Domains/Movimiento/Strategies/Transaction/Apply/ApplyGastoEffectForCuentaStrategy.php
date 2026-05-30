@@ -38,7 +38,7 @@ final readonly class ApplyGastoEffectForCuentaStrategy implements ApplyTransacti
      */
     public function applyTransactionEffectWhenAMovimientoIsWritten(Movimiento $movimiento, Cuenta $cuenta): Cuenta
     {
-        $cuenta = $cuenta->updateSaldoActual($cuenta->getSaldoActual() - $movimiento->getMonto()->getValue());
+        $cuenta = $cuenta->updateSaldoActual($cuenta->getSaldoActual()->subtract($movimiento->getMonto()));
         return $cuenta ;
     }
 }
