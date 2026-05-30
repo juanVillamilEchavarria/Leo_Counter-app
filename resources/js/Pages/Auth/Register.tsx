@@ -1,0 +1,70 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+/**
+ * Página de registro (Crear Cuenta Administrador).
+ * Mantiene la misma estructura visual y estilos que la página de Login.
+ * @module resources/js/Pages/Register
+ */
+
+import GuestLayout from "@/Layouts/GuestLayout";
+import Card from "@/app/shared/components/common/Card";
+import Title from "@/app/shared/components/common/Title";
+import Logo from "@/app/shared/components/common/Logo";
+import RegisterForm from "@/app/domains/auth/components/register/RegisterForm";
+import AlertMessage from "@/app/shared/components/common/AlertMessage";
+import { motion, AnimatePresence } from "framer-motion";
+import useRegister from "@/app/domains/auth/hooks/useRegister";
+import { useMessageRedirect } from "@/app/shared/hooks";
+
+/**
+ * Página principal para crear el primer usuario administrador.
+ */
+export default function Register() {
+  const { form, handleSubmit } = useRegister();
+  const { flash } = useMessageRedirect();
+
+  return (
+    <div className="w-full max-w-md mx-auto">
+      <Card
+        className="rounded-2xl!"
+      >
+        <Logo className="w-1/3 mx-auto" />
+        <Title title="Bienvenido a Leo Counter" className="text-center text-gray-200 font-cursiva my-4" />
+        <p className='text-sm text-gray-200 text-center mb-7'>Para empezar debes crear el administrador del sistema</p>
+        <AnimatePresence>
+          {flash.error && (
+            <motion.div
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.25 }}
+            >
+              <AlertMessage message={flash.error} />
+            </motion.div>
+          )}
+          {flash.success && (
+            <motion.div
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.25 }}
+            >
+              <AlertMessage type="success" message={flash.success} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <RegisterForm form={form} onSubmit={handleSubmit} />
+
+      </Card>
+    </div>
+  );
+}
+
+Register.layout= (page: React.ReactNode)=> <GuestLayout children={page} />

@@ -1,7 +1,22 @@
-import { type FormDataNormalProps } from "./formData";
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+import { type FormDataNormalProps, type CreateAndEditViewWithOptionsProps, type FileWithPreview } from "./formData";
 import{ TextSize,
-    type TittleProps,
+    type TitleProps,
     type ButtonProps,
+    type ServerSideTableParams,
+    type ServerSideTableResponse,
+    type UseServerSideTableProps,
+    type UseServerSideTanStackTableProps,
+    type useModelToggleProps,
+    type ModelToggleProps,
+    type useTanStackTableProps,
     ButtonVariants,
     type InputFillableProps,
     type CardProps,
@@ -9,15 +24,39 @@ import{ TextSize,
 } from "./components";
 import { type FlashMessages } from "./intertia/flash";
 import { type InertiaProps } from "./intertia/props";
+import { type DropZoneProps,  type UploadedFileListProps } from "./dropZone";
+import { BaseIcons, IconAliases } from "./icons/icons.types";
+import { type ApiParams, ApiMethods, type SaldoValidateCuentaData, type SaldoValidateResponse } from "./api";
+import { type TimeStampModel,type  TimeStampModelWithSoftDelete, type SoftDeleteModel } from "./models/models.types";
 export {
     type FormDataNormalProps,
+    type CreateAndEditViewWithOptionsProps,
+    ApiMethods,
+    type ApiParams,
+    type SaldoValidateCuentaData,  
+    type SaldoValidateResponse, 
+    type FileWithPreview,
+    type ServerSideTableParams,
+    type ServerSideTableResponse,
+    type UseServerSideTableProps,
+    type useModelToggleProps,
+    type ModelToggleProps,
+    type useTanStackTableProps,
+    type UseServerSideTanStackTableProps,
     TextSize,
-    type TittleProps,
+    type TitleProps,
     type ButtonProps,
     ButtonVariants,
     type InputFillableProps,
     type CardProps,
     CardVariants,
     type FlashMessages,
-    type InertiaProps
+    type InertiaProps,
+    type DropZoneProps,
+    type UploadedFileListProps,
+    BaseIcons,
+    IconAliases,
+    type TimeStampModel,
+    type TimeStampModelWithSoftDelete,
+    type SoftDeleteModel
 }

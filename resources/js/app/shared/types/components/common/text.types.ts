@@ -1,3 +1,11 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 import type React from "react"
 
 export const TextSize : Record<string, string> = {
@@ -15,9 +23,9 @@ export const TextSize : Record<string, string> = {
     '8xl': 'text-8xl',
     '9xl': 'text-9xl',
 }
-export type TittleProps={
+export type TitleProps={
     as ?: React.ElementType
-    tittle? : React.ReactNode
+    title? : React.ReactNode
     size? : keyof typeof TextSize
     className? : string
 }

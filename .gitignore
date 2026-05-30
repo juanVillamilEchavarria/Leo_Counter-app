@@ -18,6 +18,7 @@
 /public/storage
 /storage/*.key
 /storage/pail
+/storage/redis
 /vendor
 docker/mysql/**/**
 Homestead.json
@@ -28,3 +29,6 @@ storage/framework/cache/data/*
 storage/framework/sessions/*
 storage/framework/views/*
 storage/logs/*
+*~
+*.swp
+*.swo

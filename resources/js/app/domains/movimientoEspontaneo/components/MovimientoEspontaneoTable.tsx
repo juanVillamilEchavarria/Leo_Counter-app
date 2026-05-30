@@ -1,0 +1,38 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+import SimpleTable from "@/app/shared/components/table/simple/SimpleTable"
+import { useSimpleTable } from "@/app/shared/hooks"
+import { useMemo } from "react"
+import { MovimientoEspontaneoColumns } from "./columns/movimientoEspontaneo.columns"
+import { type MovimientoEspontaneoTableData } from "../types/movimientoEspontaneo.types"
+
+export default function MovimientoEspontaneoTable({
+  data,
+  pageSize = 10,
+  onSelect
+}:{
+  data: MovimientoEspontaneoTableData[],
+  pageSize?: number
+  onSelect: (item: MovimientoEspontaneoTableData, modalType: string) => void
+}) {
+  const columns = useMemo(()=>{
+    return MovimientoEspontaneoColumns({
+      onSelect
+    })
+  }, [onSelect])
+
+  return (
+    <SimpleTable
+    data={data}
+    pagination={true}
+    columns={columns}
+    pageSize={pageSize}
+     />
+  )
+}

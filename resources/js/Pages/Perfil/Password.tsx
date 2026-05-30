@@ -1,0 +1,38 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+import UsuarioNavBar from "@/app/domains/usuario/components/UsuarioNavBar"
+import Title from "@/app/shared/components/common/Title"
+import PasswordForm from "@/app/domains/usuario/components/PasswordForm"
+import SectionTransition from "@/app/shared/components/common/SectionTransition"
+
+export default function Password() {
+  return (
+    <SectionTransition>
+        <UsuarioNavBar />
+        <div className="w-full px-4 sm:px-6 lg:w-[50%] lg:px-0 mx-auto mt-10 flex flex-col justify-center">
+            <div className="flex flex-col text-foreground gap-5">
+                <Title
+                title={
+                    <div>
+                        <i className="fa-solid fa-fingerprint"></i>
+                        <span>Mi Contraseña</span>
+                    </div>
+                    }
+                size="5xl"
+                 />
+                <p>Aqui puedes actualizar tu contraseña</p>
+            </div>
+
+            <div className="mt-10">
+                <PasswordForm />
+            </div>
+        </div>
+     </SectionTransition>
+  )
+}

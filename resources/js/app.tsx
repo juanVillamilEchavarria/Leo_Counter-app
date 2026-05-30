@@ -1,10 +1,28 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 import "./bootstrap";
 import "../css/app.css"
 import AppLayout from "./Layouts/AppLayout";
 import { createInertiaApp } from '@inertiajs/react'
 import { createRoot } from 'react-dom/client'
+import { restorePageMode } from "./app/shared/helpers/pageMode/pageMode.helpers";
+import { configureEcho } from '@laravel/echo-react';
 
+configureEcho({
+    broadcaster: 'reverb',
+});
+
+
+
+restorePageMode()
 createInertiaApp({
+
     title: title => title ? `${title} - ${import.meta.env.VITE_APP_NAME}`: import.meta.env.VITE_APP_NAME,
     resolve: name => {
         const pages = import.meta.glob('./Pages/**/*.tsx', { eager: true })

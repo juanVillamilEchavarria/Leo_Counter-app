@@ -4,21 +4,109 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        - USER=juanvillamil
+        - USER=leo
         - UID=1000
+    image: leo_counter_app
     container_name: leo_counter_app
     restart: unless-stopped
     ports:
       - "8080:80"
     volumes:
-      - .:/var/www/html
+      - ./.env:/var/www/html/.env:z
+      - ./storage:/var/www/html/storage:z
     env_file:
       - .env
+    networks:
+      - leo_network
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  queue-worker:
+    image: leo_counter_app
+    container_name: leo_counter_queue
+    restart: unless-stopped
+    command: php artisan queue:work --sleep=3 --tries=3 --max-time=3600
+    volumes:
+      - ./.env:/var/www/html/.env:z
+      - ./storage:/var/www/html/storage:z
+    env_file:
+      - .env
+    networks:
+      - leo_network
+    depends_on:
+      app:
+        condition: service_started
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  scheduler:
+    image: leo_counter_app
+    container_name: leo_counter_scheduler
+    restart: unless-stopped
+    command: /bin/sh -c "while :; do php artisan schedule:run --no-interaction; sleep 60; done"
+    volumes:
+      - ./.env:/var/www/html/.env:z
+      - ./storage:/var/www/html/storage:z
+    env_file:
+      - .env
+    networks:
+      - leo_network
+    depends_on:
+      app:
+        condition: service_started
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  reverb:
+    image: leo_counter_app
+    container_name: leo_counter_reverb
+    restart: unless-stopped
+    command: php artisan reverb:start --port=8081 --host=0.0.0.0
+    ports:
+      - "8085:8081"
+    volumes:
+      - ./.env:/var/www/html/.env:z
+      - ./storage:/var/www/html/storage:z
+    env_file:
+      - .env
+    networks:
+      - leo_network
+    depends_on:
+      app:
+        condition: service_started
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  redis:
+    image: redis:alpine
+    container_name: leo_counter_redis
+    restart: unless-stopped
+    command: >
+      redis-server
+      --maxmemory 256mb
+      --maxmemory-policy allkeys-lru
+      --save 900 1
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - leo_network
 
   db:
-    image: mariadb:latest
+    image: mariadb:lts
     container_name: mariadb_server
     restart: unless-stopped
     environment:
@@ -29,25 +117,47 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./docker/mysql/data:/var/lib/mysql
+      - mariadb_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 20s
+    networks:
+      - leo_network
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
-    restart: always
+    restart: unless-stopped
     ports:
-      - "8081:80"
+      - "8082:80"
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
       PMA_USER: ${DB_USERNAME}
       PMA_PASSWORD: ${DB_PASSWORD}
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    networks:
+      - leo_network
+
   mailhog:
     image: mailhog/mailhog
     container_name: mailhog
-    ports:
-      - "1025:1025"   # SMTP
-      - "8025:8025"   # Web UI
     restart: unless-stopped
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - leo_network
 
+volumes:
+  mariadb_data:
+  redis_data:
+
+networks:
+  leo_network:
+    driver: bridge

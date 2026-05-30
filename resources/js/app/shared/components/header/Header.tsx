@@ -1,36 +1,67 @@
-import Tittle from "../Tittle"
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+import Title from "../common/Title"
 import { Head } from "@inertiajs/react"
+import PageModeSelect from "../mode/PageModeSelect"
+import GithubLink from "./GithubLink"
 import { useMessageRedirect } from "../../hooks"
-export default function Header() {
+
+interface HeaderProps {
+    isOpen: boolean
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+    isMobileOpen: boolean
+    setIsMobileOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+/**
+ * Header principal.
+ * Expone el botón hamburguesa solo en móvil/tablet para abrir o cerrar el
+ * sidebar superpuesto sin afectar el colapso de escritorio.
+ */
+export default function Header({
+    isMobileOpen,
+    setIsMobileOpen,
+}: HeaderProps) {
     const { props } = useMessageRedirect()
-    
-    
   return (
-    <div className="w-full h-20 flex justify-between bg-white shadow-2xl items-center ">
-        <Head>
-          <title>{props.tittle}</title>
-       </Head>
-        <Tittle tittle={
+    <div className="w-full min-h-20 flex flex-row justify-between gap-3 bg-background shadow-xl items-center border-b border-border px-4 sm:px-6 lg:px-0">
+        {props.title && <Head title={props.title} />}
+        <button
+          type="button"
+          className="lg:hidden inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-background text-foreground shadow-sm transition-colors hover:bg-accent"
+          onClick={() => setIsMobileOpen(prev => !prev)}
+          aria-label={isMobileOpen ? "Cerrar menú lateral" : "Abrir menú lateral"}
+          aria-expanded={isMobileOpen}
+        >
+          <i className="fa-solid fa-bars" />
+        </button>
+        <Title title={
                   props.NoRegistros ? (
                     <>
-                      {props.tittle}
-                      <span className="mx-2 text-gray-400">&middot;</span>
-                      <span className="text-sm text-gray-500">
-                        {props.NoRegistros} registros
+                      {props.title}
+                      <span className="mx-2 text-foreground ">&middot;</span>
+                      <span className="text-sm">
+                        {props.NoRegistros} {props.NoRegistros === 1 ? 'registro' : 'registros'}
                       </span>
                     </>
                   ) : (
-                    props.tittle
+                    props.title
                   )
               }    
               size="md" 
-              className=" text-azul-negro ml-10 font-principal whitespace-nowrap" 
+              className="min-w-0 flex-1 truncate text-foreground lg:ml-10 font-principal whitespace-nowrap" 
               />
-        <div className="flex gap-2 items-center mr-4">
-          {/* enlace a github con el icono */}
-            <i className="fa-brands fa-github text-2xl"></i>
-            <a href={import.meta.env.VITE_GITHUB_REPOSITORY} target="_blank" rel="noopener noreferrer">Leo Counter</a>
-        </div>
+              <div className="flex shrink-0 gap-2 sm:gap-4 items-center">
+                  <PageModeSelect />
+                  <GithubLink />
+              </div>
+        
 
     </div>
   )

@@ -1,75 +1,66 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 import TransitionMotion from "../transitions/TransitionMotion"
-import Tittle from "../Tittle"
+import Title from "../common/Title"
 import NavItem from "./NavItem"
 import useOpen from "../../hooks/open/useOpen"
 import { useEffect } from "react"
-import { type NavItemConfig, type NavItemProps } from "../../types/components"
+import { isRouteActive } from "../../helpers"
+import { type NavItemProps } from "../../types/components"
 export default function NavItemGroup({
     icon = '',
-    tittle = '',
+    title = '',
+    ItemStyles = '',
+    ItemHoverStyles = '',
+    CurrentStyles,
+    TransitionStyle= '',
+    routeName,
     childrenNav = [],
     isOpen = false,
 }: NavItemProps) {
-    const CurrentStyles= 'bg-white/80 text-black!' 
-        const ItemStyles= `
-            flex 
-            px-3 
-            h-10
-            justify-start
-            gap-3
-            items-center
-            w-full 
-            rounded-2xl
-            transition-all
-            ease-in-out 
-            duration-300 
-            text-white
-        `;
-        const ItemHoverStyles=  `
-            hover:bg-white/80 
-            hover:text-black
-        `
-        const TransitionStyle= 'transition-all duration-300 ease-in-out'
         const {isOpen : isOpenChild, setIsOpen: setIsOpenChild} = useOpen(false)
             useEffect(() => {
                 if(isOpen === false) setIsOpenChild(false)
             }, [isOpen])
   return (
-     <li className="flex flex-col w-full">
-            <div className={`${ItemStyles} ${ItemHoverStyles}`}>
+     <li className={`flex flex-col w-full`}>
+                {/* ya no es un link sino un button que despliega los children */}
                <button 
-               className=" 
-               flex items-center gap-3 h-10 cursor-pointer w-full"
-               onClick={() => setIsOpenChild(prev => !prev)}
-               disabled={isOpen===false}
-               >
+                className={`
+                flex items-center gap-3 cursor-pointer w-full ${ItemStyles} ${ItemHoverStyles} ${isRouteActive(routeName) ? CurrentStyles : ''} `}
+                // aca se hace el toggle
+                onClick={() => setIsOpenChild(prev => !prev)}
+                // si el sideBar esta cerrado se deshabilita
+                disabled={isOpen===false}
+               > 
+                  {/* este es el icono que se le pasa del padre, el correspondiente al grupo */}
                     <i 
-                    className={`${icon} text-2xl ${TransitionStyle}`}>
+                    className={`${icon} ml-2 text-2xl text-foreground ${TransitionStyle}`}>
                     </i>
                     <TransitionMotion initial={{opacity: 0, x: -40}} active={isOpen} className="w-full">
                         <div className="flex items-center w-full">
-                            <Tittle size="md" tittle={tittle} className="whitespace-nowrap" />
-                      
-                        <i className={`fa-solid fa-chevron-down ml-auto mr-2 text-2xl ${isOpenChild ? 'rotate-180' : ''} ${TransitionStyle}`}></i>
+                            <Title size="md" title={title} className="whitespace-nowrap" />
+                        
+                        {/* este es el icono de la flecha */}
+                        <i className={`fa-solid fa-chevron-down ml-auto text-foreground mr-2 text-2xl ${isOpenChild ? 'rotate-180' : ''} ${TransitionStyle}`}></i>
                          
     
                         </div>
                         
                     </TransitionMotion>
                 </button>
-            </div>
+            {/* aca se muestran los children */}
               
-            <div
-                className={`
-                    ml-3
-                    overflow-hidden
-                    transition-all
-                    duration-300
-                    ease-in-out
-                    ${isOpenChild ? 'max-h-96 opacity-100 mt-3' : 'max-h-0 opacity-0'}
-                `}
-                >
-                <ul className="flex flex-col gap-2">
+           
+             <TransitionMotion transition={{duration:0.15}} initial={{y: -30, opacity: 0}} exit={{x:0, y:-30, opacity:0}} active={isOpenChild} >
+                    {/* devuelve una lista de items */}
+                <ul className="flex flex-col ml-4">
                     {childrenNav.map(item => (
                     <NavItem
                         {...item}
@@ -78,7 +69,8 @@ export default function NavItemGroup({
                     />
                     ))}
                 </ul>
-            </div>
+            </TransitionMotion>
+            
              
             
         </li>

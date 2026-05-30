@@ -1,35 +1,47 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 import TransitionMotion from "@/app/shared/components/transitions/TransitionMotion"
-import useOpen from "@/app/shared/hooks/open/useOpen"
 import SelfOptionsCard from "./SelfOptionsCard"
-import {  useEffect } from "react"
-import { type SelfUserCardsProps } from "../types/user.types"
+import { createPortal } from 'react-dom';
+import useSelfUserCard from "../hooks/useSelfUserCard";
+import { type SelfUserCardProps } from "../types/user.types"
+
+/**
+ * Tarjeta del usuario logueado del sistema con su informacion basica
+ * @param param0
+ * @param param0.isOpen
+ * @param param0.user
+ * @constructor
+ */
 export default function SelfUserCard({
     isOpen = false,
     user
-}:SelfUserCardsProps) {
+}:SelfUserCardProps) {
     // si no hay name o role no se renderiza
     if(!user.name || !user.role) return null
-    const {isOpen : isOpenCard, setIsOpen : setIsOpenCard} = useOpen(false)
-    // este useeffect es para detectar si se cerro el sidebar, y si es asi se cierra el card de opciones
-    useEffect(() => {
-       if (!isOpen) setIsOpenCard(false)
-    }, [isOpen])
-
+    const {buttonRef, cardStyle, isOpenCard, setIsOpenCard, portal} = useSelfUserCard({isOpen})
+    if(!portal) return null
   return (
-    <div className="flex flex-row items-center justify-between w-full bg-zinc-950/40 p-2 rounded-2xl relative">
-        <div 
+    <div className="flex flex-row items-center justify-between mt-3 w-full p-2 rounded-2xl">
+        <div
             className="
             flex
-            flex-row 
+            flex-row
             items-center
             gap-3
             "
         >
            {/* muestra la imagen del usuario */}
-            <div 
+            <div
                 className="
-                bg-white/80
-                p-2 
+                bg-background/80
+                p-2
                 rounded-full
                 "
             >
@@ -47,34 +59,35 @@ export default function SelfUserCard({
                  }
                 >
                     <div className="flex flex-col">
-                        <p className="text-sm text-white whitespace-nowrap">{user.name}</p>
-                        <p className="text-xs text-white whitespace-nowrap">{user.role}</p>
+                        <p className="text-sm  whitespace-nowrap">{user.name}</p>
+                        <p className="text-xs  whitespace-nowrap">{user.role}</p>
                     </div>
                 </TransitionMotion>
-            
-        </div>
-        <div> {/* este div no tiene estilos porque solo envuelve todo el contenido para que eñ justify-between del elemento padre no mueva al boton de abrir el card */}
 
-            
+        </div>
+        <div> {/* este div no tiene estilos porque solo envuelve todo el contenido para que el justify-between del elemento padre no mueva al boton de abrir el card */}
+
+
               {/* muestra el boton para abrir el card de opciones */}
-            <TransitionMotion 
-            active={isOpen} 
+            <TransitionMotion
+            active={isOpen}
             initial={
                     {
                     opacity:0, x: -70
                     }
                 }>
-                    <div className="border-l-2  border-white/80">
+                    <div className="border-l-2  border-border">
                         <button
-                        className="cursor-pointer ml-2 hover:bg-white/20 rounded-xl text-white py-1 "
+                        className="cursor-pointer ml-2 hover:bg-background/20 rounded-xlpy-1 "
                         onClick={() => setIsOpenCard(prev => !prev)}
+                        ref={buttonRef}
                         >
                             <i className={`
                                 fa-solid
                                 fa-chevron-right
                                 transition-all
                                 duration-500
-                                ${isOpenCard ? 'fa-rotate-180' : ''} 
+                                ${isOpenCard ? 'fa-rotate-180' : ''}
                                  mx-3
                                 `}
                             >
@@ -82,47 +95,63 @@ export default function SelfUserCard({
                             </i>
                         </button>
                     </div>
-                    
-                
+
+
             </TransitionMotion>
             {/* muestra el card de opciones */}
-            <TransitionMotion 
-                    active={isOpenCard} 
+            {typeof document !== 'undefined' && createPortal(
+                <TransitionMotion
+                    active={isOpenCard}
                     initial={
                             {
                             opacity: 0,
                             scaleY:0,
-                            scaleX:0}
-                        } 
+                            scaleX:0,
+                            y: -150,
+                            x: 100}
+                        }
                     animate={
                             {
                             opacity: 1,
-                            scaleY:1, 
+                            scaleY:1,
                             scaleX:1,
-                            y: -180,
-                            x: 40}
-                        } 
+                            y: -250,
+                            x: 250}
+                        }
                     exit={
                             {
                             opacity: 0,
                             scaleY:0,
                             scaleX:0,
-                            y: 0}
-                        } 
+                            y: -150,
+                            x: 100}
+                        }
                     transition={
                         {
                         duration: 0.25}
                     }
+                    layout={false}
+                    style={{
+                        position: "absolute",
+                        top: cardStyle.top,
+                        left: cardStyle.left,
+                        zIndex: 1000,
+                    }}
+                    className="fixed -bottom-35 left-10 z-100 pointer-events-auto"
                     >
                         {/* este es el card de opciones */}
                         <SelfOptionsCard />
-                </TransitionMotion>
-        
+                </TransitionMotion>,
+                portal
+
+            )}
+
+
 
         </div>
-        
-    
-            
+
+
+
     </div>
   )
 }
