@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('categoria_id')->constrained('categorias');
             $table->date('periodo');
-            $table->decimal('monto', 12, 2);
+            $table->decimal('monto', 15, 2);
             $table->foreignUuid('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->text('descripcion')->nullable();
             $table->softDeletes();
