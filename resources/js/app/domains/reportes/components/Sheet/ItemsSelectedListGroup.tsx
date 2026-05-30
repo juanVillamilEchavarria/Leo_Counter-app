@@ -1,3 +1,11 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 import ItemSelectedList from "@/app/shared/components/common/ItemSelectedList"
 import {type  Cuenta } from "@/app/domains/cuenta"
 import { type Categoria } from "@/app/domains/categoria"

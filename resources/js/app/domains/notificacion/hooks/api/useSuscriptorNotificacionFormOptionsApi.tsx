@@ -1,3 +1,11 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 import {useQuery, type UseQueryResult} from "@tanstack/react-query";
 import {suscriptorNotificacionFormOptionsApi} from "@/app/domains/notificacion/api/notificacion.api";
 import type {SuscriptorNotificacionFormOptions} from "@/app/domains/notificacion";

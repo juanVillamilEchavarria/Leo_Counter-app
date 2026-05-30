@@ -1,3 +1,11 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 const baseStyle = 'backdrop-blur-4xl shadow-[0_20px_50px_rgba(0,0,0,0.6)]'
 export const CardVariants=
 {

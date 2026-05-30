@@ -1,3 +1,11 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 import { AxiosError } from "axios";
 import { type ApiErrorResponse } from "../../types/api";
 export const parseApiErrors = (error: AxiosError<ApiErrorResponse>): Record<string, string> | AxiosError => {

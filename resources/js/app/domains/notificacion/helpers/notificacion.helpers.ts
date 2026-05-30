@@ -1,3 +1,11 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 import type { InertiaForm } from "node_modules/@inertiajs/react/types/useForm"
 import { useCallback } from "react"
 import type { CanalNotificacion, SuscriptorFormData, SuscriptorNotificacionFormOptions } from "../types/notificacion.types"

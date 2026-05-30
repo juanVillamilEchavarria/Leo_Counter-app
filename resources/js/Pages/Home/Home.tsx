@@ -1,3 +1,11 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 import { KPISection, BalanceLineChart } from "@/app/domains/reportes"
 import Loading from "@/app/shared/components/common/Loading"
 import ErrorResponse from "@/app/shared/components/common/ErrorResponse"

@@ -1,3 +1,11 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 import {type Categoria,type CategoriaTableData ,CategoriaActions, CategoriaRoutes, CategoriaToggleTypes } from "../../types/categoria.types";
 import ModelToggle from "@/app/shared/components/table/actions/ModelToggle";
 import EditAndDeleteActions from "@/app/shared/components/table/actions/EditAndDeleteActions";

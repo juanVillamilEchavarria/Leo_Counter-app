@@ -1,3 +1,11 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 export const ModalSizes={
         sm : 'w-11/12 sm:w-1/2 lg:w-1/6 min-h-40',
         md : 'w-11/12 sm:w-2/3 lg:w-1/4 min-h-64',

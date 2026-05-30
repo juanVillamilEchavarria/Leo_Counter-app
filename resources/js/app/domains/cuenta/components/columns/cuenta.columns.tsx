@@ -1,3 +1,11 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 import { CuentaActions, type Cuenta, CuentaRoutes, CuentaToggleTypes } from "../../types/cuenta.types"
 import EditAndDeleteActions from "@/app/shared/components/table/actions/EditAndDeleteActions"
 import ModelToggle from "@/app/shared/components/table/actions/ModelToggle"

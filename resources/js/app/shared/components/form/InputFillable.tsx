@@ -1,3 +1,11 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 import { type InputFillableProps } from "@/app/shared/types/components"
 /**
  * Componente de input rellenable, que se puede usar para crear campos de formulario, con un diseño predefinido y con la posibilidad de agregar un icono dentro del input, ademas de manejar el estado del input a través de props como value y onChange, y tambien permite deshabilitar el input o hacerlo requerido.
