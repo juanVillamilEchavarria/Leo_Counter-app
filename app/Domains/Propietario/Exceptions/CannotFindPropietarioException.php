@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Domains\Propietario\Exceptions;
-use App\Shared\Abstracts\Exceptions\DomainException;
-use Throwable;
+use App\Shared\Domain\Exceptions\DomainException;
 use Override;
+use Throwable;
 
 class CannotFindPropietarioException extends DomainException{
     #[Override]

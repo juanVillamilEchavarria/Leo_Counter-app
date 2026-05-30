@@ -1,8 +1,14 @@
 <?php
 namespace App\Application\Reporte\DTOs\Movimientos\KPI;
-use App\Shared\Abstracts\DTOs\DTO;
 
-class VariationsKPIDTO extends DTO{
+/**
+ * DTO que representa las variaciones de key perfomance indicators.
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @package App\Application\Reporte\DTOs\Movimientos\KPI
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+final readonly class VariationsKPIDTO {
     public function __construct(
         public ?float $ingresos,
         public ?float $gastos,

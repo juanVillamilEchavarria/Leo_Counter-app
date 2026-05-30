@@ -9,6 +9,7 @@ use App\Domains\Auth\Events\PasswordResetLinkRequested;
 use App\Shared\Application\Contracts\Bus\EventBus;
 use App\Domains\Usuario\Contracts\Repositories\UsuarioRepositoryContract;
 use App\Shared\Domain\ValueObjects\Email;
+use App\Application\Usuario\Exceptions\CannotFindUsuarioException;
 
 /**
  * Handler del caso de uso para solicitar un enlace de restablecimiento de contraseña.
@@ -39,12 +40,16 @@ final readonly class SendPasswordResetLinkHandler
      */
     public function __invoke(SendPasswordResetLinkCommand $command): void
     {
+        $usuario = $this->usuarioRepository->findByEmail(new Email($command->email));
+        if(!$usuario){
+            throw new CannotFindUsuarioException('No se encontro un usuario para el email :'. $command->email);
+        }
         try {
             $token = $this->tokenService->createToken($command->email);
         } catch (\Throwable $e) {
             throw new CannotChangeAdminPasswordException('No se pudo crear el token de restablecimiento de contraseña: '.$e->getMessage());
         }
-        $usuario = $this->usuarioRepository->findByEmail(new Email($command->email));
+
         $this->eventBus->publish(new PasswordResetLinkRequested($usuario, $token));
     }
 }

@@ -13,7 +13,14 @@ use App\Domains\ArchivoMovimiento\ValueObjects\FilePath;
 use App\Domains\Movimiento\ValueObjects\MovimientoId;
 use Illuminate\Database\Eloquent\Model;
 
-class EloquentArchivoMovimientoRepository extends EloquentRepository implements ArchivoMovimientoRepositoryContract
+/**
+ * Repositorio de archivos de movimiento implementado con Eloquent.
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @package App\Infrastructure\ArchivoMovimiento\Persistence\Repositories\Eloquent
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+final  class EloquentArchivoMovimientoRepository extends EloquentRepository implements ArchivoMovimientoRepositoryContract
 {
     protected function mapAggregateToAttributes(object $aggregate): array
     {

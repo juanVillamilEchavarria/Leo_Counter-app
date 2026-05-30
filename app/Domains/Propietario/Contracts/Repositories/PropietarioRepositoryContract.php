@@ -3,9 +3,9 @@
 namespace App\Domains\Propietario\Contracts\Repositories;
 
 use App\Domains\Propietario\Aggregates\Propietario as PropietarioAggregate;
-use App\Shared\Contracts\Repositories\SoftDeleteRepositoryContract;
 use App\Shared\Domain\Contracts\AggregateModelContract;
 use App\Shared\Domain\Contracts\AggregateModelIdContract;
+use App\Shared\Domain\Contracts\SoftDeleteRepositoryContract;
 
 /**
  * Contrato de implementación de repositorio de escritura para el dominio Propietario.

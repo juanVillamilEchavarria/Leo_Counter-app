@@ -3,7 +3,6 @@
 namespace App\Application\Movimiento\Commands;
 
 use App\Application\Movimiento\Commands\Abstracts\WriteMovimientoCommand;
-use App\Application\Movimiento\Contracts\Commands\ModifyMovimientoCommandContract;
 use App\Shared\Application\Contracts\ValueObjects\UploadedFileContract;
 use App\Shared\Application\Contracts\Commands\TransactionalCommandContract;
 
@@ -14,7 +13,7 @@ use App\Shared\Application\Contracts\Commands\TransactionalCommandContract;
  * @since 1.0.0
  * @version 1.0.0
  */
-final readonly class UpdateMovimientoCommand extends WriteMovimientoCommand implements  ModifyMovimientoCommandContract, TransactionalCommandContract
+final readonly class UpdateMovimientoCommand extends WriteMovimientoCommand implements TransactionalCommandContract
 {
     /**
      * @param string $id

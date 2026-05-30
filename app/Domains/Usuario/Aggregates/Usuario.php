@@ -3,6 +3,7 @@
 namespace App\Domains\Usuario\Aggregates;
 
 use App\Domains\Usuario\Contracts\Checkers\UsuarioCanUpdatePublicDataCheckerContract;
+use App\Domains\Usuario\Contracts\Checkers\UsuarioUniquinessCheckerContract;
 use App\Domains\Usuario\Contracts\Services\PasswordHasherContract;
 use App\Domains\Usuario\Enums\Roles;
 use App\Domains\Usuario\Exceptions\CannotCreateTheAdminUserException;
@@ -11,8 +12,7 @@ use App\Domains\Usuario\Exceptions\WrongPasswordException;
 use App\Domains\Usuario\ValueObjects\UsuarioId;
 use App\Shared\Domain\Contracts\AggregateModelContract;
 use App\Shared\Domain\ValueObjects\Email;
-use App\Shared\ValueObjects\Password;
-use App\Domains\Usuario\Contracts\Checkers\UsuarioUniquinessCheckerContract;
+use App\Shared\Domain\ValueObjects\Password;
 use InvalidArgumentException;
 
 /**

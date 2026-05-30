@@ -6,6 +6,7 @@ services:
       args:
         - USER=leo
         - UID=1000
+    image: leo_counter_app
     container_name: leo_counter_app
     restart: unless-stopped
     ports:
@@ -24,12 +25,6 @@ services:
         condition: service_healthy
 
   queue-worker:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        - USER=leo
-        - UID=1000
     image: leo_counter_app
     container_name: leo_counter_queue
     restart: unless-stopped
@@ -42,18 +37,14 @@ services:
     networks:
       - leo_network
     depends_on:
+      app:
+        condition: service_started
       db:
         condition: service_healthy
       redis:
         condition: service_healthy
 
   scheduler:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        - USER=leo
-        - UID=1000
     image: leo_counter_app
     container_name: leo_counter_scheduler
     restart: unless-stopped
@@ -66,18 +57,14 @@ services:
     networks:
       - leo_network
     depends_on:
+      app:
+        condition: service_started
       db:
         condition: service_healthy
       redis:
         condition: service_healthy
 
   reverb:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        - USER=leo
-        - UID=1000
     image: leo_counter_app
     container_name: leo_counter_reverb
     restart: unless-stopped
@@ -92,6 +79,8 @@ services:
     networks:
       - leo_network
     depends_on:
+      app:
+        condition: service_started
       db:
         condition: service_healthy
       redis:

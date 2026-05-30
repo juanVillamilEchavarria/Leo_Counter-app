@@ -4,12 +4,11 @@ namespace App\Application\Usuario\Commands\Handlers;
 
 use App\Application\Usuario\Commands\ChangeUserPasswordCommand;
 use App\Application\Usuario\Exceptions\CannotChangeAdminPasswordException;
-use App\Application\Usuario\Exceptions\CannotDeleteUsuarioException;
 use App\Application\Usuario\Exceptions\CannotFindUsuarioException;
 use App\Domains\Usuario\Contracts\Repositories\UsuarioRepositoryContract;
 use App\Domains\Usuario\Contracts\Services\PasswordHasherContract;
 use App\Domains\Usuario\ValueObjects\UsuarioId;
-use App\Shared\ValueObjects\Password;
+use App\Shared\Domain\ValueObjects\Password;
 
 /**
  * Handler del cambio administrativo de contraseña de usuario.

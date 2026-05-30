@@ -2,8 +2,7 @@
 
 namespace App\Domains\Usuario\Exceptions;
 
-use App\Shared\Abstracts\Exceptions\DomainException;
-use Override;
+use App\Shared\Domain\Exceptions\DomainException;
 use Throwable;
 
 /**

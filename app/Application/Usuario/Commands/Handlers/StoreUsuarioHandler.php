@@ -9,7 +9,7 @@ use App\Domains\Usuario\ValueObjects\UsuarioId;
 use App\Shared\Domain\Contracts\AggregateModelContract;
 use App\Shared\Domain\Contracts\IdGeneratorContract;
 use App\Shared\Domain\ValueObjects\Email;
-use App\Shared\ValueObjects\Password;
+use App\Shared\Domain\ValueObjects\Password;
 
 /**
  * Handler del comando de creación administrativa de usuarios member.

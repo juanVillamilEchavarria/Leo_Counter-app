@@ -3,10 +3,9 @@
 namespace App\Domains\Cuenta\Contracts\Repositories;
 
 use App\Domains\Cuenta\Aggregates\Cuenta;
-use App\Shared\Domain\Contracts\AggregateModelIdContract;
-use Illuminate\Database\Eloquent\Model;
-use App\Shared\Contracts\Repositories\SoftDeleteRepositoryContract;
 use App\Shared\Domain\Contracts\AggregateModelContract;
+use App\Shared\Domain\Contracts\AggregateModelIdContract;
+use App\Shared\Domain\Contracts\SoftDeleteRepositoryContract;
 
 /**
  * Repository contract for Cuenta domain

@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Application\Propietario\DTOs;
-
-use App\Shared\Abstracts\DTOs\DTO;
 /**
  * DTO que representa los datos necesarios para editar un propietario.
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
@@ -10,7 +8,7 @@ use App\Shared\Abstracts\DTOs\DTO;
  * @since 1.0.0
  * @version 1.0.0
  */
-final  class PropietarioEditDTO extends DTO{
+final readonly class PropietarioEditDTO{
 
     public function __construct(
         public string $id,

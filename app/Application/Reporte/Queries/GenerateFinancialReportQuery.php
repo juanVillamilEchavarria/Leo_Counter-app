@@ -1,7 +1,6 @@
 <?php
 namespace App\Application\Reporte\Queries;
 
-use App\Shared\Abstracts\DTOs\DTO;
 
 /**
  * Query que se encarga de representar los datos necesarios para generar un reporte
@@ -10,7 +9,7 @@ use App\Shared\Abstracts\DTOs\DTO;
  * @version 1.0.0
  * @since 1.0.0
  */
-class GenerateFinancialReportQuery extends DTO{
+final readonly class GenerateFinancialReportQuery{
     /**
      * @param string|null $startDate Fecha de inicio del periodo para el cual se generará el reporte.
      * @param string|null $endDate Fecha de fin del periodo para el cual se generará el reporte.

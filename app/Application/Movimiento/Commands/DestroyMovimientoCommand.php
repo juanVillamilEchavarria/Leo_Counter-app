@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Application\Movimiento\Commands;
-use App\Application\Movimiento\Contracts\Commands\ModifyMovimientoCommandContract;
 use App\Shared\Application\Contracts\Commands\TransactionalCommandContract;
 /**
  * Comando para eliminar un registro de movimiento.
@@ -10,7 +9,7 @@ use App\Shared\Application\Contracts\Commands\TransactionalCommandContract;
  * @since 1.0.0
  * @version 1.0.0
  */
-final readonly class DestroyMovimientoCommand implements  ModifyMovimientoCommandContract, TransactionalCommandContract
+final readonly class DestroyMovimientoCommand implements   TransactionalCommandContract
 {
 public function __construct(
     public string $id,

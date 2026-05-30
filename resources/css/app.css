@@ -143,7 +143,7 @@
 }
 
 .section{
-  @apply mx-auto mt-10 lg:w-[95%] w-[95%] h-full 
+  @apply mx-auto mt-10 lg:w-[95%] w-[95%] h-full
 }
 
 }
@@ -240,7 +240,7 @@
      --sidebar-ring: oklch(0.707 0.022 261.325);
      --brand-dark: oklch(18.334% 0.06836 264.606);
      --brand-dark-foreground: oklch(0.21 0.034 264.665);
-     
+
 }
 
 .dark {
@@ -280,4 +280,14 @@
      --sidebar-accent-foreground: oklch(0.985 0.002 247.839);
      --sidebar-border: oklch(1 0 0 / 10%);
      --sidebar-ring: oklch(0.551 0.027 264.364);
+}
+.dark select,
+.dark select option {
+    background-color: #1e1e2b;
+    color: #e2e8f0;
+}
+
+.dark select {
+    background-color: #1e1e2b !important;
+    color: #e2e8f0 !important;
 }

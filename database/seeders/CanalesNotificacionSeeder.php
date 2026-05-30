@@ -14,7 +14,7 @@ class CanalesNotificacionSeeder extends Seeder
      */
     public function run(): void
     {
-        CanalNotificacion::create([
+        CanalNotificacion::firstOrCreate([
             'id'=> Uuid::uuid7()->toString(),
             'nombre' => 'Email',
             'active'=>true

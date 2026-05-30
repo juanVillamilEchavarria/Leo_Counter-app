@@ -2,11 +2,11 @@
 
 namespace App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Movimientos;
 
-use App\Infrastructure\Reporte\Enums\Queries\Builders\MovimientoQueryRelationParam;
 use App\Domains\Reporte\ValueObjects\ReporteQuery;
-use App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Abstracts\QueryJoinRelationStrategy;
 use App\Infrastructure\Reporte\Contracts\Enums\QueryRelationParamContract;
-use App\Shared\Enums\ComparativeOperators;
+use App\Infrastructure\Reporte\Enums\Queries\Builders\MovimientoQueryRelationParam;
+use App\Infrastructure\Reporte\Queries\Modifiers\Laravel\Abstracts\QueryJoinRelationStrategy;
+use App\Shared\Domain\Enums\ComparativeOperators;
 
 final class MovimientoTipoMovimientoQueryJoinRelationStrategy extends QueryJoinRelationStrategy
 {

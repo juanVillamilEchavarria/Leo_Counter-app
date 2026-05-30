@@ -8,10 +8,9 @@ use App\Domains\Usuario\Enums\Roles;
 use App\Domains\Usuario\ValueObjects\UsuarioId;
 use App\Models\User;
 use App\Shared\Domain\Contracts\AggregateModelContract;
-use App\Shared\Domain\Contracts\AggregateModelIdContract;
 use App\Shared\Domain\ValueObjects\Email;
+use App\Shared\Domain\ValueObjects\Password;
 use App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent\EloquentRepository;
-use App\Shared\ValueObjects\Password;
 use Illuminate\Database\Eloquent\Model;
 
 /**

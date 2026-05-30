@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
             FrecuenciaMovimientoSeeder::class,
             TipoCuentaSeeder::class,
             TipoMovimientoSeeder::class,
-            CategoriaSeeder::class
+            CategoriaSeeder::class,
+            CanalesNotificacionSeeder::class
         ]);
     }
 }

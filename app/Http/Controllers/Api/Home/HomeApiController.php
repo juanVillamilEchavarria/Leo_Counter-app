@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\Home;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Application\Home\Services\HomeService;
 use App\Shared\Application\Contracts\Bus\QueryBus;
 use App\Application\Home\Queries\GenerateHomeReportQuery;
 use App\Application\Reporte\Resolvers\AssemblerResolver;

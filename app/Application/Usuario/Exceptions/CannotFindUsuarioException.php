@@ -2,7 +2,7 @@
 
 namespace App\Application\Usuario\Exceptions;
 
-use App\Shared\Abstracts\Exceptions\DomainException;
+use App\Shared\Domain\Exceptions\DomainException;
 use Override;
 use Throwable;
 
@@ -16,7 +16,6 @@ use Throwable;
  */
 final class CannotFindUsuarioException extends DomainException
 {
-    #[Override]
     public function __construct(string $message = 'No se pudo encontrar el usuario', int $code = 0, ?Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);

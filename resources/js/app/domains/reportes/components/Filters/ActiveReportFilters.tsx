@@ -24,7 +24,7 @@ export default function ActiveReportFilters({
     <div className="bg-background rounded-lg border border-border p-4 mb-6">
       <div className="flex items-center gap-4 mb-4">
         <h4 className="font-semibold text-foreground">Filtros activos</h4>
-        <div className="w-1/12">
+        <div className="lg:w-1/12 md:w-1/6 sm:w-1/2 ">
           <Button
             type="button"
             variant="secondary"

@@ -2,9 +2,9 @@
 
 namespace App\Providers\MovimientoPendiente;
 
-use Illuminate\Support\ServiceProvider;
 use App\Application\MovimientoPendiente\Contracts\Enrichers\MovimientoPendienteCollectionEnricherContract;
-use App\Infrastructure\MovimientoPendiente\Enricher\Laravel\LaravelMovimientoPendienteCollectionEnricher;
+use App\Infrastructure\MovimientoPendiente\Framework\Laravel\Enricher\LaravelMovimientoPendienteCollectionEnricher;
+use Illuminate\Support\ServiceProvider;
 
 class EnricherProvider extends ServiceProvider
 {

@@ -1,12 +1,8 @@
 <?php
 namespace App\Infrastructure\Reporte\Queries\Executors\Abstracts\Eloquent;
-use App\Application\Reporte\Contracts\Queries\ReporteQueryExecutorContract;
-use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
-use App\Domains\Reporte\ValueObjects\ReporteQuery;
-use App\Shared\QueryBuilders\ConditionalAggregateBuilder;
+use App\Shared\Infrastructure\Queries\Builders\ConditionalAggregateBuilder;
 use DateTimeImmutable;
 use Illuminate\Database\Query\Builder;
-use Illuminate\Support\Facades\DB;
 
 abstract class EloquentTableQueryExecutor
 {

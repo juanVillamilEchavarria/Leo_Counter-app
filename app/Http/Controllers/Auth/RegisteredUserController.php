@@ -27,9 +27,7 @@ class RegisteredUserController extends Controller
             email: $request->input('email'),
             password: $request->input('password')
         ));
-
-        Inertia::flash('succes', 'Administrador creado correctamente');
-
+        Inertia::flash('success', 'Administrador creado correctamente');
         return redirect()->route('login');
 
     }

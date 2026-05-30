@@ -2,11 +2,10 @@
 namespace App\Shared\Infrastructure\Framework\Laravel\Services\Files;
 
 use App\Domains\ArchivoMovimiento\Enums\ArchivoMovimientoDiskEnum;
-use App\Domains\ArchivoMovimiento\ValueObjects\FilePath;
 use App\Shared\Application\Contracts\Services\FileServiceContract;
 use App\Shared\Application\DTOs\Files\MoveFileDTO;
 use App\Shared\Application\DTOs\Files\UploadFileDTO;
-use App\Shared\Exceptions\CannotUploadFileException;
+use App\Shared\Infrastructure\Exceptions\CannotUploadFileException;
 use Illuminate\Support\Facades\Storage;
 
 /**

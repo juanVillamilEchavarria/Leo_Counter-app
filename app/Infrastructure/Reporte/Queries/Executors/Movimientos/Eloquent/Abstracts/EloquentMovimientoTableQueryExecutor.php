@@ -2,12 +2,11 @@
 
 namespace App\Infrastructure\Reporte\Queries\Executors\Movimientos\Eloquent\Abstracts;
 
-use App\Infrastructure\Reporte\Queries\Executors\Abstracts\Eloquent\EloquentTableQueryExecutor;
 use App\Application\Reporte\Contracts\Queries\ReporteQueryExecutorContract;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 use App\Domains\Reporte\ValueObjects\ReporteQuery;
-use App\Shared\QueryBuilders\ConditionalAggregateBuilder;
-use DateTimeImmutable;
+use App\Infrastructure\Reporte\Queries\Executors\Abstracts\Eloquent\EloquentTableQueryExecutor;
+use App\Shared\Infrastructure\Queries\Builders\ConditionalAggregateBuilder;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 

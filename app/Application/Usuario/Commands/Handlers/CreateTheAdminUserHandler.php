@@ -4,12 +4,13 @@ namespace App\Application\Usuario\Commands\Handlers;
 
 use App\Application\Usuario\Commands\CreateTheAdminUserCommand;
 use App\Domains\Usuario\Aggregates\Usuario;
-use App\Domains\Usuario\Contracts\Repositories\UsuarioRepositoryContract;
-use App\Shared\ValueObjects\Password;
-use App\Shared\Domain\ValueObjects\Email;
-use App\Domains\Usuario\ValueObjects\UsuarioId;
 use App\Domains\Usuario\Contracts\Checkers\UsuarioUniquinessCheckerContract;
+use App\Domains\Usuario\Contracts\Repositories\UsuarioRepositoryContract;
+use App\Domains\Usuario\ValueObjects\UsuarioId;
 use App\Shared\Domain\Contracts\IdGeneratorContract;
+use App\Shared\Domain\ValueObjects\Email;
+use App\Shared\Domain\ValueObjects\Password;
+
 final readonly class CreateTheAdminUserHandler
 {
     public function __construct(

@@ -5,9 +5,9 @@ namespace App\Domains\Configuracion\Strategies\Abstracts;
 use App\Domains\Configuracion\Contracts\Strategies\SoftDeleteManagerContract;
 use App\Domains\Configuracion\Enums\SoftDeleteManagerTypes;
 use App\Domains\Configuracion\Exceptions\CannotHardDeleteModel;
-use App\Shared\Contracts\Repositories\SoftDeleteRepositoryContract;
 use App\Shared\Domain\Contracts\AggregateModelContract;
 use App\Shared\Domain\Contracts\AggregateModelIdContract;
+use App\Shared\Domain\Contracts\SoftDeleteRepositoryContract;
 
 /**
  * Clase padre para las estrategias de manejo de registros eliminados
