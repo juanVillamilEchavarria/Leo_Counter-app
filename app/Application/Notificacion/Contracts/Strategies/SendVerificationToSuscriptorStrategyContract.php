@@ -11,7 +11,6 @@
 namespace App\Application\Notificacion\Contracts\Strategies;
 
 use App\Domains\Notificacion\Contracts\Events\SendVerificationToSuscriptorEventContract;
-use App\Domains\Notificacion\Events\SuscriptorCreated;
 
 /**
  * Contrato para la estrategia de manejadores de envio de verificacion para el suscriptor de notificaciones

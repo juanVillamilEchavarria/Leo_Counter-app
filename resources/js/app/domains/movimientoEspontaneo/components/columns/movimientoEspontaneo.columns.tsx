@@ -6,7 +6,8 @@
  * @since 1.0.0
  * @version 1.0.0
  */
-import EditAndDeleteActions from "@/app/shared/components/table/actions/EditAndDeleteActions"
+import ActionSection from "@/app/shared/components/table/actions/ActionSection"
+import CrudButton from "@/app/shared/components/common/CrudButton"
 import SuccessOrFailText from "@/app/shared/components/common/SuccessOrFailText"
 import MoneyFlow from "@/app/shared/components/common/MoneyFlow"
 import { type MovimientoEspontaneoTableData, MovimientoEspontaneoRoutes } from "../../types/movimientoEspontaneo.types"
@@ -56,9 +57,11 @@ export const MovimientoEspontaneoColumns = ({
             key : 'actions',
             label : '',
             render: (row: MovimientoEspontaneoTableData) => (
-                <EditAndDeleteActions
-                    editHref={MovimientoEspontaneoRoutes.edit(row.id)}
-                    deleteOnClick={() => onSelect(row, 'delete')}
+                <ActionSection
+                    as={CrudButton}
+                    actions={[
+                        { onClick: () => onSelect(row, 'delete'), Crudvariant: 'Delete' }
+                    ]}
                 />
             )
         }

@@ -18,7 +18,6 @@ use Illuminate\Contracts\Bus\Dispatcher;
 use App\Application\Movimiento\Commands\StoreMovimientoCommand;
 use App\Shared\Infrastructure\Framework\Laravel\ValueObjects\LaravelUploadedFile;
 use App\Http\Requests\MovimientoEspontaneo\StoreMovimientoEspontaneoRequest;
-use App\Http\Requests\MovimientoEspontaneo\UpdateMovimientoEspontaneoRequest;
 use App\Http\Requests\MovimientoEspontaneo\DestroyMovimientoEspontaneoRequest;
 use Carbon\Carbon;
 use Inertia\Inertia;
@@ -29,7 +28,6 @@ use App\Application\Movimiento\Queries\ListMovimientoFormOptionsQuery;
 use App\Application\Movimiento\Queries\GetMovimientoForEditQuery;
 use App\Shared\Infrastructure\Framework\Laravel\Builders\LaravelUploadedFileBuilder;
 use App\Http\Resources\Movimiento\MovimientoResource;
-use App\Application\Movimiento\Commands\UpdateMovimientoCommand;
 use App\Application\Movimiento\Commands\DestroyMovimientoCommand;
 
 class MovimientoEspontaneoController extends Controller
@@ -115,34 +113,6 @@ class MovimientoEspontaneoController extends Controller
         ]);
         return Inertia::render('Movimientos/Espontaneos/Edit',$props);
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateMovimientoEspontaneoRequest $request, string $id)
-    {
-
-        $laravelFiles = LaravelUploadedFileBuilder::many($request->file('comprobantes'));
-
-        $this->dispatcher->dispatch(
-            new UpdateMovimientoCommand(
-                id: $id,
-                nombre: $request->nombre,
-                cuenta_id: $request->cuenta_id,
-                categoria_id: $request->categoria_id,
-                tipo_movimiento_id: $request->tipo_movimiento_id,
-                monto: $request->monto,
-                descripcion: $request->descripcion,
-                comprobantes: $laravelFiles,
-                comprobantes_existing: $request->comprobantes_existing,
-                comprobantes_delete_ids: $request->comprobantes_delete_ids
-
-            )
-        );
-        Inertia::flash('success','Movimiento actualizado con exito');
-        return redirect()->route('movimientosEspontaneos.index');
-    }
-
     /**
      * Remove the specified resource from storage.
      */

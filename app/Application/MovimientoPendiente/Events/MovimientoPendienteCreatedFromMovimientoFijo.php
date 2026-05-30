@@ -8,26 +8,26 @@
  * @since 1.0.0
  * @version 1.0.0
  */
-namespace App\Domains\MovimientoFijo\Events;
+namespace App\Application\MovimientoPendiente\Events;
 
 use App\Domains\MovimientoFijo\Aggregates\MovimientoFijo;
+use App\Domains\MovimientoPendiente\Aggregates\MovimientoPendiente;
 use App\Shared\Domain\Contracts\EventContract;
 use App\Shared\Domain\ValueObjects\Date;
-use App\Domains\Movimiento\Aggregates\Movimiento;
 
 /**
- * Evento que ocurre cuando un movimiento fijo es procesado y se crea un movimiento a partir de este.
+ * Evento de cuando se crea un movimiento pendiente a partir de un movimiento fijo.
  *
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
- * @package App\Domains\MovimientoFijo\Events
+ * @package App\Domains\MovimientoPendiente\Events
  * @version 1.0.0
  * @since 1.0.0
  */
-final readonly class AutomatedMovimientoFijoProcessed implements EventContract
+final readonly class MovimientoPendienteCreatedFromMovimientoFijo implements EventContract
 {
     public function __construct(
+        private MovimientoPendiente $movimientoPendiente,
         private MovimientoFijo $movimientoFijo,
-        private Movimiento $movimiento,
         private Date $ocurredOn = new Date(new \DateTimeImmutable())
     )
     {
@@ -38,9 +38,9 @@ final readonly class AutomatedMovimientoFijoProcessed implements EventContract
         return $this->movimientoFijo;
     }
 
-    public function getMovimiento(): Movimiento
+    public function getMovimientoPendiente(): MovimientoPendiente
     {
-        return $this->movimiento;
+        return $this->movimientoPendiente;
     }
 
     /**

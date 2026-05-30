@@ -10,7 +10,7 @@
  */
 namespace App\Application\MovimientoPendiente\EventHandlers;
 
-use App\Domains\MovimientoPendiente\Events\MovimientoPendienteExpired;
+use App\Application\MovimientoPendiente\Events\MovimientoPendienteExpired;
 use App\Shared\Application\Resolvers\SendMessageToUsersByChannelsResolver;
 
 /**

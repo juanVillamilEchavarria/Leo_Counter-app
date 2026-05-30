@@ -10,18 +10,14 @@
  */
 namespace App\Providers\MovimientoFijo;
 
-use App\Infrastructure\MovimientoFijo\Framework\Laravel\Builders\LaravelMovimientoCreatedAutomatedEmailFormatBuilder;
-use App\Infrastructure\MovimientoFijo\Framework\Laravel\Builders\LaravelMovimientoPendienteCreatedFromAMovimientoFijoEmailFormatBuilder;
-use App\Infrastructure\MovimientoFijo\Framework\Laravel\Builders\LaravelWarningDayOfMovimientoFijoEmailFormatBuilder;
+use App\Application\MovimientoFijo\Events\AutomatedMovimientoFijoProcessed;
+use App\Application\MovimientoFijo\Events\MovimientoFijoWarningDayArrived;
+use App\Application\MovimientoPendiente\Events\MovimientoPendienteCreatedFromMovimientoFijo;
 use App\Infrastructure\MovimientoFijo\Framework\Laravel\EventHandlers\LaravelSendMessageToUserWhenMovimientoFijoWarningDayArrivedEventHandler;
 use App\Infrastructure\MovimientoFijo\Framework\Laravel\EventHandlers\LaravelSendMessageToUserWhenMovimientoIsCreatedAutomatedFromAMovimientoFijoEventHandler;
 use App\Infrastructure\MovimientoFijo\Framework\Laravel\EventHandlers\LaravelSendMessageToUserWhenMovimientoPendienteIsCreatedFromAMovimientoFijoEventHandler;
-use App\Shared\Application\Contracts\Builders\EmailFormatBuilderContract;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Event;
-use App\Domains\MovimientoFijo\Events\MovimientoFijoWarningDayArrived;
-use App\Domains\MovimientoFijo\Events\AutomatedMovimientoFijoProcessed;
-use App\Domains\MovimientoPendiente\Events\MovimientoPendienteCreatedFromMovimientoFijo;
+use Illuminate\Support\ServiceProvider;
 
 /**
  * Provider de handlers de eventos del modulo MovimientoFijo.

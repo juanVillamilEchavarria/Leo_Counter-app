@@ -12,7 +12,6 @@ namespace App\Application\Notificacion\Resolvers;
 
 use App\Application\Notificacion\Contracts\Strategies\SendVerificationToSuscriptorStrategyContract;
 use App\Domains\Notificacion\Contracts\Events\SendVerificationToSuscriptorEventContract;
-use App\Domains\Notificacion\Events\SuscriptorCreated;
 
 /**
  * Resuelve la estrategia para el envio de verificacion de canal al suscriptor

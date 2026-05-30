@@ -8,13 +8,20 @@
  * @since 1.0.0
  * @version 1.0.0
  */
-namespace App\Domains\MovimientoPendiente\Events;
+namespace App\Application\MovimientoPendiente\Events;
 
 use App\Domains\MovimientoPendiente\Aggregates\MovimientoPendiente;
 use App\Shared\Domain\Contracts\EventContract;
 use App\Shared\Domain\ValueObjects\Date;
 
-final readonly class MovimientoPendienteWarningDayArrived implements EventContract
+/**
+ * Evento que ocurre cuando un movimiento pendiente se vence.
+ * @package App\Domains\MovimientoPendiente\Events
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ */
+final readonly class MovimientoPendienteExpired implements EventContract
 {
     public function __construct(
         private MovimientoPendiente $movimientoPendiente,
@@ -30,6 +37,7 @@ final readonly class MovimientoPendienteWarningDayArrived implements EventContra
     {
         return $this->movimientoPendiente;
     }
+
     /**
      * @inheritDoc
      */

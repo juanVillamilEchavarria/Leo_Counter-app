@@ -10,10 +10,10 @@
  */
 namespace App\Application\Notificacion\Commands\Handlers;
 
+use App\Application\Notificacion\Commands\VerifySuscriptorCommand;
+use App\Application\Notificacion\Events\SuscriptorVerified;
 use App\Domains\Notificacion\Contracts\Repositories\SuscriptorRepositoryContract;
 use App\Domains\Notificacion\ValueObjects\SuscriptorId;
-use App\Application\Notificacion\Commands\VerifySuscriptorCommand;
-use App\Domains\Notificacion\Events\SuscriptorVerified;
 use App\Shared\Application\Contracts\Bus\EventBus;
 use App\Shared\Domain\ValueObjects\Date;
 

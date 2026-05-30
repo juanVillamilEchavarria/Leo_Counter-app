@@ -10,8 +10,7 @@
  */
 namespace App\Infrastructure\MovimientoFijo\Framework\Laravel\Builders;
 
-use App\Domains\MovimientoFijo\Events\MovimientoFijoCreatedAMovimientoPendiente;
-use App\Domains\MovimientoPendiente\Events\MovimientoPendienteCreatedFromMovimientoFijo;
+use App\Application\MovimientoPendiente\Events\MovimientoPendienteCreatedFromMovimientoFijo;
 use App\Domains\Usuario\Aggregates\Usuario;
 use App\Shared\Application\Contracts\Builders\EmailFormatBuilderContract;
 use App\Shared\Application\DTOs\EmailMessageDTO;

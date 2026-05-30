@@ -9,7 +9,7 @@
  * @version 1.0.0
  */
 namespace App\Infrastructure\Notificacion\Framework\Laravel\EventHandlers;
-use App\Domains\Notificacion\Events\SuscriptorVerified;
+use App\Application\Notificacion\Events\SuscriptorVerified;
 use App\Infrastructure\Notificacion\Framework\Laravel\Broadcasting\LaravelSuscriptorVerifiedBroadcast;
 
 /**

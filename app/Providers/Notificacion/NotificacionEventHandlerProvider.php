@@ -10,12 +10,13 @@
  */
 namespace App\Providers\Notificacion;
 
-use Illuminate\Support\ServiceProvider;
-use App\Domains\Notificacion\Events\SuscriptorVerified;
+use App\Application\Notificacion\Events\SuscriptorCreated;
+use App\Application\Notificacion\Events\SuscriptorVerified;
 use App\Infrastructure\Notificacion\Framework\Laravel\EventHandlers\LaravelBroadcastSuscriptorVerifiedEventHandler;
-use Illuminate\Support\Facades\Event;
-use App\Domains\Notificacion\Events\SuscriptorCreated;
 use App\Infrastructure\Notificacion\Framework\Laravel\EventHandlers\LaravelSendVerificationToSuscriptorEventHandler;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\ServiceProvider;
+
 class NotificacionEventHandlerProvider extends ServiceProvider
 {
     /**

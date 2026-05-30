@@ -19,20 +19,32 @@ namespace App\Shared\Domain\ValueObjects;
  */
 final readonly class Amount
 {
-    private float $amount;
-    public function __construct(
-         float $amount
-    ) {
-        if($amount<0){
+    private int $cents;
+
+    public function __construct(float $amount)
+    {
+        if ($amount < 0) {
             throw new \InvalidArgumentException('El monto debe ser positivo');
         }
-        $this->amount = $amount;
+        $this->cents = (int) round($amount * 100);
     }
 
-    public function getValue(): float{
-        return $this->amount;
+    public function getValue(): float
+    {
+        return $this->cents / 100;
     }
 
+    public function add(Amount $other): self
+    {
+        return new self(($this->cents + $other->cents) / 100);
+    }
 
-
+    public function subtract(Amount $other): self
+    {
+        $result = $this->cents - $other->cents;
+        if ($result < 0) {
+            throw new \InvalidArgumentException('El resultado no puede ser negativo');
+        }
+        return new self($result / 100);
+    }
 }

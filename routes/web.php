@@ -63,7 +63,7 @@ Route::middleware('auth')->group( function () {
     //MOVIMIENTOS ESPONTANEOS
     Route::resource('movimientos-espontaneos',MovimientoEspontaneoController::class)->names('movimientosEspontaneos')->parameters([
         'movimientos-espontaneos'=> 'movimientoEspontaneo'
-    ]);
+    ])->except(['update']);
     // MOVIMIENTOS PENDIENTES
     Route::resource('movimientos-pendientes',MovimientoPendienteController::class)->names('movimientosPendientes')->parameters([
         'movimientos-pendientes'=> 'movimientoPendiente'

@@ -12,9 +12,11 @@ namespace App\Domains\Presupuesto\Aggregates;
 
 use App\Domains\Presupuesto\Contracts\Checkers\PresupuestoCanDuplicateCheckerContract;
 use App\Domains\Presupuesto\Contracts\Checkers\PresupuestoUniquenessCheckerContract;
+use App\Domains\Usuario\ValueObjects\UsuarioId;
 use App\Shared\Domain\Contracts\AggregateModelContract;
 use App\Domains\Presupuesto\ValueObjects\PresupuestoId;
 use App\Domains\Categoria\ValueObjects\CategoriaId;
+use App\Shared\Domain\ValueObjects\Amount;
 use App\Shared\Domain\ValueObjects\Date;
 /**
  * Agregado de dominio Presupuesto.
@@ -27,11 +29,11 @@ final readonly class Presupuesto implements AggregateModelContract
 {
     private function __construct(
         private PresupuestoId $id,
-        private CategoriaId $categoria_id,
-        private float $monto,
-        private Date $periodo,
-        private ?string $descripcion,
-        private string $user_id,
+        private CategoriaId   $categoria_id,
+        private Amount        $monto,
+        private Date          $periodo,
+        private ?string       $descripcion,
+        private UsuarioId        $user_id,
     ) {
     }
     /**
@@ -41,10 +43,10 @@ final readonly class Presupuesto implements AggregateModelContract
     public static function create(
         PresupuestoId $id,
         CategoriaId $categoria_id,
-        float $monto,
+        Amount $monto,
         Date $periodo,
         ?string $descripcion,
-        string $user_id,
+        UsuarioId $user_id,
         PresupuestoUniquenessCheckerContract $checker
     ): self {
         if(!$checker->isUnique($categoria_id, $periodo->format('Y-m'))) {
@@ -69,10 +71,10 @@ final readonly class Presupuesto implements AggregateModelContract
     public static function reconstitute(
         PresupuestoId $id,
         CategoriaId $categoria_id,
-        float $monto,
+        Amount $monto,
         Date $periodo,
         ?string $descripcion,
-        string $user_id
+        UsuarioId $user_id
     ): self {
         return new self(
             id: $id,
@@ -89,7 +91,7 @@ final readonly class Presupuesto implements AggregateModelContract
      */
     public function updateData(
         CategoriaId $categoria_id,
-        float $monto,
+        Amount $monto,
         ?string $descripcion,
         PresupuestoUniquenessCheckerContract $checker
     ): self {
@@ -144,7 +146,7 @@ final readonly class Presupuesto implements AggregateModelContract
         return $this->categoria_id;
     }
 
-    public function getMonto(): float
+    public function getMonto(): Amount
     {
         return $this->monto;
     }
@@ -159,7 +161,7 @@ final readonly class Presupuesto implements AggregateModelContract
         return $this->descripcion;
     }
 
-    public function getUserId(): string
+    public function getUserId(): UsuarioId
     {
         return $this->user_id;
     }

@@ -10,22 +10,18 @@
  */
 namespace App\Providers\Movimiento;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Event;
-use App\Domains\Movimiento\Events\AttachmentsForMovimientoCreated;
-use App\Domains\Movimiento\Events\AttachmentsForMovimientoUpdated;
-use App\Domains\Movimiento\Events\AttachmentsForMovimientoDeleted;
-use App\Domains\Movimiento\Events\MovimientoCreated;
-use App\Domains\Movimiento\Events\MovimientoUpdated;
-use App\Domains\Movimiento\Events\MovimientoDeleted;
-use App\Domains\Movimiento\Events\AutomatedMovimientoRegistered;
+use App\Application\Movimiento\EventHandlers\DestroyAttachmentsWhenMovimientoIsWrittenEventHandler;
 use App\Application\Movimiento\EventHandlers\MovimientoCreatedFinancialImpactEventHandler;
-use App\Application\Movimiento\EventHandlers\MovimientoUpdatedFinancialImpactEventHandler;
 use App\Application\Movimiento\EventHandlers\MovimientoDeletedFinancialImpactEventHandler;
 use App\Application\Movimiento\EventHandlers\UploadAttachmentsWhenMovimientoIsWrittenEventHandler;
-use App\Application\Movimiento\EventHandlers\UpdateAttachmentsWhenMovimientoIsWrittenEventHandler;
-use App\Application\Movimiento\EventHandlers\DestroyAttachmentsWhenMovimientoIsWrittenEventHandler;
+use App\Application\Movimiento\Events\AttachmentsForMovimientoCreated;
+use App\Application\Movimiento\Events\AttachmentsForMovimientoDeleted;
+use App\Domains\Movimiento\Events\AutomatedMovimientoRegistered;
+use App\Domains\Movimiento\Events\MovimientoCreated;
+use App\Domains\Movimiento\Events\MovimientoDeleted;
 use App\Infrastructure\Reporte\EventHandlers\Laravel\LaravelInvalidateReportCacheWhenMovimientoIsWritten;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\ServiceProvider;
 
 /**
  * Provider de handlers de eventos del modulo Movimiento.
@@ -54,11 +50,6 @@ class EventHandlersProvider extends ServiceProvider
         Event::listen(AttachmentsForMovimientoCreated::class, UploadAttachmentsWhenMovimientoIsWrittenEventHandler::class);
         Event::listen(AutomatedMovimientoRegistered::class, MovimientoCreatedFinancialImpactEventHandler::class);
 
-        Event::listen(MovimientoUpdated::class, MovimientoUpdatedFinancialImpactEventHandler::class);
-        Event::listen(MovimientoUpdated::class, LaravelInvalidateReportCacheWhenMovimientoIsWritten::class);
-        Event::listen(AttachmentsForMovimientoUpdated::class, UploadAttachmentsWhenMovimientoIsWrittenEventHandler::class);
-        Event::listen(AttachmentsForMovimientoUpdated::class, UpdateAttachmentsWhenMovimientoIsWrittenEventHandler::class);
-        Event::listen(AttachmentsForMovimientoUpdated::class, DestroyAttachmentsWhenMovimientoIsWrittenEventHandler::class);
 
         Event::listen(MovimientoDeleted::class, MovimientoDeletedFinancialImpactEventHandler::class);
         Event::listen(MovimientoDeleted::class, LaravelInvalidateReportCacheWhenMovimientoIsWritten::class);

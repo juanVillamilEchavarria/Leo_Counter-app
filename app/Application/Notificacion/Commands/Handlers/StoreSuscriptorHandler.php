@@ -11,15 +11,15 @@
 namespace App\Application\Notificacion\Commands\Handlers;
 
 use App\Application\Notificacion\Commands\StoreSuscriptorCommand;
+use App\Application\Notificacion\Events\SuscriptorCreated;
 use App\Domains\Notificacion\Contracts\Repositories\SuscriptorRepositoryContract;
 use App\Domains\Notificacion\Contracts\SuscriptorUniquenessCheckerContract;
+use App\Domains\Notificacion\ValueObjects\CanalId;
 use App\Domains\Notificacion\ValueObjects\SuscriptorId;
 use App\Domains\Usuario\Contracts\Repositories\UsuarioRepositoryContract;
 use App\Domains\Usuario\ValueObjects\UsuarioId;
-use App\Domains\Notificacion\ValueObjects\CanalId;
-use App\Shared\Domain\Contracts\IdGeneratorContract;
 use App\Shared\Application\Contracts\Bus\EventBus;
-use App\Domains\Notificacion\Events\SuscriptorCreated;
+use App\Shared\Domain\Contracts\IdGeneratorContract;
 use App\Shared\Domain\ValueObjects\Date;
 use DateTimeImmutable;
 

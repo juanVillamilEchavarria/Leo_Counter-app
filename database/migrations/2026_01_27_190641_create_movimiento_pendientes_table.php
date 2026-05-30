@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignUuid('cuenta_id')->constrained('cuentas');
             $table->foreignUuid('movimiento_fijo_id')->nullable()->constrained('movimiento_fijos')->nullOnDelete();
             $table->foreignId('tipo_movimiento_id')->constrained('tipo_movimientos');
-            $table->decimal('monto', 15, 2);
+            $table->decimal('monto', 18, 2);
             $table->date('fecha_programada');
             $table->enum('estado', ['pendiente', 'realizado', 'vencido'])->default('pendiente');
             $table->unsignedTinyInteger('dias_aviso')->nullable()->default(0);

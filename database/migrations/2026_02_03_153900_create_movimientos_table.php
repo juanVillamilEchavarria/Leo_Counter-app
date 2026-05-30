@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignUuid('categoria_id')->constrained('categorias')->onDelete('cascade');
             $table->foreignId('tipo_movimiento_id')->constrained('tipo_movimientos')->onDelete('cascade');
             $table->foreignUuid('movimiento_pendiente_id')->nullable()->constrained('movimiento_pendientes')->nullOnDelete();
-            $table->decimal('monto', 15, 2);
+            $table->decimal('monto', 18, 2);
             $table->date('fecha');
             $table->text('descripcion')->nullable();
             $table->softDeletes();

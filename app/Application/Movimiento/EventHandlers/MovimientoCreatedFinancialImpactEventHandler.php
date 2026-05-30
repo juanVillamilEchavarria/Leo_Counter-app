@@ -30,11 +30,13 @@ final readonly class MovimientoCreatedFinancialImpactEventHandler
     )
     {
     }
-    public function __invoke( FinancialMovimientoRegisteredEventContract $event): void
+    public function __invoke(FinancialMovimientoRegisteredEventContract $event): void
     {
-        $this->transactionValidatorResolver->resolve($event->getCuenta(), $event->getMovimiento());
-       $cuenta = $this->applyTransactionEffectForCuentaResolver->resolve($event->getMovimiento(), $event->getCuenta());
-       $this->cuentaRepository->update($cuenta);
+        $movimiento = $event->getMovimiento();
+        $cuenta = $this->cuentaRepository->findById($movimiento->getCuentaId());
+        $this->transactionValidatorResolver->resolve($cuenta, $movimiento);
+        $cuenta = $this->applyTransactionEffectForCuentaResolver->resolve($movimiento, $cuenta);
+        $this->cuentaRepository->update($cuenta);
     }
 
 }

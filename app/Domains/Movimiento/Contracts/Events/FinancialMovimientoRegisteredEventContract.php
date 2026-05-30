@@ -25,7 +25,6 @@ use App\Shared\Domain\Contracts\EventContract;
  */
 interface FinancialMovimientoRegisteredEventContract extends EventContract
 {
-    public function getCuenta(): Cuenta;
     public function getMovimiento(): Movimiento;
 
 }

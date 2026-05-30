@@ -8,7 +8,7 @@
  * @since 1.0.0
  * @version 1.0.0
  */
-namespace App\Domains\MovimientoFijo\Events;
+namespace App\Application\MovimientoFijo\Events;
 
 use App\Domains\MovimientoFijo\Aggregates\MovimientoFijo;
 use App\Shared\Domain\Contracts\EventContract;
