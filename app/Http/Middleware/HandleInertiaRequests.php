@@ -48,7 +48,7 @@ class HandleInertiaRequests extends Middleware
             'auth'=>[
                 'user' => auth()->user() ? auth()->user()->only('id', 'name', 'email', 'role'): '',
             ]
-            
+
         ];
     }
 }

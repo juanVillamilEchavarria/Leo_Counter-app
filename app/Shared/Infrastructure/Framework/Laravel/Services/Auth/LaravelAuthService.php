@@ -15,7 +15,7 @@ use App\Shared\Application\Contracts\Services\AuthServiceContract;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class LaravelAuthService implements AuthServiceContract
+final readonly class LaravelAuthService implements AuthServiceContract
 {
     public function login ( array $credentials, bool $remember = false ): bool {
         if(!Auth::attempt($credentials, $remember)){

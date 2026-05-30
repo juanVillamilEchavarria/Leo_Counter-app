@@ -23,7 +23,7 @@ configureEcho({
 restorePageMode()
 createInertiaApp({
 
-    title: title => title ? `${title} - ${import.meta.env.VITE_APP_NAME}`: import.meta.env.VITE_APP_NAME,
+    title: title => title ? `${title} - Leo Counter`: 'Leo Counter',
     resolve: name => {
         const pages = import.meta.glob('./Pages/**/*.tsx', { eager: true })
         const page: any = pages[`./Pages/${name}.tsx`]

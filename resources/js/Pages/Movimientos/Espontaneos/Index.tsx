@@ -44,7 +44,7 @@ export default function Index({
                 </CrudButton>
             </CreateButtonSection>
             <MovimientoEspontaneoTable data={movimientos.data} onSelect={(item, modalType)=> open(item,modalType)} />
-            <DeleteModal  open={item !== null && modal === 'delete'} onClose={handleClose} title="Movimiento Espontaneo" spanTitle="Eliminar" paragraph={`¿Esta seguro de eliminar el movimiento espontaneo con ID: ${item?.id} ?`} onSubmit={handleMovimientoDelete} size="xl">
+            <DeleteModal  open={item !== null && modal === 'delete'} onClose={handleClose} title="Movimiento Espontaneo" spanTitle="Eliminar" paragraph={`¿Esta seguro de eliminar el movimiento espontaneo con ID: ${item?.id} ?`} onSubmit={handleMovimientoDelete}>
                 <div className="flex flex-col gap-4 my-2">
                     <p>Los movimientos eliminados <span className="font-bold">NO SON RECUPERABLES Y PUEDEN AFECTAR DIRECTAMENTE A TUS REPORTES</span> </p>
                     <div className="formulario-campo gap-4">
