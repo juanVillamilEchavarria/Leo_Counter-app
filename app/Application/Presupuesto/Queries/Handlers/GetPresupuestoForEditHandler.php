@@ -31,7 +31,7 @@ final readonly class GetPresupuestoForEditHandler{
         return new PresupuestoEditDTO(
             id: (string) $aggregate->getId(),
             categoria_id: $aggregate->getCategoriaId()->getValue(),
-            monto: $aggregate->getMonto(),
+            monto: $aggregate->getMonto()->getValue(),
             descripcion: $aggregate->getDescripcion()
         );
     }

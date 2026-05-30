@@ -12,6 +12,7 @@ namespace App\Shared\Domain\Services\Financial;
 use App\Domains\Cuenta\Contracts\Repositories\CuentaReadRepositoryContract;
 use App\Domains\Movimiento\Contracts\Repositories\MovimientoReadRepositoryContract;
 use App\Shared\Domain\ValueObjects\WhereFilterQueryDTO;
+use App\Shared\Domain\ValueObjects\Amount;
 
 /**
  * Servicio que verifica si una cuenta tiene saldo suficiente para realizar una transacción.
@@ -21,8 +22,8 @@ use App\Shared\Domain\ValueObjects\WhereFilterQueryDTO;
  * @since 1.0.0
  */
 class BalanceCheckerService{
-     public function canAfford(float $saldo, float $monto): bool{
-        return $saldo >= $monto;
+     public function canAfford(Amount $saldo, Amount $monto): bool{
+        return $saldo->getValue() >= $monto->getValue();
     }
 
 }

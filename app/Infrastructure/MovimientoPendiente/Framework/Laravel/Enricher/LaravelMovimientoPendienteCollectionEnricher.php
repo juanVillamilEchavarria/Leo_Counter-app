@@ -15,6 +15,7 @@ use App\Application\MovimientoPendiente\DTOs\MovimientoPendienteForListDTO;
 use App\Models\MovimientoPendiente\MovimientoPendiente;
 use App\Shared\Domain\Contracts\CollectionContract;
 use App\Shared\Domain\Services\Financial\BalanceCheckerService;
+use App\Shared\Domain\ValueObjects\Amount;
 use App\Shared\Infrastructure\Framework\Laravel\Collections\LaravelCollection;
 use Illuminate\Support\Collection;
 
@@ -48,8 +49,8 @@ final readonly class LaravelMovimientoPendienteCollectionEnricher implements Mov
             $enoughBalance = null;
             if ($accountBalance !== null) {
                 $enoughBalance = $this->balanceCheckerService->canAfford(
-                    $accountBalance->saldo_actual,
-                    $movimientoPendiente->monto
+                    new Amount((float) $accountBalance->saldo_actual),
+                    new Amount((float) $movimientoPendiente->monto)
                 );
             }
 

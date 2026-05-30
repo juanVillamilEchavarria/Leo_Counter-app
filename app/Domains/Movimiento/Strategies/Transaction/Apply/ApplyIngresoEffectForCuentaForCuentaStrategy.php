@@ -32,7 +32,7 @@ final readonly class ApplyIngresoEffectForCuentaForCuentaStrategy implements App
 
     public function applyTransactionEffectWhenAMovimientoIsWritten(Movimiento $movimiento, Cuenta $cuenta): Cuenta
     {
-        $cuenta = $cuenta->updateSaldoActual($cuenta->getSaldoActual() + $movimiento->getMonto()->getValue());
+        $cuenta = $cuenta->updateSaldoActual($cuenta->getSaldoActual()->add($movimiento->getMonto()));
         return $cuenta ;
 
     }

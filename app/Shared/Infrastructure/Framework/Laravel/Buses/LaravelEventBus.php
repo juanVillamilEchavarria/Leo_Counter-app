@@ -28,6 +28,7 @@ class LaravelEventBus implements EventBus
     }
     public function publishMany(array $events): void
     {
+
        foreach ($events as $event){
            $this->eventDispatcher->dispatch($event);
        }

@@ -13,8 +13,10 @@ namespace App\Application\Cuenta\Commands\Handlers;
 use App\Application\Cuenta\Commands\UpdateCuentaCommand;
 use App\Domains\Cuenta\Contracts\Repositories\CuentaRepositoryContract;
 use App\Domains\Cuenta\Contracts\CuentaCanUpdateSaldoInicialCheckerContract;
-use App\Domains\Cuenta\Exceptions\CannotFindCuentaException;
+use App\Application\Cuenta\Exceptions\CannotFindCuentaException;
 use App\Domains\Cuenta\ValueObjects\CuentaId;
+use App\Shared\Domain\ValueObjects\Amount;
+use App\Domains\Propietario\ValueObjects\PropietarioId;
 
 /**
  * Handler para el comando de actualización de cuentas.
@@ -40,10 +42,10 @@ final readonly class UpdateCuentaHandler
         $cuenta = $existing->updateData(
             nombre: $command->nombre,
             notas: $command->notas,
-           saldo_inicial: $command->saldo_inicial,
+            saldo_inicial: new Amount((float) $command->saldo_inicial),
             saldo_actual: $existing->getSaldoActual(),
             tipo_cuenta_id: $command->tipo_cuenta_id,
-            propietario_id: $command->propietario_id,
+            propietario_id: new PropietarioId($command->propietario_id),
             id: new CuentaId($command->id),
             checker: $this->checker,
         );

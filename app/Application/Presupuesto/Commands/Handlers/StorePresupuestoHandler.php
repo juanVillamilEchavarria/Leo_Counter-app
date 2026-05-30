@@ -19,6 +19,8 @@ use App\Domains\Categoria\ValueObjects\CategoriaId;
 use App\Shared\Domain\Contracts\IdGeneratorContract;
 use App\Shared\Domain\ValueObjects\Date;
 use DateTimeImmutable;
+use App\Shared\Domain\ValueObjects\Amount;
+use App\Domains\Usuario\ValueObjects\UsuarioId;
 
 final readonly class StorePresupuestoHandler
 {
@@ -34,10 +36,10 @@ final readonly class StorePresupuestoHandler
         $presupuesto = PresupuestoAggregate::create(
             id: PresupuestoId::generate($this->idGenerator),
             categoria_id: new CategoriaId($command->categoria_id),
-            monto: $command->monto,
+            monto: new Amount((float) $command->monto),
             periodo: new Date(new DateTimeImmutable()),
             descripcion: $command->descripcion,
-            user_id: $command->user_id,
+            user_id: new UsuarioId($command->user_id),
             checker: $this->uniquenessChecker
         );
 

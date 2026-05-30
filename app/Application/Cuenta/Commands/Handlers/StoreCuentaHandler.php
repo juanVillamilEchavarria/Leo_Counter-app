@@ -15,6 +15,8 @@ use App\Application\Cuenta\Commands\StoreCuentaCommand;
 use App\Domains\Cuenta\Contracts\Repositories\CuentaRepositoryContract;
 use App\Shared\Domain\Contracts\IdGeneratorContract;
 use App\Domains\Cuenta\ValueObjects\CuentaId;
+use App\Shared\Domain\ValueObjects\Amount;
+use App\Domains\Propietario\ValueObjects\PropietarioId;
 
 /**
  * Handler encargado de crear una nueva Cuenta
@@ -36,8 +38,8 @@ final readonly class StoreCuentaHandler
             id: CuentaId::generate($this->idGenerator),
             nombre: $command->nombre,
             notas: $command->notas,
-            saldo_inicial: $command->saldo_inicial,
-            propietario_id: $command->propietario_id,
+            saldo_inicial: new Amount((float) $command->saldo_inicial),
+            propietario_id: new PropietarioId($command->propietario_id),
             tipo_cuenta_id: $command->tipo_cuenta_id,
         );
 

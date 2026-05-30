@@ -45,18 +45,14 @@ class EloquentMovimientoRepository extends EloquentRepository implements Movimie
 
     public function store(AggregateModelContract $model): AggregateModelContract
     {
-        // Capturar eventos registrados por el agregado antes de persistir
         $events = [];
         if (method_exists($model, 'releaseEvents')) {
             $events = $model->releaseEvents();
         }
-
-        // Persistir y obtener el agregado reconstituido desde la BD
         $stored = parent::store($model);
 
-        // Publicar los eventos de dominio capturados
         if (!empty($events)) {
-            $this->eventBus->publishMany(...$events);
+            $this->eventBus->publishMany($events);
         }
 
         return $stored;
@@ -70,7 +66,7 @@ class EloquentMovimientoRepository extends EloquentRepository implements Movimie
         $deletedAggregate = $aggregate->delete();
 
         $model->delete();
-        $this->eventBus->publishMany(...$deletedAggregate->releaseEvents());
+        $this->eventBus->publishMany($deletedAggregate->releaseEvents());
         return true;
     }
 

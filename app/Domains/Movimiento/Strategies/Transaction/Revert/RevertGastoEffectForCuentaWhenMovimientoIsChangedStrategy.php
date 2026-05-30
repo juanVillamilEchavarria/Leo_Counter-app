@@ -42,7 +42,7 @@ final readonly class RevertGastoEffectForCuentaWhenMovimientoIsChangedStrategy i
      */
     public function revertTransactionEffectWhenAMovimientoChanges(Movimiento $old_movimiento, Cuenta $old_cuenta): Cuenta
     {
-        $oldCuenta = $old_cuenta->updateSaldoActual($old_cuenta->getSaldoActual() + $old_movimiento->getMonto()->getValue());
+        $oldCuenta = $old_cuenta->updateSaldoActual($old_cuenta->getSaldoActual()->add($old_movimiento->getMonto()));
         return $oldCuenta;
     }
 }
