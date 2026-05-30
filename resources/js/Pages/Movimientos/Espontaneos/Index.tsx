@@ -24,7 +24,7 @@ export default function Index({
     movimientos: {data:MovimientoEspontaneoTableData []}
 }) {
     const {item, modal, open, close, setItem}= useModalItem<MovimientoEspontaneoTableData>()
-    const {handleSubmit, form}= useMovimientoEspontaneo({method: 'delete', id: item?.id})
+    const {handleMovimientoDelete, form}= useMovimientoEspontaneo({id: item?.id})
     const {setData, data}= form
     const handleClose = ()=>{
         close()
@@ -44,7 +44,7 @@ export default function Index({
                 </CrudButton>
             </CreateButtonSection>
             <MovimientoEspontaneoTable data={movimientos.data} onSelect={(item, modalType)=> open(item,modalType)} />
-            <DeleteModal  open={item !== null && modal === 'delete'} onClose={handleClose} title="Movimiento Espontaneo" spanTitle="Eliminar" paragraph={`¿Esta seguro de eliminar el movimiento espontaneo con ID: ${item?.id} ?`} onSubmit={handleSubmit} size="xl">
+            <DeleteModal  open={item !== null && modal === 'delete'} onClose={handleClose} title="Movimiento Espontaneo" spanTitle="Eliminar" paragraph={`¿Esta seguro de eliminar el movimiento espontaneo con ID: ${item?.id} ?`} onSubmit={handleMovimientoDelete} size="xl">
                 <div className="flex flex-col gap-4 my-2">
                     <p>Los movimientos eliminados <span className="font-bold">NO SON RECUPERABLES Y PUEDEN AFECTAR DIRECTAMENTE A TUS REPORTES</span> </p>
                     <div className="formulario-campo gap-4">
@@ -53,7 +53,7 @@ export default function Index({
                     </div>
 
                 </div>
-                
+
                 </DeleteModal>
         </SectionTransition>
   )

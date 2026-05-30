@@ -7,6 +7,7 @@ ARG UID=1000
 # DEPENDENCIAS DEL SISTEMA
 # ================================
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    cron \
     git zip unzip curl \
     libpng-dev libjpeg62-turbo-dev libfreetype6-dev \
     libwebp-dev libzip-dev libonig-dev libxml2-dev \
@@ -41,6 +42,19 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
         /etc/apache2/apache2.conf \
     && a2enmod rewrite \
     && echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
+# ================================
+# CONFIGURACIÓN NATIVA DE CRON (User Crontab)
+# ================================
+# Copiamos el crontab a una ruta temporal
+COPY docker/crontab /tmp/laravel-cron
+
+# Blindaje: Eliminamos retornos de carro (\r) por si se editó en Windows
+RUN sed -i 's/\r$//' /tmp/laravel-cron
+
+# Instalamos el cron explícitamente en el perfil del usuario www-data
+RUN crontab -u www-data /tmp/laravel-cron \
+    && rm /tmp/laravel-cron
 
 # ================================
 # USUARIO DEL SISTEMA

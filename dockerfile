@@ -4,9 +4,10 @@ ARG USER=leo
 ARG UID=1000
 
 # ================================
-# DEPENDENCIAS DEL SISTEMA
+# DEPENDENCIAS DEL SISTEMA (Se agrega cron)
 # ================================
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    cron \
     git zip unzip curl \
     libpng-dev libjpeg62-turbo-dev libfreetype6-dev \
     libwebp-dev libzip-dev libonig-dev libxml2-dev \
@@ -43,6 +44,18 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
     && echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # ================================
+# CONFIGURACIÓN NATIVA DE CRON (User Crontab)
+# ================================
+# Copiamos el crontab a una ruta temporal
+COPY docker/crontab /tmp/laravel-cron
+
+# Blindaje: Eliminamos retornos de carro (\r) por si se editó en Windows
+RUN sed -i 's/\r$//' /tmp/laravel-cron
+
+# Instalamos el cron explícitamente en el perfil del usuario www-data
+RUN crontab -u www-data /tmp/laravel-cron \
+    && rm /tmp/laravel-cron
+# ================================
 # USUARIO DEL SISTEMA
 # ================================
 RUN useradd -G www-data,root -u "${UID}" -d "/home/${USER}" "${USER}" \
@@ -55,6 +68,7 @@ WORKDIR /var/www/html
 # PNPM GLOBAL
 # ================================
 RUN npm install -g pnpm
+
 # ================================
 # ARGUMENTOS PARA BUILD DE VITE
 # ================================
@@ -71,6 +85,7 @@ ENV VITE_REVERB_HOST="${REVERB_HOST}"
 ENV VITE_REVERB_PORT="${REVERB_PORT}"
 ENV VITE_REVERB_SCHEME="${REVERB_SCHEME}"
 ENV VITE_API_URL="${VITE_API_URL}"
+
 # ================================
 # COPIAR CÓDIGO Y BUILD
 # ================================

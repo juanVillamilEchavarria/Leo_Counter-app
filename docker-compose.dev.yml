@@ -67,7 +67,7 @@ services:
     image: leo_counter_app_dev
     container_name: leo_counter_scheduler
     restart: unless-stopped
-    command: /bin/sh -c "while :; do php artisan schedule:run --no-interaction; sleep 60; done"
+    command: /bin/sh -c "printenv | grep -v 'no_proxy' >> /etc/environment && touch /var/www/html/storage/logs/cron.log && chown www-data:www-data /var/www/html/storage/logs/cron.log && cron && tail -f /var/www/html/storage/logs/cron.log"
     volumes:
       - .:/var/www/html:z
       - dev_node_modules:/var/www/html/node_modules
@@ -75,6 +75,7 @@ services:
     env_file:
       - .env
     environment:
+      - TZ=${TZ}
       - REVERB_HOST=reverb
       - REVERB_PORT=8081
       - REVERB_SCHEME=http

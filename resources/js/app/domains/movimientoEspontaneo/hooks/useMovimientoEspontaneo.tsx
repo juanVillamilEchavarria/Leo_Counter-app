@@ -9,32 +9,43 @@
 import { useFormNormal } from "@/app/shared/hooks"
 import { MovimientoEspontaneoActions, type MovimientoEspontaneoFormData } from "../types/movimientoEspontaneo.types"
 import { FormMethods } from "@/app/shared/types/components"
+import {useIdempotentForm} from "@/app/shared/hooks/form/useIdemptotentForm";
 
+const defaultData: MovimientoEspontaneoFormData = {
+    nombre: '',
+    cuenta_id: '',
+    categoria_id: '',
+    tipo_movimiento_id: 1, // o el valor por defecto que prefieras
+    monto: 0,
+    fecha: '',
+    descripcion: '',
+    comprobantes: [],
+    comprobantes_existing: [],
+    comprobantes_delete_ids: [],
+};
 export default function useMovimientoEspontaneo({
-    method = 'post',
     id,
     data
 }:{
-    method ?: keyof typeof FormMethods,
-    id ?: number | null
+    id ?: string | null | undefined
     data ?:  MovimientoEspontaneoFormData
 }) {
-  const action = (() => {
-                  const current = MovimientoEspontaneoActions[method]
-                      if (typeof current === 'function') {
-                        return id ? current(id) : ''
-                      }
-                      return current
-              })() // es una funcion que se llama inmediatamente para obtener la accion correcta segun el metodo y el id
-               
-           const { form, handleSubmit, submit } = useFormNormal< MovimientoEspontaneoFormData>({
-               action,
-               data: data ?? {} as MovimientoEspontaneoFormData,
-               method
-           })
+ const {idempotentPost, idempotentDelete, form}= useIdempotentForm(data ?? defaultData);
+ const handleMovimientoPost = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+     form.clearErrors()
+    idempotentPost(MovimientoEspontaneoActions.post);
+ }
+
+ const handleMovimientoDelete = (e: React.FormEvent<HTMLFormElement>) => {
+     if(!id)return
+    e.preventDefault();
+    form.clearErrors()
+    idempotentDelete(MovimientoEspontaneoActions.delete(id));
+ }
     return {
-      form,
-      submit,
-      handleSubmit
+     form,
+      handleMovimientoPost,
+      handleMovimientoDelete
     }
 }
