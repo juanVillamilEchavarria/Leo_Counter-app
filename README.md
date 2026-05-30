@@ -6,7 +6,10 @@
 
 <p align="center">
   <strong>Sistema de Gestión Financiera Open Source</strong><br>
-  Construido con altos estándares de ingeniería
+  Construido con los más altos estándares de ingeniería
+</p>
+<p align="center">
+  <em>Creado Por <a href="https://github.com/juanVillamilEchavarria">Juan Esteban Villamil Echavarria</a></em>
 </p>
 
 ---
@@ -240,4 +243,4 @@ docker compose logs -f app
 ```
 
 ---
-<p align="center" >Leo Counter — Arquitectura diseñada para durar.</p>
+<p align="center" >Leo Counter — Tus Finanzas, Tu Control.</p>
