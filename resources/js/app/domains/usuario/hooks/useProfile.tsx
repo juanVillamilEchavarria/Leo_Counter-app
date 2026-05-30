@@ -1,3 +1,11 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 import React from 'react'
 import { ProfileActions, ProfileRoutes, type UsuarioData } from '../types/usuario.types'
 import { useForm } from '@inertiajs/react'

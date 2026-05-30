@@ -1,3 +1,11 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 import SectionTransition from "@/app/shared/components/common/SectionTransition"
 import ReporteSheet from "../Sheet/ReporteSheet"
 import Title from "@/app/shared/components/common/Title"

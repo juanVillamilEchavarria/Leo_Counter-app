@@ -1,5 +1,13 @@
 <?php
 
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 namespace App\Application\Categoria\Commands\Abstracts;
 /**
  * Comando padre que representa la intencion de añadir una nueva categoria o actualizar una categoria existente en el sistema.

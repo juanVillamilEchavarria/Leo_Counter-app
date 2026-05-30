@@ -1,3 +1,11 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 import { Line, YAxis, XAxis, CartesianGrid, Legend , Area, ComposedChart} from "recharts"
 import Card from "@/app/shared/components/common/Card"
 import Title from "@/app/shared/components/common/Title"

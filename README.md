@@ -16,7 +16,7 @@
 
 ## Sobre Leo Counter
 
-Leo Counter es una plataforma web **autoalojada** de gestión financiera diseñada para que hogares y  negocios mantengan el control total de su economía, construida en memoria del Ingeniero Leonardo Villamil Gamba 
+Leo Counter es una plataforma web **autoalojada** de gestión financiera  diseñada para que hogares y  negocios mantengan el control total de su economía, construida en memoria del Ingeniero Leonardo Villamil Gamba 
 
 Leo Counter permite registrar y gestionar ingresos, gastos, cuentas bancarias, presupuestos, categorías y otros elementos financieros relevantes. El sistema se compone de varios módulos integrados (Movimientos y sus Subgrupos, Presupuestos, Cuentas, Categorías, etc.) que cubren las necesidades básicas de contabilidad 
 

@@ -1,3 +1,11 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 import { TextSize, type TitleProps} from './common/text.types';
 import { type ButtonProps, ButtonVariants } from './common/button.types';
 import { type InputFillableProps,type TextAreaProps ,type FormCommonProps, type SelectModelProps, FormMethods } from './common/form.types';

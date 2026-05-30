@@ -1,3 +1,11 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 import { RadialBarChart, RadialBar, PolarAngleAxis } from "recharts"
 import { ChartContainer } from "@/app/shared/components/ui/chart"
 import Card from "@/app/shared/components/common/Card"

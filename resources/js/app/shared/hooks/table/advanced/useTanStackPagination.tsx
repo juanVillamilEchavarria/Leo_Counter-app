@@ -1,3 +1,11 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 import { type Table } from "@tanstack/react-table"
 import { useMemo, useCallback } from "react"
 export default function useTanStackPagination<T>(table: Table<T>) {

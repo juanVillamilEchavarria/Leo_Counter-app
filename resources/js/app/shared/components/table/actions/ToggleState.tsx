@@ -1,3 +1,11 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 // ajustar tamaño y espacio en el elemento padre del toggle
 // after es la bolita que se mueve
 // este es el switch para hacer patch a un estado de algun modelo desde la tabla

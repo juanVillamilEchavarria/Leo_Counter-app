@@ -1,3 +1,11 @@
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 import SectionDescription from "@/app/shared/components/common/SectionDescription"
 import UsuarioTable from "@/app/domains/usuario/components/UsuarioTable"
 import DeleteModal from "@/app/shared/components/modal/DeleteModal"
