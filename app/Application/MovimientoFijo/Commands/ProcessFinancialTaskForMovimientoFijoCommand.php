@@ -10,6 +10,8 @@
  */
 namespace App\Application\MovimientoFijo\Commands;
 
+use App\Shared\Application\Contracts\Commands\TransactionalCommandContract;
+
 /**
  * Comando que representa la intencion de procesar las tareas financieras automaticas asociadas al movimiento fijo
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
