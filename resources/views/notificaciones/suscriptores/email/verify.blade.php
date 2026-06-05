@@ -1,9 +1,38 @@
+<<<<<<< HEAD
 <x-email-layout
     title="Verificación de Suscripción"
     :headerBackground="'linear-gradient(135deg, #5f1e1e 0%, #8a2c2c 100%)'"
     headerSubtitle=""
 >
 <p style="margin: 0 0 16px; font-size: 20px; font-weight: 600; color: #0f172a;">Hola, {{ $name }}</p>
+=======
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifica tu suscripción - Leo Counter</title>
+</head>
+<body style="font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #f1f5f9; margin: 0; padding: 0; -webkit-text-size-adjust: none;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; margin: 40px auto; background-color: #ffffff; border-radius: 16px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06); overflow: hidden;">
+
+    <tr>
+        <td style="padding: 32px 40px 20px; text-align: center; background-color: #0f172a; border-radius: 16px 16px 0 0;">
+            @if ($logoSvg)
+                <div style="max-width: 180px; margin: 0 auto;">
+                    {!! $logoSvg !!}
+                </div>
+            @else
+                <span style="color: #ffffff; font-size: 24px; font-weight: bold;">Leo Counter</span>
+            @endif
+        </td>
+    </tr>
+
+    <!-- Cuerpo del mensaje -->
+    <tr>
+        <td style="padding: 32px 40px 20px; color: #334155; font-size: 16px; line-height: 1.6;">
+            <p style="margin: 0 0 16px; font-size: 20px; font-weight: 600; color: #0f172a;">Hola, {{ $name }}</p>
+>>>>>>> 23def1b7b9d919ef710829c8b7a5a63623b7ed7b
 
             <p style="margin: 0 0 16px;">
                 Te han agregado como suscriptor de notificaciones en <strong>Leo Counter</strong>. Para comenzar a recibir alertas por correo electrónico, confirma tu suscripción haciendo clic en el siguiente botón:
@@ -32,4 +61,20 @@
                 ¡Gracias por usar Leo Counter!<br>
                 <span style="color: #64748b; font-size: 14px;">— El equipo de Leo Counter</span>
             </p>
+<<<<<<< HEAD
 </x-email-layout>
+=======
+        </td>
+    </tr>
+
+    <!-- Pie de página -->
+    <tr>
+        <td style="padding: 20px 40px 24px; border-top: 1px solid #e2e8f0; text-align: center; color: #94a3b8; font-size: 13px;">
+            &copy; {{ date('Y') }} Leo Counter. Todos los derechos reservados.<br>
+            Un proyecto open source para la gestión financiera familiar.
+        </td>
+    </tr>
+</table>
+</body>
+</html>
+>>>>>>> 23def1b7b9d919ef710829c8b7a5a63623b7ed7b
