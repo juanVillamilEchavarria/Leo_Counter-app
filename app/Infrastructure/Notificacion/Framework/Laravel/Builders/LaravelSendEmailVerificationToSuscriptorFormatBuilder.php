@@ -13,8 +13,7 @@ namespace App\Infrastructure\Notificacion\Framework\Laravel\Builders;
 use App\Application\Notificacion\Contracts\Builders\SendVerificationToSuscriptorFormatBuilderContract;
 use App\Domains\Notificacion\Contracts\Events\SendVerificationToSuscriptorEventContract;
 use App\Shared\Application\DTOs\EmailMessageDTO;
-use Illuminate\Support\Facades\View;
-use function Termwind\render;
+use App\Shared\Application\Services\CompactHTMLBodyService;
 
 /**
  * Constructor de la notificacion de verificacion de correo electronico al suscriptor
@@ -24,6 +23,11 @@ use function Termwind\render;
  */
 final readonly class LaravelSendEmailVerificationToSuscriptorFormatBuilder implements SendVerificationToSuscriptorFormatBuilderContract
 {
+    public function __construct(
+        private CompactHTMLBodyService $compact
+    )
+    {
+    }
 
     /**
      * @inheritDoc
@@ -35,27 +39,18 @@ final readonly class LaravelSendEmailVerificationToSuscriptorFormatBuilder imple
             now()->addHours(24),
             ['suscriptorId'=>  $event->getSuscriptor()->getId()->getValue()]
         );
-        $svgPath = public_path('favicon.svg');
-        $logoSvg = '';
-        if (file_exists($svgPath)) {
-            $logoSvg = file_get_contents($svgPath);
-        }
         $body = view('notificaciones.suscriptores.email.verify', [
             'name'=> $event->getUsuario()->getName(),
-            'signedUrl'=> $signedUrl,
-            'logoSvg' => $logoSvg
+            'signedUrl'=> $signedUrl
 
-        ]);
+        ])->render();
+        $minifiedBody = $this->compact->compact($body);
 
         $emailMessage= new EmailMessageDTO(
             to: $event->getUsuario()->getEmail(),
             subject: 'Verificacion de correo electronico para recibir notificaciones por email',
-            htmlBody: $body
+            htmlBody: $minifiedBody
         );
-        \Log::info('EmailMessageDTO creado para verificación', [
-            'to' => $emailMessage->to->__toString(),
-            'subject' => $emailMessage->subject,
-        ]);
         return $emailMessage;
 
     }

@@ -1,6 +1,5 @@
 {{-- resources/views/movimientos_fijos/notifications/emails/movimiento_pendiente_created.blade.php --}}
 <x-email-layout
-    :logoSvg="$logoSvg"
     title="Movimiento Pendiente Creado"
     :headerBackground="'linear-gradient(135deg, #d97706 0%, #f59e0b 100%)'"
     headerSubtitle="Gestión Financiera Inteligente"

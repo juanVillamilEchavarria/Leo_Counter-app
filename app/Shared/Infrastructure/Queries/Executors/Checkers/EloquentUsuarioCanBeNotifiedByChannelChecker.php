@@ -25,7 +25,8 @@ final readonly class EloquentUsuarioCanBeNotifiedByChannelChecker implements Usu
     {
         return SuscriptorNotificacion::where([
             'user_id' => $usuario->getId()->getValue(),
-            'canal_notificacion_id' => $canal->getId()->getValue()
+            'canal_notificacion_id' => $canal->getId()->getValue(),
+            'active' => true
         ])->exists();
     }
 }
