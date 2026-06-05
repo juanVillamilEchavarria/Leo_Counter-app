@@ -17,7 +17,11 @@ class CanalesNotificacionSeeder extends Seeder
         CanalNotificacion::firstOrCreate([
             'id'=> Uuid::uuid7()->toString(),
             'nombre' => 'Email',
+<<<<<<< HEAD
             'active'=>false
+=======
+            'active'=>true
+>>>>>>> 23def1b7b9d919ef710829c8b7a5a63623b7ed7b
         ]);
     }
 }

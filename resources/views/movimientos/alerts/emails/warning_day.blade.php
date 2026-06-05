@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 <x-email-layout
+=======
+
+<x-email-layout
+    :logoSvg="$logoSvg"
+>>>>>>> 23def1b7b9d919ef710829c8b7a5a63623b7ed7b
     title="Aviso de Movimiento"
     :headerBackground="'linear-gradient(135deg, #1e3a5f 0%, #2c5f8a 100%)'"
     headerSubtitle="Gestión Financiera Inteligente"
