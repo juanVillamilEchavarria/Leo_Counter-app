@@ -66,11 +66,26 @@ export function useIdempotentForm<TForm extends Record<string, any>>(initialData
         });
     };
 
+    const idempotentPatch = (url: string, options?: Parameters<typeof form.patch>[1]) => {
+        form.patch(url, {
+            ...options,
+            headers: {
+                ...options?.headers,
+                'Idempotency-Key': idempotencyKey.current,
+            },
+            onSuccess: (page)=>{
+                resetIdempotencyKey();
+                if (options?.onSuccess) options.onSuccess(page);
+            }
+        });
+    }
+
 
     return {
         form,
         idempotentPost,
         idempotentPut,
         idempotentDelete,
+        idempotentPatch
     };
 }

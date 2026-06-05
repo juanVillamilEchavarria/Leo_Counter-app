@@ -143,7 +143,25 @@ Write-Host ">>> Preparando la configuración..." -ForegroundColor Blue
 docker compose exec -T app php artisan config:clear
 
 Write-Host ">>> Ejecutando migraciones..." -ForegroundColor Blue
-docker compose exec -T app php artisan migrate --force
+$MaxTries = 5
+$Tries = 0
+
+while ($Tries -lt $MaxTries) {
+    docker compose exec -T app php artisan migrate --force
+    if ($LASTEXITCODE -eq 0) {
+        break
+    } else {
+        $IntentoActual = $Tries + 1
+        Write-Host ">>> La base de datos aun no acepta conexiones TCP, reintentando en 3 segundos... ($IntentoActual/$MaxTries)" -ForegroundColor Yellow
+        Start-Sleep -Seconds 3
+        $Tries++
+    }
+}
+
+if ($Tries -eq $MaxTries) {
+    Write-Host "ERROR: Las migraciones fallaron porque la base de datos no respondio despues de $MaxTries intentos." -ForegroundColor Red
+    exit 1
+}
 
 Write-Host ">>> Ejecutando seeders..." -ForegroundColor Blue
 docker compose exec -T app php artisan db:seed --force
