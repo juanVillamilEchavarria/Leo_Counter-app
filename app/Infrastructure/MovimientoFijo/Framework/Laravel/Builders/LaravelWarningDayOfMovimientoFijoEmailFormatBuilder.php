@@ -14,10 +14,16 @@ use App\Application\MovimientoFijo\Events\MovimientoFijoWarningDayArrived;
 use App\Domains\Usuario\Aggregates\Usuario;
 use App\Shared\Application\Contracts\Builders\EmailFormatBuilderContract;
 use App\Shared\Application\DTOs\EmailMessageDTO;
+use App\Shared\Application\Services\CompactHTMLBodyService;
 use App\Shared\Domain\Contracts\EventContract;
 
 final readonly class LaravelWarningDayOfMovimientoFijoEmailFormatBuilder implements EmailFormatBuilderContract
 {
+    public function __construct(
+        private CompactHTMLBodyService $compact
+    )
+    {
+    }
 
     /**
      * @param MovimientoFijoWarningDayArrived $event
@@ -26,22 +32,17 @@ final readonly class LaravelWarningDayOfMovimientoFijoEmailFormatBuilder impleme
      */
     public function build(EventContract $event, Usuario $usuario): EmailMessageDTO
     {
-        $svgPath = public_path('favicon.svg');
-        $logoSvg = '';
-        if (file_exists($svgPath)) {
-            $logoSvg = file_get_contents($svgPath);
-        }
         $body = view('movimientos.alerts.emails.warning_day', [
             'name'=> $usuario->getName(),
             'tipo'=> 'movimiento fijo',
-            'movimiento'=> $event->getMovimientoFijo(),
-            'logoSvg' => $logoSvg
+            'movimiento'=> $event->getMovimientoFijo()
 
-        ]);
+        ])->render();
+        $minifiedBody = $this->compact->compact($body);
         return new EmailMessageDTO(
             to: $usuario->getEmail(),
             subject: 'Movimiento fijo proximo a realizarse',
-            htmlBody: $body
+            htmlBody: $minifiedBody
         );
 
     }

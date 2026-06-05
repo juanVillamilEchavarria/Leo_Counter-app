@@ -14,10 +14,16 @@ use App\Application\MovimientoPendiente\Events\MovimientoPendienteWarningDayArri
 use App\Domains\Usuario\Aggregates\Usuario;
 use App\Shared\Application\Contracts\Builders\EmailFormatBuilderContract;
 use App\Shared\Application\DTOs\EmailMessageDTO;
+use App\Shared\Application\Services\CompactHTMLBodyService;
 use App\Shared\Domain\Contracts\EventContract;
 
 final readonly class LaravelWarningDayOfMovimientoPendienteEmailFormatBuilder implements EmailFormatBuilderContract
 {
+    public function __construct(
+        private CompactHTMLBodyService $compact
+    )
+    {
+    }
 
     /**
      * @param MovimientoPendienteWarningDayArrived $event
@@ -26,22 +32,17 @@ final readonly class LaravelWarningDayOfMovimientoPendienteEmailFormatBuilder im
      */
     public function build(EventContract $event, Usuario $usuario): EmailMessageDTO
     {
-        $svgPath = public_path('favicon.svg');
-        $logoSvg = '';
-        if (file_exists($svgPath)) {
-            $logoSvg = file_get_contents($svgPath);
-        }
         $body = view('movimientos.alerts.emails.warning_day', [
             'name'=> $usuario->getName(),
             'tipo'=> 'movimiento_pendiente',
-            'movimiento'=> $event->getMovimientoPendiente(),
-            'logoSvg' => $logoSvg
+            'movimiento'=> $event->getMovimientoPendiente()
 
-        ]);
+        ])->render();
+        $minifiedBody = $this->compact->compact($body);
         return new EmailMessageDTO(
             to: $usuario->getEmail(),
             subject: 'Movimiento Pendiente proximo a realizarse',
-            htmlBody: $body
+            htmlBody: $minifiedBody
         );
     }
 
