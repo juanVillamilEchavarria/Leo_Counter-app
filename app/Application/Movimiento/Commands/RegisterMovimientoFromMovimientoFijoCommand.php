@@ -10,6 +10,7 @@
  */
 namespace App\Application\Movimiento\Commands;
 use App\Domains\MovimientoFijo\Aggregates\MovimientoFijo;
+use App\Shared\Application\Contracts\Commands\TransactionalCommandContract;
 
 /**
  * Comando que representa la intencion de registrar automaticamente un movimiento desde un movimiento fijo, este comando es utilizado en la automatizacion diaria de movimientos fijos
@@ -18,7 +19,7 @@ use App\Domains\MovimientoFijo\Aggregates\MovimientoFijo;
  * @since 1.0.0
  * @version 1.0.0
  */
-final readonly class RegisterMovimientoFromMovimientoFijoCommand
+final readonly class RegisterMovimientoFromMovimientoFijoCommand implements TransactionalCommandContract
 {
     public function __construct(
         public MovimientoFijo $movimientoFijo
