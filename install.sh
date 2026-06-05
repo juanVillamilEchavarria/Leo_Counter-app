@@ -170,7 +170,22 @@ echo -e "${BLUE}>>> Preparando la configuración...${NC}"
 docker compose exec -T app php artisan config:clear
 
 echo -e "${BLUE}>>> Ejecutando migraciones...${NC}"
-docker compose exec -T app php artisan migrate --force
+MAX_TRIES=5
+TRIES=0
+while [ $TRIES -lt $MAX_TRIES ]; do
+    if docker compose exec -T app php artisan migrate --force; then
+        break
+    else
+        echo -e "${YELLOW}>>> La base de datos aun no acepta conexiones TCP, reintentando en 3 segundos... ($((TRIES+1))/$MAX_TRIES)${NC}"
+        sleep 3
+        TRIES=$((TRIES+1))
+    fi
+done
+
+if [ $TRIES -eq $MAX_TRIES ]; then
+    echo -e "${RED}ERROR: Las migraciones fallaron porque la base de datos no respondio despues de $MAX_TRIES intentos.${NC}"
+    exit 1
+fi
 
 echo -e "${BLUE}>>> Ejecutando seeders...${NC}"
 docker compose exec -T app php artisan db:seed --force
