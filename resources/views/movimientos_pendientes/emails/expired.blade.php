@@ -1,9 +1,5 @@
 {{-- resources/views/movimientos_pendientes/emails/expired.blade.php --}}
 <x-email-layout
-<<<<<<< HEAD
-=======
-    :logoSvg="$logoSvg"
->>>>>>> 23def1b7b9d919ef710829c8b7a5a63623b7ed7b
     title="Movimiento Pendiente Expirado"
     :headerBackground="'linear-gradient(135deg, #5f1e1e 0%, #8a2c2c 100%)'"
     headerSubtitle="Gestión Financiera Inteligente"

@@ -1,9 +1,5 @@
 {{-- resources/views/movimientos_fijos/notifications/emails/movimiento_created_automated.blade.php --}}
 <x-email-layout
-<<<<<<< HEAD
-=======
-    :logoSvg="$logoSvg"
->>>>>>> 23def1b7b9d919ef710829c8b7a5a63623b7ed7b
     title="Movimiento Creado Automáticamente"
     :headerBackground="'linear-gradient(135deg, #1e5f3a 0%, #2c8a4e 100%)'"
     headerSubtitle="Gestión Financiera Inteligente"
