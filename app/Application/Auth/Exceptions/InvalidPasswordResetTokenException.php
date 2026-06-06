@@ -10,6 +10,8 @@
  */
 namespace App\Application\Auth\Exceptions;
 
+use App\Shared\Application\Exceptions\ApplicationException;
+
 /**
  * Excepcion lanzada cuando el token de restablecimiento no existe o no es valido.
  *
@@ -18,6 +20,6 @@ namespace App\Application\Auth\Exceptions;
  * @since 1.0.0
  * @version 1.0.0
  */
-final class InvalidPasswordResetTokenException extends \RuntimeException
+final class InvalidPasswordResetTokenException extends ApplicationException
 {
 }

@@ -51,6 +51,7 @@ final readonly class Suscriptor implements AggregateModelContract
         SuscriptorUniquenessCheckerContract $checker
     ): self {
         if ($checker->exists($userId->getValue(), $canalNotificacionId->getValue())) {
+
             throw new CannotStoreSuscriptorNotificacionException(message: 'El usuario ya está suscrito a este canal.');
         }
 

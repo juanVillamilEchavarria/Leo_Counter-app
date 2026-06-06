@@ -10,7 +10,7 @@
  */
 namespace App\Domains\Notificacion\Exceptions;
 
-use Exception;
+use App\Shared\Domain\Exceptions\DomainException;
 
 /**
  * Excepción lanzada cuando no es posible actualizar una suscripción de notificación.
@@ -20,6 +20,6 @@ use Exception;
  * @since 1.0.0
  * @version 1.0.0
  */
-final class CannotUpdateSuscriptorNotificacionException extends Exception
+final class CannotUpdateSuscriptorNotificacionException extends DomainException
 {
 }

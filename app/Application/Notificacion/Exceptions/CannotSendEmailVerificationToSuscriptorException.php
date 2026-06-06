@@ -10,7 +10,9 @@
  */
 namespace App\Application\Notificacion\Exceptions;
 
-class CannotSendEmailVerificationToSuscriptorException extends \RuntimeException
+use App\Shared\Application\Exceptions\ApplicationException;
+
+class CannotSendEmailVerificationToSuscriptorException extends ApplicationException
 {
     public function __construct(string $message = "No se pudo enviar el correo de verificacion al suscriptor", int $code = 0, ?Throwable $previous = null)
     {

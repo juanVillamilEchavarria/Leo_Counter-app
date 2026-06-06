@@ -9,6 +9,6 @@
  * @version 1.0.0
  */
 namespace App\Application\Reporte\Exceptions;
-use App\Shared\Domain\Exceptions\DomainException;
+use App\Shared\Application\Exceptions\ApplicationException;
 
-abstract class ReporteException extends DomainException {}
+abstract class ReporteException extends ApplicationException {}

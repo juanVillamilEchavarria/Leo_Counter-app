@@ -29,4 +29,5 @@ export interface ApiValidationError {
 export interface ApiErrorResponse {
   message: string;
   errors?: ApiValidationError;
+  error?: string
 }

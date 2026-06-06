@@ -10,10 +10,10 @@
  */
 namespace App\Application\Categoria\Exceptions;
 
-use App\Shared\Domain\Exceptions\DomainException;
+use App\Shared\Application\Exceptions\ApplicationException;
 use Throwable;
 
-class CannotFindCategoriaException extends DomainException{
+class CannotFindCategoriaException extends ApplicationException{
     public function __construct(string $message = "Categoría no encontrada", int $code = 0, Throwable|null $previous = null)
     {
         return parent::__construct($message, $code, $previous);
