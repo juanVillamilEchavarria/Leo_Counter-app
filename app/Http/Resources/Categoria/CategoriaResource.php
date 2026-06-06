@@ -25,7 +25,7 @@ class CategoriaResource extends JsonResource
         return [
             'id'=>$this->id,
             'nombre'=>$this->nombre,
-            'tipo'=>$this->tipoMovimiento ? $this->tipoMovimiento->tipo_movimiento : null,
+            'tipo'=>$this->tipo_movimiento ? $this->tipo_movimiento->tipo_movimiento : null,
             'es_fijo'=>$this->es_fijo,
             'descripcion'=>$this->descripcion,
             'is_system'=>$this->is_system
