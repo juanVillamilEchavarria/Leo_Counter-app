@@ -10,7 +10,7 @@
  */
 namespace App\Domains\Notificacion\Exceptions;
 
-use Exception;
+use App\Shared\Domain\Exceptions\DomainException;
 
 /**
  * Excepción lanzada cuando no se encuentra una suscripción de notificación por su id.
@@ -20,6 +20,6 @@ use Exception;
  * @since 1.0.0
  * @version 1.0.0
  */
-final class SuscriptorNotificacionNotFoundException extends Exception
+final class SuscriptorNotificacionNotFoundException extends DomainException
 {
 }

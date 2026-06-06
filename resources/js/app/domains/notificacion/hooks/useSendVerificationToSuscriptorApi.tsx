@@ -41,11 +41,8 @@ export default function useSendVerificationToSuscriptorApi({
     },
 
     onError: (err: AxiosError<ApiErrorResponse>) => {
-      if (typeof err === 'object' && 'response' in err && err.response?.data?.errors) {
-          console.log(err.response);
-      }else{
-          if(err.response?.data.message) toastHelper.error(err.response.data.message)
-      }
+          const message = err.response?.data?.error || 'Error al crear suscriptor.';
+          if(err.response?.data) toastHelper.error(message)
 
     },
   })

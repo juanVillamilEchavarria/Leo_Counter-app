@@ -10,9 +10,9 @@
  */
 namespace App\Shared\Application\Exceptions;
 
-use RuntimeException;
+use Throwable;
 
-final class CannotSendEmailMessageToUserException extends RuntimeException
+final class CannotSendEmailMessageToUserException extends ApplicationException
 {
     public function __construct(string $message = "no se pudo enviar el correo al usuario", int $code = 0, ?Throwable $previous = null)
     {

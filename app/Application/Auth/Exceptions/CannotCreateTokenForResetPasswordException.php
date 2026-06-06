@@ -10,7 +10,9 @@
  */
 namespace App\Application\Auth\Exceptions;
 
-class CannotCreateTokenForResetPasswordException extends \RuntimeException
+use App\Shared\Application\Exceptions\ApplicationException;
+
+class CannotCreateTokenForResetPasswordException extends ApplicationException
 {
 
 }

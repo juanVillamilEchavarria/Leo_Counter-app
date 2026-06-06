@@ -10,10 +10,10 @@
  */
 namespace App\Application\Cuenta\Exceptions;
 
-use App\Shared\Domain\Exceptions\DomainException;
+use App\Shared\Application\Exceptions\ApplicationException;
 use Throwable;
 
-class CannotFindCuentaException extends DomainException {
+class CannotFindCuentaException extends ApplicationException {
     public function __construct(string $message = "No se puede encontrar la cuenta", int $code = 0, Throwable|null $previous = null)
     {
         return parent::__construct($message, $code, $previous);

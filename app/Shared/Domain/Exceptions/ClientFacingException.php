@@ -8,11 +8,12 @@
  * @since 1.0.0
  * @version 1.0.0
  */
-namespace App\Application\Usuario\Exceptions;
+namespace App\Shared\Domain\Exceptions;
 
-use App\Shared\Application\Exceptions\ApplicationException;
-
-class CannotDeleteUsuarioException extends ApplicationException
+interface ClientFacingException
 {
-
+    /**
+     * Obtiene el mensaje de error que se mostrará al cliente.
+     */
+    public function getMessage(): string;
 }

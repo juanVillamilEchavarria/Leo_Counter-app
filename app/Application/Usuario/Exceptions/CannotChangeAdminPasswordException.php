@@ -10,7 +10,9 @@
  */
 namespace App\Application\Usuario\Exceptions;
 
-class CannotChangeAdminPasswordException extends \RuntimeException
+use App\Shared\Application\Exceptions\ApplicationException;
+
+class CannotChangeAdminPasswordException extends ApplicationException
 {
 
 }

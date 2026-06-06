@@ -10,7 +10,7 @@
  */
 namespace App\Application\MovimientoFijo\Exceptions;
 
-use RuntimeException;
+use App\Shared\Application\Exceptions\ApplicationException;
 
 /**
  * Excepcion de aplicacion lanzada cuando no existe el movimiento fijo solicitado.
@@ -21,7 +21,7 @@ use RuntimeException;
  * @since 1.0.0
  * @version 1.0.0
  */
-final class CannotFindMovimientoFijoException extends RuntimeException
+final class CannotFindMovimientoFijoException extends ApplicationException
 {
     public function __construct(string $message = 'No se encontro el movimiento fijo solicitado.')
     {

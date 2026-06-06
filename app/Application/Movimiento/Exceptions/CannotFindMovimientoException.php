@@ -10,10 +10,12 @@
  */
 namespace App\Application\Movimiento\Exceptions;
 
+use App\Shared\Application\Exceptions\ApplicationException;
+
 /**
  * Excepción lanzada cuando no se encuentra un movimiento solicitado por su id.
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  * @since 1.0.0
  * @version 1.0.0
  */
-final class CannotFindMovimientoException extends \RuntimeException {}
+final class CannotFindMovimientoException extends ApplicationException {}
