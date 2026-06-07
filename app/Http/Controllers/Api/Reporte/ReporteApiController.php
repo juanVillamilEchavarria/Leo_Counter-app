@@ -60,8 +60,14 @@ final class ReporteApiController extends Controller
      */
     public function generate(GenerateReporteRequest $request): JsonResponse
     {
-        $dto = GenerateFinancialReportQuery::fromArray($request->validated());
-        $result = $this->reportHandler->__invoke( ReportStatisticType::statistics(),$dto);
+        $query = new GenerateFinancialReportQuery(
+            startDate: $request->input('startDate'),
+            endDate: $request->input('endDate'),
+            cuentas: $request->input('cuentas'),
+            categorias: $request->input('categorias'),
+            only_categorias_fijas: $request->input('only_categorias_fijas', false)
+        );
+        $result = $this->reportHandler->__invoke( ReportStatisticType::statistics(),$query);
         return ReporteResource::make($result, app(AssemblerResolver::class))->response();
     }
 
