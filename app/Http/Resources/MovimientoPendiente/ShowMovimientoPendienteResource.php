@@ -22,7 +22,16 @@ class ShowMovimientoPendienteResource extends MovimientoPendienteResource
     public function toArray(Request $request): array
     {
         return array_merge(parent::toArray($request), [
-            'automatic'=> (bool) $this->movimiento_fijo? $this->movimiento_fijo->registrar_automatico : null
+            'automatic'=> $this->resolveAutomatic()
         ]);
+    }
+
+    private function resolveAutomatic(): ?bool
+    {
+        $movimientoFijo = data_get($this->resource, 'movimiento_fijo');
+
+        return is_object($movimientoFijo)
+            ? (bool) data_get($movimientoFijo, 'registrar_automatico')
+            : null;
     }
 }

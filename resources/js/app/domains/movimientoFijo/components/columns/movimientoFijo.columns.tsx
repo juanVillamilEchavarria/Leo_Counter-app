@@ -34,12 +34,12 @@ export const MovimientoFijoColumns = (({
            { key: "monto", label: "Monto", render: (row: MovimientoFijoTableData)=>(moneyFormat(Number(row.monto))) },
            { key: "fecha_proximo", label: "Fecha Del Proximo Pago", render: (row: MovimientoFijoTableData)=>(dateFormat(row.fecha_proximo)) },
            { key: "frecuencia_movimiento", label: "Frecuencia" },
-           { key: "descripcion", label: "Descripcion", className: 'w-30' },
+           { key: "descripcion", label: "Descripcion", className: 'max-w-50 truncate' },
            {
              key: 'active',
              label: 'Activo',
              render: (row : MovimientoFijoTableData)=>(
-               <ModelToggle 
+               <ModelToggle
                active={row.active}
                route={MovimientoFijoActions.toggle(row.id, MovimientoFijoToggleTypes.active  )}
                />
@@ -49,7 +49,7 @@ export const MovimientoFijoColumns = (({
              key: 'registrar_automatico',
              label: 'Registro Automatico',
              render: (row : MovimientoFijoTableData)=>(
-                <ModelToggle 
+                <ModelToggle
                 active={row.registrar_automatico}
                 route={MovimientoFijoActions.toggle(row.id, MovimientoFijoToggleTypes.registrar_automatico )}
                 labels={{

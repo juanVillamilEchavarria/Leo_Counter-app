@@ -34,7 +34,7 @@ class MovimientoPendienteResource extends JsonResource
             'monto'=>$this->monto,
             'estado'=>$this->estado,
             'dias_aviso'=>$this->dias_aviso,
-            'enough_balance'=>$this->enough_balance
+            'enough_balance'=>data_get($this->resource, 'enough_balance')
         ];
     }
 }

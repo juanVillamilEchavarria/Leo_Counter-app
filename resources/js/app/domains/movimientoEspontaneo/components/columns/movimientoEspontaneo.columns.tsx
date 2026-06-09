@@ -51,7 +51,8 @@ export const MovimientoEspontaneoColumns = ({
         },
         {
             key: 'descripcion',
-            label: 'Descripcion'
+            label: 'Descripcion',
+             className: 'max-w-50 truncate'
         },
         {
             key : 'actions',

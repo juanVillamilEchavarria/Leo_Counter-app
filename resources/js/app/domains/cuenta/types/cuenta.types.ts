@@ -16,21 +16,21 @@ const route= useRoute()
 export const CuentaRoutes = {
   index : () => route('cuentas.index'),
   create : () => route('cuentas.create'),
-  show : (id: number) => route('cuentas.show', {id}),
-  edit : (id: number) => route('cuentas.edit', {id})
+  show : (id: string) => route('cuentas.show', {id}),
+  edit : (id: string) => route('cuentas.edit', {id})
 }
 export const CuentaActions = {
   post : route('cuentas.store'),
-  put : (id: number) => route('cuentas.update', {id}),
-  patch : (id: number) => route('cuentas.update', {id}),
-  delete : (id: number) => route('cuentas.destroy', {cuenta:id}),
-  toggle : (id: number, attribute: keyof typeof CuentaToggleTypes) => route('cuentas.toggle', {cuenta:id, attribute}),
+  put : (id: string) => route('cuentas.update', {id}),
+  patch : (id: string) => route('cuentas.update', {id}),
+  delete : (id: string) => route('cuentas.destroy', {cuenta:id}),
+  toggle : (id: string, attribute: keyof typeof CuentaToggleTypes) => route('cuentas.toggle', {cuenta:id, attribute}),
 }as const
 export const CuentaToggleTypes = {
   active: 'active'
 } as const
 export interface Cuenta extends SoftDeleteModel {
-  id: number
+  id: string
   nombre: string
   saldo_inicial: number
   saldo_actual: number

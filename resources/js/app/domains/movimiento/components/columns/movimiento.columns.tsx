@@ -73,5 +73,6 @@ export const MovimientoColumns = ({onSelect}:{onSelect: (item:MovimientoShowData
         id: 'descripcion',
         header: 'Descripcion',
         accessorKey: 'descripcion',
+        
     },
 ]

@@ -21,7 +21,7 @@ export const CategoriaStaticColumns: SimpleTableColumn<CategoriaTableData>[] = [
        render: (row : CategoriaTableData)=>(
         <SuccessOrFailText attribute={row.tipo} value={'Ingreso'}  />
        )},
-    { key: "descripcion", label: "Descripcion"},
+    { key: "descripcion", label: "Descripcion",  className: 'max-w-100 truncate'},
 ]
 
 export const CategoriaColumns=(({

@@ -14,6 +14,7 @@ use App\Application\MovimientoPendiente\Commands\DestroyMovimientoPendienteComma
 use App\Application\MovimientoPendiente\Commands\StoreMovimientoPendienteCommand;
 use App\Application\MovimientoPendiente\Commands\UpdateMovimientoPendienteCommand;
 use App\Application\MovimientoPendiente\Queries\GetMovimientoPendienteForEditQuery;
+use App\Application\MovimientoPendiente\Queries\GetMovimientoPendienteForShowQuery;
 use App\Application\MovimientoPendiente\Queries\GetMovimientoPendienteRecordsCountQuery;
 use App\Application\MovimientoPendiente\Queries\ListAllMovimientoPendienteQuery;
 use App\Application\MovimientoPendiente\Queries\ListMovimientoPendienteFormOptionsQuery;
@@ -26,6 +27,7 @@ use App\Shared\Infrastructure\Framework\Laravel\Builders\LaravelUploadedFileBuil
 use Illuminate\Contracts\Bus\Dispatcher;
 use Inertia\Inertia;
 use App\Application\MovimientoPendiente\Commands\MarkAsDoneMovimientoPendienteCommand;
+use App\Http\Resources\MovimientoPendiente\ShowMovimientoPendienteResource;
 
 /**
  * Controlador de presentacion para MovimientoPendiente.
@@ -111,11 +113,12 @@ class MovimientoPendienteController extends Controller
     {
         $movimientos = $this->queryBus->ask(new ListAllMovimientoPendienteQuery());
 
+        $movimiento = $this->queryBus->ask(new GetMovimientoPendienteForShowQuery(id: $id));
         return Inertia::render('MovimientosPendientes/Index', [
             'title' => 'Detalle Movimiento Pendiente',
             'NoRegistros' => $this->NoRegistros(),
             'movimientos' => MovimientoPendienteResource::collection($movimientos),
-            'data' => $this->queryBus->ask(new GetMovimientoPendienteForEditQuery(id: $id)),
+            'data' => ShowMovimientoPendienteResource::make($movimiento),
         ]);
     }
 
