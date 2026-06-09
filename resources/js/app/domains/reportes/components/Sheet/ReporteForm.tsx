@@ -48,21 +48,21 @@ export default function ReporteForm({
   })
 
   const handleAddCategoriaIngreso = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    handleAddCategoria(options?.data.categorias.ingresos, Number(e.target.value))
+    handleAddCategoria(options?.data.categorias.ingresos, e.target.value)
   }
 
   const handleAddCategoriaGasto = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    handleAddCategoria(options?.data.categorias.gastos, Number(e.target.value))
+    handleAddCategoria(options?.data.categorias.gastos, e.target.value)
   }
 
-  const handleAddCategoria = (categorias: Categoria[] | undefined, id: number) => {
+  const handleAddCategoria = (categorias: Categoria[] | undefined, id: string) => {
     if (categorias === undefined) return
-    const categoria = categorias.find(c => c.id === Number(id))
+    const categoria = categorias.find(c => c.id === id)
     if (categoria) addCategoria(categoria)
   }
 
   const handleAddCuenta = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const cuenta = options?.data.cuentas.find(c => c.id === Number(e.target.value))
+    const cuenta = options?.data.cuentas.find(c => c.id === e.target.value)
     if (cuenta) addCuenta(cuenta)
   }
   return (

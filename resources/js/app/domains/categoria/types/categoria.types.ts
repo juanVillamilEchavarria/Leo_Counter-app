@@ -12,7 +12,7 @@ import { useRoute } from "ziggy-js"
 import { type SoftDeleteModel } from "@/app/shared/types"
 const route= useRoute()
 export interface Categoria extends SoftDeleteModel {
-    id: number,
+    id: string,
     nombre: string,
     tipo_movimiento_id: number,
     descripcion: string,
@@ -25,10 +25,10 @@ export type CategoriaTableData = Omit<Categoria, 'tipo_movimiento_id'> & {
 
 export const CategoriaActions = {
     post : route('categorias.store'),
-    put : (id: number) => route('categorias.update', {id}),
-    patch : (id: number) => route('categorias.update', {id}),
-    delete : (id: number) => route('categorias.destroy', {categoria:id}),
-    toggle : (id: number, attribute: keyof typeof CategoriaToggleTypes) => route('categorias.toggle', {categoria:id, attribute}),
+    put : (id: string) => route('categorias.update', {id}),
+    patch : (id: string) => route('categorias.update', {id}),
+    delete : (id: string) => route('categorias.destroy', {categoria:id}),
+    toggle : (id: string, attribute: keyof typeof CategoriaToggleTypes) => route('categorias.toggle', {categoria:id, attribute}),
 }as const
 export const CategoriaToggleTypes = {
     es_fijo: 'es_fijo'

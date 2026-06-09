@@ -30,8 +30,9 @@ export default function MovimientoFijoTable({
   return (
     <SimpleTable
       data={data}
+      pageSize={10}
       columns={columns}
-      pagination={false}
+      pagination={true}
     />
   )
 }

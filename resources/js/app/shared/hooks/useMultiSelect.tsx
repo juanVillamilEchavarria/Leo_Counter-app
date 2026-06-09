@@ -9,11 +9,11 @@
 import React, {useCallback } from 'react';
 import { addUniqueItem, removeItemById } from '@/app/shared/helpers';
 
-interface useMultiSelectProps<T extends { id: number }> {
+interface useMultiSelectProps<T extends { id: number | string }> {
   items?: T[];
   setItems: (items: T[]) => void;
 }
-export function useMultiSelect<T extends { id: number }>({
+export function useMultiSelect<T extends { id: number | string }>({
   items = [],
    setItems 
   }: useMultiSelectProps<T>) {
@@ -21,7 +21,7 @@ export function useMultiSelect<T extends { id: number }>({
     setItems(addUniqueItem(item, items));
   }, [items, setItems]);
 
-  const removeItem = useCallback((id: number) => {
+  const removeItem = useCallback((id: number | string) => {
     setItems(removeItemById(id, items));
   }, [items, setItems]);
 

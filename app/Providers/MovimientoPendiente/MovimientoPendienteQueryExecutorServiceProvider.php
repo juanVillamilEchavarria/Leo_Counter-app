@@ -12,6 +12,7 @@ namespace App\Providers\MovimientoPendiente;
 
 use App\Application\MovimientoPendiente\Commands\Handlers\ProcessFinancialTasksForMovimientoPendienteHandler;
 use App\Application\MovimientoPendiente\Contracts\Queries\Executors\GetMovimientoPendienteRecordsCountQueryExecutorContract;
+use App\Application\MovimientoPendiente\Contracts\Queries\Executors\MovimientoPendienteForShowQueryExecutorContract;
 use App\Application\MovimientoPendiente\Contracts\Queries\Executors\MovimientoPendienteQueryExecutorContract;
 use App\Application\MovimientoPendiente\Queries\Handlers\GetMovimientoPendienteRecordsCountHandler;
 use App\Application\MovimientoPendiente\Queries\Handlers\ListAllMovimientoPendienteDueForProcessingHandler;
@@ -20,6 +21,7 @@ use App\Application\MovimientoPendiente\Queries\ListAllMovimientoPendienteDueFor
 use App\Infrastructure\MovimientoPendiente\Queries\Executors\Eloquent\EloquentGetMovimientoPendienteRecordsCountExecutor;
 use App\Infrastructure\MovimientoPendiente\Queries\Executors\Eloquent\EloquentListAllMovimientoPendienteDueForProcessingQueryExecutor;
 use App\Infrastructure\MovimientoPendiente\Queries\Executors\Eloquent\EloquentListAllMovimientoPendienteWithDetailsExecutor;
+use App\Infrastructure\MovimientoPendiente\Queries\Executors\Eloquent\EloquentMovimientoPendienteForShowQueryExecutor;
 use App\Domains\MovimientoPendiente\Contracts\GetAllAccountsBalanceForMovimientosPendientesContract;
 use App\Infrastructure\MovimientoPendiente\Queries\Executors\Eloquent\EloquentGetAllAccountsBalanceForMovimientosPendientesQueryExecutor;
 use Illuminate\Support\ServiceProvider;
@@ -51,6 +53,7 @@ final class MovimientoPendienteQueryExecutorServiceProvider extends ServiceProvi
             ->give( EloquentListAllMovimientoPendienteDueForProcessingQueryExecutor::class);
 
         $this->app->singleton(GetAllAccountsBalanceForMovimientosPendientesContract::class, EloquentGetAllAccountsBalanceForMovimientosPendientesQueryExecutor::class);
+        $this->app->singleton(MovimientoPendienteForShowQueryExecutorContract::class, EloquentMovimientoPendienteForShowQueryExecutor::class);
     }
 
     public function boot(): void
