@@ -4,9 +4,8 @@
  * @license MIT
  * @copyright 2026 Juan Esteban Villamil Echavarria
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.0.1
  */
-import SectionDescription from "@/app/shared/components/common/SectionDescription"
 import CreateButtonSection from "@/app/shared/components/common/CreateButtonSection"
 import CrudButton from "@/app/shared/components/common/CrudButton"
 import SectionTransition from "@/app/shared/components/common/SectionTransition"
@@ -16,6 +15,7 @@ import { type CategoriaTableData, CategoriaRoutes } from "@/app/domains/categori
 import DeleteModal from "@/app/shared/components/modal/DeleteModal"
 import { useModalItem } from "@/app/shared/hooks"
 import useCategoria from "@/app/domains/categoria/hooks/useCategoria"
+import SectionDescriptionWithDetails from "@/app/shared/components/common/SectionDescriptionWithDetails"
 
 export default function Index({
   categorias
@@ -24,10 +24,26 @@ export default function Index({
 }) {
   const {item, modal, open, close}= useModalItem<CategoriaTableData>()
   const {handleSubmit}= useCategoria({method: 'delete', id: item?.id})
+  const descriptionItems=[
+    {
+      title: '¿Que son las categorias?',
+      description: 'Las categorias son etiquetas que puedes asignar a tus movimientos o presupuestos para organizarlos y clasificarlos, puedes crear categorias para tus gastos e ingresos y asi llevar un control mas detallado de tus finanzas',
+      icon: 'fa-solid fa-tags !text-yellow-400'
+    },
+    {
+      title: 'Frecuencia fija o no fija',
+      description: 'Marca tus categorias como de frecuencia fija o no fija, las categorias de frecuencia fija son aquellas que representan un concepto recurrente (similar a movimientos fijos), y las categorias de frecuencia no fija son aquellas que usas ocasionalmente',
+      icon: 'fa-solid fa-repeat !text-green-400'
+    }
+  ]
 
   return (
     <SectionTransition>
-        <SectionDescription title="Categorias" paragraph="Gestiona Tus Categorias" />
+        <SectionDescriptionWithDetails 
+        principalTitle="Categorias"
+         paragraph="Gestiona Tus Categorias"
+          items={descriptionItems}
+          />
         <CreateButtonSection>
           <CrudButton
            as={Link}

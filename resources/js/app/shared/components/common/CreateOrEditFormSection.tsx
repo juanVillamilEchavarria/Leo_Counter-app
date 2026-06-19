@@ -31,8 +31,8 @@ export default function CreateOrEditFormSection({
           <i className="fa-solid fa-arrow-left"></i>
          </Button>
          <TransitionMotion   active
-            initial={{ y: -12, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
+            initial={{ y: -12, opacity: 0 , x: -100}}
+            animate={{ y: 0, opacity: 1 , x: 0}}
             transition={{
               duration: 0.35,
               ease: [0.22, 1, 0.36, 1], 

@@ -11,22 +11,28 @@
 namespace App\Application\MovimientoFijo\Events;
 
 use App\Domains\MovimientoFijo\Aggregates\MovimientoFijo;
+use App\Shared\Domain\Contracts\CollectionContract;
 use App\Shared\Domain\Contracts\EventContract;
 use App\Shared\Domain\ValueObjects\Date;
 
 final readonly class MovimientoFijoWarningDayArrived implements EventContract
 {
+    /**
+     * @param CollectionContract<MovimientoFijo> $movimientosFijos
+     * @param Date $ocurredOn
+     */
     public function __construct(
-        private MovimientoFijo $movimientoFijo,
-        private Date $ocurredOn
+        private CollectionContract $movimientosFijos,
+        private Date $ocurredOn = new Date(new \DateTimeImmutable())
     )
     {
     }
 
-    public function getMovimientoFijo(): MovimientoFijo
+    public function getMovimientosFijos(): CollectionContract
     {
-        return $this->movimientoFijo;
+        return $this->movimientosFijos;
     }
+
     /**
      * @inheritDoc
      */

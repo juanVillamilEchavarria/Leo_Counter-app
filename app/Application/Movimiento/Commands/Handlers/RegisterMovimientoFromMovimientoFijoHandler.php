@@ -10,13 +10,10 @@
  */
 namespace App\Application\Movimiento\Commands\Handlers;
 use App\Application\Movimiento\Commands\RegisterMovimientoFromMovimientoFijoCommand;
-use App\Application\MovimientoFijo\Events\AutomatedMovimientoFijoProcessed;
 use App\Domains\Cuenta\Contracts\Repositories\CuentaRepositoryContract;
 use App\Domains\Movimiento\Aggregates\Movimiento;
 use App\Domains\Movimiento\Contracts\Repositories\MovimientoRepositoryContract;
-use App\Domains\Movimiento\Events\AutomatedMovimientoRegistered;
 use App\Domains\Movimiento\ValueObjects\MovimientoId;
-use App\Shared\Application\Contracts\Bus\EventBus;
 use App\Shared\Domain\Contracts\IdGeneratorContract;
 use App\Shared\Domain\ValueObjects\Date;
 
@@ -33,7 +30,6 @@ final readonly class RegisterMovimientoFromMovimientoFijoHandler
 {
     public function __construct(
         private MovimientoRepositoryContract $movimientoRepositoryContract,
-        private EventBus $eventBus,
         private IdGeneratorContract $idGenerator,
         private CuentaRepositoryContract $cuentaRepository,
 
@@ -55,12 +51,8 @@ final readonly class RegisterMovimientoFromMovimientoFijoHandler
             fecha: $now,
             descripcion: $movimientoFijo->getDescripcion(),
         );
-        $cuenta = $this->cuentaRepository->findById($movimiento->getCuentaId());
+        $this->cuentaRepository->findById($movimiento->getCuentaId());
         $this->movimientoRepositoryContract->store($movimiento);
-        $this->eventBus->publish(new AutomatedMovimientoFijoProcessed(
-            movimientoFijo: $movimientoFijo,
-            movimiento: $movimiento,
-        ));
     }
 
 }

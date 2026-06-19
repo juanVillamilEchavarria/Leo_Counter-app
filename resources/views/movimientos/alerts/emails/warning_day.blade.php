@@ -1,61 +1,53 @@
 <x-email-layout
-    title="Aviso de Movimiento"
+    title="Aviso de Movimientos"
     :headerBackground="'linear-gradient(135deg, #1e3a5f 0%, #2c5f8a 100%)'"
     headerSubtitle="Gestión Financiera Inteligente"
 >
+    @php
+        $esMovimientoFijo = $tipo === 'movimiento fijo';
+        $tipoPlural = $esMovimientoFijo ? 'movimientos fijos' : 'movimientos pendientes';
+        $fechaLabel = $esMovimientoFijo ? 'Próxima Fecha' : 'Fecha Programada';
+    @endphp
+
     {{-- Saludo --}}
     <h2 style="color: #1e3a5f; font-size: 18px; font-weight: 600; margin: 0 0 10px 0;">
         ¡Hola, {{ $name }}!
     </h2>
-    <p style="color: #4a5568; font-size: 14px; line-height: 1.6; margin: 0 0 25px 0;">
-        Este es un recordatorio automático de Leo Counter para informarte que tienes un
-        <strong style="color: #2c5f8a;">
-            {{ $tipo === 'movimiento fijo' ? 'movimiento fijo' : 'movimiento pendiente' }}
-        </strong>
-        programado para los próximos días.
+    <p style="color: #4a5568; font-size: 14px; line-height: 1.6; margin: 0 0 20px 0;">
+        Este es un recordatorio automático de Leo Counter para informarte que tienes
+        <strong style="color: #2c5f8a;">{{ $tipoPlural }}</strong>
+        programados para los próximos días.
     </p>
 
-    {{-- Tarjeta de Detalles del Movimiento --}}
-    <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 25px;">
-        <tr>
-            <td style="padding: 20px 25px;">
-                <h3 style="color: #1e3a5f; font-size: 15px; font-weight: 600; margin: 0 0 15px 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">
-                    📋 Detalles del {{ $tipo === 'movimiento fijo' ? 'Movimiento Fijo' : 'Movimiento Pendiente' }}
-                </h3>
-
-                <table width="100%" cellpadding="8" cellspacing="0" role="presentation">
-                    <tr>
-                        <td style="color: #718096; font-size: 13px; font-weight: 500; width: 40%;">Nombre:</td>
-                        <td style="color: #2d3748; font-size: 13px; font-weight: 600;">{{ $movimiento->getNombre() }}</td>
-                    </tr>
-                    <tr>
-                        <td style="color: #718096; font-size: 13px; font-weight: 500;">Monto:</td>
-                        <td style="color: #2d3748; font-size: 13px; font-weight: 600;">
-                            ${{ number_format($movimiento->getMonto()->getValue(), 2) }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="color: #718096; font-size: 13px; font-weight: 500;">
-                            {{ $tipo === 'movimiento fijo' ? 'Fecha Próximo:' : 'Fecha Programada:' }}
-                        </td>
-                        <td style="color: #2d3748; font-size: 13px; font-weight: 600;">
-                            @php
-                                $fecha = $tipo === 'movimiento fijo'
-                                    ? $movimiento->getFechaProximo()
-                                    : $movimiento->getFechaProgramada();
-                            @endphp
-                            {{ $fecha->format('d/m/Y') }}
-                        </td>
-                    </tr>
-                    @if($movimiento->getDescripcion())
-                        <tr>
-                            <td style="color: #718096; font-size: 13px; font-weight: 500;">Descripción:</td>
-                            <td style="color: #2d3748; font-size: 13px;">{{ $movimiento->getDescripcion() }}</td>
-                        </tr>
-                    @endif
-                </table>
-            </td>
-        </tr>
+    {{-- Tabla compacta de movimientos --}}
+    <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="border: 1px solid #d9e6f2; border-radius: 8px; border-collapse: separate; overflow: hidden; margin-bottom: 25px;">
+        <thead>
+            <tr style="background-color: #ebf8ff;">
+                <th align="left" style="color: #1e3a5f; font-size: 12px; font-weight: 700; padding: 12px 14px; border-bottom: 1px solid #bee3f8;">Nombre</th>
+                <th align="right" style="color: #1e3a5f; font-size: 12px; font-weight: 700; padding: 12px 14px; border-bottom: 1px solid #bee3f8;">Monto</th>
+                <th align="right" style="color: #1e3a5f; font-size: 12px; font-weight: 700; padding: 12px 14px; border-bottom: 1px solid #bee3f8;">{{ $fechaLabel }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($movimientos as $movimiento)
+                @php
+                    $fecha = $esMovimientoFijo
+                        ? $movimiento->getFechaProximo()
+                        : $movimiento->getFechaProgramada();
+                @endphp
+                <tr style="background-color: {{ $loop->even ? '#f8fafc' : '#ffffff' }};">
+                    <td style="color: #2d3748; font-size: 13px; font-weight: 600; padding: 12px 14px; border-bottom: 1px solid #edf2f7;">
+                        {{ $movimiento->getNombre() }}
+                    </td>
+                    <td align="right" style="color: #2d3748; font-size: 13px; font-weight: 600; padding: 12px 14px; border-bottom: 1px solid #edf2f7; white-space: nowrap;">
+                        ${{ number_format($movimiento->getMonto()->getValue(), 2) }}
+                    </td>
+                    <td align="right" style="color: #4a5568; font-size: 13px; padding: 12px 14px; border-bottom: 1px solid #edf2f7; white-space: nowrap;">
+                        {{ $fecha->format('d/m/Y') }}
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
     </table>
 
     {{-- Mensaje de Acción --}}
@@ -63,11 +55,11 @@
         <tr>
             <td style="padding: 15px 20px;">
                 <p style="color: #2b6cb0; font-size: 13px; line-height: 1.6; margin: 0;">
-                    <strong>💡 Recuerda:</strong>
-                    @if($tipo === 'movimiento fijo')
-                        Puedes gestionar este movimiento fijo desde la sección de <strong>Movimientos Fijos</strong> en tu panel de Leo Counter.
+                    <strong>Recuerda:</strong>
+                    @if($esMovimientoFijo)
+                        Puedes gestionar estos movimientos fijos desde la sección de <strong>Movimientos Fijos</strong> en tu panel de Leo Counter.
                     @else
-                        Puedes confirmar o cancelar este movimiento desde la sección de <strong>Movimientos Pendientes</strong> en tu panel de Leo Counter.
+                        Puedes confirmar o cancelar estos movimientos desde la sección de <strong>Movimientos Pendientes</strong> en tu panel de Leo Counter.
                     @endif
                 </p>
             </td>

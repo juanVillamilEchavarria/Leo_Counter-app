@@ -1,6 +1,6 @@
 {{-- resources/views/movimientos_fijos/notifications/emails/movimiento_pendiente_created.blade.php --}}
 <x-email-layout
-    title="Movimiento Pendiente Creado"
+    title="Movimientos Pendientes Creados"
     :headerBackground="'linear-gradient(135deg, #d97706 0%, #f59e0b 100%)'"
     headerSubtitle="Gestión Financiera Inteligente"
 >
@@ -8,94 +8,47 @@
     <h2 style="color: #1e3a5f; font-size: 18px; font-weight: 600; margin: 0 0 10px 0;">
         ¡Hola, {{ $name }}!
     </h2>
-    <p style="color: #4a5568; font-size: 14px; line-height: 1.6; margin: 0 0 25px 0;">
-        Tu <strong style="color: #d97706;">movimiento fijo</strong> no estaba configurado para
-        <strong>registro automático</strong>, por lo que se ha creado un
-        <strong style="color: #b45309;">movimiento pendiente</strong> para que puedas confirmarlo o eliminarlo manualmente.
+    <p style="color: #4a5568; font-size: 14px; line-height: 1.6; margin: 0 0 20px 0;">
+        Algunos <strong style="color: #d97706;">movimientos fijos</strong> no están configurados para
+        <strong>registro automático</strong>, por lo que se crearon
+        <strong style="color: #b45309;">movimientos pendientes</strong> para que puedas confirmarlos o eliminarlos manualmente.
     </p>
 
-    {{-- Tarjeta del Movimiento Fijo Origen --}}
-    <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="background-color: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; margin-bottom: 15px;">
-        <tr>
-            <td style="padding: 15px 20px;">
-                <h3 style="color: #92400e; font-size: 14px; font-weight: 600; margin: 0 0 10px 0;">
-                    🔄 Movimiento Fijo Origen
-                </h3>
-                <table width="100%" cellpadding="6" cellspacing="0" role="presentation">
-                    <tr>
-                        <td style="color: #718096; font-size: 12px; font-weight: 500; width: 40%;">Nombre:</td>
-                        <td style="color: #2d3748; font-size: 12px; font-weight: 600;">{{ $movimiento_fijo->getNombre() }}</td>
-                    </tr>
-                    <tr>
-                        <td style="color: #718096; font-size: 12px; font-weight: 500;">Monto Programado:</td>
-                        <td style="color: #2d3748; font-size: 12px; font-weight: 600;">
-                            ${{ number_format($movimiento_fijo->getMonto()->getValue(), 2) }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="color: #718096; font-size: 12px; font-weight: 500;">Próxima Fecha:</td>
-                        <td style="color: #2d3748; font-size: 12px; font-weight: 600;">
-                            {{ $movimiento_fijo->getFechaProximo()->format('d/m/Y') }}
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-
-    {{-- Tarjeta del Movimiento Pendiente Creado --}}
-    <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 25px;">
-        <tr>
-            <td style="padding: 20px 25px;">
-                <h3 style="color: #1e3a5f; font-size: 15px; font-weight: 600; margin: 0 0 15px 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">
-                    📋 Movimiento Pendiente Creado
-                </h3>
-
-                <table width="100%" cellpadding="8" cellspacing="0" role="presentation">
-                    <tr>
-                        <td style="color: #718096; font-size: 13px; font-weight: 500; width: 40%;">Nombre:</td>
-                        <td style="color: #2d3748; font-size: 13px; font-weight: 600;">{{ $movimiento_pendiente->getNombre() }}</td>
-                    </tr>
-                    <tr>
-                        <td style="color: #718096; font-size: 13px; font-weight: 500;">Monto:</td>
-                        <td style="color: #2d3748; font-size: 13px; font-weight: 600;">
-                            ${{ number_format($movimiento_pendiente->getMonto()->getValue(), 2) }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="color: #718096; font-size: 13px; font-weight: 500;">Fecha Límite:</td>
-                        <td style="color: #2d3748; font-size: 13px; font-weight: 600;">
-                            {{ $movimiento_pendiente->getFechaProgramada()->format('d/m/Y') }}
-                        </td>
-                    </tr>
-                    @if($movimiento_pendiente->getDescripcion())
-                        <tr>
-                            <td style="color: #718096; font-size: 13px; font-weight: 500;">Descripción:</td>
-                            <td style="color: #2d3748; font-size: 13px;">{{ $movimiento_pendiente->getDescripcion() }}</td>
-                        </tr>
-                    @endif
-                </table>
-            </td>
-        </tr>
+    {{-- Tabla compacta de movimientos pendientes creados --}}
+    <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="border: 1px solid #fde68a; border-radius: 8px; border-collapse: separate; overflow: hidden; margin-bottom: 25px;">
+        <thead>
+            <tr style="background-color: #fffbeb;">
+                <th align="left" style="color: #92400e; font-size: 12px; font-weight: 700; padding: 12px 14px; border-bottom: 1px solid #fde68a;">Nombre</th>
+                <th align="right" style="color: #92400e; font-size: 12px; font-weight: 700; padding: 12px 14px; border-bottom: 1px solid #fde68a;">Monto</th>
+                <th align="right" style="color: #92400e; font-size: 12px; font-weight: 700; padding: 12px 14px; border-bottom: 1px solid #fde68a;">Próxima Fecha</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($movimientosFijos as $movimientoFijo)
+                <tr style="background-color: {{ $loop->even ? '#f8fafc' : '#ffffff' }};">
+                    <td style="color: #2d3748; font-size: 13px; font-weight: 600; padding: 12px 14px; border-bottom: 1px solid #edf2f7;">
+                        {{ $movimientoFijo->getNombre() }}
+                    </td>
+                    <td align="right" style="color: #2d3748; font-size: 13px; font-weight: 600; padding: 12px 14px; border-bottom: 1px solid #edf2f7; white-space: nowrap;">
+                        ${{ number_format($movimientoFijo->getMonto()->getValue(), 2) }}
+                    </td>
+                    <td align="right" style="color: #4a5568; font-size: 13px; padding: 12px 14px; border-bottom: 1px solid #edf2f7; white-space: nowrap;">
+                        {{ $movimientoFijo->getFechaProximo()->format('d/m/Y') }}
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
     </table>
 
     {{-- Mensaje de Acción Urgente --}}
     <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="background-color: #fff7ed; border-left: 4px solid #f97316; border-radius: 4px; margin-bottom: 25px;">
         <tr>
             <td style="padding: 15px 20px;">
-                <p style="color: #c2410c; font-size: 13px; line-height: 1.6; margin: 0 0 10px 0;">
-                    <strong>⏰ Acción requerida:</strong>
-                    Tienes <strong>1 día</strong> para confirmar o eliminar este movimiento pendiente.
-                    Si no realizas ninguna acción, expirará automáticamente.
+                <p style="color: #c2410c; font-size: 13px; line-height: 1.6; margin: 0;">
+                    <strong>Acción requerida:</strong>
+                    Confirma los movimientos pendientes si ya fueron realizados, o elimínalos si fueron cancelados.
+                    Si no realizas ninguna acción, expirarán automáticamente.
                 </p>
-                <ul style="color: #c2410c; font-size: 13px; line-height: 1.6; margin: 0; padding-left: 20px;">
-                    <li style="margin-bottom: 5px;">
-                        <strong>Confírmalo</strong> si el movimiento fue realizado.
-                    </li>
-                    <li style="margin-bottom: 0;">
-                        <strong>Elimínalo</strong> si fue cancelado o ya no es necesario.
-                    </li>
-                </ul>
             </td>
         </tr>
     </table>

@@ -20,5 +20,5 @@ Route::middleware(['auth'])->group( function () {
     Route::get('home', [HomeApiController::class, 'index'])->name('api.home.index');
     Route::get('notificacion/suscriptores/form-options', [SuscriptorApiController::class, 'formOptions'])->name('api.notificaciones.suscriptor.form-options');
     Route::apiResource('notificacion/suscriptores', SuscriptorApiController::class)->only(['store', 'destroy']);
-
+    Route::get('transferencias', [TransferenciaApiController::class, 'totalPaginated'])->name('api.transferencias.total-paginated');
 });

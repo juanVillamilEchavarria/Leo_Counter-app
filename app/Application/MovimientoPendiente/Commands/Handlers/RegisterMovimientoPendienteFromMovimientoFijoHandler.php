@@ -11,19 +11,16 @@
 namespace App\Application\MovimientoPendiente\Commands\Handlers;
 
 use App\Application\MovimientoPendiente\Commands\RegisterMovimientoPendienteFromMovimientoFijoCommand;
-use App\Application\MovimientoPendiente\Events\MovimientoPendienteCreatedFromMovimientoFijo;
 use App\Domains\MovimientoPendiente\Aggregates\MovimientoPendiente;
 use App\Domains\MovimientoPendiente\Contracts\Repositories\MovimientoPendienteRepositoryContract;
 use App\Domains\MovimientoPendiente\ValueObjects\MovimientoPendienteId;
-use App\Shared\Application\Contracts\Bus\EventBus;
 use App\Shared\Domain\Contracts\IdGeneratorContract;
 
 final readonly class RegisterMovimientoPendienteFromMovimientoFijoHandler
 {
     public function __construct(
         private MovimientoPendienteRepositoryContract $movimientoPendienteRepositoryContract,
-        private IdGeneratorContract $idGeneratorContract,
-        private EventBus $eventBus
+        private IdGeneratorContract $idGeneratorContract
     )
     {
     }
@@ -44,11 +41,6 @@ final readonly class RegisterMovimientoPendienteFromMovimientoFijoHandler
             movimiento_fijo_id: $movimientoFijo->getId()
         );
         $this->movimientoPendienteRepositoryContract->store($movimientoPendiente);
-        $this->eventBus->publish(new MovimientoPendienteCreatedFromMovimientoFijo(
-            movimientoPendiente: $movimientoPendiente,
-            movimientoFijo: $movimientoFijo
-
-        ));
     }
 
 }

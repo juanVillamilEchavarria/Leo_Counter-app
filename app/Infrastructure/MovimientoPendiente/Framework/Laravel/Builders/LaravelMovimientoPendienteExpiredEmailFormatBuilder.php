@@ -34,12 +34,12 @@ final readonly class LaravelMovimientoPendienteExpiredEmailFormatBuilder impleme
     {
         $body = view('movimientos_pendientes.emails.expired', [
             'name'=> $usuario->getName(),
-            'movimiento'=> $event->getMovimientoPendiente()
+            'movimientosPendientes'=> $event->getMovimientosPendientes()
         ])->render();
-            $minifiedBody = $this->compact->compact($body);
+        $minifiedBody = $this->compact->compact($body);
         return new EmailMessageDTO(
             to: $usuario->getEmail(),
-            subject: 'Movimiento Pendiente Vencido',
+            subject: 'Movimientos Pendientes Vencidos',
             htmlBody: $minifiedBody
         );
     }

@@ -4,7 +4,7 @@
  * @license MIT
  * @copyright 2026 Juan Esteban Villamil Echavarria
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.0.1
  */
 import Card from "@/app/shared/components/common/Card"
 import InputFillable from "@/app/shared/components/form/InputFillable"
@@ -68,6 +68,9 @@ export default function CuentaForm({
                          `}
                     icon={`fa-solid fa-coins fa-xl top-6 text-muted-foreground ${errors.saldo_inicial && 'text-red-500!'} `}
                 />
+                {can_update_saldo === false && (
+                    <p className="text-sm text-red-300 mt-1">El saldo inicial de esta cuenta no se puede actualizar porque ya tiene movimientos asociados</p>
+                )}
                 <TransitionMotion
                  active={errors?.saldo_inicial}
                 >

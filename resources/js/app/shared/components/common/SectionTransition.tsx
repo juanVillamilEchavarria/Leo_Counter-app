@@ -4,7 +4,7 @@
  * @license MIT
  * @copyright 2026 Juan Esteban Villamil Echavarria
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.0.1
  */
 import TransitionMotion from "../transitions/TransitionMotion"
 import { type TransitionDuration } from "../../types/components"
@@ -23,7 +23,8 @@ export default function SectionTransition({
     <div className={`section ${className}`}>
         <TransitionMotion
         active
-        initial={{ opacity: 0, y: 6 }}
+        initial={{ opacity: 0, x: -100 }}
+
         transition={transition}
         >
             {children}

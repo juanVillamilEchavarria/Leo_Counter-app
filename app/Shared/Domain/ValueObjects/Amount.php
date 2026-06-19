@@ -34,11 +34,21 @@ final readonly class Amount
         return $this->cents / 100;
     }
 
+    /**
+     * Suma un monto con otro monto
+     * @param Amount $other
+     * @return self
+     */
     public function add(Amount $other): self
     {
         return new self(($this->cents + $other->cents) / 100);
     }
 
+    /**
+     * Resta el monto con otro monto
+     * @param Amount $other
+     * @return self
+     */
     public function subtract(Amount $other): self
     {
         $result = $this->cents - $other->cents;

@@ -40,7 +40,7 @@ export default function Index({
 
   return (
     <SectionTransition>
-        <SectionDescription title="Propietarios" paragraph="Gestiona Tus Propietarios" />
+        <SectionDescription title="Propietarios" paragraph="Gestiona los propietarios de las cuentas del sistema" />
         <CreateButtonSection>
           <CrudButton
             as={Link}

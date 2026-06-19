@@ -35,13 +35,13 @@ final readonly class LaravelWarningDayOfMovimientoFijoEmailFormatBuilder impleme
         $body = view('movimientos.alerts.emails.warning_day', [
             'name'=> $usuario->getName(),
             'tipo'=> 'movimiento fijo',
-            'movimiento'=> $event->getMovimientoFijo()
+            'movimientos'=> $event->getMovimientosFijos()
 
         ])->render();
         $minifiedBody = $this->compact->compact($body);
         return new EmailMessageDTO(
             to: $usuario->getEmail(),
-            subject: 'Movimiento fijo proximo a realizarse',
+            subject: 'Movimientos fijos proximos a realizarse',
             htmlBody: $minifiedBody
         );
 

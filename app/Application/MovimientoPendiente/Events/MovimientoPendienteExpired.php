@@ -11,6 +11,7 @@
 namespace App\Application\MovimientoPendiente\Events;
 
 use App\Domains\MovimientoPendiente\Aggregates\MovimientoPendiente;
+use App\Shared\Domain\Contracts\CollectionContract;
 use App\Shared\Domain\Contracts\EventContract;
 use App\Shared\Domain\ValueObjects\Date;
 
@@ -23,19 +24,23 @@ use App\Shared\Domain\ValueObjects\Date;
  */
 final readonly class MovimientoPendienteExpired implements EventContract
 {
+    /**
+     * @param CollectionContract<MovimientoPendiente> $movimientosPendientes
+     * @param Date $ocurredOn
+     */
     public function __construct(
-        private MovimientoPendiente $movimientoPendiente,
+        private CollectionContract $movimientosPendientes,
         private Date $ocurredOn = new Date(new \DateTimeImmutable())
     )
     {
     }
 
     /**
-     * @return MovimientoPendiente
+     * @return CollectionContract
      */
-    public function getMovimientoPendiente(): MovimientoPendiente
+    public function getMovimientosPendientes(): CollectionContract
     {
-        return $this->movimientoPendiente;
+        return $this->movimientosPendientes;
     }
 
     /**

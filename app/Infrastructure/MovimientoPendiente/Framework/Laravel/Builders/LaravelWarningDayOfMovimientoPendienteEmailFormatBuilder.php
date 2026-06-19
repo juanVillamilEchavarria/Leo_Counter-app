@@ -34,14 +34,14 @@ final readonly class LaravelWarningDayOfMovimientoPendienteEmailFormatBuilder im
     {
         $body = view('movimientos.alerts.emails.warning_day', [
             'name'=> $usuario->getName(),
-            'tipo'=> 'movimiento_pendiente',
-            'movimiento'=> $event->getMovimientoPendiente()
+            'tipo'=> 'movimiento pendiente',
+            'movimientos'=> $event->getMovimientosPendientes()
 
         ])->render();
         $minifiedBody = $this->compact->compact($body);
         return new EmailMessageDTO(
             to: $usuario->getEmail(),
-            subject: 'Movimiento Pendiente proximo a realizarse',
+            subject: 'Movimientos Pendientes proximos a realizarse',
             htmlBody: $minifiedBody
         );
     }

@@ -17,9 +17,9 @@ export default function SectionDescription({
     paragraph: string | React.ReactNode
 }) {
   return (
-   <div className={`flex flex-col justify-center items-center ${className}`}> 
-        <Title title={title} size="4xl" className={` font-principal `} />
-        <p className="text-foreground text-lg font-principal mt-2 bg- ">{paragraph}</p>
+   <div className={`flex flex-col justify-start items-start gap-2 my-5 ${className}`}> 
+        <Title title={title} size="3xl" className={` font-principal `} />
+        <p className="text-foreground text-sm font-principal mt-2 bg- ">{paragraph}</p>
    </div>
   )
 }

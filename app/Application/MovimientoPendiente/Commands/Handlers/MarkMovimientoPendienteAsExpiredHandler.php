@@ -10,9 +10,7 @@
  */
 namespace App\Application\MovimientoPendiente\Commands\Handlers;
 use App\Application\MovimientoPendiente\Commands\MarkMovimientoPendienteAsExpiredCommand;
-use App\Application\MovimientoPendiente\Events\MovimientoPendienteExpired;
 use App\Domains\MovimientoPendiente\Contracts\Repositories\MovimientoPendienteRepositoryContract;
-use App\Shared\Application\Contracts\Bus\EventBus;
 
 /**
  * Manejador para marcar un movimiento pendiente como vencido.
@@ -27,8 +25,7 @@ use App\Shared\Application\Contracts\Bus\EventBus;
 final readonly class MarkMovimientoPendienteAsExpiredHandler
 {
     public function __construct(
-        private  MovimientoPendienteRepositoryContract $movimientoPendienteRepositoryContract,
-        private  EventBus $eventBus
+        private  MovimientoPendienteRepositoryContract $movimientoPendienteRepositoryContract
     )
     {
     }
@@ -36,7 +33,6 @@ final readonly class MarkMovimientoPendienteAsExpiredHandler
     {
        $movimientoPendiente = $command->movimientoPendiente;
        $this->movimientoPendienteRepositoryContract->hardDelete($movimientoPendiente->getId());
-       $this->eventBus->publish(new MovimientoPendienteExpired($movimientoPendiente));
     }
 
 }

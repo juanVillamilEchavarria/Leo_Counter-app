@@ -34,13 +34,12 @@ final readonly class LaravelMovimientoCreatedAutomatedEmailFormatBuilder impleme
     {
         $body = view('movimientos_fijos.notifications.emails.movimiento_created_automated', [
             'name'=> $usuario->getName(),
-            'movimiento'=>$event->getMovimiento(),
-            'movimiento_fijo'=>$event->getMovimientoFijo()
+            'movimientosFijos'=> $event->getMovimientosFijos()
         ])->render();
         $minifiedBody = $this->compact->compact($body);
         return new EmailMessageDTO(
             to: $usuario->getEmail(),
-            subject: 'Movimiento creado automaticamente a partir de un movimiento fijo',
+            subject: 'Movimientos creados automaticamente a partir de movimientos fijos',
             htmlBody: $minifiedBody
         );
     }

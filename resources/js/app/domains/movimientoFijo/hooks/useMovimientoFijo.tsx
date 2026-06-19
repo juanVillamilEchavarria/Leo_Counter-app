@@ -4,18 +4,18 @@
  * @license MIT
  * @copyright 2026 Juan Esteban Villamil Echavarria
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.0.1
  */
 import { useFormNormal } from "@/app/shared/hooks"
 import { FormMethods } from "@/app/shared/types/components"
-import { type MovimientoFijo, MovimientoFijoActions, MovimientoFijoRoutes } from "../types/movimientoFijo.types"
+import { type MovimientoFijo, MovimientoFijoActions} from "../types/movimientoFijo.types"
 export default function useMovimientoFijo({
     method = 'post',
     id,
     data
 }:{
     method ?: keyof typeof FormMethods,
-    id ?: number | null
+    id ?: string | null
     data ?: MovimientoFijo
 }) {
     const action = (() => {

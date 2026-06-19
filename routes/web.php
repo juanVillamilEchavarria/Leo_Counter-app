@@ -66,6 +66,11 @@ Route::middleware('auth')->group( function () {
             'movimientos-espontaneos'=> 'movimientoEspontaneo'
         ])->except(['update']);
     });
+    
+    // TRANSFERENCIAS
+    Route::resource('transferencias', \App\Http\Controllers\Transferencia\TransferenciaController::class)
+        ->only(['index', 'store'])
+        ->names('transferencias');
 
     // MOVIMIENTOS PENDIENTES
     Route::resource('movimientos-pendientes',MovimientoPendienteController::class)->names('movimientosPendientes')->parameters([

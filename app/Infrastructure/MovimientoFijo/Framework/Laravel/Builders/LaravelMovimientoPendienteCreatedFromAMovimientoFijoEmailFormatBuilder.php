@@ -34,13 +34,12 @@ final readonly class LaravelMovimientoPendienteCreatedFromAMovimientoFijoEmailFo
     {
         $body = view('movimientos_fijos.notifications.emails.movimiento_pendiente_created', [
             'name'=> $usuario->getName(),
-            'movimiento_pendiente'=>$event->getMovimientoPendiente(),
-            'movimiento_fijo'=>$event->getMovimientoFijo()
+            'movimientosFijos'=> $event->getMovimientosFijos()
         ])->render();
         $minifiedBody = $this->compact->compact($body);
         return new EmailMessageDTO(
             to: $usuario->getEmail(),
-            subject: 'Movimiento Pendiente creado automaticamente a partir de un movimiento fijo',
+            subject: 'Movimientos pendientes creados automaticamente a partir de movimientos fijos',
             htmlBody: $minifiedBody
         );
     }
