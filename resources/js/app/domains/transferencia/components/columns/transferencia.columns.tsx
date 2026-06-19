@@ -18,14 +18,14 @@ export const TransferenciaColumns = (): ColumnDef<Transferencia>[] => [
         accessorKey: 'id'
     },
     {
-        id: 'cuentaEnviadora.nombre',
+        id: 'cuentaOrigen',
         header: 'Cuenta Origen',
-        accessorKey: 'cuentaEnviadora.nombre'
+        accessorKey: 'cuentaOrigen'
     },
     {
-        id: 'cuentaReceptora.nombre',
+        id: 'cuentaDestino',
         header: 'Cuenta Destino',
-        accessorKey: 'cuentaReceptora.nombre'
+        accessorKey: 'cuentaDestino'
     },
     {
         id: 'monto',

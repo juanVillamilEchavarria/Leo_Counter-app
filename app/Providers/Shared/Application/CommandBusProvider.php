@@ -13,6 +13,7 @@ namespace App\Providers\Shared\Application;
 use Illuminate\Support\ServiceProvider;
 use App\Shared\Application\Contracts\Bus\CommandBus;
 use App\Shared\Infrastructure\Framework\Laravel\Buses\LaravelCommandBus;
+use Illuminate\Support\Facades\Bus;
 
 class CommandBusProvider extends ServiceProvider
 {
@@ -22,6 +23,7 @@ class CommandBusProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(CommandBus::class, LaravelCommandBus::class);
+
     }
 
     /**
@@ -29,6 +31,8 @@ class CommandBusProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Bus::pipeThrough([
+            \App\Shared\Infrastructure\Framework\Laravel\Middlewares\LaravelTransactionMiddleware::class,
+        ]);
     }
 }

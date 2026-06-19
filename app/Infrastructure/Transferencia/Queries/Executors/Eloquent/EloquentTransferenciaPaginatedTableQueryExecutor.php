@@ -13,7 +13,6 @@ namespace App\Infrastructure\Transferencia\Queries\Executors\Eloquent;
 use App\Shared\Infrastructure\Queries\Executors\EloquentPaginatedTableQueryExecutor;
 use App\Application\Transferencia\Contracts\Queries\Executors\TransferenciaPaginatedTableQueryExecutorContract;
 use App\Models\Transferencia\Transferencia;
-use Override;
 
 /**
  * Executor Eloquent para paginación de tabla de transferencias (server side).
@@ -25,26 +24,23 @@ use Override;
  */
 final readonly class EloquentTransferenciaPaginatedTableQueryExecutor extends EloquentPaginatedTableQueryExecutor implements TransferenciaPaginatedTableQueryExecutorContract
 {
-    #[Override]
     protected function model(): string
     {
        return Transferencia::class;
     }
 
-    #[Override]
     protected function modelRelations(): array
     {
-        return ['cuentaEnviadora', 'cuentaReceptora'];
+        return ['cuentaOrigen', 'cuentaDestino'];
     }
 
-    #[Override]
     protected function searchColumns(): array
     {
         return [
-            'cuentaEnviadora' => [
+            'cuentaOrigen' => [
                 'cuentas.nombre'
             ],
-            'cuentaReceptora' => [
+            'cuentaDestino' => [
                 'cuentas.nombre'
             ],
             'monto',
@@ -53,16 +49,15 @@ final readonly class EloquentTransferenciaPaginatedTableQueryExecutor extends El
         ];
     }
 
-    #[Override]
     protected function modelSorteableRelations(): array
     {
         return [
-            'cuentaEnviadora'=>[
-                'relation'=> 'cuentaEnviadora',
+            'cuentaOrigen'=>[
+                'relation'=> 'cuentaOrigen',
                 'column'=> 'cuentas.nombre'
             ],
-            'cuentaReceptora'=>[
-                'relation'=> 'cuentaReceptora',
+            'cuentaDestino'=>[
+                'relation'=> 'cuentaDestino',
                 'column'=> 'cuentas.nombre'
             ]
         ];

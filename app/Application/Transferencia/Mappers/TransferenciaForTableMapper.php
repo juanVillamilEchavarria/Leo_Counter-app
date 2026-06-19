@@ -12,7 +12,6 @@ namespace App\Application\Transferencia\Mappers;
 
 use App\Shared\Application\Mappers\TableQueryMapper;
 use App\Application\Transferencia\Queries\ListTransferenciasForTableQuery;
-use Override;
 
 /**
  * Mapper que convierte una request de tabla a ListTransferenciasForTableQuery.
@@ -24,7 +23,6 @@ use Override;
  */
 final readonly class TransferenciaForTableMapper extends TableQueryMapper
 {
-    #[Override]
     protected function query(): string
     {
         return ListTransferenciasForTableQuery::class;

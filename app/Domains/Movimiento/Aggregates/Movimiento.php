@@ -34,7 +34,7 @@ use App\Shared\Domain\Traits\RecordsEvents;
  * @since 1.0.0
  * @version 1.0.0
  */
-final  class Movimiento implements AggregateModelContract
+final   class Movimiento implements AggregateModelContract
 {
 use RecordsEvents;
     private function __construct(

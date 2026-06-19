@@ -23,20 +23,20 @@ class Transferencia extends Model
     
     protected $fillable = [
         'id',
-        'cuenta_enviadora_id',
-        'cuenta_receptora_id',
+        'cuenta_origen_id',
+        'cuenta_destino_id',
         'monto',
         'descripcion',
         'fecha'
     ];
 
-    public function cuentaEnviadora()
+    public function cuentaOrigen()
     {
-        return $this->belongsTo(Cuenta::class, 'cuenta_enviadora_id');
+        return $this->belongsTo(Cuenta::class, 'cuenta_origen_id');
     }
 
-    public function cuentaReceptora()
+    public function cuentaDestino()
     {
-        return $this->belongsTo(Cuenta::class, 'cuenta_receptora_id');
+        return $this->belongsTo(Cuenta::class, 'cuenta_destino_id');
     }
 }

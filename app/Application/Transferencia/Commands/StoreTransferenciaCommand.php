@@ -10,7 +10,7 @@
  */
 namespace App\Application\Transferencia\Commands;
 
-use App\Shared\Application\Contracts\Commands\CommandContract;
+use App\Shared\Application\Contracts\Commands\TransactionalCommandContract;
 
 /**
  * Comando para almacenar una nueva transferencia.
@@ -19,11 +19,11 @@ use App\Shared\Application\Contracts\Commands\CommandContract;
  * @since 1.0.1
  * @version 1.0.1
  */
-final readonly class StoreTransferenciaCommand implements CommandContract
+final readonly class StoreTransferenciaCommand implements TransactionalCommandContract
 {
     public function __construct(
-        public string $cuenta_enviadora_id,
-        public string $cuenta_receptora_id,
+        public string $cuenta_origen_id,
+        public string $cuenta_destino_id,
         public float $monto,
         public ?string $descripcion = null
     ) {

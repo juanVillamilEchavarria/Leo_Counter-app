@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Presupuesto\PresupuestoHistoricoApiController;
 use App\Http\Controllers\Api\Reporte\ReporteApiController;
 use App\Http\Controllers\Api\Shared\SaldoValidateController;
 use App\Http\Controllers\Notificacion\SuscriptorVerificationController;
+use App\Http\Controllers\Api\Transferencia\TransferenciaApiController;
 use Illuminate\Support\Facades\Route;
 
 

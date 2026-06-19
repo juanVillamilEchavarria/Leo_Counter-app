@@ -33,20 +33,23 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (\App\Shared\Domain\Exceptions\ClientFacingException $exception, \Illuminate\Http\Request $request) {
             if ($request->inertia()) {
-                $pageData = session()->get('_inertia_page', []);
-                $component = $pageData['component'] ?? 'Error';
-                $props = $pageData['props'] ?? [];
+            $pageData = session()->get('_inertia_page', []);
+            $component = $pageData['component'] ?? null;
 
-                // Añadimos el error a las props compartidas
+            if ($component) {
+                // Caso normal: tenemos la página capturada, la renderizamos con el error
                 Inertia::share('flash', [
                     'success' => null,
                     'error' => $exception->getMessage(),
                 ]);
-
-                return Inertia::render($component, $props);
+                return Inertia::render($component, $pageData['props'] ?? []);
             }
 
-            // Si no es Inertia, devolvemos un error genérico
-            return response()->json(['error' => $exception->getMessage()], 500);
-        });
+            return back()->withErrors([
+                'domain_error' => $exception->getMessage(),
+            ])->withInput();
+        }
+
+        return response()->json(['error' => $exception->getMessage()], 500);
+    });
     })->create();

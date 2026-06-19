@@ -10,7 +10,6 @@
  */
 namespace App\Providers\Notificacion;
 
-use App\Shared\Infrastructure\Framework\Laravel\Middlewares\LaravelTransactionMiddleware;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Bus;
 

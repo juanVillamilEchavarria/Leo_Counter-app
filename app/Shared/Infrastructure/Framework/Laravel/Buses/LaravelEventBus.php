@@ -12,6 +12,7 @@ namespace App\Shared\Infrastructure\Framework\Laravel\Buses;
 
 use App\Shared\Application\Contracts\Bus\EventBus;
 use App\Shared\Domain\Contracts\EventContract;
+use App\Shared\Domain\Exceptions\DomainException;
 use Illuminate\Contracts\Events\Dispatcher;
 
 class LaravelEventBus implements EventBus
@@ -24,13 +25,18 @@ class LaravelEventBus implements EventBus
 
     public function publish(EventContract $event): void
     {
-        $this->eventDispatcher->dispatch($event);
+        try {
+            $this->eventDispatcher->dispatch($event);
+        } catch (DomainException $th) {
+            throw $th;
+        }
+        
     }
     public function publishMany(array $events): void
     {
 
        foreach ($events as $event){
-           $this->eventDispatcher->dispatch($event);
+           $this->publish($event);
        }
     }
 }

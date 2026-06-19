@@ -23,7 +23,7 @@ export default function Index({
 }) {
     const { modal, open, close } = useModalItem<Transferencia>();
     const { form, handleTransferenciaCreate } = useTransferencia();
-    
+
     const handleClose = () => {
         close();
         form.reset();
@@ -40,14 +40,14 @@ export default function Index({
 
     return (
         <SectionTransition>
-            <SectionDescriptionWithDetails 
-                principalTitle="Transferencias entre Cuentas" 
+            <SectionDescriptionWithDetails
+                principalTitle="Transferencias entre Cuentas"
                 paragraph={(
                     <span>Gestiona y registra el movimiento de dinero entre tus cuentas.</span>
-                )} 
+                )}
                 items={descriptionItems}
             />
-            
+
             <CreateButtonSection>
                 <CrudButton
                     onClick={() => open(null, 'create')}
@@ -56,10 +56,10 @@ export default function Index({
                 </CrudButton>
             </CreateButtonSection>
 
-            <TransferenciaTable data={transferencias} />
+            <TransferenciaTable  />
 
-            <Modal open={modal === 'create'} onClose={handleClose} title="Nueva Transferencia">
-                <TransferenciaForm 
+            <Modal open={modal === 'create'} size={'lg'} onClose={handleClose} title={<p className='mb-10'><span className='text-blue-400 border-b rounded-b-lg'>Nueva</span>  Transferencia</p>} >
+                <TransferenciaForm
                     data={form.data}
                     setData={form.setData}
                     errors={form.errors}

@@ -8,6 +8,7 @@
  */
 import { type ApiParams, ApiMethods, type ApiErrorResponse, type ApiValidationError } from "./api.types";
 import { type SaldoValidateCuentaData, type SaldoValidateResponse } from "./apiData.types";
+import { SaldoValidateApiActions } from "./financial.types";
 
 export {
     ApiMethods,
@@ -15,5 +16,6 @@ export {
     type ApiErrorResponse,
     type ApiValidationError,
     type SaldoValidateCuentaData,
-    type SaldoValidateResponse
+    type SaldoValidateResponse,
+    SaldoValidateApiActions
 }

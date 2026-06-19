@@ -64,8 +64,8 @@ class EloquentTransferenciaRepository extends EloquentRepository implements Tran
         assert($aggregate instanceof TransferenciaAggregate);
         return [
             'id' => $aggregate->getId()->getValue(),
-            'cuenta_enviadora_id' => $aggregate->getCuentaEnviadoraId()->getValue(),
-            'cuenta_receptora_id' => $aggregate->getCuentaReceptoraId()->getValue(),
+            'cuenta_origen_id' => $aggregate->getCuentaOrigenId()->getValue(),
+            'cuenta_destino_id' => $aggregate->getCuentaDestinoId()->getValue(),
             'monto' => $aggregate->getMonto()->getValue(),
             'fecha' => $aggregate->getFecha()->format('Y-m-d H:i:s'),
             'descripcion' => $aggregate->getDescripcion(),
@@ -76,8 +76,8 @@ class EloquentTransferenciaRepository extends EloquentRepository implements Tran
     {
         return TransferenciaAggregate::reconstitute(
             id: new TransferenciaId($model->id),
-            cuenta_enviadora_id: new CuentaId($model->cuenta_enviadora_id),
-            cuenta_receptora_id: new CuentaId($model->cuenta_receptora_id),
+            cuenta_origen_id: new CuentaId($model->cuenta_origen_id),
+            cuenta_destino_id: new CuentaId($model->cuenta_destino_id),
             monto: new Amount($model->monto),
             fecha: new Date(new \DateTimeImmutable($model->fecha)),
             descripcion: (string) $model->descripcion

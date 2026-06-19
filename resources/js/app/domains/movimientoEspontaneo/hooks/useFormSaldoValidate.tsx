@@ -9,7 +9,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { useDebounce } from "use-debounce"
 import { useMemo } from "react"
-import { saldoValidate } from "../api/saldoValidate"
+import { saldoValidate } from "../../../shared/api/financialValidate.api"
 import { isGasto as isGastoFunc } from "../../tipoMovimiento"
 export default function useFormSaldoValidate({
     cuentaId,

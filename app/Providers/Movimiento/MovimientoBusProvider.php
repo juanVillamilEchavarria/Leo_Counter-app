@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\ServiceProvider;
 use App\Application\Movimiento\Commands\StoreMovimientoCommand;
 use App\Application\Movimiento\Commands\Handlers\StoreMovimientoHandler;
-use App\Shared\Infrastructure\Framework\Laravel\Middlewares\LaravelTransactionMiddleware;
 use App\Application\Movimiento\Commands\RegisterMovimientoFromMovimientoFijoCommand;
 use App\Application\Movimiento\Commands\Handlers\RegisterMovimientoFromMovimientoFijoHandler;
 

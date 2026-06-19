@@ -37,7 +37,7 @@ export default function SectionDescriptionWithDetails({
              <p>{paragraph}</p>
                 <i className={ ` fa-solid ${isOpen ? 'fa-chevron-up' : 'fa-chevron-down'} text-xs`}></i>
            </button>
-          <TransitionMotion className="flex md:flex-row flex-col md:items-stretch justify-center sm:items-center  w-[90%] mx-auto gap-9 my-10  " active={isOpen} initial={{opacity:0, y:-40}} exit={{opacity:0, y: -40}}>
+          <TransitionMotion className="flex md:flex-row flex-col md:items-stretch justify-center sm:items-center  w-[85%] mx-auto gap-9 my-10  " active={isOpen} initial={{opacity:0, y:-40}} exit={{opacity:0, y: -40}}>
             {items.map((item, index)=>(
                 <div key={index} className={`flex flex-col justify-start items-center gap-2 p-4 rounded-lg border-2 border-muted-foreground/10 max-w-md `}>
                     <i className={`${item.icon} text-5xl text-primary my-3`}></i>

@@ -10,11 +10,11 @@ import { useRoute } from "ziggy-js";
 
 export interface Transferencia {
     id: string;
-    cuentaEnviadora: {
+    cuentaOrigen: {
         id: string;
         nombre: string;
     };
-    cuentaReceptora: {
+    cuentaDestino: {
         id: string;
         nombre: string;
     };
@@ -24,8 +24,8 @@ export interface Transferencia {
 }
 
 export interface TransferenciaFormData {
-    cuenta_enviadora_id: string;
-    cuenta_receptora_id: string;
+    cuenta_origen_id: string;
+    cuenta_destino_id: string;
     monto: number;
     descripcion: string;
     fecha?: string;

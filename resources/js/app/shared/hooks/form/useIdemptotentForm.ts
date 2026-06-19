@@ -48,7 +48,9 @@ export function useIdempotentForm<TForm extends Record<string, any>>(initialData
             onSuccess: (page)=>{
                 resetIdempotencyKey();
                 if (options?.onSuccess) options.onSuccess(page);
-            }
+            },
+            preserveScroll: true,
+            preserveState: true
         });
     };
 
@@ -62,7 +64,9 @@ export function useIdempotentForm<TForm extends Record<string, any>>(initialData
             onSuccess: (page)=>{
                 resetIdempotencyKey();
                 if (options?.onSuccess) options.onSuccess(page);
-            }
+            },
+            preserveScroll: true,
+            preserveState: true
         });
     };
 
@@ -76,7 +80,9 @@ export function useIdempotentForm<TForm extends Record<string, any>>(initialData
             onSuccess: (page)=>{
                 resetIdempotencyKey();
                 if (options?.onSuccess) options.onSuccess(page);
-            }
+            },
+            preserveScroll: true,
+            preserveState: true
         });
     }
 

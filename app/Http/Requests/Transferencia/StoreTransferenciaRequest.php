@@ -22,8 +22,8 @@ use Illuminate\Foundation\Http\FormRequest;
     public function rules(): array
     {
         return [
-            'cuenta_enviadora_id'=>['required','string' ,'exists:cuentas,id'],
-            'cuenta_receptora_id'=>['required','string' ,'exists:cuentas,id'],
+            'cuenta_origen_id'=>['required','string' ,'exists:cuentas,id'],
+            'cuenta_destino_id'=>['required','string' ,'exists:cuentas,id'],
             'monto'=>['required','numeric','min:0'],
             'descripcion'=>['nullable','string'],
         ];

@@ -110,7 +110,13 @@ export const NavItems: NavItemConfig[] = [
         ],
         href: route('movimientos.index')
     },
-
+    {
+        key: 'transferencias',
+        title: 'Transferencias',
+        icon: 'fa-solid fa-arrow-right-arrow-left fa-lg',
+        routeName: 'transferencias.*',
+        href: route('transferencias.index'),
+    },
     {
         key: 'categorias',
         title: 'Categorias',

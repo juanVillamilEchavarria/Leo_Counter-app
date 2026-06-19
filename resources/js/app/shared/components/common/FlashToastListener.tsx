@@ -11,12 +11,15 @@ import { useMessageRedirect } from "../../hooks"
 import { toastHelper } from "../../helpers"
 
 export default function FlashToastListener() {
-    const {flash}= useMessageRedirect()
+    const {flash, props}= useMessageRedirect()
 
     const {success, error}= toastHelper
       useEffect(() => {
     if (flash?.success) success(flash.success)
     if (flash?.error) error(flash.error)
+     if (props?.errors?.domain_error) error(props.errors.domain_error);
   }, [flash])
+
+    console.log(flash)
   return null
 }

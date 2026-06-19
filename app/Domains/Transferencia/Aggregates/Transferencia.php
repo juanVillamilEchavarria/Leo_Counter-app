@@ -11,7 +11,6 @@ namespace App\Domains\Transferencia\Aggregates;
 
 use App\Shared\Domain\Contracts\AggregateModelContract;
 use App\Shared\Domain\Contracts\AggregateModelIdContract;
-use App\Shared\Domain\Contracts\EventContract;
 use App\Domains\Transferencia\Events\TransferenciaCreated;
 use App\Domains\Transferencia\ValueObjects\TransferenciaId;
 use App\Domains\Cuenta\ValueObjects\CuentaId;
@@ -23,16 +22,16 @@ use App\Shared\Domain\ValueObjects\Date;
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  * @license MIT
  */
-final readonly class Transferencia implements AggregateModelContract
+final  class Transferencia implements AggregateModelContract
 {
     use \App\Shared\Domain\Traits\RecordsEvents;
     public function __construct(
         private TransferenciaId $id,
-        private CuentaId $cuenta_enviadora_id,
-        private CuentaId $cuenta_receptora_id,
+        private CuentaId $cuenta_origen_id,
+        private CuentaId $cuenta_destino_id,
         private Amount $monto,
         private Date $fecha,
-        private string $descripcion
+        private ?string $descripcion
     )
     {
     }
@@ -40,8 +39,8 @@ final readonly class Transferencia implements AggregateModelContract
     /**
      * Crea una nueva transferencia
      * @param TransferenciaId $id
-     * @param CuentaId $cuenta_enviadora_id
-     * @param CuentaId $cuenta_receptora_id
+     * @param CuentaId $cuenta_origen_id
+     * @param CuentaId $cuenta_destino_id
      * @param Amount $monto
      * @param Date $fecha
      * @param string $descripcion
@@ -49,17 +48,17 @@ final readonly class Transferencia implements AggregateModelContract
      */
     public static function create(
          TransferenciaId $id,
-         CuentaId $cuenta_enviadora_id,
-         CuentaId $cuenta_receptora_id,
+         CuentaId $cuenta_origen_id,
+         CuentaId $cuenta_destino_id,
          Amount $monto,
          Date $fecha,
-         string $descripcion
+         ?string $descripcion
 
     ){
         $transferencia = new self(
            id: $id,
-            cuenta_enviadora_id: $cuenta_enviadora_id,
-            cuenta_receptora_id:  $cuenta_receptora_id,
+            cuenta_origen_id: $cuenta_origen_id,
+            cuenta_destino_id:  $cuenta_destino_id,
            monto:  $monto,
            fecha:  $fecha,
            descripcion:  $descripcion
@@ -71,8 +70,8 @@ final readonly class Transferencia implements AggregateModelContract
     /**
      * Reconstituye una transferencia existente
      * @param TransferenciaId $id
-     * @param CuentaId $cuenta_enviadora_id
-     * @param CuentaId $cuenta_receptora_id
+     * @param CuentaId $cuenta_origen_id
+     * @param CuentaId $cuenta_destino_id
      * @param Amount $monto
      * @param Date $fecha
      * @param string $descripcion
@@ -80,17 +79,17 @@ final readonly class Transferencia implements AggregateModelContract
      */
     public static function reconstitute(
         TransferenciaId $id,
-        CuentaId $cuenta_enviadora_id,
-        CuentaId $cuenta_receptora_id,
+        CuentaId $cuenta_origen_id,
+        CuentaId $cuenta_destino_id,
         Amount $monto,
         Date $fecha,
-        string $descripcion
+        ?string $descripcion
 
     ){
         return new self(
             id: $id,
-            cuenta_enviadora_id: $cuenta_enviadora_id,
-            cuenta_receptora_id:  $cuenta_receptora_id,
+            cuenta_origen_id: $cuenta_origen_id,
+            cuenta_destino_id:  $cuenta_destino_id,
             monto:  $monto,
             fecha:  $fecha,
             descripcion:  $descripcion
@@ -105,23 +104,23 @@ final readonly class Transferencia implements AggregateModelContract
     /**
      * @return CuentaId
      */
-    public function getCuentaEnviadoraId(): CuentaId
+    public function getCuentaOrigenId(): CuentaId
     {
-        return $this->cuenta_enviadora_id;
+        return $this->cuenta_origen_id;
     }
 
     /**
      * @return CuentaId
      */
-    public function getCuentaReceptoraId(): CuentaId
+    public function getCuentaDestinoId(): CuentaId
     {
-        return $this->cuenta_receptora_id;
+        return $this->cuenta_destino_id;
     }
 
     /**
      * @return string
      */
-    public function getDescripcion(): string
+    public function getDescripcion(): ?string
     {
         return $this->descripcion;
     }

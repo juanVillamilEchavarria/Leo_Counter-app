@@ -41,11 +41,11 @@ final readonly class StoreTransferenciaHandler
 
         $transferencia = Transferencia::create(
             id: $id,
-            cuenta_enviadora_id: new CuentaId($command->cuenta_enviadora_id),
-            cuenta_receptora_id: new CuentaId($command->cuenta_receptora_id),
+            cuenta_origen_id: new CuentaId($command->cuenta_origen_id),
+            cuenta_destino_id: new CuentaId($command->cuenta_destino_id),
             monto: new Amount($command->monto),
             fecha: new Date(new DateTimeImmutable()),
-            descripcion: (string) $command->descripcion
+            descripcion:  $command->descripcion
         );
 
         $this->transferenciaRepository->store($transferencia);

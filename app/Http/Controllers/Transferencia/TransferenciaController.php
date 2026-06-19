@@ -13,8 +13,6 @@ namespace App\Http\Controllers\Transferencia;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Transferencia\StoreTransferenciaRequest;
 use App\Application\Transferencia\Commands\StoreTransferenciaCommand;
-use App\Application\Transferencia\Queries\ListTransferenciasQuery;
-use App\Shared\Application\Contracts\Bus\QueryBus;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Inertia\Inertia;
 use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListCuentaForFormContract;
@@ -29,7 +27,6 @@ use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListCuentaFor
 class TransferenciaController extends Controller
 {
     public function __construct(
-        private QueryBus $queryBus,
         private Dispatcher $dispatcher,
         private ListCuentaForFormContract $listCuentaForFormContract
     ) {
@@ -37,11 +34,9 @@ class TransferenciaController extends Controller
 
     public function index()
     {
-        $transferencias = $this->queryBus->ask(new ListTransferenciasQuery());
-        
+
         return Inertia::render('Transferencias/Index', [
             'title' => 'Transferencias',
-            'transferencias' => $transferencias,
             'cuentas' => $this->listCuentaForFormContract->execute(),
         ]);
     }
@@ -50,8 +45,8 @@ class TransferenciaController extends Controller
     {
         $this->dispatcher->dispatch(
             new StoreTransferenciaCommand(
-                cuenta_enviadora_id: $request->cuenta_enviadora_id,
-                cuenta_receptora_id: $request->cuenta_receptora_id,
+                cuenta_origen_id: $request->cuenta_origen_id,
+                cuenta_destino_id: $request->cuenta_destino_id,
                 monto: (float) $request->monto,
                 descripcion: $request->descripcion
             )

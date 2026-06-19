@@ -28,8 +28,8 @@ final readonly class EloquentListTransferenciasExecutor implements Transferencia
     {
         return LaravelCollection::make(
             Transferencia::with([
-                'cuentaEnviadora:id,nombre',
-                'cuentaReceptora:id,nombre'
+                'cuentaOrigen:id,nombre',
+                'cuentaDestino:id,nombre'
             ])->orderByDesc('fecha')->get()
         );
     }

@@ -21,10 +21,10 @@ return new class extends Migration
     {
         Schema::create('transferencias', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('cuenta_enviadora_id')->constrained('cuentas');
-            $table->foreignUuid('cuenta_receptora_id')->constrained('cuentas');
+            $table->foreignUuid('cuenta_origen_id')->constrained('cuentas');
+            $table->foreignUuid('cuenta_destino_id')->constrained('cuentas');
             $table->decimal('monto', 18, 2);
-            $table->string('descripcion', 255);
+            $table->string('descripcion', 255)->nullable();
             $table->date('fecha');
             $table->timestamps();
         });
