@@ -6,7 +6,7 @@
  * @license MIT
  * @copyright 2026 Juan Esteban Villamil Echavarria
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.0.1
  */
 namespace App\Domains\MovimientoFijo\Aggregates;
 
@@ -30,7 +30,7 @@ use App\Shared\Domain\ValueObjects\Date;
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  * @package App\Domains\MovimientoFijo\Aggregates
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.0.1
  */
 final readonly class MovimientoFijo implements AggregateModelContract
 {
@@ -252,8 +252,8 @@ final readonly class MovimientoFijo implements AggregateModelContract
             throw new $exceptionClass('El nombre del movimiento fijo es obligatorio.');
         }
 
-        if ($monto->getValue() < 0) {
-            throw new $exceptionClass('El monto del movimiento fijo no puede ser negativo.');
+        if ($monto->isLessOrEqualThanCero()) {
+            throw new $exceptionClass('El monto del movimiento fijo no puede ser cero o negativo.');
         }
 
         if ($tipo_movimiento_id->value <= 0) {

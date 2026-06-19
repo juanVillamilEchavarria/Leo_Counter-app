@@ -24,7 +24,7 @@ use Illuminate\Foundation\Http\FormRequest;
         return [
             'cuenta_origen_id'=>['required','string' ,'exists:cuentas,id'],
             'cuenta_destino_id'=>['required','string' ,'exists:cuentas,id'],
-            'monto'=>['required','numeric','min:0'],
+            'monto'=>['required','numeric','min:0.1'],
             'descripcion'=>['nullable','string'],
         ];
     }

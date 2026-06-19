@@ -27,8 +27,8 @@ class TransferenciaResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'cuentaEnviadora' => $this->cuentaEnviadora ? $this->cuentaEnviadora->nombre : null,
-            'cuentaReceptora' => $this->cuentaReceptora ? $this->cuentaReceptora->nombre : null,
+            'cuentaOrigen' => $this->cuentaOrigen ? $this->cuentaOrigen->nombre : null,
+            'cuentaDestino' => $this->cuentaDestino ? $this->cuentaDestino->nombre : null,
             'monto' => $this->monto,
             'fecha' => $this->fecha,
             'descripcion' => $this->descripcion,

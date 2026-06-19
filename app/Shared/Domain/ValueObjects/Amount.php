@@ -6,7 +6,7 @@
  * @license MIT
  * @copyright 2026 Juan Esteban Villamil Echavarria
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.0.1
  */
 namespace App\Shared\Domain\ValueObjects;
 
@@ -55,6 +55,13 @@ final readonly class Amount
         if ($result < 0) {
             throw new \InvalidArgumentException('El resultado no puede ser negativo');
         }
-        return new self($result / 100);
+        return new
+         self($result / 100);
+    }
+
+
+    public function isLessOrEqualThanCero(): bool
+    {
+        return $this->cents <= 0;
     }
 }

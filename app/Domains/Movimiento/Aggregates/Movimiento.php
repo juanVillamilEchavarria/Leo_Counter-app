@@ -6,7 +6,7 @@
  * @license MIT
  * @copyright 2026 Juan Esteban Villamil Echavarria
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.0.1
  */
 namespace App\Domains\Movimiento\Aggregates;
 use App\Domains\Movimiento\Events\MovimientoDeleted;
@@ -32,7 +32,7 @@ use App\Shared\Domain\Traits\RecordsEvents;
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  * @package App\Domains\Movimiento\Aggregates
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.0.1
  */
 final   class Movimiento implements AggregateModelContract
 {
@@ -209,8 +209,8 @@ use RecordsEvents;
             throw new $exceptionClass('El nombre del movimiento es obligatorio.');
         }
 
-        if ($monto->getValue() < 0) {
-            throw new $exceptionClass('El monto del movimiento no puede ser negativo.');
+        if ($monto->isLessOrEqualThanCero()) {
+            throw new $exceptionClass('El monto del movimiento no puede ser cero o negativo.');
         }
 
         if ($tipo_movimiento_id <= 0) {

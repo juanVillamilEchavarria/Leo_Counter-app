@@ -40,7 +40,7 @@ export default function TransferenciaForm({
             
             <div className="flex w-full flex-col gap-4 md:flex-row">
                 <div className="formulario-campo w-full">
-                    <label htmlFor="cuenta_origen_id">Cuenta Enviadora (Origen)</label>
+                    <label htmlFor="cuenta_origen_id">Cuenta Origen</label>
                     <SelectModel
                         name="cuenta_origen_id"
                         id="cuenta_origen_id"
@@ -65,7 +65,7 @@ export default function TransferenciaForm({
                 </div>
                 
                 <div className="formulario-campo w-full">
-                    <label htmlFor="cuenta_destino_id">Cuenta Receptora (Destino)</label>
+                    <label htmlFor="cuenta_destino_id">Cuenta Destino</label>
                     <SelectModel
                         name="cuenta_destino_id"
                         id="cuenta_destino_id"

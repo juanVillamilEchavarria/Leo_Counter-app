@@ -10,7 +10,7 @@ import { type AlertMessageProps } from "../../types/components"
 /**
  * Componente de mensaje de alerta para mostrar mensajes de error o éxito en los formularios
  * @param {string} message - Mensaje de alerta a mostrar
- * @param {'error' | 'success'} type - Tipo de mensaje, puede ser 'error' o 'success', por defecto es 'error' 
+ * @param {'error' | 'success'} type - Tipo de mensaje, puede ser 'error' o 'success', por defecto es 'error'
  * @returns {JSX.Element} Componente de mensaje de alerta
  * @example
  * <AlertMessage type="error" message="Este es un mensaje de error" />
@@ -26,7 +26,7 @@ export default function AlertMessage({
     `
     return (
         <div className={BaseStyles}>
-            <p className="text-sm">{message}</p>
+            <p className="text-sm text-black">{message}</p>
         </div>
     )
 }

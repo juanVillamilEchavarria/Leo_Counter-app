@@ -44,12 +44,12 @@ final readonly class ApplyTransactionEffectForCuentaWhenTransferenciaWasCreatedE
         if($cuentaOrigen->getId()->equals($cuentaDestino->getId())){
             throw new CannotExecuteTransferenciaTransactionException('No se pudo ejecutar la transaccion de transferencia, la cuenta de origen y la cuenta de destino son la misma');
         }
-        $saldoEnviadora = $cuentaOrigen->getSaldoActual();
-        $saldoReceptora = $cuentaDestino->getSaldoActual();
-        $newSaldoEnviadora= $saldoEnviadora->subtract($transferencia->getMonto());
-        $newSaldoReceptora= $saldoReceptora->add($transferencia->getMonto());
-        $cuentaOrigen = $cuentaOrigen->updateSaldoActual($newSaldoEnviadora);
-        $cuentaDestino= $cuentaDestino->updateSaldoActual($newSaldoReceptora);
+        $saldoOrigen = $cuentaOrigen->getSaldoActual();
+        $saldoDestino = $cuentaDestino->getSaldoActual();
+        $newSaldoOrigen = $saldoOrigen->subtract($transferencia->getMonto());
+        $newSaldoDestino = $saldoDestino->add($transferencia->getMonto());
+        $cuentaOrigen = $cuentaOrigen->updateSaldoActual($newSaldoOrigen);
+        $cuentaDestino = $cuentaDestino->updateSaldoActual($newSaldoDestino);
         $this->repository->update($cuentaOrigen);
         $this->repository->update($cuentaDestino);
     }

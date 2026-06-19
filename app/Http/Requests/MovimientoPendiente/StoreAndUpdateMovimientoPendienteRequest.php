@@ -34,7 +34,7 @@ class StoreAndUpdateMovimientoPendienteRequest extends FormRequest
             'tipo_movimiento_id'=> 'required|integer|exists:tipo_movimientos,id',
             'categoria_id'=> 'required|string|exists:categorias,id',
             'cuenta_id'=> 'required|string|exists:cuentas,id',
-            'monto'=> 'required|numeric|min:0',
+            'monto'=> 'required|numeric|min:0.1',
             'fecha_programada'=> 'required|date',
             'dias_aviso'=> 'nullable|numeric|min:0',
             'descripcion'=> 'nullable|string|max:1000',

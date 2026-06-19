@@ -6,7 +6,7 @@
  * @license MIT
  * @copyright 2026 Juan Esteban Villamil Echavarria
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.0.1
  */
 namespace App\Domains\MovimientoPendiente\Aggregates;
 
@@ -233,8 +233,8 @@ final readonly class MovimientoPendiente implements AggregateModelContract
             throw new $exceptionClass('El nombre del movimiento pendiente es obligatorio.');
         }
 
-        if ($monto->getValue() < 0) {
-            throw new $exceptionClass('El monto del movimiento pendiente no puede ser negativo.');
+        if ($monto->isLessOrEqualThanCero()) {
+            throw new $exceptionClass('El monto del movimiento pendiente no puede ser cero o negativo.');
         }
 
         if ($tipo_movimiento_id->value <= 0) {

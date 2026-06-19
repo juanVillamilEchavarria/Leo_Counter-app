@@ -65,10 +65,8 @@ export default function Index({
                     errors={form.errors}
                     processing={form.processing}
                     submit={(e) => {
-                        handleTransferenciaCreate(e);
-                        if (!form.hasErrors) {
-                            handleClose();
-                        }
+                        handleTransferenciaCreate(e, handleClose);
+
                     }}
                     options={{ cuentas }}
                 />

@@ -34,6 +34,11 @@ export default function Index({
       title: 'Frecuencia fija o no fija',
       description: 'Marca tus categorias como de frecuencia fija o no fija, las categorias de frecuencia fija son aquellas que representan un concepto recurrente (similar a movimientos fijos), y las categorias de frecuencia no fija son aquellas que usas ocasionalmente',
       icon: 'fa-solid fa-repeat !text-green-400'
+    },
+        {
+      title : 'Restricciones de eliminacion',
+      description: 'Las categorias no se eliminan directamente desde aqui, si la marcas como eliminada, se ira a la papelera en configuracion (solo puedes enviar a la papelera las categorias que tu registres, las que son propias del sistema no se eliminan), y desde alli, unicamente las que no tienen registros asociados podran ser eliminadas permanentemente (el acceso a configuracion es restringido unicamente para el administrador)',
+      icon: 'fa-solid fa-ban !text-red-400'
     }
   ]
 

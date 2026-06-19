@@ -18,14 +18,14 @@ export default function useTransferencia() {
     });
     const queryClient = useQueryClient();
 
-    const handleTransferenciaCreate = (e: React.FormEvent) => {
+    const handleTransferenciaCreate = (e: React.FormEvent, handleSuccess?: ()=>void) => {
         e.preventDefault();
         form.clearErrors();
         idempotentPost(TransferenciaRoutes.store(), {
         onSuccess: () => {
             queryClient.invalidateQueries({queryKey: ['transferencias']});
             form.reset();
-            
+            handleSuccess?.();
         }
     });
 

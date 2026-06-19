@@ -14,6 +14,7 @@ use App\Shared\Domain\Contracts\AggregateModelIdContract;
 use App\Domains\Transferencia\Events\TransferenciaCreated;
 use App\Domains\Transferencia\ValueObjects\TransferenciaId;
 use App\Domains\Cuenta\ValueObjects\CuentaId;
+use App\Domains\Transferencia\Exception\CannotCreateTransferenciaException;
 use App\Shared\Domain\ValueObjects\Amount;
 use App\Shared\Domain\ValueObjects\Date;
 
@@ -55,6 +56,7 @@ final  class Transferencia implements AggregateModelContract
          ?string $descripcion
 
     ){
+        self::validateData($monto, $fecha, $descripcion);
         $transferencia = new self(
            id: $id,
             cuenta_origen_id: $cuenta_origen_id,
@@ -96,6 +98,24 @@ final  class Transferencia implements AggregateModelContract
         );
     }
 
+    private static function validateData(
+        Amount $monto,
+        Date $fecha,
+        ?string $descripcion
+    ){
+        
+        if ($monto->isLessOrEqualThanCero()) {
+            throw new CannotCreateTransferenciaException('El monto debe ser mayor a cero.');
+        }
+
+        if ($fecha->getPeriod() > new \DateTimeImmutable()) {
+            throw new CannotCreateTransferenciaException('La fecha no puede ser futura.');
+        }
+        if ($descripcion !== null && strlen($descripcion) > 255) {
+            throw new CannotCreateTransferenciaException('La descripción no puede exceder los 255 caracteres.');
+        }
+
+    }
     public function getId(): AggregateModelIdContract
     {
         return $this->id;

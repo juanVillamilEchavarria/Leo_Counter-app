@@ -6,7 +6,7 @@
  * @license MIT
  * @copyright 2026 Juan Esteban Villamil Echavarria
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.0.1
  */
 namespace App\Domains\Presupuesto\Aggregates;
 
@@ -18,6 +18,8 @@ use App\Domains\Presupuesto\ValueObjects\PresupuestoId;
 use App\Domains\Categoria\ValueObjects\CategoriaId;
 use App\Shared\Domain\ValueObjects\Amount;
 use App\Shared\Domain\ValueObjects\Date;
+use Throwable;
+
 /**
  * Agregado de dominio Presupuesto.
  * Representa un presupuesto del sistema con su información.
@@ -54,6 +56,7 @@ final readonly class Presupuesto implements AggregateModelContract
                 message: 'Ya existe un presupuesto para la fecha seleccionada'
             );
         }
+            self::validateData($monto, \App\Domains\Presupuesto\Exceptions\CannotStorePresupuestoException::class);
         return new self(
             id: $id,
             categoria_id: $categoria_id,
@@ -100,6 +103,7 @@ final readonly class Presupuesto implements AggregateModelContract
                 message: 'Ya existe un presupuesto para esta categoria en la fecha seleccionada'
             );
         }
+            self::validateData($monto, \App\Domains\Presupuesto\Exceptions\CannotUpdatePresupuestoException::class);
 
         return new self(
             id: $this->id,
@@ -109,6 +113,21 @@ final readonly class Presupuesto implements AggregateModelContract
             descripcion: $descripcion,
             user_id: $this->user_id,
         );
+        
+    }
+    /**
+     * Valida los datos obligatorios del presupuesto
+     * @param Amount $monto
+     * @param string|null $exceptionClass
+      * @throws Throwable
+     */
+    public static function validateData( Amount $monto, string $exceptionClass): void
+    {
+        if ($monto->isLessOrEqualThanCero()) {
+            throw new $exceptionClass(
+                message: 'El monto del presupuesto no puede ser cero o negativo'
+            );
+        }
     }
     /**
      * Duplica un presupuesto

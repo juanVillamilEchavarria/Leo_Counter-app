@@ -18,6 +18,7 @@ import DeleteModal from "@/app/shared/components/modal/DeleteModal"
 import DuplicateModal from "@/app/domains/presupuestoMesActual/components/DuplicateModal"
 import { useModalItem } from "@/app/shared/hooks"
 import usePresupuestoMesActual from "@/app/domains/presupuestoMesActual/hooks/usePresupuestoMesActual"
+import SectionDescriptionWithDetails from "@/app/shared/components/common/SectionDescriptionWithDetails"
 
 export default function Index({
     periodo,
@@ -28,16 +29,30 @@ export default function Index({
 }) {
     const {item, modal, open, close}= useModalItem<PresupuestoMesActualTableData>()
     const {handleSubmit}= usePresupuestoMesActual({method: 'delete', id: item?.id})
+    const descriptionItems=[
+      {
+        title: 'Duplica tus presupuestos',
+        description: 'Duplica tus presupuestos que hiciste este mes para el proximo si son los mismos, para no tener que volver a escribirlos el proximo mes',
+        icon: 'fa-solid fa-copy !text-blue-400'
+      },
+      {
+        title: 'Presupuestos unicos',
+        description: 'Solo puedes registrar un presupuesto por categoria para el mes actual',
+        icon: 'fa-solid fa-lock !text-red-400'
+      },
+    ]
 
     return (
         <SectionTransition>
-            <SectionDescription 
-                title="Presupuestos Del Mes" 
+            <SectionDescriptionWithDetails 
+                principalTitle="Presupuestos Del Mes" 
                 paragraph={(
                     <div>
                         <p>Gestiona Tus Presupuestos del Mes de <span className="font-bold capitalize">{dateFormat(normalizePeriod(periodo), 'MMMM YYYY')}</span></p>
                     </div>
                 )} 
+                items={descriptionItems}
+                
             />
             <CreateButtonSection>
                 <CrudButton
