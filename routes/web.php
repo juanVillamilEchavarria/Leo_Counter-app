@@ -60,6 +60,8 @@ Route::middleware('auth')->group( function () {
     // MOVIMIENTOS
     Route::get('/movimientos/historicos', [MovimientoController::class, 'index'])->name('movimientos.index');
     Route::get('/movimientos/historicos/{movimiento}', [MovimientoController::class, 'show'])->name('movimientos.show');
+    // AUDITORÍAS
+    Route::get('/auditorias', [\App\Http\Controllers\Auditoria\AuditoriaController::class, 'index'])->name('auditorias.index');
     //MOVIMIENTOS ESPONTANEOS
     Route::middleware(\App\Http\Middleware\IdempotencyMiddleware::class)->group(function () {
         Route::resource('movimientos-espontaneos',MovimientoEspontaneoController::class)->names('movimientosEspontaneos')->parameters([
