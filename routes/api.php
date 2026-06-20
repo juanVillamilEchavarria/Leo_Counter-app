@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth'])->group( function () {
     Route::post('validate-saldo', SaldoValidateController::class)->name('api.validate-saldo');
     Route::get('movimientos', [MovimientoApiController::class, 'totalPaginated'])->name('api.movimientos.total-paginated');
+    Route::get('auditorias', [\App\Http\Controllers\Api\Auditoria\AuditoriaApiController::class, 'index'])->name('api.auditorias.index');
     Route::get('presupuestos/historicos', [PresupuestoHistoricoApiController::class, 'historicosPaginated'])->name('api.presupuestos.historicos-paginated');
     Route::get('reportes', [ReporteApiController::class, 'index'])->name('api.reportes.index');
     Route::post('reportes/generate', [ReporteApiController::class, 'generate'])->name('api.reportes.generate');

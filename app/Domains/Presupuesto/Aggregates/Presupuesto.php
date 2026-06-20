@@ -13,9 +13,9 @@ namespace App\Domains\Presupuesto\Aggregates;
 use App\Domains\Presupuesto\Contracts\Checkers\PresupuestoCanDuplicateCheckerContract;
 use App\Domains\Presupuesto\Contracts\Checkers\PresupuestoUniquenessCheckerContract;
 use App\Domains\Usuario\ValueObjects\UsuarioId;
-use App\Shared\Domain\Contracts\AggregateModelContract;
 use App\Domains\Presupuesto\ValueObjects\PresupuestoId;
 use App\Domains\Categoria\ValueObjects\CategoriaId;
+use App\Shared\Domain\Contracts\PrimitiveAggregateModelContract;
 use App\Shared\Domain\ValueObjects\Amount;
 use App\Shared\Domain\ValueObjects\Date;
 use Throwable;
@@ -27,7 +27,7 @@ use Throwable;
  * @since 1.0.0
  * @version 1.0.0
  */
-final readonly class Presupuesto implements AggregateModelContract
+final readonly class Presupuesto implements PrimitiveAggregateModelContract
 {
     private function __construct(
         private PresupuestoId $id,
@@ -149,6 +149,17 @@ final readonly class Presupuesto implements AggregateModelContract
             descripcion: $this->descripcion,
             user_id: $this->user_id,
         );
+    }
+    public function toPrimitive(): array
+    {
+        return [
+            'id' => $this->id->getValue(),
+            'categoria_id' => $this->categoria_id->getValue(),
+            'monto' => $this->monto->getValue(),
+            'periodo' => $this->periodo->format('Y-m'),
+            'descripcion' => $this->descripcion,
+            'user_id' => $this->user_id->getValue(),
+        ];
     }
 
     public function getId(): PresupuestoId

@@ -6,12 +6,17 @@
  * @license MIT
  * @copyright 2026 Juan Esteban Villamil Echavarria
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.0.1
  */
 namespace App\Shared\Infrastructure\Framework\Laravel\Services\Auth;
 
+use App\Domains\Usuario\Aggregates\Usuario;
+use App\Domains\Usuario\Enums\Roles;
+use App\Domains\Usuario\ValueObjects\UsuarioId;
 use App\Models\User;
 use App\Shared\Application\Contracts\Services\AuthServiceContract;
+use App\Shared\Domain\ValueObjects\Email;
+use App\Shared\Domain\ValueObjects\Password;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -30,16 +35,28 @@ final readonly class LaravelAuthService implements AuthServiceContract
         request()->session()->invalidate();
         request()->session()->regenerateToken();
     }
-    private function getAuthenticatedUser(): User{
-        return auth()->user();
+    public function getAuthenticatedUser(): ?Usuario{
+        $user = $this->user();
+        if(!$user) return null;
+        return Usuario::reconstitute(
+            id: new UsuarioId($user->id),
+            name: $user->name,
+            email: new Email($user->email),
+            password: Password::fromHash($user->password),
+            role: Roles::try($user->role),
+        );
     }
 
+
+    private function user(): User {
+        return auth()->user();
+    }
     /**
      * @inheritDoc
      */
     public function verifyPasswordForLoggedInUser(string $password): bool
     {
-        $user = $this->getAuthenticatedUser();
+        $user = $this->user();
         if(!$user){
             return false;
         }

@@ -18,7 +18,7 @@ use App\Domains\MovimientoPendiente\Exceptions\CannotStoreMovimientoPendienteExc
 use App\Domains\MovimientoPendiente\Exceptions\CannotUpdateMovimientoPendienteException;
 use App\Domains\MovimientoPendiente\ValueObjects\MovimientoPendienteId;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
-use App\Shared\Domain\Contracts\AggregateModelContract;
+use App\Shared\Domain\Contracts\PrimitiveAggregateModelContract;
 use App\Shared\Domain\ValueObjects\Amount;
 use App\Shared\Domain\ValueObjects\Date;
 
@@ -33,7 +33,7 @@ use App\Shared\Domain\ValueObjects\Date;
  * @since 1.0.0
  * @version 1.0.0
  */
-final readonly class MovimientoPendiente implements AggregateModelContract
+final readonly class MovimientoPendiente implements PrimitiveAggregateModelContract
 {
     private function __construct(
         private MovimientoPendienteId      $id,
@@ -244,6 +244,22 @@ final readonly class MovimientoPendiente implements AggregateModelContract
         if ($dias_aviso !== null && $dias_aviso < 0) {
             throw new $exceptionClass('Los días de aviso no pueden ser negativos.');
         }
+    }
+
+    public function toPrimitive(): array
+    {
+        return [
+            'id' => $this->id->getValue(),
+            'categoria_id' => $this->categoria_id->getValue(),
+            'cuenta_id' => $this->cuenta_id->getValue(),
+            'movimiento_fijo_id' => $this->movimiento_fijo_id?->getValue(),
+            'tipo_movimiento_id' => $this->tipo_movimiento_id->value,
+            'nombre' => $this->nombre,
+            'monto' => $this->monto->getValue(),
+            'fecha_programada' => $this->fecha_programada->format(),
+            'dias_aviso' => $this->dias_aviso,
+            'descripcion' => $this->descripcion
+        ];
     }
 
     // Getters

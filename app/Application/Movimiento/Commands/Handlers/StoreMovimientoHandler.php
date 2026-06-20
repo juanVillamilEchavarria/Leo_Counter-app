@@ -3,6 +3,8 @@
 namespace App\Application\Movimiento\Commands\Handlers;
 
 use App\Application\Movimiento\Commands\StoreMovimientoCommand;
+use App\Domains\Auditoria\Enums\AuditableActions;
+use App\Domains\Auditoria\Enums\AuditableTypes;
 use App\Domains\Categoria\ValueObjects\CategoriaId;
 use App\Domains\Cuenta\ValueObjects\CuentaId;
 use App\Domains\Movimiento\Aggregates\Movimiento;
@@ -10,6 +12,7 @@ use App\Domains\Movimiento\Contracts\Repositories\MovimientoRepositoryContract;
 use App\Domains\Movimiento\ValueObjects\MovimientoId;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 use App\Shared\Application\Contracts\Bus\EventBus;
+use App\Shared\Application\Events\AuditableActionOcurred;
 use App\Shared\Domain\Contracts\IdGeneratorContract;
 use App\Shared\Domain\ValueObjects\Amount;
 use App\Shared\Domain\ValueObjects\Date;
@@ -47,6 +50,12 @@ final readonly class StoreMovimientoHandler
         $this->eventBus->publish(new \App\Application\Movimiento\Events\AttachmentsForMovimientoCreated(
             movimiento: $movimiento,
             comprobantes: $command->comprobantes
+        ));
+        $this->eventBus->publish(new AuditableActionOcurred(
+            old_aggregate:null,
+            new_aggregate: $movimiento,
+            type: AuditableTypes::MOVIMIENTOS,
+            action: AuditableActions::CREATE
         ));
     }
 }

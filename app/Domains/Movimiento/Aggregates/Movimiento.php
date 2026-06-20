@@ -18,7 +18,8 @@ use App\Domains\Movimiento\Exceptions\CannotUpdateMovimientoException;
 use App\Domains\Movimiento\ValueObjects\MovimientoId;
 use App\Domains\MovimientoPendiente\ValueObjects\MovimientoPendienteId;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
-use App\Shared\Domain\Contracts\AggregateModelContract;
+use App\Shared\Domain\Contracts\PrimitiveAggregateModelContract;
+use App\Shared\Domain\ContractsPrimitiveAggregateModelContract;
 use App\Shared\Domain\Contracts\EventContract;
 use App\Shared\Domain\ValueObjects\Amount;
 use App\Shared\Domain\ValueObjects\Date;
@@ -34,7 +35,7 @@ use App\Shared\Domain\Traits\RecordsEvents;
  * @since 1.0.0
  * @version 1.0.1
  */
-final   class Movimiento implements AggregateModelContract
+final   class Movimiento implements PrimitiveAggregateModelContract
 {
 use RecordsEvents;
     private function __construct(
@@ -216,6 +217,22 @@ use RecordsEvents;
         if ($tipo_movimiento_id <= 0) {
             throw new $exceptionClass('El tipo de movimiento es obligatorio.');
         }
+    }
+
+    public function toPrimitive(): array
+    {
+        return [
+            'id' => $this->id->getValue(),
+            'nombre'=> $this->nombre,
+            'cuenta_id' => $this->cuenta_id->getValue(),
+            'categoria_id' => $this->categoria_id->getValue(),
+            'tipo_movimiento_id' => $this->tipo_movimiento_id->value,
+            'movimiento_pendiente_id' => $this->movimiento_pendiente_id?->getValue(),
+            'monto' => $this->monto->getValue(),
+            'fecha' => $this->fecha->format(),
+            'descripcion' => $this->descripcion
+
+        ];
     }
 
     // Getters

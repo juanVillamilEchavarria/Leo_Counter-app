@@ -6,9 +6,11 @@
  * @license MIT
  * @copyright 2026 Juan Esteban Villamil Echavarria
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.0.1
  */
 namespace App\Shared\Application\Contracts\Services;
+
+use App\Domains\Usuario\Aggregates\Usuario;
 
 /**
  * Contrato para servicios de autenticación.
@@ -37,5 +39,11 @@ interface AuthServiceContract
      * @return bool
      */
     public function verifyPasswordForLoggedInUser(string $password): bool;
+
+    /**
+     * Obtiene el usuario logueado.
+     * @return Usuario
+     */
+    public function getAuthenticatedUser() : ?Usuario;
 
 }

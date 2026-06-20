@@ -12,6 +12,9 @@ use App\Domains\Movimiento\Exceptions\CannotDeleteMovimientoException;
 use App\Domains\Movimiento\ValueObjects\MovimientoId;
 use App\Shared\Application\Contracts\Bus\EventBus;
 use App\Shared\Application\Contracts\Services\AuthServiceContract;
+use App\Domains\Auditoria\Enums\AuditableActions;
+use App\Domains\Auditoria\Enums\AuditableTypes;
+use App\Shared\Application\Events\AuditableActionOcurred;
 
 /**
  * Manejador del caso de uso de eliminar un movimiento
@@ -40,6 +43,13 @@ final readonly class DestroyMovimientoHandler
         // El repositorio se encarga de publicar el evento de dominio MovimientoDeleted
         $this->movimientoRepository->destroy($movimiento->getId());
 
+        // Publicar auditoría de la acción
+        $this->eventBus->publish(new AuditableActionOcurred(
+            old_aggregate: $movimiento,
+            new_aggregate: null,
+            type: AuditableTypes::MOVIMIENTOS,
+            action: AuditableActions::DELETE
+        ));
 
     }
 }

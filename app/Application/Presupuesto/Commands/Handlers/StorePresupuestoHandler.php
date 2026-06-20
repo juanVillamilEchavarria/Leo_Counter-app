@@ -6,7 +6,7 @@
  * @license MIT
  * @copyright 2026 Juan Esteban Villamil Echavarria
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.0.1
  */
 namespace App\Application\Presupuesto\Commands\Handlers;
 
@@ -21,13 +21,18 @@ use App\Shared\Domain\ValueObjects\Date;
 use DateTimeImmutable;
 use App\Shared\Domain\ValueObjects\Amount;
 use App\Domains\Usuario\ValueObjects\UsuarioId;
+use App\Shared\Application\Contracts\Bus\EventBus;
+use App\Shared\Application\Events\AuditableActionOcurred;
+use App\Domains\Auditoria\Enums\AuditableActions;
+use App\Domains\Auditoria\Enums\AuditableTypes;
 
 final readonly class StorePresupuestoHandler
 {
     public function __construct(
         private PresupuestoRepositoryContract $repository,
         private PresupuestoUniquenessCheckerContract $uniquenessChecker,
-        private IdGeneratorContract $idGenerator
+        private IdGeneratorContract $idGenerator,
+        private EventBus $eventBus
     ) {}
 
 
@@ -43,6 +48,15 @@ final readonly class StorePresupuestoHandler
             checker: $this->uniquenessChecker
         );
 
-        return $this->repository->store($presupuesto);
+        $stored = $this->repository->store($presupuesto);
+
+        $this->eventBus->publish(new AuditableActionOcurred(
+            old_aggregate: null,
+            new_aggregate: $stored,
+            type: AuditableTypes::PRESUPUESTOS,
+            action: AuditableActions::CREATE
+        ));
+
+        return $stored;
     }
 }

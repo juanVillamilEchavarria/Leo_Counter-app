@@ -23,7 +23,6 @@ use Illuminate\Database\Eloquent\Model;
  * - actualización de registros existentes
  * - eliminación de registros (soft delete y hard delete)
  *
- * No gestiona operaciones de lectura; para eso existe EloquentReadRepository.
  *
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  * @package App\Shared\Infrastructure\AbstractPersistence\Repositories\Eloquent

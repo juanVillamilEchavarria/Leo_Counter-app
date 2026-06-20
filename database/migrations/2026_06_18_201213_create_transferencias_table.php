@@ -27,6 +27,8 @@ return new class extends Migration
             $table->string('descripcion', 255)->nullable();
             $table->date('fecha');
             $table->timestamps();
+
+            $table->index(['cuenta_origen_id', 'cuenta_destino_id']);
         });
     }
 
