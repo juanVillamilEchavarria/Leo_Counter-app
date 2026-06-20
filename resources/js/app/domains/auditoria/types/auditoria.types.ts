@@ -3,8 +3,8 @@
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  * @license MIT
  * @copyright 2026 Juan Esteban Villamil Echavarria
- * @since 1.0.0
- * @version 1.0.0
+ * @since 1.0.1
+ * @version 1.0.1
  */
 
 import { route } from "ziggy-js"
@@ -33,9 +33,9 @@ export type Auditoria = {
     auditable_type: string,
     auditable_id: string | null,
     action: string,
+    created_at: string,
     old_values: Record<string, any> | null,
-    new_values: Record<string, any> | null,
-    created_at: string | null,
+    new_values: Record<string, any> | null
 }
 
 /**

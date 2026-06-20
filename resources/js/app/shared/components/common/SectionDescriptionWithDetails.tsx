@@ -39,7 +39,7 @@ export default function SectionDescriptionWithDetails({
            </button>
           <TransitionMotion className="flex md:flex-row flex-col md:items-stretch justify-center sm:items-center  w-[85%] mx-auto gap-9 my-10  " active={isOpen} initial={{opacity:0, y:-40}} exit={{opacity:0, y: -40}}>
             {items.map((item, index)=>(
-                <div key={index} className={`flex flex-col justify-start items-center gap-2 p-4 rounded-lg border-2 border-muted-foreground/10 max-w-md `}>
+                <div key={index} className={`flex flex-col justify-start items-center gap-2 p-4 rounded-lg border-2 border-cyan-600/10 shadow-2xl shadow-blue-500/15 max-w-md hover:scale-105 transition-all duration-300  `}>
                     <i className={`${item.icon} text-5xl text-primary my-3`}></i>
                     <h3 className='text-lg font-semibold text-center text-foreground'>{item.title}</h3>
                     <p className='text-sm text-center text-muted-foreground'>{item.description}</p>

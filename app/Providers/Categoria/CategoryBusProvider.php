@@ -12,14 +12,14 @@ namespace App\Providers\Categoria;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Bus;
-use App\Application\Categoria\Commands\StoreCategoryCommand;
-use App\Application\Categoria\Commands\UpdateCategoryCommand;
-use App\Application\Categoria\Commands\DestroyCategoryCommand;
-use App\Application\Categoria\Commands\Handlers\StoreCategoryHandler;
-use App\Application\Categoria\Commands\Handlers\UpdateCategoryHandler;
-use App\Application\Categoria\Commands\Handlers\DestroyCategoryHandler;
-use App\Application\Categoria\Commands\Handlers\ToggleCategoryHandler;
-use App\Application\Categoria\Commands\ToggleCategoryCommand;
+use App\Application\Categoria\Commands\StoreCategoriaCommand;
+use App\Application\Categoria\Commands\UpdateCategoriaCommand;
+use App\Application\Categoria\Commands\DestroyCategoriaCommand;
+use App\Application\Categoria\Commands\Handlers\StoreCategoriaHandler;
+use App\Application\Categoria\Commands\Handlers\UpdateCategoriaHandler;
+use App\Application\Categoria\Commands\Handlers\DestroyCategoriaHandler;
+use App\Application\Categoria\Commands\Handlers\ToggleCategoriaHandler;
+use App\Application\Categoria\Commands\ToggleCategoriaCommand;
 
 class CategoryBusProvider extends ServiceProvider
 {
@@ -28,7 +28,7 @@ class CategoryBusProvider extends ServiceProvider
      */
     public function register(): void
     {
-       
+
     }
 
     /**
@@ -37,11 +37,11 @@ class CategoryBusProvider extends ServiceProvider
     public function boot(): void
     {
          Bus::map([
-            StoreCategoryCommand::class => StoreCategoryHandler::class,
-            UpdateCategoryCommand::class => UpdateCategoryHandler::class,
-            DestroyCategoryCommand::class => DestroyCategoryHandler::class,
-            ToggleCategoryCommand::class => ToggleCategoryHandler::class
+            StoreCategoriaCommand::class => StoreCategoriaHandler::class,
+            UpdateCategoriaCommand::class => UpdateCategoriaHandler::class,
+            DestroyCategoriaCommand::class => DestroyCategoriaHandler::class,
+            ToggleCategoriaCommand::class => ToggleCategoriaHandler::class
         ]);
-        
+
     }
 }

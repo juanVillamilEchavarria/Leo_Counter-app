@@ -11,7 +11,7 @@ namespace App\Shared\Application\Exceptions;
 
 use App\Shared\Domain\Exceptions\ClientFacingException;
 
-class CannotAuditRegisterException extends \RuntimeException implements ClientFacingException
+class CannotAuditRegisterException extends ApplicationException implements ClientFacingException
 {
 
 }

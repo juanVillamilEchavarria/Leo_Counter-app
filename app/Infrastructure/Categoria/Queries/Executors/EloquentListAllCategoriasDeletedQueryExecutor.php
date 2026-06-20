@@ -11,7 +11,7 @@
 namespace App\Infrastructure\Categoria\Queries\Executors;
 
 use App\Application\Categoria\Contracts\Queries\Executors\CategoriaQueryExecutorContract;
-use App\Application\Categoria\Contracts\Queries\ListCategoriesQueryContract;
+use App\Application\Categoria\Contracts\Queries\ListCategoriasQueryContract;
 use App\Models\Categoria\Categoria;
 use App\Shared\Domain\Contracts\CollectionContract;
 use App\Shared\Infrastructure\Framework\Laravel\Collections\LaravelCollection;
@@ -30,7 +30,7 @@ class EloquentListAllCategoriasDeletedQueryExecutor implements CategoriaQueryExe
     /**
      * @inheritDoc
      */
-    public function execute(ListCategoriesQueryContract $query): CollectionContract
+    public function execute(ListCategoriasQueryContract $query): CollectionContract
     {
        return LaravelCollection::make(Categoria::onlyTrashed()->get());
     }

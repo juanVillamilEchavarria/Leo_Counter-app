@@ -15,7 +15,7 @@ use App\Http\Requests\Shared\TableQueryRequest;
 use App\Shared\Application\Contracts\Bus\QueryBus;
 use App\Application\Movimiento\Mappers\MovimientoForTableMapper;
 use App\Http\Resources\Movimiento\MovimientoResource;
-
+use App\Http\Resources\Shared\PaginationMetaResource;
 
 class MovimientoApiController extends Controller
 {
@@ -32,14 +32,7 @@ class MovimientoApiController extends Controller
 
         return response()->json([
             'data' => MovimientoResource::collection($result->items),
-            'meta' => [
-                'currentPage' => $result->currentPage,
-                'perPage' => $result->perPage,
-                'lastPage' => $result->lastPage,
-                'total' => $result->total,
-                'from' => ($result->currentPage - 1) * $result->perPage + 1,
-                'to' => min($result->total, $result->currentPage * $result->perPage),
-            ]
+            'meta' => PaginationMetaResource::make($result),
         ]);
     }
 }

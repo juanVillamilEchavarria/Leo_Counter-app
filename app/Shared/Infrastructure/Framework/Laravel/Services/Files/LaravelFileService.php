@@ -13,7 +13,7 @@ use App\Domains\ArchivoMovimiento\Enums\ArchivoMovimientoDiskEnum;
 use App\Shared\Application\Contracts\Services\FileServiceContract;
 use App\Shared\Application\DTOs\Files\MoveFileDTO;
 use App\Shared\Application\DTOs\Files\UploadFileDTO;
-use App\Shared\Infrastructure\Exceptions\CannotUploadFileException;
+use App\Shared\Application\Exceptions\CannotUploadFileException;
 use Illuminate\Support\Facades\Storage;
 
 /**

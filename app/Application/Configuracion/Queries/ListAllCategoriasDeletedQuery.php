@@ -9,7 +9,7 @@
  * @version 1.0.0
  */
 namespace App\Application\Configuracion\Queries;
-use App\Application\Categoria\Contracts\Queries\ListCategoriesQueryContract;
+use App\Application\Categoria\Contracts\Queries\ListCategoriasQueryContract;
 
 /**
  * Query interna para listar categorías eliminadas.
@@ -19,7 +19,7 @@ use App\Application\Categoria\Contracts\Queries\ListCategoriesQueryContract;
  * @since 1.0.0
  * @version 1.0.0
  */
-final readonly class ListAllCategoriasDeletedQuery implements  ListCategoriesQueryContract
+final readonly class ListAllCategoriasDeletedQuery implements  ListCategoriasQueryContract
 {
 
 }

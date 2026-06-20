@@ -1,0 +1,30 @@
+<?php
+
+/*
+ * @package Leo Counter
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @license MIT
+ * @copyright 2026 Juan Esteban Villamil Echavarria
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+namespace App\Infrastructure\Categoria\Queries\Executors\Eloquent;
+
+use App\Application\Categoria\Contracts\Queries\Executors\GetCategoriaRecordsCountQueryExecutorContract;
+use App\Models\Categoria\Categoria;
+
+/**
+ * Ejecutor encargado de obtener el conteo total de registros de categorías utilizando Eloquent ORM.
+ * Este executor implementa un contrato específico para el caso de uso de conteo de registros de categorías.
+ * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
+ * @package App\Infrastructure\Categoria\Queries\Executors\Eloquent
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+final readonly class EloquentGetCategoriaRecordsCountQueryExecutor implements GetCategoriaRecordsCountQueryExecutorContract
+{
+    public function execute(): int
+    {
+        return Categoria::count();
+    }
+}

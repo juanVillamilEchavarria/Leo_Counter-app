@@ -9,7 +9,6 @@
  */
 namespace App\Shared\Domain\Contracts;
 
-use Illuminate\Database\Eloquent\Model;
 
 /**
  * Contrato que implementaran todos los write repositories que su modelo tenga soft deletes, para poder recuperar y eliminar registros eliminados
@@ -34,7 +33,7 @@ interface SoftDeleteRepositoryContract
     /**
      * Obtiene un registro eliminado por ID
      * @param AggregateModelIdContract $id
-     * @return Model|null
+     * @return AggregateModelContract|null
      */
     public function findByIdWithTrashed(AggregateModelIdContract $id): ?AggregateModelContract;
 }

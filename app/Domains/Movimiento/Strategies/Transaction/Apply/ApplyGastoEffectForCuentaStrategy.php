@@ -10,12 +10,9 @@
  */
 namespace App\Domains\Movimiento\Strategies\Transaction\Apply;
 
-use App\Application\Movimiento\Contracts\Commands\WriteMovimientoCommandContract;
 use App\Domains\Cuenta\Aggregates\Cuenta;
 use App\Domains\Movimiento\Aggregates\Movimiento;
 use App\Domains\Movimiento\Contracts\Strategies\ApplyTransactionEffectForCuentaStrategyContract;
-use App\Domains\Cuenta\Contracts\Repositories\CuentaRepositoryContract;
-use App\Application\Movimiento\Commands\Abstracts\WriteMovimientoCommand;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 
 /**

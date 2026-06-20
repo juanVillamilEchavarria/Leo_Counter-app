@@ -15,8 +15,6 @@ use App\Domains\ArchivoMovimiento\Contracts\Repositories\ArchivoMovimientoReposi
 use App\Domains\ArchivoMovimiento\Exceptions\CannotDeleteArchivoMovimientoException;
 use App\Shared\Application\Contracts\Services\FileServiceContract;
 use App\Domains\ArchivoMovimiento\Aggregates\ArchivoMovimiento;
-use App\Models\ArchivoMovimiento\ArchivoMovimiento as ArchivoMovimientoModel;
-use Illuminate\Support\Facades\DB;
 final readonly class DestroyArchivoMovimientoHandler
 {
 

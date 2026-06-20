@@ -13,6 +13,8 @@ namespace App\Http\Controllers\Transferencia;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Transferencia\StoreTransferenciaRequest;
 use App\Application\Transferencia\Commands\StoreTransferenciaCommand;
+use App\Application\Transferencia\Queries\GetTransferenciaRecordsCountQuery;
+use App\Shared\Application\Contracts\Bus\QueryBus;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Inertia\Inertia;
 use App\Shared\Application\Contracts\Queries\Executors\FormOptions\ListCuentaForFormContract;
@@ -28,6 +30,7 @@ class TransferenciaController extends Controller
 {
     public function __construct(
         private Dispatcher $dispatcher,
+        private QueryBus $queryBus,
         private ListCuentaForFormContract $listCuentaForFormContract
     ) {
     }
@@ -35,8 +38,10 @@ class TransferenciaController extends Controller
     public function index()
     {
 
+        $records = $this->queryBus->ask(new GetTransferenciaRecordsCountQuery());
         return Inertia::render('Transferencias/Index', [
             'title' => 'Transferencias',
+            'NoRegistros' => $records,
             'cuentas' => $this->listCuentaForFormContract->execute(),
         ]);
     }

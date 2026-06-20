@@ -53,8 +53,8 @@ final readonly class RegisterForAuditEventHandler
             auditable_type: $event->getType(),
             auditable_id: new AuditableRegisterId($targetAggregate->getId()->getValue()),
             action: $event->getAction(),
-            old_values: new JsonPayload($primitiveOldAggregate),
-            new_values: new JsonPayload($primitiveNewAggregate)
+            old_values: $primitiveOldAggregate !== null ? new JsonPayload($primitiveOldAggregate) : null,
+            new_values: $primitiveNewAggregate !== null ? new JsonPayload($primitiveNewAggregate) : null
         );
         $this->auditoriaRepository->store($auditoria);
     }

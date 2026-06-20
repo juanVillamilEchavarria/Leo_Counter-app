@@ -28,7 +28,8 @@ export default function MovimientoPendienteTable({
       <SimpleTable
         data={data}
         columns={columns}
-        pagination={false}
+        pagination={true}
+        pageSize={10}
       />
     </>
   )

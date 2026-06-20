@@ -3,8 +3,8 @@
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  * @license MIT
  * @copyright 2026 Juan Esteban Villamil Echavarria
- * @since 1.0.0
- * @version 1.0.0
+ * @since 1.0.1
+ * @version 1.0.1
  */
 import SectionDescriptionWithDetails from "@/app/shared/components/common/SectionDescriptionWithDetails"
 import SectionTransition from "@/app/shared/components/common/SectionTransition"
@@ -13,14 +13,14 @@ import AuditoriaTable from "@/app/domains/auditoria/components/AuditoriaTable"
 export default function Index() {
   const descriptionItems = [
     {
-      title: 'Auditorías',
-      description: 'Revisa las acciones registradas en el sistema para propósitos de auditoría y trazabilidad',
+      title: '¿Qué son las auditorias?',
+      description: 'Mira los registros completos de las acciones en el sistema en los modulos de Movimientos, Movimientos Pendientes y presupuestos, cuando algun usuario cree un nuevo registro, edite alguno ya existente o elimine, quedara aqui la informacion guardada de la accion con detalles',
       icon: 'fa-solid fa-shield-halved !text-indigo-400'
     },
     {
-      icon: 'fa-solid fa-clock-rotate-left !text-yellow-300',
-      title: 'Histórico completo',
-      description: 'Consulta todas las acciones registradas con filtros y paginación server-side'
+      icon: 'fa-solid fa-magnifying-glass !text-yellow-300',
+      title: 'Filtrado dinamico',
+      description: 'Filtra tus auditorias por fecha, usuario o modulo para encontrar lo que buscas'
     }
   ]
 

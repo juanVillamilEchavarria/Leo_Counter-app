@@ -10,17 +10,17 @@
  */
 namespace App\Http\Controllers\Categoria;
 
-use App\Application\Categoria\Commands\StoreCategoryCommand;
-use App\Application\Categoria\Commands\UpdateCategoryCommand;
-use App\Application\Categoria\Commands\DestroyCategoryCommand;
+use App\Application\Categoria\Commands\StoreCategoriaCommand;
+use App\Application\Categoria\Commands\UpdateCategoriaCommand;
+use App\Application\Categoria\Commands\DestroyCategoriaCommand;
 use App\Http\Controllers\Controller;
-use App\Application\Categoria\Queries\GetCategoryForEditQuery;
+use App\Application\Categoria\Queries\GetCategoriaForEditQuery;
 use App\Shared\Application\Contracts\Bus\QueryBus;
-use App\Application\Categoria\Queries\ListAllCategoriesWithDetailsQuery;
-use App\Application\Categoria\Queries\ListCategoriesRecordsCountQuery;
-use App\Application\Categoria\Queries\ListCategoryFormOptionsQuery;
+use App\Application\Categoria\Queries\ListAllCategoriasWithDetailsQuery;
+use App\Application\Categoria\Queries\GetCategoriaRecordsCountQuery;
+use App\Application\Categoria\Queries\ListCategoriaFormOptionsQuery;
 use Illuminate\Contracts\Bus\Dispatcher;
-use App\Application\Categoria\Commands\ToggleCategoryCommand;
+use App\Application\Categoria\Commands\ToggleCategoriaCommand;
 use App\Http\Requests\Categoria\StoreAndUpdateCategoriaRequest;
 use App\Http\Resources\Categoria\CategoriaResource;
 use Inertia\Inertia;
@@ -28,24 +28,24 @@ use Inertia\Inertia;
 class CategoriaController extends Controller
 {
 
-    
+
     public function __construct(
         private QueryBus $queryBus,
         private Dispatcher $dispatcher
         )
     {
-    }   
+    }
 
 
     private function NoRegistros(){
-        return $this->queryBus->ask(new ListCategoriesRecordsCountQuery());
+        return $this->queryBus->ask(new GetCategoriaRecordsCountQuery());
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $categorias = $this->queryBus->ask(new ListAllCategoriesWithDetailsQuery());
+        $categorias = $this->queryBus->ask(new ListAllCategoriasWithDetailsQuery());
         return Inertia::render('Categorias/Index',[
             'title' => 'Categorias',
             'NoRegistros' => $this->NoRegistros(),
@@ -58,7 +58,7 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        $options = $this->queryBus->ask(new ListCategoryFormOptionsQuery());
+        $options = $this->queryBus->ask(new ListCategoriaFormOptionsQuery());
         return Inertia::render('Categorias/Create',[
             'title'=>'Crear Categoria',
             'NoRegistros'=>$this->NoRegistros(),
@@ -71,7 +71,7 @@ class CategoriaController extends Controller
      */
     public function store(StoreAndUpdateCategoriaRequest $request)
     {
-        $command = new StoreCategoryCommand(
+        $command = new StoreCategoriaCommand(
             nombre: $request->nombre,
             tipo_movimiento_id: $request->tipo_movimiento_id,
             descripcion: $request->descripcion
@@ -93,12 +93,12 @@ class CategoriaController extends Controller
      */
     public function edit(string $id)
     {
-        $categoria = $this->queryBus->ask(new GetCategoryForEditQuery(id: $id));
+        $categoria = $this->queryBus->ask(new GetCategoriaForEditQuery(id: $id));
         return Inertia::render('Categorias/Edit',[
             'title'=>'Editar Categoria',
             'NoRegistros'=>$this->NoRegistros(),
             'data'=>$categoria,
-            'options'=>$this->queryBus->ask(new ListCategoryFormOptionsQuery())
+            'options'=>$this->queryBus->ask(new ListCategoriaFormOptionsQuery())
         ]);
     }
 
@@ -107,7 +107,7 @@ class CategoriaController extends Controller
      */
     public function update(StoreAndUpdateCategoriaRequest $request, string $id)
     {
-        $command = new UpdateCategoryCommand(
+        $command = new UpdateCategoriaCommand(
             id: $id,
             nombre: $request->nombre,
             tipo_movimiento_id: $request->tipo_movimiento_id,
@@ -123,7 +123,7 @@ class CategoriaController extends Controller
      */
     public function destroy(string $id)
     {
-        $command = new DestroyCategoryCommand(
+        $command = new DestroyCategoriaCommand(
                 id: $id
         );
         $this->dispatcher->dispatch($command);
@@ -133,7 +133,7 @@ class CategoriaController extends Controller
 
     public function toggleEsFijo(string $id, string $attribute)
     {
-        $this->dispatcher->dispatch(new ToggleCategoryCommand(id: $id, attribute: $attribute));
+        $this->dispatcher->dispatch(new ToggleCategoriaCommand(id: $id, attribute: $attribute));
         Inertia::flash('success','Categoria actualizada con exito');
         return redirect()->route('categorias.index');
     }

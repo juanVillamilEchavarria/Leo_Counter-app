@@ -10,7 +10,7 @@
  */
 namespace App\Http\Controllers\Presupuesto;
 
-use App\Application\Categoria\Commands\DestroyCategoryCommand;
+use App\Application\Categoria\Commands\DestroyCategoriaCommand;
 use App\Application\Presupuesto\Commands\DestroyPresupuestoCommand;
 use App\Application\Presupuesto\Commands\DuplicatePresupuestoCommand;
 use App\Application\Presupuesto\Commands\StorePresupuestoCommand;

@@ -15,6 +15,7 @@ use App\Http\Requests\Shared\TableQueryRequest;
 use App\Application\Presupuesto\Queries\ListHistoricPresupuestosForTableQuery;
 use App\Application\Presupuesto\Mappers\ListHistoricPresupuestosForTableMapper;
 use App\Http\Resources\Presupuesto\PresupuestoForTableResource;
+use App\Http\Resources\Shared\PaginationMetaResource;
 use App\Shared\Application\Contracts\Bus\QueryBus;
 
 class PresupuestoHistoricoApiController extends Controller
@@ -33,6 +34,9 @@ class PresupuestoHistoricoApiController extends Controller
          */
         $query = $this->mapper->map($request);
         $paginated = $this->queryBus->ask($query);
-        return PresupuestoForTableResource::make($paginated);
+        return response()->json([
+            'data' => PresupuestoForTableResource::make($paginated),
+            'meta' => PaginationMetaResource::make($paginated),
+        ]);
     }
 }

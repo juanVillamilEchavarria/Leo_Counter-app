@@ -10,7 +10,7 @@
  */
 namespace App\Application\Movimiento\Validators;
 
-use App\Shared\Infrastructure\Exceptions\CannotUploadFileException;
+use App\Shared\Application\Exceptions\CannotUploadFileException;
 
 /**
  * Validador de archivos adjuntos para movimientos.

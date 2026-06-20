@@ -14,10 +14,10 @@ use App\Application\Configuracion\Commands\HardDeleteRecordCommand;
 use App\Application\Configuracion\Commands\RestoreRecordCommand;
 use App\Application\Configuracion\Queries\ListDomainRecordsDeletedQuery;
 use App\Domains\Configuracion\Enums\SoftDeleteManagerTypes;
+use App\Infrastructure\Configuracion\Resolvers\DeletedRecordsResourceResolver;
 use App\Shared\Application\Contracts\Bus\QueryBus;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Inertia\Inertia;
-use App\Application\Configuracion\Resolvers\DeletedRecordsResourceResolver;
 
 class SoftDeleteRecordsController{
     public function __construct(

@@ -23,7 +23,7 @@ final readonly class PresupuestoEditDTO
         public string $id,
         public string $categoria_id,
         public float $monto,
-        public string $descripcion
+        public ?string $descripcion
     )
     {
     }

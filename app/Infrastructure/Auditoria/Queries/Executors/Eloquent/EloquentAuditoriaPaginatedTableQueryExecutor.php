@@ -5,15 +5,14 @@
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  * @license MIT
  * @copyright 2026 Juan Esteban Villamil Echavarria
- * @since 1.0.0
- * @version 1.0.0
+ * @since 1.0.1
+ * @version 1.0.1
  */
 namespace App\Infrastructure\Auditoria\Queries\Executors\Eloquent;
 
 use App\Shared\Infrastructure\Queries\Executors\EloquentPaginatedTableQueryExecutor;
 use App\Application\Auditoria\Contracts\Queries\Executors\AuditoriaPaginatedTableQueryExecutorContract;
 use App\Models\Auditoria\Auditoria;
-use Override;
 
 /**
  * Executor Eloquent para paginación de tabla de auditorías (server side).
@@ -22,19 +21,18 @@ use Override;
  */
 final readonly class EloquentAuditoriaPaginatedTableQueryExecutor extends EloquentPaginatedTableQueryExecutor implements AuditoriaPaginatedTableQueryExecutorContract
 {
-    #[Override]
     protected function model(): string
     {
        return Auditoria::class;
     }
 
-    #[Override]
+
     protected function modelRelations(): array
     {
         return ['usuario'];
     }
 
-    #[Override]
+
     protected function searchColumns(): array
     {
         return [
@@ -47,7 +45,7 @@ final readonly class EloquentAuditoriaPaginatedTableQueryExecutor extends Eloque
         ];
     }
 
-    #[Override]
+
     protected function modelSorteableRelations(): array
     {
         return [

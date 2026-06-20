@@ -10,7 +10,6 @@
  */
 namespace App\Domains\Movimiento\Contracts\Strategies;
 
-use App\Application\Movimiento\Contracts\Commands\WriteMovimientoCommandContract;
 use App\Domains\Movimiento\Aggregates\Movimiento;
 use App\Domains\Cuenta\Aggregates\Cuenta;
 

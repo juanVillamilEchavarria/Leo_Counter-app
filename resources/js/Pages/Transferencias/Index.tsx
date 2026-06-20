@@ -51,7 +51,7 @@ export default function Index({
             <CreateButtonSection>
                 <CrudButton
                     onClick={() => open(null, 'create')}
-                    icon="fa-solid fa-plus"
+                    icon="fa-solid fa-arrow-right-arrow-left"
                 >
                 </CrudButton>
             </CreateButtonSection>

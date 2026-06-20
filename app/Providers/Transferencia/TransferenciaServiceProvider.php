@@ -32,6 +32,12 @@ class TransferenciaServiceProvider extends ServiceProvider
             ->give(EloquentTransferenciaPaginatedTableQueryExecutor::class);
 
         $this->app->singleton(TransferenciaPaginatedTableQueryExecutorContract::class, EloquentTransferenciaPaginatedTableQueryExecutor::class);
+
+        // Binding para obtener el conteo total de transferencias
+        $this->app->bind(
+            \App\Application\Transferencia\Contracts\Queries\Executors\GetTransferenciaRecordsCountQueryExecutorContract::class,
+            \App\Infrastructure\Transferencia\Queries\Executors\Eloquent\EloquentGetTransferenciaRecordsCountQueryExecutor::class
+        );
     }
 
     public function boot(): void
