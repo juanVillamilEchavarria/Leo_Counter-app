@@ -25,7 +25,7 @@ class PercentageService{
      * 
      * @return float
      */
-        public function calculatePercentageChange( float $currentValue, float $previousValue){
+        public function calculatePercentageChange( float $currentValue, float $previousValue): ?float {
             if($previousValue == 0) {
                 return null;
             };

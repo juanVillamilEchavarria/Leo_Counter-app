@@ -64,4 +64,9 @@ final readonly class Amount
     {
         return $this->cents <= 0;
     }
+
+    public function isGreaterThanOrEqualThanOther(Amount $other): bool
+    {
+        return $this->cents >= $other->cents;
+    }
 }

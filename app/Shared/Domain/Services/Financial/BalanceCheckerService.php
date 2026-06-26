@@ -9,9 +9,6 @@
  * @version 1.0.0
  */
 namespace App\Shared\Domain\Services\Financial;
-use App\Domains\Cuenta\Contracts\Repositories\CuentaReadRepositoryContract;
-use App\Domains\Movimiento\Contracts\Repositories\MovimientoReadRepositoryContract;
-use App\Shared\Domain\ValueObjects\WhereFilterQueryDTO;
 use App\Shared\Domain\ValueObjects\Amount;
 
 /**
@@ -23,7 +20,7 @@ use App\Shared\Domain\ValueObjects\Amount;
  */
 class BalanceCheckerService{
      public function canAfford(Amount $saldo, Amount $monto): bool{
-        return $saldo->getValue() >= $monto->getValue();
+        return $saldo->isGreaterThanOrEqualThanOther($monto);
     }
 
 }

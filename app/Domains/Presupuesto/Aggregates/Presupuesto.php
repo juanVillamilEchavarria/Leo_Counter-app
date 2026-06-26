@@ -121,7 +121,7 @@ final readonly class Presupuesto implements PrimitiveAggregateModelContract
      * @param string|null $exceptionClass
       * @throws Throwable
      */
-    public static function validateData( Amount $monto, string $exceptionClass): void
+    private static function validateData( Amount $monto, string $exceptionClass): void
     {
         if ($monto->isLessOrEqualThanCero()) {
             throw new $exceptionClass(

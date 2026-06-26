@@ -19,8 +19,6 @@ use App\Domains\Movimiento\ValueObjects\MovimientoId;
 use App\Domains\MovimientoPendiente\ValueObjects\MovimientoPendienteId;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 use App\Shared\Domain\Contracts\PrimitiveAggregateModelContract;
-use App\Shared\Domain\ContractsPrimitiveAggregateModelContract;
-use App\Shared\Domain\Contracts\EventContract;
 use App\Shared\Domain\ValueObjects\Amount;
 use App\Shared\Domain\ValueObjects\Date;
 use Throwable;
@@ -78,7 +76,7 @@ use RecordsEvents;
         ?MovimientoPendienteId $movimiento_pendiente_id = null,
     ): self
     {
-        self::validateData($nombre, $monto, $tipo_movimiento_id, CannotExecuteMovimientoTransactionException::class);
+        self::validateData($nombre, $monto, CannotExecuteMovimientoTransactionException::class);
 
 
         $movimiento= new self(
@@ -176,7 +174,7 @@ use RecordsEvents;
         ?string           $descripcion = null,
     ): self
     {
-        self::validateData($nombre, $monto, $tipo_movimiento_id, CannotUpdateMovimientoException::class);
+        self::validateData($nombre, $monto, CannotUpdateMovimientoException::class);
 
         return new self(
             id: $this->id,
@@ -202,7 +200,6 @@ use RecordsEvents;
     private static function validateData(
         string $nombre,
         Amount  $monto,
-        TipoMovimientoEnum    $tipo_movimiento_id,
         string $exceptionClass,
     ): void
     {
@@ -212,10 +209,6 @@ use RecordsEvents;
 
         if ($monto->isLessOrEqualThanCero()) {
             throw new $exceptionClass('El monto del movimiento no puede ser cero o negativo.');
-        }
-
-        if ($tipo_movimiento_id <= 0) {
-            throw new $exceptionClass('El tipo de movimiento es obligatorio.');
         }
     }
 
