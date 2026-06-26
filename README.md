@@ -23,6 +23,39 @@ Leo Counter permite registrar y gestionar ingresos, gastos, cuentas bancarias, p
 Cada línea de código refleja meses de dedicación aplicando principios de arquitectura de software al más alto nivel: Domain-Driven Design, CQRS, Clean Architecture y SOLID. El resultado es un sistema impecable, extensible y preparado para funcionar durante décadas.
 
 La privacidad es absoluta. Tus datos nunca abandonan tu red local. El proyecto es completamente open source y puedes instalarlo en cualquier máquina con Docker, desde una laptop antigua hasta un servidor doméstico.
+### Ejemplo de arquitectura y flujo de datos
+<p align="center">
+  <img src="./docs/arquitectura_leo_counter.svg" alt="Diagrama de Arquitectura Leo Counter" width="800">
+</p>
+
+**FLUJOS DETALLADOS DEL MÓDULO MOVIMIENTOS:**
+
+### Flujo 1: Creación de Movimiento Espontáneo (POST /movimientos-espontaneos)
+1. **Cliente HTTP** → Envía formulario con datos del movimiento
+2. **Middleware** → Valida sesión, transacción, idempotencia
+3. **FormRequest** → Valida reglas de negocio (nombre, monto > 0, cuenta válida)
+4. **Controller** → Construye `StoreMovimientoCommand` con DTO
+5. **CommandBus** → Resuelve y ejecuta `StoreMovimientoHandler`
+6. **Handler** → Crea ValueObjects, invoca `Movimiento::create()`
+7. **Agregado** → Valida invariantes, registra `MovimientoCreated` event
+8. **Repository** → Persiste agregado en BD mediante Eloquent ORM
+9. **EventBus** → Publica eventos de dominio
+10. **EventHandlers** → Procesan comprobantes, auditoría, aplican y validan los efectos del movimiento en la cuenta relacionada segun el tipo de movimiento
+11. **Response** → Inertia flash message + redirect
+
+### Flujo 2: Listado de Movimientos Espontaneos (GET /movimientos-espontaneos)
+1. **Cliente HTTP** → Solicita lista paginada con filtros
+2. **Middleware** → Valida autenticación
+3. **Controller API** → Construye `ListAllSpontaneousMovimientosWithDetailsQuery`
+4. **QueryBus** → Resuelve `ListAllSpontaneousMovimientosWithDetailsHandler`
+5. **Handler** → Delega a `MovimientoQueryExecutorContract`
+6. **QueryExecutor** → Construye QueryBuilder con filtros (fecha, categoría)
+7. **ORM** → Ejecuta query en BD, recupera registros
+8. **DTOs** → Mapea resultados a objetos de transferencia
+9. **Resources** → Transforma DTOs a JSON API
+10. **Response** → Retorna colección paginada con metadatos
+
+
 
 ---
 
