@@ -27,7 +27,9 @@ final readonly class EloquentCuentaCanBeDeletedChecker extends EloquentDomainRec
     protected function relations(): array
     {
         return [
-            'movimientos'
+            'movimientos',
+            'transferencias_origen',
+            'transferencias_destino'
         ];
     }
 }

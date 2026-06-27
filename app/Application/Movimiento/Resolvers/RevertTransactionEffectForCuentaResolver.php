@@ -10,11 +10,8 @@
  */
 namespace App\Application\Movimiento\Resolvers;
 use App\Domains\Cuenta\Aggregates\Cuenta;
-use App\Domains\Cuenta\ValueObjects\CuentaId;
 use App\Domains\Movimiento\Aggregates\Movimiento;
 use App\Domains\Movimiento\Contracts\Strategies\RevertTransactionEffectForCuentaStrategyContract;
-use App\Domains\Movimiento\ValueObjects\RevertTransactionEffectForCuentaResultVO;
-use App\Shared\Domain\ValueObjects\Amount;
 
 final readonly class RevertTransactionEffectForCuentaResolver
 {

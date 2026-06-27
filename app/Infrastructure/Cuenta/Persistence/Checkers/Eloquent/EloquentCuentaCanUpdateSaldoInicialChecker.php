@@ -28,6 +28,6 @@ final readonly class EloquentCuentaCanUpdateSaldoInicialChecker implements Cuent
         if (!$model) {
             return false;
         }
-        return !$model->movimientos()->exists();
+        return !$model->movimientos()->exists() && !$model->transferencias_origen()->exists() && !$model->transferencias_destino()->exists();
     }
 }

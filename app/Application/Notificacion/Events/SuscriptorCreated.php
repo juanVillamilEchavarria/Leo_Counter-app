@@ -23,6 +23,7 @@ use App\Shared\Domain\ValueObjects\Date;
  */
 final readonly class SuscriptorCreated implements SendVerificationToSuscriptorEventContract
 {
+
     public function __construct(
         private Suscriptor $suscriptor,
         private Usuario    $usuario,

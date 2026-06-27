@@ -46,10 +46,10 @@ La privacidad es absoluta. Tus datos nunca abandonan tu red local. El proyecto e
 ### Flujo 2: Listado de Movimientos Espontaneos (GET /movimientos-espontaneos)
 1. **Cliente HTTP** → Solicita lista paginada con filtros
 2. **Middleware** → Valida autenticación
-3. **Controller API** → Construye `ListAllSpontaneousMovimientosWithDetailsQuery`
-4. **QueryBus** → Resuelve `ListAllSpontaneousMovimientosWithDetailsHandler`
-5. **Handler** → Delega a `MovimientoQueryExecutorContract`
-6. **QueryExecutor** → Construye QueryBuilder con filtros (fecha, categoría)
+3. **Controller API** → Construye `ListMovimientosForTableQuery`
+4. **QueryBus** → Resuelve `ListMovimientosForTableHandler`
+5. **Handler** → Delega a `MovimientoPaginatedTableQueryExecutorContract`
+6. **QueryExecutor** → Construye la query con filtros
 7. **ORM** → Ejecuta query en BD, recupera registros
 8. **DTOs** → Mapea resultados a objetos de transferencia
 9. **Resources** → Transforma DTOs a JSON API

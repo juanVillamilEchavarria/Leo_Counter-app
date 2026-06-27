@@ -31,7 +31,7 @@ final readonly class Cuenta implements AggregateModelContract
      * @param string $nombre - El nombre de la cuenta
      * @param ?string $notas - La descripción de la cuenta opcional
      * @param bool $active - Indica si la cuenta está activa
-     * @param string $propietario_id - El ID del propietario de la cuenta
+     * @param PropietarioId $propietario_id - El ID del propietario de la cuenta
      * @param int $tipo_cuenta_id - El ID del tipo de cuenta
      */
     private function __construct(
@@ -77,7 +77,7 @@ final readonly class Cuenta implements AggregateModelContract
      * @param string $nombre
      * @param ?string $notas
      * @param bool $active
-     * @param string $propietario_id
+     * @param PropietarioId $propietario_id
      * @param int $tipo_cuenta_id
      */
     public static function reconstitute(

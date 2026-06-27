@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\TipoCuenta\TipoCuenta;
 use App\Models\Propietario\Propietario;
 use App\Models\Movimiento\Movimiento;
+use App\Models\Transferencia\Transferencia;
 class Cuenta extends Model
 {
   use HasFactory;
@@ -46,5 +47,13 @@ class Cuenta extends Model
   }
   public function movimientos(){
     return $this->hasMany(Movimiento::class);
+  }
+
+  public function transferencias_origen(){
+    return $this->hasMany(Transferencia::class, 'cuenta_origen_id');
+  }
+
+  public function transferencias_destino(){
+    return $this->hasMany(Transferencia::class, 'cuenta_destino_id');
   }
 }

@@ -24,4 +24,6 @@ use App\Shared\Domain\Contracts\RepositoryContract;
  */
 interface MovimientoFijoRepositoryContract extends RepositoryContract
 {
+
+    public function toggle(AggregateModelIdContract $id, string $attribute): bool;
 }
