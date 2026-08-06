@@ -11,6 +11,7 @@
 namespace App\Infrastructure\Transferencia\Queries\Executors\Eloquent;
 
 use App\Application\Transferencia\Contracts\Queries\Executors\TransferenciaQueryExecutorContract;
+use App\Application\Transferencia\Contracts\Queries\ListTransferenciaQueryContract;
 use App\Models\Transferencia\Transferencia;
 use App\Shared\Domain\Contracts\CollectionContract;
 use App\Shared\Infrastructure\Framework\Laravel\Collections\LaravelCollection;
@@ -24,7 +25,7 @@ use App\Shared\Infrastructure\Framework\Laravel\Collections\LaravelCollection;
  */
 final readonly class EloquentListTransferenciasExecutor implements TransferenciaQueryExecutorContract
 {
-    public function execute(): CollectionContract
+    public function execute(ListTransferenciaQueryContract $query): CollectionContract
     {
         return LaravelCollection::make(
             Transferencia::with([

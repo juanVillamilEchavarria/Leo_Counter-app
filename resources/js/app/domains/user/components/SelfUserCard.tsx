@@ -58,8 +58,8 @@ export default function SelfUserCard({
                     }
                  }
                 >
-                    <div className="flex flex-col">
-                        <p className="text-sm  whitespace-nowrap">{user.name}</p>
+                    <div className="flex flex-col ">
+                        <p className="text-sm  whitespace-nowrap max-w-40 truncate  ">{user.name}</p>
                         <p className="text-xs  whitespace-nowrap">{user.role}</p>
                     </div>
                 </TransitionMotion>

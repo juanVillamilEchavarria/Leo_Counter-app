@@ -10,6 +10,7 @@
  */
 namespace App\Shared\Domain\ValueObjects;
 
+use App\Shared\Domain\Exceptions\InvalidDomainArgumentException;
 
 /**
  * Valor monetario de un movimiento
@@ -24,7 +25,7 @@ final readonly class Amount
     public function __construct(float $amount)
     {
         if ($amount < 0) {
-            throw new \InvalidArgumentException('El monto debe ser positivo');
+            throw new InvalidDomainArgumentException('El monto debe ser positivo');
         }
         $this->cents = (int) round($amount * 100);
     }
@@ -53,7 +54,7 @@ final readonly class Amount
     {
         $result = $this->cents - $other->cents;
         if ($result < 0) {
-            throw new \InvalidArgumentException('El resultado no puede ser negativo');
+            throw new InvalidDomainArgumentException('No se puede restar un monto mayor a otro, el resultado no puede ser negativo');
         }
         return new
          self($result / 100);
