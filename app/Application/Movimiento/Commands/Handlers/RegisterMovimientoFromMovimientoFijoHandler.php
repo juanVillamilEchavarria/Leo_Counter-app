@@ -16,6 +16,8 @@ use App\Domains\Movimiento\Contracts\Repositories\MovimientoRepositoryContract;
 use App\Domains\Movimiento\ValueObjects\MovimientoId;
 use App\Shared\Domain\Contracts\IdGeneratorContract;
 use App\Shared\Domain\ValueObjects\Date;
+use App\Shared\Application\Events\InvalidateReportCacheActionOcurred;
+use App\Shared\Application\Contracts\Bus\EventBus;
 
 /**
  * Manejador del comando para registrar un movimiento desde un movimiento fijo.
@@ -32,6 +34,7 @@ final readonly class RegisterMovimientoFromMovimientoFijoHandler
         private MovimientoRepositoryContract $movimientoRepositoryContract,
         private IdGeneratorContract $idGenerator,
         private CuentaRepositoryContract $cuentaRepository,
+        private EventBus $eventBus
 
     )
     {
@@ -53,6 +56,8 @@ final readonly class RegisterMovimientoFromMovimientoFijoHandler
         );
         $this->cuentaRepository->findById($movimiento->getCuentaId());
         $this->movimientoRepositoryContract->store($movimiento);
+        $this->eventBus->publish(new InvalidateReportCacheActionOcurred());
+
     }
 
 }

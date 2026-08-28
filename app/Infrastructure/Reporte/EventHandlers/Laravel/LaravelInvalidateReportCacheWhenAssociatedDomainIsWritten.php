@@ -11,24 +11,24 @@
 namespace App\Infrastructure\Reporte\EventHandlers\Laravel;
 
 use App\Domains\Movimiento\Contracts\Events\MovimientoEventContract;
+use App\Shared\Application\Events\InvalidateReportCacheActionOcurred;
+use App\Shared\Domain\Contracts\EventContract;
 use Illuminate\Support\Facades\Cache;
 
 /**
  * Event handler que invalida la caché de reportes cuando se escribe
- * (crea/actualiza/elimina) un Movimiento. Usa la etiqueta 'reportes'.
+ * (crea/actualiza/elimina) un dominio asociado a reportes. Usa la etiqueta 'reportes'.
  *
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  * @package App\Domains\Movimiento\Contracts\Events
  * @version 1.0.0
  * @since 1.0.0
  */
-final class LaravelInvalidateReportCacheWhenMovimientoIsWritten
+final class LaravelInvalidateReportCacheWhenAssociatedDomainIsWritten
 {
-    /** Ejecutar el job después de que la transacción se haya confirmado */
-    public bool $afterCommit = true;
 
-    public function __invoke(MovimientoEventContract $event): void
+    public function __invoke(InvalidateReportCacheActionOcurred $event): void
     {
-        Cache::tags(['reportes'])->flush();
+        Cache::tags([$event->getKey()])->flush();
     }
 }

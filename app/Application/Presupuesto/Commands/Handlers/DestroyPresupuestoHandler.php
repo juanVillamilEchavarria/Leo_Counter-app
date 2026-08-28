@@ -17,6 +17,7 @@ use App\Shared\Application\Contracts\Bus\EventBus;
 use App\Shared\Application\Events\AuditableActionOcurred;
 use App\Domains\Auditoria\Enums\AuditableActions;
 use App\Domains\Auditoria\Enums\AuditableTypes;
+use App\Shared\Application\Events\InvalidateReportCacheActionOcurred;
 
 final readonly class DestroyPresupuestoHandler
 {
@@ -39,6 +40,7 @@ final readonly class DestroyPresupuestoHandler
                 action: AuditableActions::DELETE
             ));
         }
+        $this->eventBus->publish(new InvalidateReportCacheActionOcurred());
 
         return $success;
     }

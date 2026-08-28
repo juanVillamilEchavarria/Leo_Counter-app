@@ -5,7 +5,6 @@ namespace App\Application\Movimiento\Commands\Handlers;
 use App\Application\Movimiento\Commands\DestroyMovimientoCommand;
 use App\Application\Movimiento\Contracts\Queries\Executors\GetAllArchivoMovimientosIdsForAMovimientoQueryExecutorContract;
 use App\Application\Movimiento\Events\AttachmentsForMovimientoDeleted;
-use App\Domains\Cuenta\Contracts\CuentaRepositoryContract;
 use App\Domains\Movimiento\Aggregates\Movimiento;
 use App\Domains\Movimiento\Contracts\Repositories\MovimientoRepositoryContract;
 use App\Domains\Movimiento\Exceptions\CannotDeleteMovimientoException;
@@ -15,6 +14,7 @@ use App\Shared\Application\Contracts\Services\AuthServiceContract;
 use App\Domains\Auditoria\Enums\AuditableActions;
 use App\Domains\Auditoria\Enums\AuditableTypes;
 use App\Shared\Application\Events\AuditableActionOcurred;
+use App\Shared\Application\Events\InvalidateReportCacheActionOcurred;
 
 /**
  * Manejador del caso de uso de eliminar un movimiento
@@ -50,6 +50,7 @@ final readonly class DestroyMovimientoHandler
             type: AuditableTypes::MOVIMIENTOS,
             action: AuditableActions::DELETE
         ));
+        $this->eventBus->publish(new InvalidateReportCacheActionOcurred());
 
     }
 }

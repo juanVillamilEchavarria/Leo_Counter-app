@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\DB;
 /**
  * Clase abstracta padre para todos los query handlers de presupuestos basados en Eloquent
  * Encapsula metodos de construccion de consultas para evitar DRY
- * Solo handlers de la tabla de movimientos deben extender esta clase
+ * Solo handlers de la tabla de presupuestos deben extender esta clase
  *
  * @author Juan Villamil
  * @package App\Infrastructure\QueryExecutors\Reporte\Abstracts

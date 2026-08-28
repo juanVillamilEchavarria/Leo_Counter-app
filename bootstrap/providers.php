@@ -92,4 +92,5 @@ return [
     App\Providers\Usuario\UsuarioBusProvider::class,
     App\Providers\Usuario\UsuarioCheckersProvider::class,
     App\Providers\Usuario\UsuarioServiceProvider::class,
+    \App\Providers\Shared\Application\EventBusSharedProvider::class
 ];

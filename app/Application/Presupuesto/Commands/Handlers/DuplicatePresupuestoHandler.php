@@ -16,14 +16,17 @@ use App\Domains\Presupuesto\Contracts\Checkers\PresupuestoCanDuplicateCheckerCon
 use App\Domains\Presupuesto\Contracts\Checkers\PresupuestoUniquenessCheckerContract;
 use App\Domains\Presupuesto\Contracts\Repositories\PresupuestoRepositoryContract;
 use App\Domains\Presupuesto\ValueObjects\PresupuestoId;
+use App\Shared\Application\Events\InvalidateReportCacheActionOcurred;
 use App\Shared\Domain\Contracts\IdGeneratorContract;
+use App\Shared\Application\Contracts\Bus\EventBus;
 
 final readonly class DuplicatePresupuestoHandler
 {
     public function __construct(
         private PresupuestoRepositoryContract $repository,
         private PresupuestoCanDuplicateCheckerContract $duplicateChecker,
-        private IdGeneratorContract $idGenerator
+        private IdGeneratorContract $idGenerator,
+        private EventBus $eventBus,
     ) {}
 
     public function __invoke(DuplicatePresupuestoCommand $command)
@@ -40,7 +43,7 @@ final readonly class DuplicatePresupuestoHandler
         }
         $id = PresupuestoId::generate($this->idGenerator);
         $duplicate = $aggregate->duplicate($id, $this->duplicateChecker);
-
+        $this->eventBus->publish(new InvalidateReportCacheActionOcurred());
 
         return $this->repository->store($duplicate);
     }

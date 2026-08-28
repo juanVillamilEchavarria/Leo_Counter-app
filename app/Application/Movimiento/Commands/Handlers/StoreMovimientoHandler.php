@@ -13,6 +13,7 @@ use App\Domains\Movimiento\ValueObjects\MovimientoId;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 use App\Shared\Application\Contracts\Bus\EventBus;
 use App\Shared\Application\Events\AuditableActionOcurred;
+use App\Shared\Application\Events\InvalidateReportCacheActionOcurred;
 use App\Shared\Domain\Contracts\IdGeneratorContract;
 use App\Shared\Domain\ValueObjects\Amount;
 use App\Shared\Domain\ValueObjects\Date;
@@ -57,5 +58,7 @@ final readonly class StoreMovimientoHandler
             type: AuditableTypes::MOVIMIENTOS,
             action: AuditableActions::CREATE
         ));
+
+        $this->eventBus->publish(new InvalidateReportCacheActionOcurred());
     }
 }

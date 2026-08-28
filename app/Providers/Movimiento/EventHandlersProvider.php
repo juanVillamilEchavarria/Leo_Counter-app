@@ -19,7 +19,7 @@ use App\Application\Movimiento\Events\AttachmentsForMovimientoDeleted;
 use App\Domains\Movimiento\Events\AutomatedMovimientoRegistered;
 use App\Domains\Movimiento\Events\MovimientoCreated;
 use App\Domains\Movimiento\Events\MovimientoDeleted;
-use App\Infrastructure\Reporte\EventHandlers\Laravel\LaravelInvalidateReportCacheWhenMovimientoIsWritten;
+use App\Infrastructure\Reporte\EventHandlers\Laravel\LaravelInvalidateReportCacheWhenAssociatedDomainIsWritten;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
@@ -46,13 +46,11 @@ class EventHandlersProvider extends ServiceProvider
     public function boot(): void
     {
         Event::listen(MovimientoCreated::class, MovimientoCreatedFinancialImpactEventHandler::class);
-        Event::listen(MovimientoCreated::class, LaravelInvalidateReportCacheWhenMovimientoIsWritten::class);
         Event::listen(AttachmentsForMovimientoCreated::class, UploadAttachmentsWhenMovimientoIsWrittenEventHandler::class);
-        Event::listen(AutomatedMovimientoRegistered::class, MovimientoCreatedFinancialImpactEventHandler::class);
+        // Event::listen(AutomatedMovimientoRegistered::class, MovimientoCreatedFinancialImpactEventHandler::class);
 
 
         Event::listen(MovimientoDeleted::class, MovimientoDeletedFinancialImpactEventHandler::class);
-        Event::listen(MovimientoDeleted::class, LaravelInvalidateReportCacheWhenMovimientoIsWritten::class);
         Event::listen(AttachmentsForMovimientoDeleted::class, DestroyAttachmentsWhenMovimientoIsWrittenEventHandler::class);
     }
 }

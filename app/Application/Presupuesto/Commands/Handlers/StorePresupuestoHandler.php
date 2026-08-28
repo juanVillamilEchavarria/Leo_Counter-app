@@ -16,6 +16,7 @@ use App\Domains\Presupuesto\Contracts\Checkers\PresupuestoUniquenessCheckerContr
 use App\Domains\Presupuesto\Contracts\Repositories\PresupuestoRepositoryContract;
 use App\Domains\Presupuesto\ValueObjects\PresupuestoId;
 use App\Domains\Categoria\ValueObjects\CategoriaId;
+use App\Shared\Application\Events\InvalidateReportCacheActionOcurred;
 use App\Shared\Domain\Contracts\IdGeneratorContract;
 use App\Shared\Domain\ValueObjects\Date;
 use DateTimeImmutable;
@@ -56,6 +57,7 @@ final readonly class StorePresupuestoHandler
             type: AuditableTypes::PRESUPUESTOS,
             action: AuditableActions::CREATE
         ));
+        $this->eventBus->publish(new InvalidateReportCacheActionOcurred());
 
         return $stored;
     }
