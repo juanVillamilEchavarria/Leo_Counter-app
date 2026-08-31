@@ -18,6 +18,9 @@ use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 use App\Infrastructure\Reporte\Builders\Eloquent\EloquentUsedBudgetBuilder;
 use App\Domains\Reporte\ValueObjects\Budget\UsedBudgetVO;
+use App\Models\Movimiento\Movimiento;
+use App\Models\Categoria\Categoria;
+use DB;
 
 final class EloquentUsedBudgetQueryExecutor extends EloquentPresupuestoTableQueryExecutor implements ReporteQueryExecutorContract
 {
@@ -30,27 +33,49 @@ final class EloquentUsedBudgetQueryExecutor extends EloquentPresupuestoTableQuer
 
     public function execute(ReporteQuery $dto): UsedBudgetVO
     {
-        // Construir query base con JOIN
-        $query = $this->presupuestos()
-            ->where('presupuestos.deleted_at', null)
-            ->leftJoin('movimientos', function ($join) use ($dto) {
-                $join->on('presupuestos.categoria_id', '=', 'movimientos.categoria_id')
-                     ->where('movimientos.tipo_movimiento_id', '=', TipoMovimientoEnum::GASTO->value)
-                     ->whereBetween('movimientos.fecha', [$dto->dateRange->startDate, $dto->dateRange->endDate]);
-            })
+        $startDate = $dto->dateRange->startDate;
+        $endDate   = $dto->dateRange->endDate;
 
+        //  Presupuesto agrupado por categoría
+        $presupuestosPorCategoria = $this->presupuestos()
+            ->select('presupuestos.categoria_id')
+            ->selectRaw('SUM(presupuestos.monto) as total_categoria')
+            ->whereNull('presupuestos.deleted_at')
+            ->whereBetween('presupuestos.periodo', [$startDate, $endDate])
+            ->groupBy('presupuestos.categoria_id');
+
+        //  Gastos agrupados por categoría
+        $gastosPorCategoria = Movimiento::query()
+            ->select('movimientos.categoria_id')
+            ->selectRaw('SUM(movimientos.monto) as total_categoria')
+            ->whereNull('movimientos.deleted_at')
+            ->where('movimientos.tipo_movimiento_id', TipoMovimientoEnum::GASTO->value)
+            ->whereBetween('movimientos.fecha', [$startDate, $endDate])
+            ->groupBy('movimientos.categoria_id');
+
+        // Estadisticas en general uniendo los resultados de las dos subqueries
+        $query = DB::table('categorias')
+            ->joinSub(
+                $presupuestosPorCategoria,
+                'presupuesto_agg',
+                'categorias.id',
+                '=',
+                'presupuesto_agg.categoria_id'
+            )
+            ->leftJoinSub(
+                $gastosPorCategoria,
+                'gasto_agg',
+                'categorias.id',
+                '=',
+                'gasto_agg.categoria_id'
+            )
             ->selectRaw('
-                COALESCE(SUM(presupuestos.monto), 0) as total_presupuesto,
-                COALESCE(SUM(movimientos.monto), 0) as total_gastos,
-                (COALESCE(SUM(presupuestos.monto), 0) - COALESCE(SUM(movimientos.monto), 0)) as disponible
+                COALESCE(SUM(presupuesto_agg.total_categoria), 0) as total_presupuesto,
+                COALESCE(SUM(gasto_agg.total_categoria), 0) as total_gastos,
+                COALESCE(SUM(presupuesto_agg.total_categoria), 0) - COALESCE(SUM(gasto_agg.total_categoria), 0) as disponible
             ');
 
-
-        // Aplicar baseQuery con rango de fechas para presupuestos
-        $query = $this->baseQuery($dto->dateRange->startDate, $dto->dateRange->endDate, $query, "presupuestos.periodo");
-        // Ejecutar y construir VO
         $result = $query->first();
-
         return EloquentUsedBudgetBuilder::build($result);
     }
 }
