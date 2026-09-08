@@ -11,7 +11,7 @@ import { MovimientoPendienteActions } from "../types/movimientoPendiente.types"
 export default function useMovimientoPendienteActions<TPayload extends Record<string, any>>() {
     const form = useForm<TPayload>({} as TPayload)
 
-    const markAsDone = (id: number) => {
+    const markAsDone = (id: string) => {
         form.patch(MovimientoPendienteActions.markAsDone(id))
     }
     return {

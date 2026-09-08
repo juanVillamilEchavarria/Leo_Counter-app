@@ -25,15 +25,14 @@ final readonly class RevertTransactionEffectForCuentaResolver
     }
 
     /**
-     * @param Movimiento $old_movimiento - el movimiento antes de ser modificado
-     * @param Cuenta $old_cuenta - la cuenta asociada al movimiento antes de ser modifcado
-     * @return Cuenta - la cuenta "vieja" con el efecto de la transaccion revertido
+     * @param Movimiento $movimiento - el movimiento 
+     * @param Cuenta $cuenta - la cuenta asociada al movimiento 
      * @throws \LogicException si no se encuentra una estrategia para revertir el efecto de la transaccion
      */
-    public function resolve(Movimiento $old_movimiento, Cuenta $old_cuenta): Cuenta{
+    public function resolve(Movimiento $movimiento, Cuenta $cuenta): Cuenta{
         foreach($this->strategies as $strategy){
-            if($strategy->supports($old_movimiento)){
-                return $strategy->revertTransactionEffectWhenAMovimientoChanges($old_movimiento, $old_cuenta);
+            if($strategy->supports($movimiento)){
+                return $strategy->revertTransactionEffectWhenAMovimientoChanges($movimiento, $cuenta);
             }
         }
         throw new \LogicException('No se encontro una estrategia para revertir el efecto de la transaccion');

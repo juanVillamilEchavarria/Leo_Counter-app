@@ -21,22 +21,22 @@ const route= useRoute()
 export const MovimientoPendienteRoutes={
     index : ()=>route('movimientosPendientes.index'),
     create :()=> route('movimientosPendientes.create'),
-    edit : (id: number) => route('movimientosPendientes.edit', {id}),
-    show : (id: number) => route('movimientosPendientes.show', {id})
+    edit : (id: string) => route('movimientosPendientes.edit', {id}),
+    show : (id: string) => route('movimientosPendientes.show', {id})
 }
 
 export const MovimientoPendienteActions= {
     post : route('movimientosPendientes.store'),
-    put : (id: number) => route('movimientosPendientes.update', {id}),
-    patch : (id: number)=> route('movimientosPendientes.update', {id}),
-    delete : (id: number) => route('movimientosPendientes.destroy', {id}),
-    markAsDone : (id: number) => route('movimientosPendientes.markAsDone', {id})
+    put : (id: string) => route('movimientosPendientes.update', {id}),
+    patch : (id: string)=> route('movimientosPendientes.update', {id}),
+    delete : (id: string) => route('movimientosPendientes.destroy', {id}),
+    markAsDone : (id: string) => route('movimientosPendientes.markAsDone', {id})
 }
 
 export type MovimientoPendienteEstados= 'pendiente' | 'realizado' | 'vencido'
 
 export interface MovimientoPendiente extends SoftDeleteModel {
-    id: number
+    id: string
     nombre : string
     cuenta_id : string
     tipo_movimiento_id : number

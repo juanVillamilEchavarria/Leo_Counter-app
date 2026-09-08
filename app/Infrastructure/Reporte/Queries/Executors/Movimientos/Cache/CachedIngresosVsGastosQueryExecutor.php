@@ -11,38 +11,26 @@
 namespace App\Infrastructure\Reporte\Queries\Executors\Movimientos\Cache;
 
 use App\Application\Reporte\Contracts\Queries\ReporteQueryExecutorContract;
-use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
-use App\Domains\Reporte\ValueObjects\ReporteQuery;
-use App\Infrastructure\Reporte\Collections\Laravel\Movimientos\LaravelIncomeExpenseCollection;
+use App\Infrastructure\Reporte\Queries\Executors\Abstracts\Cache\CacheReportQueryExecutor;
 use App\Infrastructure\Reporte\Queries\Executors\Movimientos\Eloquent\EloquentIngresosVsGastosQueryExecutor;
-use Illuminate\Support\Facades\Cache;
+use Override;
 
 /**
  * Decorador que cachea el reporte de ingresos vs gastos usando Redis.
  * Agrupa claves con la etiqueta 'reportes' para facilitar la invalidación.
  */
-final readonly class CachedIngresosVsGastosQueryExecutor implements ReporteQueryExecutorContract
+final readonly class CachedIngresosVsGastosQueryExecutor extends CacheReportQueryExecutor implements ReporteQueryExecutorContract
 {
-    private const CACHE_TTL = 3600;
 
     public function __construct(
-        private EloquentIngresosVsGastosQueryExecutor $executor
-    ) {}
-
-    public function supports(ReportStatisticTypeContract $type): bool
-    {
-        return $this->executor->supports($type);
+         EloquentIngresosVsGastosQueryExecutor $executor
+    ) {
+        parent::__construct($executor);
     }
 
-    public function execute(ReporteQuery $dto): LaravelIncomeExpenseCollection
+    #[Override]
+    protected function getCacheKeyPrefix(): string
     {
-        $cacheKey = sprintf('reporte_ingresos_vs_gastos_%s_%s',
-            $dto->dateRange->startDate->format('Y-m-d'),
-            $dto->dateRange->endDate->format('Y-m-d')
-        );
-
-        return Cache::tags(['reportes'])->remember($cacheKey, self::CACHE_TTL, function () use ($dto) {
-            return $this->executor->execute($dto);
-        });
+        return 'ingresos_vs_gastos';
     }
 }

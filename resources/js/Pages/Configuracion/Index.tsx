@@ -11,7 +11,7 @@ import { ConfiguracionNavBar } from "@/app/domains/configuracion"
 import SectionDescription from "@/app/shared/components/common/SectionDescription";
 import CanalNotificationSection from '@/app/domains/notificacion/components/CanalNotificationSection'
 import SuscriptorNotificacionSection from '@/app/domains/notificacion/components/SuscriptorNotificacionSection'
-import type { CanalNotificacion, SuscriptorNotificacion } from "@/app/domains/notificacion";
+import type { CanalNotificacion, SuscriptorTableData } from "@/app/domains/notificacion";
 import type { User } from "@/app/domains/user";
 import Title from "@/app/shared/components/common/Title";
 
@@ -20,7 +20,7 @@ export default function Index({
     suscriptores
 }: {
       canales?: CanalNotificacion[],
-    suscriptores?: SuscriptorNotificacion[],
+    suscriptores?: SuscriptorTableData[],
     }) {
   const options = {
     canales: canales || []
@@ -37,7 +37,7 @@ export default function Index({
         />
         <div className="flex flex-col gap-10">
           <CanalNotificationSection canales={canales || []} />
-        <SuscriptorNotificacionSection suscriptores={suscriptores || []} canales={canales || []}/>
+        <SuscriptorNotificacionSection suscriptores={suscriptores || []} />
 
         </div>
 

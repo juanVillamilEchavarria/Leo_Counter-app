@@ -55,11 +55,16 @@ export interface IngresoVsGastoData {
   gastos: number
   period: string
 }
+
+export interface PresupuestoDetailed extends Presupuesto{
+  categoria: string
+}
 export interface Presupuesto{
     gastado : number
     presupuestado: number
     porcentaje_usado: number
     disponible: number
+    detailed: PresupuestoDetailed[]
 }
 export interface IngresoVsGastoPromedios{
   ingresos_por_periodo: number

@@ -30,7 +30,7 @@ export default function Header({
 }: HeaderProps) {
     const { props } = useMessageRedirect()
   return (
-    <div className="w-full min-h-20 flex flex-row justify-between gap-3 bg-background shadow-xl items-center border-b border-border px-4 sm:px-6 lg:px-0">
+    <div className="w-full min-h-20 flex flex-row justify-between gap-3 bg-background  items-center border-b border-border px-4 sm:px-6 lg:px-0">
         {props.title !== undefined && <Head title={props.title} />}
         <button
           type="button"

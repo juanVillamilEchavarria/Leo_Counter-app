@@ -12,6 +12,7 @@ namespace App\Application\Reporte\DTOs\Presupuestos\Used;
 
 use App\Application\Reporte\Assemblers\Presupuestos\UsedBudgetAssembler;
 use App\Domains\Reporte\ValueObjects\Budget\UsedBudgetVO;
+use App\Shared\Domain\Contracts\CollectionContract;
 
 /**
  * DTO para representar el presupuesto utilizado en un periodo específico.
@@ -28,7 +29,8 @@ final readonly class UsedBudgetDTO{
         public float $gastado,
         public float $presupuestado,
         public float $porcentaje_usado,
-        public float $disponible
+        public float $disponible,
+        public CollectionContract $detailed
     )
     {
     }

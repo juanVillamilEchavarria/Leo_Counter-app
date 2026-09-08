@@ -13,7 +13,7 @@ import type { MovimientoEspontaneoFormData } from "../../movimientoEspontaneo"
 
 export const MovimientoRoutes={
     index : ()=>route('movimientos.index'),
-    show : (id: number) => route('movimientos.show', {id}),
+    show : (id: string) => route('movimientos.show', {id}),
 }
 export const MovimientoApiActions={
     paginatedData: '/movimientos'

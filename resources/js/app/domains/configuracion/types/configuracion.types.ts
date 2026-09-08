@@ -21,8 +21,8 @@ export type SoftDeletedDomainsNames= 'cuentas'| 'categorias' | 'movimientosPendi
  * Acciones permitidas en la seccion de configuracion
  */
 export const ConfiguracionActions ={
-    restore : (domain : SoftDeletedDomainsNames,id : number) => myRoute('configuracion.deleted.restore',{domain, id}),
-    hardDelete : (domain : SoftDeletedDomainsNames,id : number) => myRoute('configuracion.deleted.hardDelete',{domain, id})
+    restore : (domain : SoftDeletedDomainsNames,id : string) => myRoute('configuracion.deleted.restore',{domain, id}),
+    hardDelete : (domain : SoftDeletedDomainsNames,id : string) => myRoute('configuracion.deleted.hardDelete',{domain, id})
 }
 /**
  * Rutas permitidas en la seccion de configuracion

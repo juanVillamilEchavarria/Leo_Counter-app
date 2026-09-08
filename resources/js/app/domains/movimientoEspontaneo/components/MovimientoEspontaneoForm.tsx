@@ -8,6 +8,7 @@
  */
 import Card from "@/app/shared/components/common/Card"
 import InputFillable from "@/app/shared/components/form/InputFillable"
+import CurrencyInput from 'react-currency-input-field';
 import SelectModel from "@/app/shared/components/form/SelectModel"
 import TextArea from "@/app/shared/components/form/TextArea"
 import TransitionMotion from "@/app/shared/components/transitions/TransitionMotion"
@@ -139,14 +140,21 @@ export default function MovimientoEspontaneoForm({
                 </div>
                 <div className="formulario-campo w-full">
                     <label htmlFor="monto">Monto</label>
-                    <InputFillable
-                        type="number"
-                        name="monto"
+                    <CurrencyInput
                         id="monto"
+                        name="monto"
+                        placeholder="Ingrese el monto"
                         value={data?.monto}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('monto', Number(e.target.value))}
-                        className={` ${errors.monto && 'border-red-500! text-red-500!'} `}
-                    ></InputFillable>
+                        decimalsLimit={2}
+                        decimalScale={2}
+                        prefix="$ "
+                        groupSeparator="."
+                        decimalSeparator=","
+                        onValueChange={(value) => {
+                            setData('monto', value ? parseFloat(value) : 0);
+                        }}
+                        className={`formulario-fillable ${errors.monto && 'border-red-500'}`}
+                    />
 
                     <TransitionMotion active={errors?.monto}>
                         <AlertMessage message={errors?.monto} />

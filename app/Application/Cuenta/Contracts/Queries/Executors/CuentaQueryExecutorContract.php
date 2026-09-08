@@ -23,5 +23,5 @@ interface CuentaQueryExecutorContract
      * @param ListCuentasQueryContract $query
      * @return CollectionContract|int
      */
-    public function execute(ListCuentasQueryContract $query): CollectionContract|int;
+    public function execute(ListCuentasQueryContract $query): CollectionContract;
 }

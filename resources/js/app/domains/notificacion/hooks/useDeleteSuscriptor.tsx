@@ -3,46 +3,35 @@
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  * @license MIT
  * @copyright 2026 Juan Esteban Villamil Echavarria
- * @since 1.0.0
- * @version 1.0.0
+ * @since 1.1.0
+ * @version 1.1.0
  */
 import { router } from "@inertiajs/react"
-import { useSuscriptorMutation } from "./api/useSuscriptorMutation"
-import { toastHelper } from "@/app/shared/helpers"
-
+import { useDeleteSuscriptorNotificacion } from "./useDeleteSuscriptorNotificacion"
 
 /**
- * Hook para eliminar un suscriptor de notificación
- * 
- * 
- * @param {string} id  - ID del suscriptor a eliminar
- * @returns 
+ * Hook para eliminar un suscriptor de notificación.
+ * Recupera el ID del suscriptor a eliminar y recarga la página tras el éxito.
+ *
+ * @param {string} id - ID del suscriptor a eliminar
  */
 export default function useDeleteSuscriptor({
-    id
-}:{
+    id,
+}: {
     id: string
 }) {
-  const {mutate} = useSuscriptorMutation({
-    action: 'delete',
-    id,
-    onSuccess: () => {
-        toastHelper.success('Suscriptor eliminado')
+    const { handleDelete, isPending } = useDeleteSuscriptorNotificacion()
+
+    const handleDeleteForm = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        handleDelete(id)
         router.reload({
-               preserveUrl: true
-            });
-    },
-    onError: (err) => {
-        toastHelper.error('Error al eliminar suscriptor')
+            preserveUrl: true
+        });
     }
-  })
 
-  const handleDelete = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    mutate()
-  }
-
-  return {
-    handleDelete
-  }
+    return {
+        handleDelete: handleDeleteForm,
+        isPending,
+    }
 }

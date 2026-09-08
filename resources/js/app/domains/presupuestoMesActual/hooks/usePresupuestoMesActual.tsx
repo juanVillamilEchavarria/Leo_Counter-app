@@ -15,7 +15,7 @@ export default function usePresupuestoMesActual({
     data
 }:{
     method ?: keyof typeof FormMethods,
-    id ?: number | null
+    id ?: string | null
     data ?: Presupuesto
 }) {
     const action = (() => {

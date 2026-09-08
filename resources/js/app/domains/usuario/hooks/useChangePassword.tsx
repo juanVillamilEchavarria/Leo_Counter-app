@@ -7,7 +7,7 @@
  * @version 1.0.0
  */
 import React from 'react'
-import { PasswordActions, type UsuarioPasswordData } from '../types/usuario.types'
+import { PasswordActions, type ChangeOwnPasswordData } from '../types/usuario.types'
 import useFormNormal from '@/app/shared/hooks/form/useFormNormal';
 
 /**
@@ -18,7 +18,7 @@ import useFormNormal from '@/app/shared/hooks/form/useFormNormal';
 export default function useChangePassword({
     data
 }: {
-    data?: UsuarioPasswordData
+    data?: ChangeOwnPasswordData
 }) {
   const { form, submit, handleSubmit } = useFormNormal({
        action: PasswordActions.update,

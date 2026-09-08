@@ -13,9 +13,10 @@ import TransitionMotion from "@/app/shared/components/transitions/TransitionMoti
 import AlertMessage from "@/app/shared/components/common/AlertMessage"
 import Button from "@/app/shared/components/common/Button"
 import SelectModel from "@/app/shared/components/form/SelectModel"
+import CurrencyInput from 'react-currency-input-field';
 import { useCategoriasMovimientoFilter } from "@/app/shared/hooks"
 import { useMemo } from "react"
-import { dateToLocal, today as todayFunction } from "@/app/shared/helpers"
+import { dateToLocal, moneyFormat, today as todayFunction } from "@/app/shared/helpers"
 import { type MovimientoFijoFormProps } from "../types/movimientoFijo.types"
 export default function MovimientoFijoForm({
     data,
@@ -135,14 +136,21 @@ export default function MovimientoFijoForm({
         <div className="flex w-full flex-col gap-4 md:flex-row">
             <div className="formulario-campo w-full">
                 <label htmlFor="monto">Monto</label>
-                <InputFillable
-                    type="number"
-                    name="monto"
+               <CurrencyInput
                     id="monto"
+                    name="monto"
+                    placeholder="Ingrese el monto"
                     value={data?.monto}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('monto', Number(e.target.value))}
-                    className={` ${errors.monto && 'border-red-500! text-red-500!'} `}
-                ></InputFillable>
+                    decimalsLimit={2}
+                    decimalScale={2}
+                    prefix="$ "
+                    groupSeparator="."
+                    decimalSeparator=","
+                    onValueChange={(value) => {
+                        setData('monto', value ? parseFloat(value) : 0);
+                    }}
+                    className={`formulario-fillable ${errors.monto && 'border-red-500'}`}
+                />
 
                 <TransitionMotion active={errors?.monto}>
                     <AlertMessage message={errors?.monto} />

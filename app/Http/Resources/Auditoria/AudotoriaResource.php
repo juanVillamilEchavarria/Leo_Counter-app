@@ -23,7 +23,8 @@ class AudotoriaResource extends JsonResource
     {
         return [
              'id' => $this->id,
-                'user' => $this->usuario?->name ?? null,
+                'user_name' => $this->usuario?->name ?? null,
+                'user_email' => $this->usuario?->email ?? null,
                 'auditable_type' => $this->auditable_type,
                 'auditable_id' => $this->auditable_id,
                 'action' => $this->action,

@@ -7,6 +7,7 @@
  * @version 1.0.0
  */
 import { type ServerSideTableParams } from "../../types";
+import type { ServerSideFilters } from "../../types/components/common/table.types";
 export function getVisiblePages(
     current : number,
     total: number,
@@ -38,8 +39,13 @@ export function getVisiblePages(
     };
 }
 
+/**
+ * Convierte los parametros de la tabla del lado del cliente a los parametros del lado del servidor
+ * @param params 
+ * @returns 
+ */
 
-export function convertServerSideQueryParams( params : ServerSideTableParams){
+export function convertServerSideQueryParams( params : ServerSideTableParams) : ServerSideFilters{
   const { pagination, sorting, globalFilter } = params;
   const queryParams = {
       page: pagination.pageIndex + 1, // tanStack por default usa 0, asi que sumamos 1
@@ -48,5 +54,5 @@ export function convertServerSideQueryParams( params : ServerSideTableParams){
       sortBy: sorting[0]?.id || undefined,
       sortOrder: sorting[0]?.desc ? 'desc' : 'asc',
   };
-  return queryParams
+  return queryParams as ServerSideFilters;
 }

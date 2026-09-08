@@ -14,10 +14,11 @@ use App\Application\Reporte\Contracts\AssemblerContract;
 use App\Application\Reporte\DTOs\Presupuestos\Used\UsedBudgetDTO;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
 use App\Domains\Reporte\Enums\Statistic\PresupuestoReportStatisticType;
-use App\Domains\Reporte\ValueObjects\Budget\UsedBudgetVO;
+use App\Domains\Reporte\ValueObjects\Budget\UsedBudgetcollection;
 use App\Domains\Reporte\ValueObjects\ReporteQueryResult;
 use App\Shared\Domain\Services\Financial\PercentageService;
 use App\Application\Reporte\Assemblers\Abstracts\ReportAssembler;
+use App\Domains\Reporte\Contracts\Collections\Presupuestos\UsedBudgetCollectionContract;
 
 /**
  * Ensamblador encargado de transformar ReporteQueryResult a UsedBudgetDTO para la capa de presentación.
@@ -40,14 +41,15 @@ final class UsedBudgetAssembler extends ReportAssembler implements AssemblerCont
 
     protected function buildAssemble(ReporteQueryResult $results): ?UsedBudgetDTO
     {
-        /** @var UsedBudgetVO $vo */
-        $vo = $results->get(PresupuestoReportStatisticType::USED_BUDGET);
+        /** @var UsedBudgetCollectionContract $collection */
+        $collection = $results->get(PresupuestoReportStatisticType::USED_BUDGET);
 
         return new UsedBudgetDTO(
-            gastado: $vo->total_gastos,
-            presupuestado: $vo->total_presupuesto,
-            disponible: $vo->disponible,
-            porcentaje_usado: $vo->percentageUsed()
+            gastado: $collection->totalGastos(),
+            presupuestado: $collection->totalPresupuesto(),
+            disponible: $collection->disponible(),
+            porcentaje_usado: $collection->percentageUsed(),
+            detailed: $collection
         );
     }
 }

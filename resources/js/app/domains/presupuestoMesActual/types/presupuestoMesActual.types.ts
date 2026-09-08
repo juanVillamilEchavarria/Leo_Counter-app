@@ -30,18 +30,18 @@ export type PresupuestoMesActualTableData = Omit<Presupuesto, 'periodo'> &{
 
 export const PresupuestoMesActualActions = {
     post: route('presupuestosMesActual.store'),
-    put : (id: number) => route('presupuestosMesActual.update', {id}),
-    patch : (id: number) => route('presupuestosMesActual.update', {id}),
-    delete : (id: number) => route('presupuestosMesActual.destroy', {id}),
-    duplicate : (id: number) => route('presupuestosMesActual.duplicate', {id})
+    put : (id: string) => route('presupuestosMesActual.update', {id}),
+    patch : (id: string) => route('presupuestosMesActual.update', {id}),
+    delete : (id: string) => route('presupuestosMesActual.destroy', {id}),
+    duplicate : (id: string) => route('presupuestosMesActual.duplicate', {id})
 
 }
 
 export const PresupuestoMesActualRoutes={
     index: ()=>route('presupuestosMesActual.index'),
     create: ()=>route('presupuestosMesActual.create'),
-    show: (id: number) => route('presupuestosMesActual.show', {id}),
-    edit: (id: number) => route('presupuestosMesActual.edit', {id})
+    show: (id: string) => route('presupuestosMesActual.show', {id}),
+    edit: (id: string) => route('presupuestosMesActual.edit', {id})
 } as const
 
 export type PresupuestoMesActualFormOptions={

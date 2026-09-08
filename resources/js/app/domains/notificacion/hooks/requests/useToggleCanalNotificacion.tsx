@@ -19,7 +19,7 @@ import { CanalNotificacionActions, NotificacionToggleTypes } from '../../types/n
  */
 export default function useToggleCanalNotificacion() {
   const toggle = (id: string) => {
-    router.patch(CanalNotificacionActions.toggleCanal(id, NotificacionToggleTypes.activo), {}, {
+    router.patch(CanalNotificacionActions.toggle(id, NotificacionToggleTypes.active), {}, {
       preserveState: true,
       preserveScroll: true
     })

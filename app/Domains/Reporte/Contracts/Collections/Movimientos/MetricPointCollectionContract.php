@@ -18,7 +18,7 @@ use App\Shared\Domain\Contracts\CollectionContract;
  * @version 1.0.0
  * @see App\Domains\Reporte\ValueObjects\Common\MetricPointVO
  */
-interface MetricPointCollectionContract{
+interface MetricPointCollectionContract extends CollectionContract{
     /**
      * Retorna el monto total de la coleccion
      * @return int

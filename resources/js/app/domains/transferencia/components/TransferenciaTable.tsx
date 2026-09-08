@@ -26,6 +26,7 @@ export default function TransferenciaTable({
       pageSize={pageSize}
       endpoint={TransferenciaApiActions.paginatedData}
       queryKey={['transferencias']}
+      exportTable="transferencias"
     />
   )
 }

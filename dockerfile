@@ -2,9 +2,10 @@ FROM php:8.5-apache
 
 ARG USER=leo
 ARG UID=1000
+ARG GID=1000
 
 # ================================
-# DEPENDENCIAS DEL SISTEMA (Se agrega cron)
+# DEPENDENCIAS DEL SISTEMA 
 # ================================
 RUN apt-get update && apt-get install -y --no-install-recommends \
     cron \
@@ -44,23 +45,27 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
     && echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # ================================
-# CONFIGURACIÓN NATIVA DE CRON (User Crontab)
+# CONFIGURACIÓN NATIVA DE CRON 
 # ================================
-# Copiamos el crontab a una ruta temporal
 COPY docker/crontab /tmp/laravel-cron
 
-# Blindaje: Eliminamos retornos de carro (\r) por si se editó en Windows
 RUN sed -i 's/\r$//' /tmp/laravel-cron
 
-# Instalamos el cron explícitamente en el perfil del usuario www-data
 RUN crontab -u www-data /tmp/laravel-cron \
     && rm /tmp/laravel-cron
+
+# Entrypoint del scheduler 
+COPY docker/scheduler-entrypoint.sh /usr/local/bin/scheduler-entrypoint.sh
+RUN chmod +x /usr/local/bin/scheduler-entrypoint.sh
 # ================================
-# USUARIO DEL SISTEMA
+# USUARIO DEL SISTEMA 
 # ================================
-RUN useradd -G www-data,root -u "${UID}" -d "/home/${USER}" "${USER}" \
+RUN groupadd -g "${GID}" "${USER}" \
+    && useradd -G www-data -u "${UID}" -g "${GID}" -d "/home/${USER}" "${USER}" \
     && mkdir -p "/home/${USER}/.composer" \
     && chown -R "${USER}:${USER}" "/home/${USER}"
+
+ENV COMPOSER_HOME="/home/${USER}/.composer"
 
 WORKDIR /var/www/html
 
@@ -91,17 +96,26 @@ ENV VITE_API_URL="${VITE_API_URL}"
 # ================================
 COPY . /var/www/html
 
-# Dependencias PHP
+RUN chown -R "${USER}:www-data" /var/www/html
+
+USER "${USER}"
+
 RUN composer install --no-dev --optimize-autoloader --no-scripts
 # Eliminar el manifiesto de paquetes cacheado para forzar su regeneración limpia
 RUN rm -f bootstrap/cache/packages.php && php artisan package:discover
 
-# Build de assets
 RUN pnpm install && pnpm run build
 
 # Verificar manifiesto Vite
 RUN test -f public/build/manifest.json \
     || (echo "ERROR: manifest.json de Vite no encontrado." && exit 1)
+
+
+USER root
+
+
+ENV APACHE_RUN_USER=www-data \
+    APACHE_RUN_GROUP=www-data
 
 # ================================
 # ESTRUCTURA DE STORAGE
@@ -115,14 +129,16 @@ RUN mkdir -p \
     storage/logs \
     bootstrap/cache
 
-# Permisos correctos para www-data
+
 RUN chown -R www-data:www-data \
         storage \
         bootstrap/cache \
-        public/build \
     && chmod -R 775 \
         storage \
         bootstrap/cache
+
+
+RUN chmod -R 755 public
 
 # ================================
 # ENTRYPOINT

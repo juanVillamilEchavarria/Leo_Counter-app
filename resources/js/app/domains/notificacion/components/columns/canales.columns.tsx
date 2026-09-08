@@ -16,7 +16,6 @@ import ModelToggle from "@/app/shared/components/table/actions/ModelToggle";
 import CrudButton from "@/app/shared/components/common/CrudButton";
 
 export const CanalesColumns = (): SimpleTableColumn<CanalNotificacion>[] => [
-    { key: 'id', label: 'ID' },
     { key: 'nombre', label: 'Nombre' },
     {
         key: 'active',

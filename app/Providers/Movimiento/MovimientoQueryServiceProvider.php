@@ -28,10 +28,15 @@ use App\Application\Movimiento\Contracts\Queries\Executors\MovimientoForShowQuer
 use App\Infrastructure\Movimiento\Queries\Executors\Eloquent\EloquentMovimientoForShowQueryExecutor;
 use App\Application\Movimiento\Contracts\Queries\Executors\GetAllArchivoMovimientosForAMovimientoQueryExecutorContract;
 use App\Infrastructure\ArchivoMovimiento\Queries\Executors\Eloquent\EloquentGetAllArchivoMovimientosForAMovimientoQueryExecutorContract;
+use App\Infrastructure\Movimiento\Queries\Strategies\EloquentMovimientoExportQueryStrategy;
 final class MovimientoQueryServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        $this->app->tag([
+            EloquentMovimientoExportQueryStrategy::class,
+        ], 'export.query.strategies');
+
         $this->app->when(ListAllSpontaneousMovimientosWithDetailsHandler::class)
             ->needs(MovimientoQueryExecutorContract::class)
             ->give(EloquentListAllSpontaneousMovimientosWithDetailsExecutor::class);

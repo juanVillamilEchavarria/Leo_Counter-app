@@ -12,8 +12,8 @@ export default function useSubmitWithId({
     itemId,
     execute
 }:{
-    itemId: number | null | undefined,
-    execute: (id: number) => void
+    itemId: string | null | undefined,
+    execute: (id: string) => void
 }) {
     const submit = async ()=>{
         if(!itemId) return 

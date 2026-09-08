@@ -19,7 +19,6 @@ import useMyDropZone from "./dropZone/useMyDropZone";
 import useSubmitWithId from "./form/useSubmitWithId";
 import useOpen from "./open/useOpen";
 import { useModalItem } from "./modal/useModalItem";
-import useApi from "./api/useApi";
 import useCategoriasMovimientoFilter from "./filter/useCategoriasMovimientoFilter";
 import useEntries from "./table/pagination/useEntries";
 import { useMultiSelect } from "./useMultiSelect";
@@ -31,7 +30,6 @@ export {
     useModelToggle,
     useMyDropZone,
     useOpen,
-    useApi,
     useSimplePagination,
     useSubmitWithId,
     useSimpleTable,

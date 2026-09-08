@@ -59,7 +59,6 @@ final readonly class ProcessFinancialTasksForMovimientoFijoHandler
             $updatedMovimiento = $movimientoFijo->recalculateNextDate($this->recalculateNextDateResolver);
             $this->movimientoFijoRepositoryContract->update($updatedMovimiento);
         });
-        // lanzamos los eventos de aplicacion (caso de uso)
         if($warningDays->count()>0){
             $this->eventBus->publish(new MovimientoFijoWarningDayArrived($warningDays));
         }

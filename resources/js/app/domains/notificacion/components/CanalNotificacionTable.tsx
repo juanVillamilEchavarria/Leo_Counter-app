@@ -33,11 +33,15 @@ export default function CanalNotificacionTable({
   const columns = useMemo((): SimpleTableColumn<CanalNotificacion>[] => CanalesColumns(), [])
 
   return (
-    <SimpleTable
+    <div className=" w-1/2">
+       <SimpleTable
       data={data}
       columns={columns}
-      pagination={true}
-      pageSize={pageSize}
+      pagination={false}
+      pageSize={20}
     />
+
+    </div>
+   
   )
 }

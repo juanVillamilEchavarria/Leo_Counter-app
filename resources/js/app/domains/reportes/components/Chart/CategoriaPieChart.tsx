@@ -4,7 +4,7 @@
  * @license MIT
  * @copyright 2026 Juan Esteban Villamil Echavarria
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.1.0
  */
 import Title from "@/app/shared/components/common/Title"
 import { Pie, PieChart, Cell } from "recharts"
@@ -20,6 +20,9 @@ import {
 } from "@/app/shared/components/ui/chart"
 import useCategoriaPieChart from "../../hooks/Charts/useCategoriaPieChart"
 import type { DistribucionPorCategoria } from "../../types/reporte.types"
+import { useEffect } from "react"
+import { calculatePercentagesForCategoryDistribution } from "../../helpers/statistic.helper"
+import { useState } from "react"
 
 const pieColors = [
   "var(--chart-1)",
@@ -43,7 +46,7 @@ interface CategoriaPieChartProps {
 export default function CategoriaPieChart({ distribucion }: CategoriaPieChartProps) {
   const {filteredData, filteredOptions} = useCategoriaPieChart({data: distribucion.data})
   const hasData = filteredData.length > 0
-
+  console.log('filteredData', filteredData)
   return (
     <Card>
       <div className="flex flex-col gap-4">

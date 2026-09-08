@@ -11,6 +11,7 @@ import TableEntries from "../pagination/TableEntries"
 import { type SimpleTableProps } from "../../../types/components"
 import { useEntries } from "@/app/shared/hooks"
 import {useSimpleTable }from "@/app/shared/hooks"
+import { ExportButton } from "@/app/domains/exportacion"
 /**
  * Componente de tabla client side, con paginacion
  * @param {SimpleTableColumn[]} columns - Columnas de la tabla
@@ -30,6 +31,8 @@ export default function SimpleTable<T>({
     emptyMessage= "No hay registros",
     pagination=true,
     pageSize=10,
+    exportTable,
+    idKey = 'id' as keyof T,
 }: SimpleTableProps<T>) {
     const {entries, setEntries} = useEntries({
         value: pageSize
@@ -38,10 +41,27 @@ export default function SimpleTable<T>({
         data,
         pageSize: entries,
        })
+
+    const visibleIds = exportTable
+        ? paginatedData.map((row) => String(row[idKey]))
+        : undefined
+
+
+
   return (
     <div>
+         <div className="flex w-full justify-end">
+            {exportTable && (
+                <ExportButton
+                    table={exportTable}
+                    totalRecords={data.length}
+                    visibleIds={visibleIds}
+                    disabled={data.length === 0}
+                />
+            )}
+         </div>
          <div className="overflow-x-auto w-full table-container">
-            <table className="table-general min-w-[640px]">
+            <table className="table-general min-w-160">
                 <thead className="table-thead">
                     <tr>
                         {columns.map((col)=>(
@@ -83,7 +103,7 @@ export default function SimpleTable<T>({
             </table>
             
         </div>
-        {pagination&&(
+        {pagination &&(
                  <div className="mt-10 w-full flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                         <TablePagination
                         controller={controller}        

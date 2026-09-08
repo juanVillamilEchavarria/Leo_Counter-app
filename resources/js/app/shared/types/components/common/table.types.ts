@@ -6,6 +6,7 @@
  * @since 1.0.0
  * @version 1.0.0
  */
+import type { ExportableTableKey } from "@/app/domains/exportacion"
 import { type ColumnDef, type PaginationState, type SortingState } from "@tanstack/react-table"
 export type EditAndDeleteActionsProps={
     editHref?: string,
@@ -37,6 +38,8 @@ export type SimpleTableProps<T>={
         pagination?: boolean
         pageSize?:number,
         controller?: TablePaginationController
+        exportTable?: ExportableTableKey
+        idKey?: keyof T
 }
 export interface TablePaginationController {
   page: number
@@ -102,4 +105,12 @@ export type UseServerSideTanStackTableProps<T extends Record<string, any>>={
     endpoint: string
     queryKey: string[]
     initialPageSize?: number
+}
+
+export interface ServerSideFilters {
+  search?: string
+  sortBy?: string
+  sortOrder?: 'asc' | 'desc'
+  page?: number
+  perPage?: number
 }

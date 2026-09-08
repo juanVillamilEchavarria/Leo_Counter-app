@@ -8,21 +8,27 @@
  * @since 1.0.1
  * @version 1.0.1
  */
+
 namespace App\Providers\Transferencia;
 
-use Illuminate\Support\ServiceProvider;
+use App\Application\Transferencia\Contracts\Queries\Executors\TransferenciaPaginatedTableQueryExecutorContract;
+use App\Application\Transferencia\Contracts\Queries\Executors\TransferenciaQueryExecutorContract;
+use App\Application\Transferencia\Queries\Handlers\ListTransferenciasForTableHandler;
 use App\Domains\Transferencia\Contracts\Repositories\TransferenciaRepositoryContract;
 use App\Infrastructure\Transferencia\Persistence\Repositories\Eloquent\EloquentTransferenciaRepository;
-use App\Application\Transferencia\Contracts\Queries\Executors\TransferenciaQueryExecutorContract;
 use App\Infrastructure\Transferencia\Queries\Executors\Eloquent\EloquentListTransferenciasExecutor;
-use App\Application\Transferencia\Queries\Handlers\ListTransferenciasForTableHandler;
-use App\Application\Transferencia\Contracts\Queries\Executors\TransferenciaPaginatedTableQueryExecutorContract;
 use App\Infrastructure\Transferencia\Queries\Executors\Eloquent\EloquentTransferenciaPaginatedTableQueryExecutor;
+use App\Infrastructure\Transferencia\Queries\Strategies\EloquentTransferenciaExportQueryStrategy;
+use Illuminate\Support\ServiceProvider;
 
 class TransferenciaServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        $this->app->tag([
+            EloquentTransferenciaExportQueryStrategy::class,
+        ], 'export.query.strategies');
+
         $this->app->singleton(TransferenciaRepositoryContract::class, EloquentTransferenciaRepository::class);
         $this->app->singleton(TransferenciaQueryExecutorContract::class, EloquentListTransferenciasExecutor::class);
 

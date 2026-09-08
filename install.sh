@@ -24,7 +24,7 @@ echo -e "${CYAN}================================================================
 echo ""
 
 # ================================================================
-# 1. VALIDACIONES PREVIAS
+#  VALIDACIONES PREVIAS
 # ================================================================
 echo -e "${BLUE}>>> Verificando requisitos del sistema...${NC}"
 
@@ -49,7 +49,7 @@ fi
 echo -e "${GREEN}>>> Requisitos verificados.${NC}"
 
 # ================================================================
-# 2. CONFIGURACION DEL ARCHIVO .env
+#  CONFIGURACION DEL ARCHIVO .env
 # ================================================================
 if [ ! -f .env ]; then
     if [ ! -f .env.example ]; then
@@ -68,7 +68,7 @@ else
 fi
 
 # ================================================================
-# 3. ESTRUCTURA DE DIRECTORIOS (CRITICO)
+# ESTRUCTURA DE DIRECTORIOS 
 # ================================================================
 echo -e "${BLUE}>>> Creando estructura de directorios requerida...${NC}"
 
@@ -89,25 +89,24 @@ touch storage/framework/views/.gitkeep 2>/dev/null || true
 echo -e "${GREEN}>>> Estructura de directorios lista.${NC}"
 
 # ================================================================
-# 4. PERMISOS
+#  PERMISOS
 # ================================================================
 echo -e "${BLUE}>>> Ajustando permisos de directorios base...${NC}"
 chmod 775 storage storage/framework storage/logs storage/app bootstrap/cache 2>/dev/null || true
 echo -e "${GREEN}>>> Permisos base verificados.${NC}"
 
 # ================================================================
-# 5. BUILD DE IMAGENES
+#  BUILD DE IMAGENES
 # ================================================================
 echo -e "${BLUE}>>> Preparando variables de entorno para el build...${NC}"
 
-# --- Leer las claves de Reverb del .env  ---
 REVERB_APP_KEY=$(grep -E '^REVERB_APP_KEY=' .env | cut -d= -f2-)
 REVERB_APP_ID=$(grep -E '^REVERB_APP_ID=' .env | cut -d= -f2-)
 REVERB_APP_SECRET=$(grep -E '^REVERB_APP_SECRET=' .env | cut -d= -f2-)
 REVERB_HOST=$(grep -E '^REVERB_HOST=' .env | cut -d= -f2-)
 REVERB_PORT=$(grep -E '^REVERB_PORT=' .env | cut -d= -f2-)
 REVERB_SCHEME=$(grep -E '^REVERB_SCHEME=' .env | cut -d= -f2-)
-# --- Leer las variables para el build de Vite ---
+
 VITE_API_URL=$(grep -E '^VITE_API_URL=' .env | cut -d= -f2- )
 
 echo -e "${BLUE}>>> Construyendo imagen Docker (puede tomar varios minutos)...${NC}"
@@ -121,10 +120,10 @@ docker compose build --no-cache \
      --build-arg VITE_API_URL="${VITE_API_URL}"
 
 # ================================================================
-# 6. LEVANTAR SERVICIOS DE SOPORTE
+#  LEVANTAR SERVICIOS DE SOPORTE
 # ================================================================
-echo -e "${BLUE}>>> Iniciando servicios de soporte (DB, Redis, Mailhog, PhpMyAdmin)...${NC}"
-docker compose up -d db redis mailhog phpmyadmin
+echo -e "${BLUE}>>> Iniciando servicios de soporte (DB, Redis, PhpMyAdmin)...${NC}"
+docker compose up -d db redis phpmyadmin
 
 echo -e "${YELLOW}>>> Esperando a que la base de datos este lista...${NC}"
 RETRIES=30
@@ -143,7 +142,7 @@ echo ""
 echo -e "${GREEN}>>> Base de datos lista.${NC}"
 
 # ================================================================
-# 7. INICIAR APLICACION
+#  INICIAR APLICACION
 # ================================================================
 echo -e "${BLUE}>>> Iniciando contenedor de la aplicacion...${NC}"
 docker compose up -d app
@@ -163,17 +162,16 @@ done
 echo -e "${GREEN}>>> Aplicacion lista.${NC}"
 
 # ================================================================
-# 8. SETUP DE LARAVEL
+#  SETUP DE LARAVEL
 # ================================================================
 echo -e "${BLUE}>>> Preparando la configuración...${NC}"
-# --- Forzar la lectura del archivo .env eliminando la caché de configuración generada en el build ---
-docker compose exec -T app php artisan config:clear
+docker compose exec -T --user=www-data app php artisan config:clear
 
 echo -e "${BLUE}>>> Ejecutando migraciones...${NC}"
 MAX_TRIES=5
 TRIES=0
 while [ $TRIES -lt $MAX_TRIES ]; do
-    if docker compose exec -T app php artisan migrate --force; then
+    if docker compose exec -T --user=www-data app php artisan migrate --force; then
         break
     else
         echo -e "${YELLOW}>>> La base de datos aun no acepta conexiones TCP, reintentando en 3 segundos... ($((TRIES+1))/$MAX_TRIES)${NC}"
@@ -188,21 +186,20 @@ if [ $TRIES -eq $MAX_TRIES ]; then
 fi
 
 echo -e "${BLUE}>>> Ejecutando seeders...${NC}"
-docker compose exec -T app php artisan db:seed --force
+docker compose exec -T --user=www-data app php artisan db:seed --force
 
 echo -e "${BLUE}>>> Creando enlace simbólico de storage...${NC}"
-docker compose exec -T app rm -rf public/storage
-docker compose exec -T app php artisan storage:link --force
+docker compose exec -T --user=leo app php artisan storage:link --force
 
 echo -e "${BLUE}>>> Optimizando Laravel...${NC}"
-docker compose exec -T app php artisan config:cache
-docker compose exec -T app php artisan route:cache
-docker compose exec -T app php artisan view:cache
-docker compose exec -T app php artisan event:cache
+docker compose exec -T --user=www-data app php artisan config:cache
+docker compose exec -T --user=www-data app php artisan route:cache
+docker compose exec -T --user=www-data app php artisan view:cache
+docker compose exec -T --user=www-data app php artisan event:cache
 echo -e "${GREEN}>>> Laravel configurado.${NC}"
 
 # ================================================================
-# 9. DIAGNOSTICO PREVIO AL FINISH
+#  DIAGNOSTICO PREVIO AL FINISH
 # ================================================================
 echo -e "${BLUE}>>> Verificando estado de la aplicacion...${NC}"
 HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080 2>/dev/null || echo "000")
@@ -217,7 +214,7 @@ else
 fi
 
 # ================================================================
-# 10. SERVICIO SYSTEMD (solo si systemctl disponible)
+# SERVICIO SYSTEMD (solo si systemctl disponible)
 # ================================================================
 SERVICE_FILE="/etc/systemd/system/leo-counter.service"
 
@@ -257,7 +254,7 @@ elif [ -f "$SERVICE_FILE" ]; then
     echo -e "${BLUE}>>> Servicio systemd ya existe.${NC}"
 fi
 # ================================================================
-# 11. ARRANQUE FINAL (todos los servicios)
+#  ARRANQUE FINAL (todos los servicios)
 # ================================================================
 echo -e "${BLUE}>>> Iniciando todos los servicios (queue, scheduler, reverb)...${NC}"
 docker compose up -d
@@ -267,7 +264,6 @@ echo -e "${GREEN}============================================================${N
 echo -e "${GREEN}   Instalacion completada con exito!                      ${NC}"
 echo -e "${GREEN}============================================================${NC}"
 echo -e "${GREEN}   Aplicacion:   http://localhost:8080                    ${NC}"
-echo -e "${GREEN}   Mailhog:      http://localhost:8025                    ${NC}"
 echo -e "${GREEN}   PhpMyAdmin:   http://localhost:8082                    ${NC}"
 echo -e "${GREEN}   Reverb WS:    ws://localhost:8085                      ${NC}"
 echo -e "${GREEN}============================================================${NC}"

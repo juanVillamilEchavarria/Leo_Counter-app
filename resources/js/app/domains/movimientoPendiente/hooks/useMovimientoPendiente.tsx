@@ -16,7 +16,7 @@ export default function useMovimientoPendiente({
     data
 }:{
     method ?: keyof typeof FormMethods,
-    id ?: number | null
+    id ?: string | null
     data ?: MovimientoPendiente 
 }) {
     const action = (() => {

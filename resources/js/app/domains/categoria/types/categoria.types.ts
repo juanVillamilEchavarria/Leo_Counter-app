@@ -38,8 +38,8 @@ export const CategoriaToggleTypes = {
 export const CategoriaRoutes = {
     index : () => route('categorias.index'),
     create : () => route('categorias.create'),
-    show : (id: number) => route('categorias.show', {id}),
-    edit : (id: number) => route('categorias.edit', {id})
+    show : (id: string) => route('categorias.show', {id}),
+    edit : (id: string) => route('categorias.edit', {id})
 }
 
 export type CategoriaFormData = Pick< //traemos las propiedades de Categoria que se enviaran al backend mediante el formulario

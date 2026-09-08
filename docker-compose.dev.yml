@@ -6,17 +6,15 @@ services:
       args:
         - USER=leo
         - UID=1000
+        - GID=1000
     container_name: leo_counter_app
     restart: unless-stopped
     ports:
       - "8080:80"
       - "5173:5173"
     volumes:
-      #  Código fuente del host
       - .:/var/www/html:z
-      #  node_modules en volumen Docker nombrado
       - dev_node_modules:/var/www/html/node_modules
-      #  Storage separado del código
       - ./storage:/var/www/html/storage:z
     env_file:
       - .env
@@ -39,9 +37,11 @@ services:
       args:
         - USER=leo
         - UID=1000
+        - GID=1000
     image: leo_counter_app_dev
     container_name: leo_counter_queue
     restart: unless-stopped
+    user: "${UID:-1000}:${GID:-1000}"
     command: php artisan queue:work --sleep=3 --tries=3 --max-time=3600
     volumes:
       - .:/var/www/html:z
@@ -68,10 +68,12 @@ services:
       args:
         - USER=leo
         - UID=1000
+        - GID=1000
     image: leo_counter_app_dev
     container_name: leo_counter_scheduler
     restart: unless-stopped
-    command: /bin/sh -c "printenv | grep -v 'no_proxy' >> /etc/environment && touch /var/www/html/storage/logs/cron.log && chown www-data:www-data /var/www/html/storage/logs/cron.log && cron && tail -f /var/www/html/storage/logs/cron.log"
+    user: "${UID:-1000}:${GID:-1000}"
+    command: ["/bin/sh", "/var/www/html/docker/scheduler-entrypoint.sh"]
     volumes:
       - .:/var/www/html:z
       - dev_node_modules:/var/www/html/node_modules
@@ -98,9 +100,11 @@ services:
       args:
         - USER=leo
         - UID=1000
+        - GID=1000
     image: leo_counter_app_dev
     container_name: leo_counter_reverb
     restart: unless-stopped
+    user: "${UID:-1000}:${GID:-1000}"
     command: php artisan reverb:start --port=8081 --host=0.0.0.0
     ports:
       - "8085:8081"
@@ -169,21 +173,22 @@ services:
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
-      PMA_USER: ${DB_USERNAME}
-      PMA_PASSWORD: ${DB_PASSWORD}
     depends_on:
       db:
         condition: service_healthy
     networks:
       - leo_network
 
-  mailhog:
-    image: mailhog/mailhog
-    container_name: mailhog
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: mailpit
     restart: unless-stopped
     ports:
       - "1025:1025"
       - "8025:8025"
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
     networks:
       - leo_network
 

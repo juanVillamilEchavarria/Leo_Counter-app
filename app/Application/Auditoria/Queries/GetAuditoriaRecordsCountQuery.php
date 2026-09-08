@@ -23,9 +23,5 @@ use App\Application\Auditoria\Contracts\Queries\ListAuditoriaQueryContract;
 /**
  * Query que representa la intención de obtener el conteo de registros de auditorías.
  * Se utiliza cuando solo se necesita conocer el número total de auditorías en el sistema.
- *
- * @package App\Application\Auditoria\Queries
  */
-final readonly class GetAuditoriaRecordsCountQuery implements ListAuditoriaQueryContract
-{
-}
+final readonly class GetAuditoriaRecordsCountQuery implements ListAuditoriaQueryContract {}

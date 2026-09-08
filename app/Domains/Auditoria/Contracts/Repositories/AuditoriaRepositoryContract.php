@@ -35,4 +35,6 @@ interface AuditoriaRepositoryContract
      */
     public function findById( AggregateModelIdContract $id ): ?AggregateModelContract;
 
+    public function destroy( AggregateModelIdContract $id ): bool;
+
 }

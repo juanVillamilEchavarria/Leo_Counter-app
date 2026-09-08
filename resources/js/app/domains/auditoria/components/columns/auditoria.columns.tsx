@@ -11,6 +11,7 @@ import { type ColumnDef } from "@tanstack/react-table"
 import { dateFormat } from "@/app/shared/helpers"
 import type { AuditoriaTableData } from "../../types/auditoria.types"
 import ValuesReview from "../ValuesReview"
+import NameAndEmail from "@/app/shared/components/common/NameAndEmail"
 
 /**
  * Columnas para la tabla de auditorías.
@@ -26,6 +27,9 @@ export const AuditoriaColumns = (): ColumnDef<AuditoriaTableData>[] => [
         id: 'user',
         header: 'Usuario',
         accessorKey: 'user',
+        cell:({row})=>(
+            <NameAndEmail name={row.original.user_name ?? 'Desconocido'} email={row.original.user_email ?? undefined} />
+        )
     },
     {
         id: 'auditable_type',

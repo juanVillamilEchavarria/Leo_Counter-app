@@ -5,6 +5,8 @@
 .env.production
 .phpactor.json
 .phpunit.result.cache
+/.opencode
+/.pnpm-store
 /.fleet
 /.idea
 /.nova

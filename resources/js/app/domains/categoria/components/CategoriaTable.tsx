@@ -35,6 +35,7 @@ export default function CategoriaTable({
       columns={columns}
       pagination={true}
       pageSize={pageSize}
+      exportTable="categorias"
     />
   )
 }

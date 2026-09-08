@@ -32,6 +32,7 @@ export default function PropietarioTable({
       columns={columns}
       pagination={true}
       pageSize={pageSize}
+      exportTable="propietarios"
     />
   )
 }

@@ -8,13 +8,17 @@
  * @since 1.0.0
  * @version 1.0.0
  */
+
 namespace App\Providers\Usuario;
 
+use App\Application\Usuario\Contracts\Queries\Executors\GetAdminUserQueryExecutorContract;
 use App\Application\Usuario\Contracts\Queries\Executors\UsuarioQueryExecutorContract;
+use App\Application\Usuario\Queries\Handlers\GetAdminUserHandler;
 use App\Application\Usuario\Queries\Handlers\ListAllUsuariosHandler;
 use App\Domains\Usuario\Contracts\Repositories\UsuarioRepositoryContract;
 use App\Domains\Usuario\Contracts\Services\PasswordHasherContract;
 use App\Infrastructure\Usuario\Persistence\Repositories\Eloquent\EloquentUsuarioRepository;
+use App\Infrastructure\Usuario\Queries\Executors\Eloquent\EloquentGetAdminUserQueryExecutor;
 use App\Infrastructure\Usuario\Queries\Executors\Eloquent\EloquentListAllUsuariosExecutor;
 use App\Infrastructure\Usuario\Services\LaravelPasswordHasher;
 use Illuminate\Support\ServiceProvider;
@@ -23,8 +27,9 @@ use Illuminate\Support\ServiceProvider;
  * Service provider de bindings del módulo Usuario.
  *
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
- * @package App\Providers\Usuario
+ *
  * @since 1.0.0
+ *
  * @version 1.0.0
  */
 final class UsuarioServiceProvider extends ServiceProvider
@@ -36,5 +41,10 @@ final class UsuarioServiceProvider extends ServiceProvider
         $this->app->when(ListAllUsuariosHandler::class)
             ->needs(UsuarioQueryExecutorContract::class)
             ->give(EloquentListAllUsuariosExecutor::class);
-    }
+
+        $this->app->bind(
+        GetAdminUserQueryExecutorContract::class,
+        EloquentGetAdminUserQueryExecutor::class
+            );
+            }
 }

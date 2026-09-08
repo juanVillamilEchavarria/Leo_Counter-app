@@ -24,11 +24,12 @@ export default function MovimientoTable({
    , [MovimientoColumns])
   return (
     <>
-        <TanStackTableServerSide<MovimientoTableData>
+<TanStackTableServerSide<MovimientoTableData>
             columns={columns}
             endpoint={MovimientoApiActions.paginatedData}
             queryKey={['movimientos', 'historicos']}
             pageSize={10}
+            exportTable="movimientos"
         />
     </>
   )

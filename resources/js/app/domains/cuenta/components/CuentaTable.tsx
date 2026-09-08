@@ -35,6 +35,7 @@ export default function CuentaTable({
       columns={columns}
       pagination={true}
       pageSize={pageSize}
+      exportTable="cuentas"
     />
   )
 }

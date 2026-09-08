@@ -33,6 +33,7 @@ export default function MovimientoFijoTable({
       pageSize={10}
       columns={columns}
       pagination={true}
+      exportTable="movimientos_fijos"
     />
   )
 }

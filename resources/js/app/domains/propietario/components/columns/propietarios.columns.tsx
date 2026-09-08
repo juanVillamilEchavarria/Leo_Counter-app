@@ -62,7 +62,7 @@ export const PropietarioColumns=({
         deleteOnClick={()=> onSelect(row, 'delete')} // onSelect recibe el registro de la fila
         />
       ):(
-        <div className="w-1/2 mx-auto">
+        <div className="">
         <ActionSection actions={buildMovimientoPendienteActions(row, onSelect)} as={CrudButton} />
         </div>
       )}

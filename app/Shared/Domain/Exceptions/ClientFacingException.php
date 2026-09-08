@@ -10,7 +10,9 @@
  */
 namespace App\Shared\Domain\Exceptions;
 
-interface ClientFacingException
+use Throwable;
+
+interface ClientFacingException extends Throwable
 {
     /**
      * Obtiene el mensaje de error que se mostrará al cliente.

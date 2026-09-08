@@ -41,12 +41,33 @@ abstract readonly class TableQueryMapper{
          * @var TableQuery $query
          */
         return new $query(
-            search: $data->search,
-            perPage: $data->perPage,
-            sortBy: $data->sortBy,
-            sortOrder: $data->sortOrder,
-            page: $data->page
+            search: $data->search ?? null,
+            perPage: $data->perPage ?? null,
+            sortBy: $data->sortBy ?? null,
+            sortOrder: $data->sortOrder ?? null,
+            page: $data->page ?? null
         );
+    }
+    /**
+     * Mapea un array de datos a un TableQuery de aplicacion.
+     * @param array $data
+     */
+
+    public function mapFromArray(array $data){
+        return $this->map((object) $data);
+    }
+
+    /**
+     * Mapea un TableQuery de aplicacion a un array de datos.
+     */
+    public function mapToArray(TableQuery $query){
+        return [
+            'search' => $query->search,
+            'perPage' => $query->perPage,
+            'sortBy' => $query->sortBy,
+            'sortOrder' => $query->sortOrder,
+            'page' => $query->page
+        ];
     }
 
 }

@@ -30,6 +30,7 @@ export default function MovimientoPendienteTable({
         columns={columns}
         pagination={true}
         pageSize={10}
+        exportTable="movimientos_pendientes"
       />
     </>
   )

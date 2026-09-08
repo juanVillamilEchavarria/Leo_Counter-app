@@ -17,14 +17,17 @@ Write-Host "  Iniciando el proceso de instalación automatizada para Windows..."
 Write-Host "=================================================================" -ForegroundColor Blue
 Write-Host ""
 
-# --- 1. Validaciones previas ---
+# ================================================================
+#  VALIDACIONES PREVIAS
+# ================================================================
 if (-not (Get-Command docker -ErrorAction SilentlyContinue)) {
     Write-Host "Error: Docker no está instalado o no está en el PATH." -ForegroundColor Red
     Write-Host "Por favor, instala Docker Desktop primero: https://www.docker.com/products/docker-desktop/" -ForegroundColor Yellow
     Exit 1
 }
-
-# --- 2. Archivo .env ---
+# ================================================================
+#  CONFIGURACION DEL ARCHIVO .env
+# ================================================================
 if (-not (Test-Path .env)) {
     Write-Host ">>> Creando archivo .env desde .env.example..." -ForegroundColor Blue
     Copy-Item .env.example .env
@@ -35,7 +38,9 @@ if (-not (Test-Path .env)) {
     Write-Host ">>> Archivo .env ya existe. Saltando..." -ForegroundColor Blue
 }
 
-# --- 3. Estructura de directorios ---
+# ================================================================
+# ESTRUCTURA DE DIRECTORIOS 
+# ================================================================
 Write-Host ">>> Creando estructura de directorios requerida..." -ForegroundColor Blue
 
 $directories = @(
@@ -61,7 +66,9 @@ foreach ($dir in $directories) {
 
 Write-Host ">>> Estructura de directorios lista." -ForegroundColor Green
 
-# --- 4. Build de imágenes con argumentos de entorno ---
+# ================================================================
+#  BUILD DE IMAGENES
+# ================================================================
 Write-Host ">>> Preparando variables de entorno para el build..." -ForegroundColor Blue
 
 $envContent = Get-Content .env -Raw
@@ -95,9 +102,11 @@ docker compose build --no-cache `
 
 Write-Host ">>> Imagen construida." -ForegroundColor Green
 
-# --- 5. Iniciar servicios de soporte y esperar a la base de datos ---
-Write-Host ">>> Iniciando servicios de soporte (DB, Redis, Mailhog, PhpMyAdmin)..." -ForegroundColor Blue
-docker compose up -d db redis mailhog phpmyadmin
+# ================================================================
+#  LEVANTAR SERVICIOS DE SOPORTE
+# ================================================================
+Write-Host ">>> Iniciando servicios de soporte (DB, Redis, PhpMyAdmin)..." -ForegroundColor Blue
+docker compose up -d db redis phpmyadmin
 
 Write-Host ">>> Esperando a que la base de datos esté lista..." -ForegroundColor Yellow
 $retries = 30
@@ -118,7 +127,9 @@ if ($health -ne "healthy") {
 }
 Write-Host ">>> Base de datos lista." -ForegroundColor Green
 
-# --- 6. Iniciar aplicación y esperar a Apache ---
+# ================================================================
+#  INICIAR APLICACION
+# ================================================================
 Write-Host ">>> Iniciando contenedor de la aplicación..." -ForegroundColor Blue
 docker compose up -d app
 
@@ -138,16 +149,18 @@ if ($count -ge $retries) {
 }
 Write-Host ">>> Aplicación lista." -ForegroundColor Green
 
-# --- 7. Setup de Laravel ---
+# ================================================================
+#  SETUP DE LARAVEL
+# ================================================================
 Write-Host ">>> Preparando la configuración..." -ForegroundColor Blue
-docker compose exec -T app php artisan config:clear
+docker compose exec -T --user=www-data app php artisan config:clear
 
 Write-Host ">>> Ejecutando migraciones..." -ForegroundColor Blue
 $MaxTries = 5
 $Tries = 0
 
 while ($Tries -lt $MaxTries) {
-    docker compose exec -T app php artisan migrate --force
+    docker compose exec -T --user=www-data app php artisan migrate --force
     if ($LASTEXITCODE -eq 0) {
         break
     } else {
@@ -164,21 +177,22 @@ if ($Tries -eq $MaxTries) {
 }
 
 Write-Host ">>> Ejecutando seeders..." -ForegroundColor Blue
-docker compose exec -T app php artisan db:seed --force
+docker compose exec -T --user=www-data app php artisan db:seed --force
 
 Write-Host ">>> Creando enlace simbólico de storage..." -ForegroundColor Blue
-docker compose exec -T app rm -f public/storage
-docker compose exec -T app php artisan storage:link --force
+docker compose exec -T --user=leo app php artisan storage:link --force
 
 Write-Host ">>> Optimizando Laravel..." -ForegroundColor Blue
-docker compose exec -T app php artisan config:cache
-docker compose exec -T app php artisan route:cache
-docker compose exec -T app php artisan view:cache
-docker compose exec -T app php artisan event:cache
+docker compose exec -T --user=www-data app php artisan config:cache
+docker compose exec -T --user=www-data app php artisan route:cache
+docker compose exec -T --user=www-data app php artisan view:cache
+docker compose exec -T --user=www-data app php artisan event:cache
 
 Write-Host ">>> Laravel configurado." -ForegroundColor Green
 
-# --- 8. Diagnóstico previo al finish ---
+# ================================================================
+#  DIAGNOSTICO PREVIO AL FINISH
+# ================================================================
 Write-Host ">>> Verificando estado de la aplicación..." -ForegroundColor Blue
 try {
     $response = Invoke-WebRequest -Uri "http://localhost:8080" -Method Head -TimeoutSec 5 -ErrorAction SilentlyContinue
@@ -199,7 +213,9 @@ if ($httpStatus -eq 200 -or $httpStatus -eq 302) {
     }
 }
 
-# --- 9. Arranque final (todos los servicios) ---
+# ================================================================
+#  ARRANQUE FINAL (todos los servicios)
+# ================================================================
 Write-Host ">>> Iniciando todos los servicios (queue, scheduler, reverb)..." -ForegroundColor Blue
 docker compose up -d
 
@@ -208,7 +224,6 @@ Write-Host "============================================================" -Foreg
 Write-Host "   Instalación completada con éxito!                      " -ForegroundColor Green
 Write-Host "============================================================" -ForegroundColor Green
 Write-Host "   Aplicación:   http://localhost:8080                    " -ForegroundColor Green
-Write-Host "   Mailhog:      http://localhost:8025                    " -ForegroundColor Green
 Write-Host "   PhpMyAdmin:   http://localhost:8082                    " -ForegroundColor Green
 Write-Host "   Reverb WS:    ws://localhost:8085                      " -ForegroundColor Green
 Write-Host "============================================================" -ForegroundColor Green

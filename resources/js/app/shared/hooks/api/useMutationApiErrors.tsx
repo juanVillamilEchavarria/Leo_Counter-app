@@ -22,7 +22,8 @@ export default function useMutationApiErrors(mutation : UseMutationResult) {
    };
    const getValidationErrors = (): Record<string, string> => {
      if (!mutation.error) return {};
-     return parseApiErrors(mutation.error as AxiosError<ApiErrorResponse>);
+     const parsed = parseApiErrors(mutation.error as AxiosError<ApiErrorResponse>);
+     return parsed instanceof AxiosError ? {} : parsed;
    };
 
    return {

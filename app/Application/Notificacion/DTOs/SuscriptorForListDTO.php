@@ -22,7 +22,8 @@ final readonly class SuscriptorForListDTO
 {
     public function __construct(
         public string $id,
-        public string $usuario,
+        public string $usuario_nombre,
+        public string $usuario_email,
         public string $canal,
         public bool $active,
         public bool $verified

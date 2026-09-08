@@ -37,7 +37,8 @@ final readonly class EloquentAuditoriaPaginatedTableQueryExecutor extends Eloque
     {
         return [
             'usuario' => [
-                'users.name'
+                'users.name',
+                'users.email'
             ],
             'auditable_type',
             'action',

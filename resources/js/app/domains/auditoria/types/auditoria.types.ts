@@ -29,7 +29,8 @@ export const AuditoriaApiActions = {
  */
 export type Auditoria = {
     id: string,
-    user: string | null,
+    user_name: string | null,
+    user_email: string | null,
     auditable_type: string,
     auditable_id: string | null,
     action: string,

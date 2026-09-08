@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Middleware\HandleInertiaRequests;
+use App\Utils\InertiaParserException;
+use Carbon\CarbonInterval;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Inertia\Inertia;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -18,13 +20,14 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(append: [
             \App\Http\Middleware\CaptureInertiaPage::class,
-            HandleInertiaRequests::class
-
-
+            HandleInertiaRequests::class,
 
         ]);
         $middleware->api(prepend: [
             EnsureFrontendRequestsAreStateful::class,
+        ]);
+        $middleware->alias([
+            'rate.limit' => \App\Shared\Infrastructure\Framework\Laravel\Middlewares\RateLimitMiddleware::class,
         ]);
         $middleware->validateCsrfTokens(except: [
             // 'api/*',
@@ -32,24 +35,9 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (\App\Shared\Domain\Exceptions\ClientFacingException $exception, \Illuminate\Http\Request $request) {
-            if ($request->inertia()) {
-            $pageData = session()->get('_inertia_page', []);
-            $component = $pageData['component'] ?? null;
+            $fallback = response()->json(['error' => $exception->getMessage()], 500);
 
-            if ($component) {
-                // Caso normal: tenemos la página capturada, la renderizamos con el error
-                Inertia::share('flash', [
-                    'success' => null,
-                    'error' => $exception->getMessage(),
-                ]);
-                return Inertia::render($component, $pageData['props'] ?? []);
-            }
+            return InertiaParserException::parse($exception, $request, $fallback);
 
-            return back()->withErrors([
-                'domain_error' => $exception->getMessage(),
-            ])->withInput();
-        }
-
-        return response()->json(['error' => $exception->getMessage()], 500);
-    });
+        });
     })->create();

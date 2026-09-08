@@ -46,7 +46,7 @@
   }
   /* Table */
   .table-container{
-    @apply border border-border/40 rounded-2xl shadow-2xl w-full font-principal overflow-x-auto
+    @apply border border-border/10 rounded-2xl  w-full font-principal overflow-x-auto
   }
   .table-general{
     @apply table p-3 h-full w-full min-w-[640px]

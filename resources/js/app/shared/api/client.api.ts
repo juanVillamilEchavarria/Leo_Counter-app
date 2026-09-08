@@ -8,18 +8,21 @@
  */
 import AxiosClient from "@/config/api/axios";
 import {type ApiParams } from "../types";
+import type { ResponseType } from "axios";
 
 export const apiRequest = async<TResponse, TData extends Record<string,any>>({
     method = 'post',
     url,
     data,
-    params
-}:ApiParams<TData>) : Promise<TResponse>=>{
+    params,
+    responseType = 'json'
+}:ApiParams<TData> & {responseType?: ResponseType}) : Promise<TResponse>=>{
     const response = await AxiosClient.request({
         method,
         url,
         data,
-        params
+        params,
+        responseType
     })
     return response.data
 

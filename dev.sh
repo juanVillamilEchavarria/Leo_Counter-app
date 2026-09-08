@@ -24,7 +24,7 @@ echo -e "${CYAN}================================================================
 echo ""
 
 # ================================================================
-# 1. VALIDACIONES PREVIAS
+#  VALIDACIONES PREVIAS
 # ================================================================
 echo -e "${BLUE}>>> Verificando requisitos del sistema...${NC}"
 
@@ -46,7 +46,7 @@ fi
 echo -e "${GREEN}>>> Requisitos verificados.${NC}"
 
 # ================================================================
-# 2. CONFIGURACION DEL .env
+# CONFIGURACION DEL .env
 # ================================================================
 if [ ! -f .env ]; then
     if [ ! -f .env.example ]; then
@@ -61,7 +61,7 @@ else
 fi
 
 # ================================================================
-# 3. ESTRUCTURA DE DIRECTORIOS
+# ESTRUCTURA DE DIRECTORIOS
 # ================================================================
 echo -e "${BLUE}>>> Creando estructura de directorios de storage...${NC}"
 
@@ -74,13 +74,13 @@ mkdir -p \
     storage/logs \
     bootstrap/cache
 
-# Tomamos posesión de las carpetas para el usuario local antes de cambiar permisos
 echo -e "${BLUE}>>> Ajustando propiedad y permisos para el desarrollo local...${NC}"
+mkdir -p bootstrap/cache
 sudo chown -R $USER:$USER storage bootstrap/cache 2>/dev/null || true
-sudo chmod -R 775 storage bootstrap/cache
+sudo chmod -R 777 storage bootstrap/cache
 
 
-# SELinux (Fedora/RHEL)
+# SELinux
 if command -v getenforce &>/dev/null && [ "$(getenforce 2>/dev/null || echo Disabled)" != "Disabled" ]; then
     sudo chcon -Rt container_file_t storage bootstrap/cache 2>/dev/null \
         || sudo chcon -Rt svirt_sandbox_file_t storage bootstrap/cache 2>/dev/null \
@@ -90,13 +90,13 @@ fi
 echo -e "${GREEN}>>> Directorios listos.${NC}"
 
 # ================================================================
-# 4. BUILD Y LEVANTAMIENTO DE SERVICIOS
+#  BUILD Y LEVANTAMIENTO DE SERVICIOS
 # ================================================================
 echo -e "${BLUE}>>> Construyendo imagen de desarrollo...${NC}"
-docker compose -f docker-compose.dev.yml build
+docker compose -f docker-compose.dev.yml build --no-cache
 
-echo -e "${BLUE}>>> Iniciando servicios de soporte (DB, Redis, Mailhog, PhpMyAdmin)...${NC}"
-docker compose -f docker-compose.dev.yml up -d db redis mailhog phpmyadmin
+echo -e "${BLUE}>>> Iniciando servicios de soporte (DB, Redis, Mailpit, PhpMyAdmin)...${NC}"
+docker compose -f docker-compose.dev.yml up -d db redis mailpit phpmyadmin
 
 echo -e "${YELLOW}>>> Esperando base de datos...${NC}"
 RETRIES=30
@@ -117,7 +117,6 @@ echo -e "${GREEN}>>> Base de datos lista.${NC}"
 echo -e "${BLUE}>>> Iniciando aplicación...${NC}"
 docker compose -f docker-compose.dev.yml up -d app
 sleep 3
-docker compose -f docker-compose.dev.yml exec -T app chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache 2>/dev/null || true
 
 echo -e "${YELLOW}>>> Esperando que PHP esté listo...${NC}"
 RETRIES=20
@@ -134,51 +133,55 @@ done
 echo -e "${GREEN}>>> Aplicación lista.${NC}"
 
 # ================================================================
-# 5. INSTALACIÓN DE DEPENDENCIAS
+#  INSTALACIÓN DE DEPENDENCIAS
 # ================================================================
 echo -e "${BLUE}>>> Configurando Git para el contenedor...${NC}"
-docker compose -f docker-compose.dev.yml exec -T app \
+docker compose -f docker-compose.dev.yml exec -T --user "${UID:-1000}" app \
     git config --global --add safe.directory /var/www/html
 
 echo -e "${BLUE}>>> Instalando dependencias PHP (Composer)...${NC}"
-docker compose -f docker-compose.dev.yml exec -T app \
+docker compose -f docker-compose.dev.yml exec -T --user "${UID:-1000}" app \
     composer install
 
+echo -e "${BLUE}>>> Normalizando permisos del volumen node_modules...${NC}"
+docker compose -f docker-compose.dev.yml exec -T --user=root app \
+    chown -R "${UID:-1000}:${GID:-1000}" /var/www/html/node_modules
+
 echo -e "${BLUE}>>> Instalando dependencias Node (pnpm)...${NC}"
-# ✅ pnpm usa copy mode (configurado en .npmrc) y store dentro del volumen de node_modules
-# Esto evita el error ERR_PNPM_EACCES por cross-filesystem hardlinks
-docker compose -f docker-compose.dev.yml exec -T app pnpm install
+docker compose -f docker-compose.dev.yml exec -T --user "${UID:-1000}" app pnpm install
 
 # ================================================================
-# 6. PREPARACIÓN DE LARAVEL
+#  PREPARACIÓN DE LARAVEL
 # ================================================================
 echo -e "${BLUE}>>> Generando clave de aplicación...${NC}"
-docker compose -f docker-compose.dev.yml exec -T app php artisan key:generate --force
+docker compose -f docker-compose.dev.yml exec -T --user "${UID:-1000}" app php artisan key:generate --force
 
 echo -e "${BLUE}>>> Ejecutando migraciones...${NC}"
-docker compose -f docker-compose.dev.yml exec -T app php artisan migrate --force
+docker compose -f docker-compose.dev.yml exec -T --user "${UID:-1000}" app php artisan migrate --force
 
 echo -e "${BLUE}>>> Ejecutando seeders...${NC}"
-docker compose -f docker-compose.dev.yml exec -T app php artisan db:seed --force
+docker compose -f docker-compose.dev.yml exec -T --user "${UID:-1000}" app php artisan db:seed --force
 
 echo -e "${BLUE}>>> Creando enlace simbólico de storage...${NC}"
-docker compose -f docker-compose.dev.yml exec -T app php artisan storage:link --force
+docker compose -f docker-compose.dev.yml exec -T --user "${UID:-1000}" app php artisan storage:link --force
 
 # ================================================================
-# 7. INICIAR SERVICIOS RESTANTES
+# INICIAR SERVICIOS RESTANTES
 # ================================================================
 echo -e "${BLUE}>>> Iniciando queue, scheduler y reverb...${NC}"
 docker compose -f docker-compose.dev.yml up -d
 
+docker compose -f docker-compose.dev.yml exec -T --user "${UID:-1000}" app pnpm run dev
+
 # ================================================================
-# 8. MENSAJE FINAL
+#  MENSAJE FINAL
 # ================================================================
 echo ""
 echo -e "${GREEN}============================================================${NC}"
 echo -e "${GREEN}   Entorno de desarrollo listo!                           ${NC}"
 echo -e "${GREEN}============================================================${NC}"
 echo -e "${GREEN}   App:        http://localhost:8080                      ${NC}"
-echo -e "${GREEN}   Mailhog:    http://localhost:8025                      ${NC}"
+echo -e "${GREEN}   Mailpit:    http://localhost:8025                      ${NC}"
 echo -e "${GREEN}    PhpMyAdmin: http://localhost:8082                      ${NC}"
 echo -e "${GREEN}============================================================${NC}"
 echo ""

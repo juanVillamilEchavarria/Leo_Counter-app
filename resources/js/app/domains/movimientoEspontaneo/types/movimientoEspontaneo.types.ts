@@ -16,6 +16,7 @@ export type MovimientoEspontaneo =Omit<Movimiento, 'movimiento_pendiente_id'>
 export type MovimientoEspontaneoTableData = Omit<MovimientoTableData , 'fecha'| 'movimiento_pendiente_id'>
 
 export type MovimientoEspontaneoFormData =  Omit<MovimientoEspontaneo, 'id'>  &{
+    id ?: string,
     comprobantes ? : FileWithPreview[],
     comprobantes_existing ? : FileWithPreview[],
     comprobantes_delete_ids ? : number[],
@@ -27,7 +28,7 @@ export type MovimientoEspontaneoFormProps = FormCommonProps <MovimientoEspontane
 export const MovimientoEspontaneoRoutes = {
     index : () => route('movimientosEspontaneos.index'),
     create : () => route('movimientosEspontaneos.create'),
-    edit : (id: number) => route('movimientosEspontaneos.edit', {id})
+    edit : (id: string) => route('movimientosEspontaneos.edit', {id})
 
 } as const
 

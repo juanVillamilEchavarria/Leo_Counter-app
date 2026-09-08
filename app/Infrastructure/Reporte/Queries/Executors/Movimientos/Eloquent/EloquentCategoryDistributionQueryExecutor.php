@@ -21,6 +21,8 @@ use App\Infrastructure\Reporte\Resolvers\Queries\Handlers\MovimientoQueryRelatio
 use App\Domains\Reporte\ValueObjects\ReporteQuery;
 use App\Infrastructure\Reporte\Collections\Laravel\Movimientos\LaravelCategoryDistributionCollection;
 use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
+use App\Models\Movimiento\Movimiento;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Category Distribution handler: joins categorias and tipo_movimientos to
@@ -41,9 +43,6 @@ use App\Domains\Reporte\Contracts\Enums\ReportStatisticTypeContract;
  */
 final class EloquentCategoryDistributionQueryExecutor extends EloquentMovimientoTableQueryExecutor implements ReporteQueryExecutorContract
 {
-    public function __construct(
-        private readonly MovimientoQueryRelationResolver $relationResolver
-    ) {}
 
     public function supports(ReportStatisticTypeContract $type): bool
     {
@@ -53,23 +52,41 @@ final class EloquentCategoryDistributionQueryExecutor extends EloquentMovimiento
     public function execute(ReporteQuery $dto): LaravelCategoryDistributionCollection
     {
         $date = $dto->granularityStrategy->groupBy();
-        $query = $this->movimientos()
+
+        $movimientosQuery = $this->movimientos()
+        ->select('movimientos.categoria_id')
+        ->selectRaw(
+            "{$this->getSumQuery('movimientos.monto')} as total_categoria,
+             {$this->getTableRecordsCountQuery('movimientos.id')} as cantidad_categoria,
+                tipo_movimientos.id as tipo_movimiento_id
+             "
+        )
+        ->join('tipo_movimientos', 'movimientos.tipo_movimiento_id', '=', 'tipo_movimientos.id')
+        ->groupByRaw('movimientos.categoria_id, tipo_movimientos.id, ' . $date);
+        $movimientosQuery = $this->baseQuery($dto->dateRange->startDate, $dto->dateRange->endDate, $movimientosQuery, "movimientos.fecha");
+        if(!empty($dto->categorias->ids)){
+            $movimientosQuery->whereIn('movimientos.categoria_id', $dto->categorias->ids);
+        }
+        if(!empty($dto->cuentas->ids)){
+            $movimientosQuery->whereIn('movimientos.cuenta_id', $dto->cuentas->ids);
+        }
+
+        $query = DB::table('categorias')
+            ->joinSub(
+                $movimientosQuery,
+                'movimientos',
+                'categorias.id',
+                '=',
+                'movimientos.categoria_id'
+            )
             ->selectRaw(
                 "categorias.nombre as categoria,
-                 tipo_movimientos.id as tipo_movimiento_id,
-                 {$this->getSumQuery('movimientos.monto')} as total,
-                 {$this->getTableRecordsCountQuery('movimientos.id')} as cantidad"
-            );
-
-        $query = $this->baseQuery($dto->dateRange->startDate, $dto->dateRange->endDate, $query, "movimientos.fecha");
-        $query = $this->relationResolver->resolve($query, $dto, MovimientoQueryRelationParam::TABLE);
-        $query = $this->relationResolver->resolve($query, $dto, MovimientoQueryRelationParam::TIPO_MOVIMIENTOS_JOIN);
-        $query = $this->relationResolver->resolve($query, $dto, MovimientoQueryRelationParam::CATEGORIAS_JOIN);
-
-
-        $query->groupByRaw("categorias.id, categorias.nombre, tipo_movimientos.id, {$date}")
-              ->orderByDesc('total');
-
+                 movimientos.tipo_movimiento_id as tipo_movimiento_id,
+                 {$this->getSumQuery('movimientos.total_categoria')} as total,
+                 {$this->getSumQuery('movimientos.cantidad_categoria')} as cantidad"
+            )
+             ->groupBy('categorias.id', 'categorias.nombre', 'movimientos.tipo_movimiento_id') 
+            ->orderByDesc('total');  
         return EloquentCategoryDistributionBuilder::buildCollection($query->get());
     }
 }

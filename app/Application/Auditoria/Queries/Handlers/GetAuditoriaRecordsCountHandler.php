@@ -24,8 +24,6 @@ use App\Application\Auditoria\Queries\GetAuditoriaRecordsCountQuery;
 /**
  * Handler encargado de manejar la consulta para obtener el conteo de registros de auditorías.
  * Delegará la ejecución al executor específico inyectado.
- *
- * @package App\Application\Auditoria\Queries\Handlers
  */
 final readonly class GetAuditoriaRecordsCountHandler
 {
@@ -35,9 +33,6 @@ final readonly class GetAuditoriaRecordsCountHandler
 
     /**
      * Maneja el query y retorna el conteo total de auditorías.
-     *
-     * @param GetAuditoriaRecordsCountQuery $query
-     * @return int
      */
     public function __invoke(GetAuditoriaRecordsCountQuery $query): int
     {

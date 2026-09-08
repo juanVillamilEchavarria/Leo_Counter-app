@@ -9,3 +9,7 @@ Artisan::command('inspire', function () {
 Schedule::command('leo:process-daily-financial-tasks')
     ->timezone('America/Bogota')
     ->dailyAt('00:00');
+
+Schedule::command('leo:clear-logs-tables')
+    ->timezone('America/Bogota')
+    ->weekly();

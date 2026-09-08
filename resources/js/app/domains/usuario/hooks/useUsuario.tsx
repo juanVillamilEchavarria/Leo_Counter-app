@@ -29,7 +29,7 @@ export default function useUsuario({
   data?: Usuario
 }) {
   const action = (() => {
-    const current = UsuarioActions[method]
+    const current = UsuarioActions[method as keyof typeof UsuarioActions]
     if (typeof current === 'function') {
       return id ? current(id) : ''
     }

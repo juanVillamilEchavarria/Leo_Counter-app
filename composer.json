@@ -16,6 +16,7 @@
         "laravel/reverb": "^1.10",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
+        "openspout/openspout": "^5.11",
         "resend/resend-laravel": "^1.4",
         "tightenco/ziggy": "^2.6"
     },

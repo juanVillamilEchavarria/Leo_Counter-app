@@ -26,6 +26,7 @@ export default function AuditoriaTable() {
             endpoint={AuditoriaApiActions.paginatedData}
             queryKey={['auditorias']}
             pageSize={10}
+            exportTable="auditorias"
         />
     </>
   )

@@ -10,7 +10,6 @@ import { type FormCommonProps } from "@/app/shared/types/components"
 import { useRoute } from "ziggy-js"
 import type { User } from "../../user"
 import type {UsuarioForForm} from "@/app/domains/user/types/user.types";
-import {createSuscriptorApi, deleteSuscriptorApi} from "@/app/domains/notificacion/api/notificacion.api";
 
 /**
  * Tipos, rutas y acciones para el dominio Notificación (frontend)
@@ -47,17 +46,10 @@ export interface SuscriptorNotificacion {
 
 export interface SuscriptorTableData extends SuscriptorNotificacion{
     verified: boolean
-    usuario?: string
+    usuario_nombre: string
+    usuario_email?: string
     canal?: string
 }
-/** Posibles acciones de la API de suscriptores */
-export type SuscriptorApiAction = 'create' | 'delete';
-
-/** Mapa de acciones a funciones API */
-export const SuscriptorApiActions = {
-    create: (data: SuscriptorFormData) => createSuscriptorApi(data),
-    delete: (id: string) => deleteSuscriptorApi(id),
-} as const;
 
 // ─── Form Data ──────────────────────────────────────────────
 

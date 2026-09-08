@@ -8,6 +8,7 @@
  * @since 1.0.0
  * @version 1.0.0
  */
+
 namespace App\Providers\MovimientoFijo;
 
 use App\Application\MovimientoFijo\Contracts\Queries\Executors\GetMovimientoFijoRecordsCountQueryExecutorContract;
@@ -18,6 +19,7 @@ use App\Application\MovimientoFijo\Queries\Handlers\ListAllMovimientoFijoHandler
 use App\Infrastructure\MovimientoFijo\Queries\Executors\Eloquent\EloquentGetMovimientoFijoRecordsCountExecutor;
 use App\Infrastructure\MovimientoFijo\Queries\Executors\Eloquent\EloquentListAllMovimientoFijoDueForProcessingQueryExecutor;
 use App\Infrastructure\MovimientoFijo\Queries\Executors\Eloquent\EloquentListAllMovimientoFijoWithDetailsExecutor;
+use App\Infrastructure\MovimientoFijo\Queries\Strategies\EloquentMovimientoFijoExportQueryStrategy;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -25,14 +27,19 @@ use Illuminate\Support\ServiceProvider;
  * Declara las implementaciones concretas que deben recibir los handlers de lectura.
  *
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
- * @package App\Providers\MovimientoFijo
+ *
  * @since 1.0.0
+ *
  * @version 1.0.0
  */
 final class MovimientoFijoQueryExecutorServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        $this->app->tag([
+            EloquentMovimientoFijoExportQueryStrategy::class,
+        ], 'export.query.strategies');
+
         $this->app->when(ListAllMovimientoFijoHandler::class)
             ->needs(MovimientoFijoQueryExecutorContract::class)
             ->give(EloquentListAllMovimientoFijoWithDetailsExecutor::class);

@@ -13,6 +13,7 @@ import EmptyDataMessage from "../common/EmptyDataMessage"
 import Title from "@/app/shared/components/common/Title"
 import {type Presupuesto } from "../../types/reporte.types"
 import { moneyFormat } from "@/app/shared/helpers"
+import PresupuestoDetailedSection from "../Presupuesto/PresupuestoDetailedSection"
 
 const chartConfig = {
     presupuesto:{
@@ -28,9 +29,9 @@ interface PresupuestoPercentageChartProps {
 export default function PresupuestoPercentageChart({
     data
 }: PresupuestoPercentageChartProps) {
-    const getColor = (value: number)=>{
-        if(data.porcentaje_usado <80) return "var(--chart-income)"
-        if(data.porcentaje_usado >= 80 && data.porcentaje_usado <=90)return "var(--chart-warning)"
+    const getChartColor = (value: number)=>{
+        if(value <80) return "var(--chart-income)"
+        if(value >= 80 && value <=90)return "var(--chart-warning)"
         return "var(--chart-danger)"
 
     }
@@ -42,7 +43,7 @@ export default function PresupuestoPercentageChart({
             <div className="flex w-full justify-between items-start">
                 <div className="flex flex-col gap-1">
                      <Title className="font-bold text-lg " title= "Control Presupuestario" as={'h3'} />
-                    <p className=" text-sm text-foreground">Estado del presupuesto mensual</p>
+                    <p className=" text-sm text-foreground">Estado del presupuesto</p>
                 </div>
                 {hasBudget && (
                     <div className="text-right">
@@ -90,7 +91,7 @@ export default function PresupuestoPercentageChart({
                                 <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
                             <RadialBar
                                 dataKey="porcentaje_usado"
-                                fill={getColor(data.porcentaje_usado)}
+                                fill={getChartColor(data.porcentaje_usado)}
                                 stroke="none"
                                 cornerRadius={20}
                                 background
@@ -107,6 +108,11 @@ export default function PresupuestoPercentageChart({
                                 </div>
                         </div>
                     </ChartContainer>
+                    <div className="w-full">
+                        
+                          <PresupuestoDetailedSection  data={data} />
+                      
+                    </div>
                 </>
             ) : (
                 <EmptyDataMessage

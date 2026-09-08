@@ -26,7 +26,7 @@ Write-Host "${CYAN}=============================================================
 Write-Host ""
 
 # ================================================================
-# 1. VALIDACIONES PREVIAS
+#  VALIDACIONES PREVIAS
 # ================================================================
 Write-Host "${BLUE}>>> Verificando requisitos del sistema...${NC}"
 
@@ -51,7 +51,7 @@ if (-not (Get-Command docker-compose -ErrorAction SilentlyContinue) -and -not (d
 Write-Host "${GREEN}>>> Requisitos verificados.${NC}"
 
 # ================================================================
-# 2. CONFIGURACION DEL .env
+#  CONFIGURACION DEL .env
 # ================================================================
 if (-not (Test-Path .env)) {
     if (-not (Test-Path .env.example)) {
@@ -66,7 +66,7 @@ if (-not (Test-Path .env)) {
 }
 
 # ================================================================
-# 3. ESTRUCTURA DE DIRECTORIOS
+# ESTRUCTURA DE DIRECTORIOS
 # ================================================================
 Write-Host "${BLUE}>>> Creando estructura de directorios de storage...${NC}"
 
@@ -86,18 +86,16 @@ foreach ($Dir in $Directories) {
     }
 }
 
-# En Windows los permisos de archivos locales compartidos hacia Docker
-# los administra automáticamente Docker Desktop (WSL2/Hyper-V).
 Write-Host "${GREEN}>>> Directorios listos.${NC}"
 
 # ================================================================
-# 4. BUILD Y LEVANTAMIENTO DE SERVICIOS
+#  BUILD Y LEVANTAMIENTO DE SERVICIOS
 # ================================================================
 Write-Host "${BLUE}>>> Construyendo imagen de desarrollo...${NC}"
 docker compose -f docker-compose.dev.yml build
 
-Write-Host "${BLUE}>>> Iniciando servicios de soporte (DB, Redis, Mailhog, PhpMyAdmin)...${NC}"
-docker compose -f docker-compose.dev.yml up -d db redis mailhog phpmyadmin
+Write-Host "${BLUE}>>> Iniciando servicios de soporte (DB, Redis, Mailpit, PhpMyAdmin)...${NC}"
+docker compose -f docker-compose.dev.yml up -d db redis mailpit phpmyadmin
 
 Write-Host "${YELLOW}>>> Esperando base de datos...${NC}"
 $Retries = 30
@@ -150,47 +148,50 @@ while ($true) {
 Write-Host "${GREEN}>>> Aplicación lista.${NC}"
 
 # ================================================================
-# 5. INSTALACIÓN DE DEPENDENCIAS
+#  INSTALACIÓN DE DEPENDENCIAS
 # ================================================================
 Write-Host "${BLUE}>>> Configurando Git para el contenedor...${NC}"
-docker compose -f docker-compose.dev.yml exec -T app git config --global --add safe.directory /var/www/html
+docker compose -f docker-compose.dev.yml exec -T --user "${UID:-1000}" app git config --global --add safe.directory /var/www/html
 
 Write-Host "${BLUE}>>> Instalando dependencias PHP (Composer)...${NC}"
-docker compose -f docker-compose.dev.yml exec -T app composer install
+docker compose -f docker-compose.dev.yml exec -T --user "${UID:-1000}" app composer install
+
+Write-Host "${BLUE}>>> Normalizando permisos del volumen node_modules...${NC}"
+docker compose -f docker-compose.dev.yml exec -T --user=root app chown -R "${UID:-1000}:${GID:-1000}" /var/www/html/node_modules
 
 Write-Host "${BLUE}>>> Instalando dependencias Node (pnpm)...${NC}"
-docker compose -f docker-compose.dev.yml exec -T app pnpm install
+docker compose -f docker-compose.dev.yml exec -T --user "${UID:-1000}" app pnpm install
 
 # ================================================================
-# 6. PREPARACIÓN DE LARAVEL
+#  PREPARACIÓN DE LARAVEL
 # ================================================================
 Write-Host "${BLUE}>>> Generando clave de aplicación...${NC}"
-docker compose -f docker-compose.dev.yml exec -T app php artisan key:generate --force
+docker compose -f docker-compose.dev.yml exec -T --user "${UID:-1000}" app php artisan key:generate --force
 
 Write-Host "${BLUE}>>> Ejecutando migraciones...${NC}"
-docker compose -f docker-compose.dev.yml exec -T app php artisan migrate --force
+docker compose -f docker-compose.dev.yml exec -T --user "${UID:-1000}" app php artisan migrate --force
 
 Write-Host "${BLUE}>>> Ejecutando seeders...${NC}"
-docker compose -f docker-compose.dev.yml exec -T app php artisan db:seed --force
+docker compose -f docker-compose.dev.yml exec -T --user "${UID:-1000}" app php artisan db:seed --force
 
 Write-Host "${BLUE}>>> Creando enlace simbólico de storage...${NC}"
-docker compose -f docker-compose.dev.yml exec -T app php artisan storage:link --force
+docker compose -f docker-compose.dev.yml exec -T --user "${UID:-1000}" app php artisan storage:link --force
 
 # ================================================================
-# 7. INICIAR SERVICIOS RESTANTES
+#  INICIAR SERVICIOS RESTANTES
 # ================================================================
 Write-Host "${BLUE}>>> Iniciando queue, scheduler y reverb...${NC}"
 docker compose -f docker-compose.dev.yml up -d
 
 # ================================================================
-# 8. MENSAJE FINAL
+#  MENSAJE FINAL
 # ================================================================
 Write-Host ""
 Write-Host "${GREEN}============================================================${NC}"
 Write-Host "    Entorno de desarrollo listo!                          "
 Write-Host "${GREEN}============================================================${NC}"
 Write-Host "${GREEN}   App:         http://localhost:8080                      ${NC}"
-Write-Host "${GREEN}   Mailhog:     http://localhost:8025                      ${NC}"
+Write-Host "${GREEN}   Mailpit:     http://localhost:8025                      ${NC}"
 Write-Host "${GREEN}   PhpMyAdmin:  http://localhost:8082                      ${NC}"
 Write-Host "${GREEN}============================================================${NC}"
 Write-Host ""

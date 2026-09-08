@@ -11,7 +11,7 @@ import { PresupuestoMesActualActions } from "../types/presupuestoMesActual.types
 export default function usePresupuestoMesActualActions<TPayload extends Record<string, any>>() {
     const form = useForm<TPayload>({} as TPayload)
 
-    const duplicate = (id : number)=>{
+    const duplicate = (id : string)=>{
         form.post(PresupuestoMesActualActions.duplicate(id))
     }
   return {

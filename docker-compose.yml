@@ -28,6 +28,7 @@ services:
     image: leo_counter_app
     container_name: leo_counter_queue
     restart: unless-stopped
+    user: "www-data"
     command: php artisan queue:work --sleep=3 --tries=3 --max-time=3600
     volumes:
       - ./.env:/var/www/html/.env:z
@@ -52,7 +53,8 @@ services:
     image: leo_counter_app
     container_name: leo_counter_scheduler
     restart: unless-stopped
-    command: /bin/sh -c "printenv | grep -v 'no_proxy' >> /etc/environment && touch /var/www/html/storage/logs/cron.log && chown www-data:www-data /var/www/html/storage/logs/cron.log && cron && tail -f /var/www/html/storage/logs/cron.log"
+    user: "www-data"
+    command: ["/usr/local/bin/scheduler-entrypoint.sh"]
     volumes:
       - ./.env:/var/www/html/.env:z
       - ./storage:/var/www/html/storage:z
@@ -77,6 +79,7 @@ services:
     image: leo_counter_app
     container_name: leo_counter_reverb
     restart: unless-stopped
+    user: "www-data"
     command: php artisan reverb:start --port=8081 --host=0.0.0.0
     ports:
       - "8085:8081"
@@ -145,24 +148,11 @@ services:
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
-      PMA_USER: ${DB_USERNAME}
-      PMA_PASSWORD: ${DB_PASSWORD}
     depends_on:
       db:
         condition: service_healthy
     networks:
       - leo_network
-
-  mailhog:
-    image: mailhog/mailhog
-    container_name: mailhog
-    restart: unless-stopped
-    ports:
-      - "1025:1025"
-      - "8025:8025"
-    networks:
-      - leo_network
-
 volumes:
   mariadb_data:
   redis_data:

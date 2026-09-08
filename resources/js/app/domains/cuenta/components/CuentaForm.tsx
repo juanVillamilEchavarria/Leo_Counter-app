@@ -8,6 +8,7 @@
  */
 import Card from "@/app/shared/components/common/Card"
 import InputFillable from "@/app/shared/components/form/InputFillable"
+import CurrencyInput from 'react-currency-input-field';
 import TextArea from "@/app/shared/components/form/TextArea"
 import Button from "@/app/shared/components/common/Button"
 import TransitionMotion from "@/app/shared/components/transitions/TransitionMotion"
@@ -53,20 +54,21 @@ export default function CuentaForm({
             </div>
             <div className="formulario-campo">
                 <label htmlFor="saldo_inicial">Saldo Inicial</label>
-                <InputFillable
-                    placeholder="Ej: 1000"
-                    type="number"
-                    name="saldo_inicial"
+                <CurrencyInput
                     id="saldo_inicial"
-                    disabled={can_update_saldo === false}
+                    name="saldo_inicial"
+                    placeholder="Ingrese el saldo inicial"
                     value={data?.saldo_inicial}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setData('saldo_inicial', Number(e.target.value))}
-                    className={`
-                            border-2 p-3 border-border text-foreground
-                            ${errors.saldo_inicial && 'border-red-500! text-red-500!'}
-                            ${can_update_saldo === false && 'bg-muted cursor-not-allowed'}
-                         `}
-                    icon={`fa-solid fa-coins fa-xl top-6 text-muted-foreground ${errors.saldo_inicial && 'text-red-500!'} `}
+                    disabled={can_update_saldo === false}
+                    decimalsLimit={2}
+                    decimalScale={2}
+                    prefix="$ "
+                    groupSeparator="."
+                    decimalSeparator=","
+                    onValueChange={(value) => {
+                        setData('saldo_inicial', value ? parseFloat(value) : 0);
+                    }}
+                    className={`formulario-fillable ${errors.saldo_inicial && 'border-red-500'} ${can_update_saldo === false && 'bg-muted cursor-not-allowed'}`}
                 />
                 {can_update_saldo === false && (
                     <p className="text-sm text-red-300 mt-1">El saldo inicial de esta cuenta no se puede actualizar porque ya tiene movimientos asociados</p>

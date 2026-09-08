@@ -18,11 +18,11 @@ import { ConfiguracionActions, type SoftDeletedDomainsNames } from '../types/con
 export default function useConfiguracionActions<TPayload extends Record<string, any>>() {
   const form = useForm<TPayload>({} as TPayload)
 
-  const restore = (domain : SoftDeletedDomainsNames, id?: number) => {
+  const restore = (domain : SoftDeletedDomainsNames, id?: string) => {
     if(!id)return
       form.put(ConfiguracionActions.restore( domain, id))
   }
-  const hardDelete = (domain : SoftDeletedDomainsNames, id?: number) => {
+  const hardDelete = (domain : SoftDeletedDomainsNames, id?: string) => {
     if(!id)return
       form.delete(ConfiguracionActions.hardDelete(domain, id))
   }

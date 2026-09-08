@@ -62,6 +62,7 @@ class EloquentMovimientoRepository extends EloquentRepository implements Movimie
     {
        $model = ($this->model)::find($id->getValue());
        if(!$model) return false;
+       /** @var MovimientoAggregate */
         $aggregate = $this->mapDatabaseRecordToAggregate($model);
         $deletedAggregate = $aggregate->delete();
 

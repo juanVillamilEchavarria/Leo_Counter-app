@@ -70,7 +70,7 @@ export default function SuscriptorNotificacionSection(
           title="Suscriptor"
           paragraph={
             <div>
-                <p>¿Estás seguro de eliminar La suscripcion de <span className="font-bold">{item?.usuario}</span> para el canal <span className="font-bold">{item?.canal}</span> ?</p>
+                <p>¿Estás seguro de eliminar La suscripcion de <span className="font-bold">{item?.usuario_nombre}</span> para el canal <span className="font-bold">{item?.canal}</span> ?</p>
             </div>
           }
           onSubmit={(e) => {

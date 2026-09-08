@@ -14,7 +14,6 @@ use App\Domains\Notificacion\Aggregates\Canal;
 use App\Domains\Notificacion\Enums\CanalesNotificacionEnum;
 use App\Domains\Usuario\Aggregates\Usuario;
 use App\Shared\Application\Exceptions\CannotSendEmailMessageToUserException;
-use App\Shared\Application\DTOs\EmailMessageDTO;
 use App\Shared\Domain\Contracts\EventContract;
 use App\Shared\Domain\Contracts\SendMessageToUserByChannelStrategyContract;
 use App\Shared\Application\Contracts\Builders\EmailFormatBuilderContract;
@@ -48,7 +47,7 @@ final readonly class SendEmailMessageToUserStrategy implements SendMessageToUser
     {
 
         $canal = $this->getChanel();
-        if (!$canal) {
+        if (!$canal || !$canal->isActive()) {
             return false;
         }
         return $this->usuarioCanBeNotifiedByAChannelCheckerContract->checkIfUsuarioCanBeNotifiedByAChannel($usuario, $canal);

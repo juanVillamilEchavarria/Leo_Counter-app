@@ -15,6 +15,7 @@ import ModelToggle from '@/app/shared/components/table/actions/ModelToggle'
 import CrudButton from '@/app/shared/components/common/CrudButton'
 import type { SimpleTableColumn } from '@/app/shared/types/components'
 import type {PresupuestoMesActualTableData} from "@/app/domains/presupuestoMesActual";
+import NameAndEmail from '@/app/shared/components/common/NameAndEmail';
 
 /**
  * Columnas para la tabla de suscriptores de notificación.
@@ -32,8 +33,9 @@ export const SuscriptorColumns = ({
 }: {
   onSelect: (item: SuscriptorTableData, modalType: string) => void
 }): SimpleTableColumn<SuscriptorTableData>[] => [
-  { key: 'id', label: 'ID' },
-  { key: 'usuario', label: 'Usuario'},
+  { key: 'usuario', label: 'Usuario', render:(row)=>(
+    <NameAndEmail name={row.usuario_nombre} email={row.usuario_email}/>
+  ),},
   { key: 'canal', label: 'Canal' },
     {
         key: 'verified',

@@ -13,12 +13,16 @@ import TableEntries from '../pagination/TableEntries';
 import { useTanStackPagination } from '@/app/shared/hooks';
 import useServerSideTanStackTable from '@/app/shared/hooks/table/advanced/useServerSideTanStackTable';
 import {useEntries} from '@/app/shared/hooks';
+import { ExportButton } from '@/app/domains/exportacion';
+import type { ExportableTableKey } from '@/app/domains/exportacion';
+import { convertServerSideQueryParams } from '@/app/shared/helpers';
 
 interface TanStackTableServerSideProps<T> {
     columns: ColumnDef<T, any>[];
     endpoint: string;
     queryKey: string[];
     pageSize?: number;
+    exportTable?: ExportableTableKey;
 }
 
 export default function TanStackTableServerSide<T extends Record<string, any>>({
@@ -26,12 +30,15 @@ export default function TanStackTableServerSide<T extends Record<string, any>>({
     endpoint,
     queryKey,
     pageSize = 10,
+    exportTable,
 }: TanStackTableServerSideProps<T>) {
     
     const {entries, setEntries} = useEntries({value:pageSize});
 
     const {
         table,
+        data,
+        metadata,
         isLoading,
         isFetching,
         isError,
@@ -45,7 +52,14 @@ export default function TanStackTableServerSide<T extends Record<string, any>>({
         queryKey,
         initialPageSize: entries,
     });
-
+    const totalRecords = metadata?.total ?? 0;
+    const params ={
+        ...table.getState(),
+        globalFilter
+    }
+    const exportFilters = exportTable
+         ? convertServerSideQueryParams(params)
+        : undefined;
     const controller = useTanStackPagination(table);
 
     if (isError) {
@@ -65,6 +79,17 @@ export default function TanStackTableServerSide<T extends Record<string, any>>({
                 <div className="flex justify-center items-center p-4">
                     <i className="fas fa-spinner fa-spin text-blue-500 mr-2"></i>
                     <span className="text-muted-foreground">Cargando...</span>
+                </div>
+            )}
+
+            {exportTable && (
+                <div className="sm:ml-auto">
+                    <ExportButton
+                        table={exportTable}
+                        totalRecords={totalRecords}
+                        filters={exportFilters}
+                        disabled={totalRecords === 0 && !isLoading}
+                    />
                 </div>
             )}
 

@@ -25,7 +25,8 @@ final readonly class EloquentListAllSuscriptoresWithDetailsExecutor implements S
        $mapped = $records->map(function ($model){
            return new SuscriptorForListDTO(
                id: $model->id,
-               usuario: $model->user->name,
+               usuario_nombre: $model->user->name,
+               usuario_email: $model->user->email,
                canal: $model->canal->nombre,
                active: $model->active,
                verified: $model->verified_at !== null ? true : false

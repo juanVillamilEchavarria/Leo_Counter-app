@@ -8,6 +8,7 @@
  * @since 1.0.1
  * @version 1.0.1
  */
+
 namespace App\Application\Auditoria\Queries;
 
 use App\Application\Auditoria\Contracts\Queries\ListAuditoriaQueryContract;
@@ -16,9 +17,7 @@ use App\Shared\Application\Queries\TableQuery;
 /**
  * Query que representa la intención de obtener auditorías para una tabla (server side).
  * Sigue el patrón usado por ListMovimientoForTableQuery.
+ *
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  */
-final readonly class ListAuditoriaForTableQuery extends TableQuery implements ListAuditoriaQueryContract
-{
-
-}
+final readonly class ListAuditoriaForTableQuery extends TableQuery implements ListAuditoriaQueryContract {}

@@ -19,8 +19,9 @@ use App\Domains\TipoMovimiento\Enums\TipoMovimientoEnum;
 use App\Infrastructure\Reporte\Builders\Eloquent\EloquentUsedBudgetBuilder;
 use App\Domains\Reporte\ValueObjects\Budget\UsedBudgetVO;
 use App\Models\Movimiento\Movimiento;
-use App\Models\Categoria\Categoria;
 use DB;
+use App\Domains\Reporte\Contracts\Collections\Presupuestos\UsedBudgetCollectionContract;
+use App\Shared\Infrastructure\Framework\Laravel\Collections\LaravelCollection;
 
 final class EloquentUsedBudgetQueryExecutor extends EloquentPresupuestoTableQueryExecutor implements ReporteQueryExecutorContract
 {
@@ -31,7 +32,7 @@ final class EloquentUsedBudgetQueryExecutor extends EloquentPresupuestoTableQuer
             && $type === PresupuestoReportStatisticType::USED_BUDGET;
     }
 
-    public function execute(ReporteQuery $dto): UsedBudgetVO
+    public function execute(ReporteQuery $dto): UsedBudgetCollectionContract
     {
         $startDate = $dto->dateRange->startDate;
         $endDate   = $dto->dateRange->endDate;
@@ -53,6 +54,11 @@ final class EloquentUsedBudgetQueryExecutor extends EloquentPresupuestoTableQuer
             ->whereBetween('movimientos.fecha', [$startDate, $endDate])
             ->groupBy('movimientos.categoria_id');
 
+            if(!empty($dto->categorias->ids)){
+                $presupuestosPorCategoria->whereIn('presupuestos.categoria_id', $dto->categorias->ids);
+                $gastosPorCategoria->whereIn('movimientos.categoria_id', $dto->categorias->ids);
+            }
+
         // Estadisticas en general uniendo los resultados de las dos subqueries
         $query = DB::table('categorias')
             ->joinSub(
@@ -70,12 +76,14 @@ final class EloquentUsedBudgetQueryExecutor extends EloquentPresupuestoTableQuer
                 'gasto_agg.categoria_id'
             )
             ->selectRaw('
+                categorias.nombre as categoria,
                 COALESCE(SUM(presupuesto_agg.total_categoria), 0) as total_presupuesto,
                 COALESCE(SUM(gasto_agg.total_categoria), 0) as total_gastos,
                 COALESCE(SUM(presupuesto_agg.total_categoria), 0) - COALESCE(SUM(gasto_agg.total_categoria), 0) as disponible
-            ');
+            ')
+            ->groupBy('categorias.id', 'categorias.nombre');
+        $result = LaravelCollection::make($query->get());
 
-        $result = $query->first();
         return EloquentUsedBudgetBuilder::build($result);
     }
 }

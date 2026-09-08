@@ -173,6 +173,14 @@ export const NavItems: NavItemConfig[] = [
         href: route('auditorias.index'),
     },
     {
+        key: 'exportaciones',
+        title: 'Exportaciones',
+        icon: 'fa-solid fa-file-export fa-lg',
+        routeName: 'exportaciones.*',
+        roles: ['admin'],
+        href: route('exportaciones.index'),
+    },
+    {
         key: 'configuracion',
         title: 'Configuracion',
         icon: 'fa-solid fa-gear fa-lg',

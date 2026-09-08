@@ -18,7 +18,7 @@ export default function useCuenta(
     data
   }: {
     method?: keyof typeof FormMethods,
-    id?: number | null
+    id?: string | null
     data?: Cuenta
   }) {
   //definimos la action dependiendo del metodo, se encuentra en CuentaActions, puede ser funcion para los metodos de put, patch y delete y una string para el metodo post

@@ -54,7 +54,6 @@ final  class EloquentAuditoriaRepository extends EloquentRepository implements A
         $oldValues = $model->old_values;
         $newValues = $model->new_values;
 
-        // Normalizar a JsonPayload si es array o string
         if ($oldValues !== null ) {
             if (is_string($oldValues)) {
                 $decoded = json_decode($oldValues, true) ?: [];

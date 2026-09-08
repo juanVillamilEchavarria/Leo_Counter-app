@@ -19,15 +19,25 @@ for dir in \
 done
 
 echo ">>> [entrypoint] Ajustando permisos de storage..."
-chown -R www-data:www-data \
-    /var/www/html/storage \
-    /var/www/html/bootstrap/cache
+# Solo ajustar permisos cuando corremos como root (bootstrap de Apache).
+# En entornos no-privilegiados se omite para no fallar.
+if [ "$(id -u)" = "0" ]; then
+    chown -R www-data:www-data \
+        /var/www/html/storage \
+        /var/www/html/bootstrap/cache
 
-chmod -R 775 \
-    /var/www/html/storage \
-    /var/www/html/bootstrap/cache
+    chmod -R 775 \
+        /var/www/html/storage \
+        /var/www/html/bootstrap/cache
+fi
 # Eliminar el manifiesto de paquetes cacheado si existe (evita referencias a paquetes de desarrollo)
 rm -f /var/www/html/bootstrap/cache/packages.php
+
+# Eliminar el marcador de hot-reload de Vite si existe (queda huérfano al usar
+# `pnpm run dev` en el host). Su presencia hace que @vite resuelva los assets al
+# dev-server (localhost:5173), rompiendo la app en producción.
+rm -f /var/www/html/public/hot
+
 cd /var/www/html && php artisan package:discover --ansi
 
 # Ajustar .env si existe

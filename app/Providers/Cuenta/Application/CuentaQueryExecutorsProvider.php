@@ -16,12 +16,17 @@ use App\Infrastructure\Cuenta\Queries\Executors\Eloquent\EloquentListAllCuentasW
 use App\Infrastructure\Cuenta\Queries\Executors\Eloquent\EloquentGetCuentasRecordsCountQueryExecutor;
 use App\Application\Cuenta\Contracts\Queries\Executors\CuentaQueryExecutorContract;
 use App\Application\Cuenta\Contracts\Queries\Executors\GetCuentaRecordsCountQueryExecutorContract;
+use App\Infrastructure\Cuenta\Queries\Strategies\EloquentCuentaExportQueryStrategy;
 use Illuminate\Support\ServiceProvider;
 
 class CuentaQueryExecutorsProvider extends ServiceProvider
 {
     public function register(): void
     {
+        $this->app->tag([
+            EloquentCuentaExportQueryStrategy::class,
+        ], 'export.query.strategies');
+
         $this->app->when(ListAllCuentasWithDetailsHandler::class)
             ->needs(CuentaQueryExecutorContract::class)
             ->give(EloquentListAllCuentasWithDetailsQueryExecutor::class);

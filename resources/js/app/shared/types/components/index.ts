@@ -14,7 +14,7 @@ import { type AlertMessageProps, AlertMessagesTypes } from './common/alert.types
 import { type TransitionDuration, type TransitionMotionProps, type TransitionSection } from './common/transition.types';
 import { type NavItemConfig, type NavItemProps,  NavItems, NavItemCurrentStyles, NavItemHoverStyles, NavItemStyles, NavItemTransitionStyle } from './common/nav.types';
 import { type CrudButtonProps, type CrudButtonVariants } from './common/crudButton.types';
-import { type EditAndDeleteActionsProps, type useTanStackTableProps, type TanStackTableProps, type SimpleTableColumn, type SimpleTableProps, type TablePaginationController, type TablePaginationProps, type ModelToggleProps, type useModelToggleProps, type ServerSideTableParams, type ServerSideTableResponse, type UseServerSideTableProps, type UseServerSideTanStackTableProps  } from './common/table.types';
+import { type EditAndDeleteActionsProps, type useTanStackTableProps, type TanStackTableProps, type SimpleTableColumn, type SimpleTableProps, type TablePaginationController, type TablePaginationProps, type ModelToggleProps, type useModelToggleProps, type ServerSideTableParams, type ServerSideTableResponse, type UseServerSideTableProps, type UseServerSideTanStackTableProps, type ServerSideFilters  } from './common/table.types';
 
 import { ModalSizes, type ModalProps, type DeleteModalProps, ModalVariants } from './common/modal.types';
 export {

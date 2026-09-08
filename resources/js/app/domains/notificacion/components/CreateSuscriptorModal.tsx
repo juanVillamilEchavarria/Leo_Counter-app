@@ -3,34 +3,30 @@
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
  * @license MIT
  * @copyright 2026 Juan Esteban Villamil Echavarria
- * @since 1.0.0
- * @version 1.0.0
+ * @since 1.1.0
+ * @version 1.1.0
  */
 import Modal from '@/app/shared/components/modal/Modal'
 import SuscriptorNotificacionForm from './SuscriptorNotificacionForm'
-import useSuscriptorNotificacion from '../hooks/useSuscriptorNotificacion';
-import useSendVerificationToSuscriptorApi from '../hooks/useSendVerificationToSuscriptorApi';
-import useSuscriptorVerify from '../hooks/useSuscriptorVerify';
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import { useCreateSuscriptorNotificacion } from '../hooks/useCreateSuscriptorNotificacion';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { selectedChannel, selectedUser } from '../helpers/notificacion.helpers';
-import type {CanalNotificacion, SuscriptorNotificacionFormOptions} from '../types/notificacion.types'
+import type { CanalNotificacion, SuscriptorNotificacionFormOptions } from '../types/notificacion.types'
 import useSuscriptorNotificacionFormOptionsApi
     from "@/app/domains/notificacion/hooks/api/useSuscriptorNotificacionFormOptionsApi";
-import type {UsuarioForForm} from "@/app/domains/user/types/user.types";
+import type { UsuarioForForm } from "@/app/domains/user/types/user.types";
 import VerificationPendingOrSuccesMessage from './VerificationPendingOrSuccesMessage';
-import {router} from "@inertiajs/react";
-import {ConfiguracionRoutes} from "@/app/domains/configuracion";
+import { router } from "@inertiajs/react";
+import { ConfiguracionRoutes } from "@/app/domains/configuracion";
 
 /**
  * Modal para crear un suscriptor de notificación.
- * Abre el formulario con método POST y pasa las props individuales
- * (data, setData, errors, submit, processing) al formulario.
+ * Usa el hook unificado useCreateSuscriptorNotificacion (useForm + useMutation).
  * @param {object} props
  * @param {boolean} props.open - Si el modal está abierto
  * @param {Function} props.onClose - Callback para cerrar el modal
- * @param {SuscriptorNotificacionFormOptions} props.options - Opciones del formulario
  * @author Juan Villamil <juanestebanvillamilechavarria@gmail.com>
- * @since 1.0.0
+ * @since 1.1.0
  * @version 1.1.0
  */
 export default function CreateSuscriptorModal({
@@ -40,32 +36,27 @@ export default function CreateSuscriptorModal({
   open: boolean
   onClose: () => void
 }) {
-    const {form} = useSuscriptorNotificacion()
-    const {setVerified, verifyingId, setVerifyingId, verified} = useSuscriptorVerify();
-    const {mutate, isPending, validationErrors, reset} = useSendVerificationToSuscriptorApi({
-        setVerifyingId: setVerifyingId,
-        setVerified: setVerified,
-        action: 'create',
-    })
+    const {
+        form,
+        handleSubmit,
+        verifyingId,
+        verified,
+        reset,
+        isPending,
+        validationErrors,
+    } = useCreateSuscriptorNotificacion()
+
     const handleClose = useCallback(() => {
         reset()
-        form.reset()
-        setVerifyingId(null)
-        setVerified(false)
         onClose()
         router.visit(ConfiguracionRoutes.index, {
             preserveScroll: true,
             preserveState: false,
         })
-    }, [reset, form, onClose])
+    }, [reset, onClose])
 
-    const mergedErrors = useMemo(() => ({...form.errors, ...validationErrors}), [form.errors, validationErrors])
+    const mergedErrors = useMemo(() => ({ ...form.errors, ...validationErrors}), [form.errors, validationErrors])
 
-    const handleSubmit = useCallback((e: React.FormEvent) => {
-        e.preventDefault()
-        form.clearErrors()
-        mutate(form.data)
-    }, [form, mutate])
     const { data: optionsData } = useSuscriptorNotificacionFormOptionsApi({ enabled: open });
     const [options, setOptions] = useState<SuscriptorNotificacionFormOptions>({} as SuscriptorNotificacionFormOptions);
     useEffect(() => {
@@ -76,9 +67,9 @@ export default function CreateSuscriptorModal({
             });
         }
     }, [optionsData]);
-  const userName = selectedUser(form, options)?.name ?? 'Usuario'
-  const channelName = selectedChannel(form, options)?.nombre ?? 'Canal'
 
+    const userName = selectedUser(form, options)?.name ?? 'Usuario'
+    const channelName = selectedChannel(form, options)?.nombre ?? 'Canal'
 
   return (
     <Modal className={verifyingId ? 'sm:max-w-md' : 'sm:max-w-2xl'} open={open} onClose={handleClose} size={verifyingId ? 'lg' : 'xl'} title={

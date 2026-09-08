@@ -19,6 +19,7 @@ export default function PresupuestoHistoricoTable() {
             endpoint={PresupuestoHistoricoApiActions.paginatedData}
             queryKey={['presupuestos', 'historicos']}
             pageSize={10}
+            exportTable="presupuestos"
         />
     )
 }
