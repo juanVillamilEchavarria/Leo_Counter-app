@@ -3,6 +3,9 @@
 
 $ErrorActionPreference = "Stop"
 
+$UID = if ($env:UID) { $env:UID } else { "1000" }
+$GID = if ($env:GID) { $env:GID } else { "1000" }
+
 $BLUE   = "`e[0;34m"
 $CYAN   = "`e[1;36m"
 $GREEN  = "`e[1;32m"
@@ -92,7 +95,7 @@ Write-Host "${GREEN}>>> Directorios listos.${NC}"
 #  BUILD Y LEVANTAMIENTO DE SERVICIOS
 # ================================================================
 Write-Host "${BLUE}>>> Construyendo imagen de desarrollo...${NC}"
-docker compose -f docker-compose.dev.yml build
+docker compose -f docker-compose.dev.yml build --no-cache
 
 Write-Host "${BLUE}>>> Iniciando servicios de soporte (DB, Redis, Mailpit, PhpMyAdmin)...${NC}"
 docker compose -f docker-compose.dev.yml up -d db redis mailpit phpmyadmin
@@ -151,31 +154,31 @@ Write-Host "${GREEN}>>> Aplicación lista.${NC}"
 #  INSTALACIÓN DE DEPENDENCIAS
 # ================================================================
 Write-Host "${BLUE}>>> Configurando Git para el contenedor...${NC}"
-docker compose -f docker-compose.dev.yml exec -T --user "${UID:-1000}" app git config --global --add safe.directory /var/www/html
+docker compose -f docker-compose.dev.yml exec -T --user "$UID" app git config --global --add safe.directory /var/www/html
 
 Write-Host "${BLUE}>>> Instalando dependencias PHP (Composer)...${NC}"
-docker compose -f docker-compose.dev.yml exec -T --user "${UID:-1000}" app composer install
+docker compose -f docker-compose.dev.yml exec -T --user "$UID" app composer install
 
 Write-Host "${BLUE}>>> Normalizando permisos del volumen node_modules...${NC}"
-docker compose -f docker-compose.dev.yml exec -T --user=root app chown -R "${UID:-1000}:${GID:-1000}" /var/www/html/node_modules
+docker compose -f docker-compose.dev.yml exec -T --user=root app chown -R "$UID:$GID" /var/www/html/node_modules
 
 Write-Host "${BLUE}>>> Instalando dependencias Node (pnpm)...${NC}"
-docker compose -f docker-compose.dev.yml exec -T --user "${UID:-1000}" app pnpm install
+docker compose -f docker-compose.dev.yml exec -T --user "$UID" app pnpm install
 
 # ================================================================
 #  PREPARACIÓN DE LARAVEL
 # ================================================================
 Write-Host "${BLUE}>>> Generando clave de aplicación...${NC}"
-docker compose -f docker-compose.dev.yml exec -T --user "${UID:-1000}" app php artisan key:generate --force
+docker compose -f docker-compose.dev.yml exec -T --user "$UID" app php artisan key:generate --force
 
 Write-Host "${BLUE}>>> Ejecutando migraciones...${NC}"
-docker compose -f docker-compose.dev.yml exec -T --user "${UID:-1000}" app php artisan migrate --force
+docker compose -f docker-compose.dev.yml exec -T --user "$UID" app php artisan migrate --force
 
 Write-Host "${BLUE}>>> Ejecutando seeders...${NC}"
-docker compose -f docker-compose.dev.yml exec -T --user "${UID:-1000}" app php artisan db:seed --force
+docker compose -f docker-compose.dev.yml exec -T --user "$UID" app php artisan db:seed --force
 
 Write-Host "${BLUE}>>> Creando enlace simbólico de storage...${NC}"
-docker compose -f docker-compose.dev.yml exec -T --user "${UID:-1000}" app php artisan storage:link --force
+docker compose -f docker-compose.dev.yml exec -T --user "$UID" app php artisan storage:link --force
 
 # ================================================================
 #  INICIAR SERVICIOS RESTANTES
@@ -183,9 +186,8 @@ docker compose -f docker-compose.dev.yml exec -T --user "${UID:-1000}" app php a
 Write-Host "${BLUE}>>> Iniciando queue, scheduler y reverb...${NC}"
 docker compose -f docker-compose.dev.yml up -d
 
-# ================================================================
-#  MENSAJE FINAL
-# ================================================================
+docker compose -f docker-compose.dev.yml exec -T --user "$UID" app pnpm run dev
+
 Write-Host ""
 Write-Host "${GREEN}============================================================${NC}"
 Write-Host "    Entorno de desarrollo listo!                          "
