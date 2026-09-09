@@ -101,12 +101,11 @@ RUN chown -R "${USER}:www-data" /var/www/html
 USER "${USER}"
 
 RUN composer install --no-dev --optimize-autoloader --no-scripts
-# Eliminar el manifiesto de paquetes cacheado para forzar su regeneración limpia
 RUN rm -f bootstrap/cache/packages.php && php artisan package:discover
 
 RUN pnpm install && pnpm run build
 
-# Verificar manifiesto Vite
+
 RUN test -f public/build/manifest.json \
     || (echo "ERROR: manifest.json de Vite no encontrado." && exit 1)
 

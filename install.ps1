@@ -1,4 +1,3 @@
-# --- Configuración de codificación para evitar problemas con tildes ---
 $OutputEncoding = [System.Text.Encoding]::UTF8
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
@@ -59,7 +58,6 @@ foreach ($dir in $directories) {
     }
 }
 
-# Archivos .gitkeep para que git trackee los directorios
 "" | Out-File -FilePath "storage/logs/.gitkeep" -Encoding utf8 -ErrorAction SilentlyContinue
 "" | Out-File -FilePath "storage/framework/sessions/.gitkeep" -Encoding utf8 -ErrorAction SilentlyContinue
 "" | Out-File -FilePath "storage/framework/views/.gitkeep" -Encoding utf8 -ErrorAction SilentlyContinue

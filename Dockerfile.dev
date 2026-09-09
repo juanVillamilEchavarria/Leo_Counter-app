@@ -57,7 +57,7 @@ RUN crontab -u www-data /tmp/laravel-cron \
     && rm /tmp/laravel-cron
 
 # ================================
-# USUARIO DEL SISTEMA (no privilegiado)
+# USUARIO DEL SISTEMA 
 # ================================
 RUN groupadd -g "${GID}" "${USER}" \
     && useradd -G www-data -u "${UID}" -g "${GID}" -d "/home/${USER}" "${USER}" \
